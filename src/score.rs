@@ -96,41 +96,94 @@ pub fn breakdown(q: &[u8], gt: &[u8], ma: &[u8]) -> Breakdown {
     sg.fill(tg);
     mark_boilerplate(ta);
 
-    // Mark echo and support.
+    // Mark echo and support. Support is **graded**, not boolean: collapsing the
+    // agreement to `>= 1 - 1e-6` put a hard cliff on top of a smooth curve, and
+    // a 1% change in an asserted figure moved the score by 0.999 whenever the
+    // figure was the answer's only decisive content (adversarial review M2).
     let mut i = 0usize;
     while i < ta.n {
         ta.echo[i] = sq.contains_tok(ta, i);
-        ta.sup[i] = if ta.kind[i] == K_NUMBER {
-            // A figure is supported when some ground-truth figure agrees with it
-            // inside tolerance — not merely when the same digits appear.
-            match best_agreement(ta, i, tg, &p) {
-                Some(a) => a >= 1.0 - 1e-6,
-                None => false,
-            }
+        if ta.kind[i] == K_NUMBER {
+            // A figure is supported to the degree some ground-truth figure
+            // agrees with it — not merely when the same digits appear.
+            ta.supw[i] = best_agreement(ta, i, tg, &p).unwrap_or(0.0);
+            ta.supi[i] = 0;
         } else {
-            sg.contains_tok(ta, i)
-        };
+            match sg.find(ta, i) {
+                Some(k) => {
+                    ta.supw[i] = 1.0;
+                    ta.supi[i] = k as u32 + 1;
+                }
+                None => {
+                    ta.supw[i] = 0.0;
+                    ta.supi[i] = 0;
+                }
+            }
+        }
         i += 1;
     }
 
     let precision = precision_of(ta, &p);
     let answered = answeredness(ta, tg, sq, &p);
     let (fmul, fact_raw) = fact_multiplier(ta, tg, &p);
+    let polarity = polarity_of(ta, tg, &p);
 
     // Concave shaping pulls a mostly-right answer up without flattening the
     // middle; p_concave = 0 leaves precision linear.
     let shaped = (1.0 - p.p_concave) * precision + p.p_concave * (precision * (2.0 - precision));
 
-    let raw = clamp01(shaped * fmul * answered);
+    let raw = clamp01(shaped * fmul * answered * polarity);
     let final_score = clamp01(smoothstep(p.ss_lo, p.ss_hi, raw));
 
     Breakdown {
         precision,
-        fact: fact_raw,
+        fact: fact_raw * polarity,
         answered,
         raw,
         final_score,
     }
+}
+
+/// Penalty for asserting the opposite of what the ground truth says.
+///
+/// Support is a set-membership test, so it cannot see polarity: before this, "is
+/// located in Germany" and "is **not** located in Germany" differed by one
+/// 0.05-weight stopword out of a ~15-token pool and tied at 1.0000 (adversarial
+/// review C2). A supported token whose negation state disagrees with the ground
+/// truth occurrence it matched is not coverage; it is a contradiction.
+fn polarity_of(ta: &Toks, tg: &Toks, p: &Profile) -> f32 {
+    let (mut sup_mass, mut contra_mass) = (0.0f32, 0.0f32);
+    let mut i = 0usize;
+    while i < ta.n {
+        // Any supported *content* token can carry a polarity claim — not just a
+        // decisive one. The claim in "is not a known proxy and is not flagged
+        // for abuse" lives entirely in lowercase common words, so restricting
+        // this to proper nouns and figures left that negation tying its own
+        // positive at 1.0000.
+        //
+        // Echoed tokens are excluded: the question's own subject is not part of
+        // the claim, and counting it halved the measured contradiction.
+        if !ta.boiler[i]
+            && !ta.echo[i]
+            && ta.w[i] >= p.decisive_min
+            && ta.supw[i] > 0.0
+            && ta.supi[i] > 0
+        {
+            let k = (ta.supi[i] - 1) as usize;
+            if k < tg.n {
+                let w = ta.w[i] * ta.supw[i];
+                sup_mass += w;
+                if ta.neg[i] != tg.neg[k] {
+                    contra_mass += w;
+                }
+            }
+        }
+        i += 1;
+    }
+    if sup_mass <= 0.0 {
+        return 1.0;
+    }
+    clamp01(1.0 - p.m_contra * (contra_mass / sup_mass))
 }
 
 /// Weighted fraction of the answer's own content that the ground truth supports.
@@ -160,14 +213,10 @@ fn precision_of(ta: &Toks, p: &Profile) -> f32 {
         let w = ta.w[i];
         if ta.decisive[i] {
             fact_d += w;
-            if ta.sup[i] {
-                fact_n += w;
-            }
+            fact_n += w * ta.supw[i];
         } else {
             prose_d += w;
-            if ta.sup[i] {
-                prose_n += w;
-            }
+            prose_n += w * ta.supw[i];
         }
         i += 1;
     }
@@ -206,22 +255,40 @@ fn answeredness(ta: &Toks, tg: &Toks, sq: &Set, p: &Profile) -> f32 {
     // whenever the ground truth is long enough to contain the same common
     // words — measured on live traffic, a contentless echo reached 0.80 on this
     // gate purely through words like "terms", "scope" and "order".
-    let mass = |t: &Toks, i: usize| -> f32 {
+    let mass = |t: &Toks, i: usize, prose_w: f32| -> f32 {
         if t.decisive[i] {
             t.w[i]
         } else {
-            t.w[i] * p.novel_prose_w
+            t.w[i] * prose_w
         }
     };
 
-    let mut gt_ans = 0.0f32;
+    // Does the ground truth state decisive facts of its own that the question
+    // did not already give away?
+    let (mut gt_ans, mut gt_decisive) = (0.0f32, 0.0f32);
     let mut k = 0usize;
     while k < tg.n {
         if tg.w[k] >= p.decisive_min && !sq.contains_tok(tg, k) {
-            gt_ans += mass(tg, k);
+            gt_ans += mass(tg, k, p.novel_prose_w);
+            if tg.decisive[k] {
+                gt_decisive += tg.w[k];
+            }
         }
         k += 1;
     }
+
+    // When it does, novelty is counted from decisive content ONLY. Prose
+    // agreement is not assertion: a ground-truth-blind list of the intent's own
+    // field names ("country, region, city, latitude, longitude, ISP ...")
+    // carries no figure, identifier or proper noun, yet 81% of it appeared
+    // somewhere in a long ground truth and it scored a perfect 1.0 on recorded
+    // rows (adversarial review C5). If the truth states facts, an answer that
+    // states none of them has not answered.
+    let novel_prose_w = if gt_decisive >= p.gt_decisive_min {
+        p.novel_prose_w_gt
+    } else {
+        p.novel_prose_w
+    };
     if gt_ans < p.gt_decisive_min {
         // Refusal-shaped ground truth: no answer can be "unanswered" against it.
         return 1.0;
@@ -230,8 +297,8 @@ fn answeredness(ta: &Toks, tg: &Toks, sq: &Set, p: &Profile) -> f32 {
     let mut novel = 0.0f32;
     let mut i = 0usize;
     while i < ta.n {
-        if !ta.boiler[i] && !ta.echo[i] && ta.sup[i] && ta.w[i] >= p.decisive_min {
-            novel += mass(ta, i);
+        if !ta.boiler[i] && !ta.echo[i] && ta.w[i] >= p.decisive_min {
+            novel += mass(ta, i, novel_prose_w) * ta.supw[i];
         }
         i += 1;
     }
@@ -356,6 +423,55 @@ mod tests {
         let _ = score(b"unrelated question", b"unrelated ground truth", b"unrelated answer");
         let b = score(Q, GT, b"The data shows the IP is hosted by Google LLC in the United States.");
         assert_eq!(a, b, "stale scratch state leaked between calls");
+    }
+
+    #[test]
+    fn a_regrouped_figure_is_not_an_exact_match() {
+        // The exact-match short-circuit used to fold punctuation, so each of
+        // these returned a literal 1.0 for a wrong answer (review C1).
+        let q = b"What is the CVSS score?";
+        let gt = b"The CVSS score is 10.";
+        let wrong = score(q, gt, b"The CVSS score is 1.0");
+        let right = score(q, gt, b"The CVSS score is 10.");
+        assert_eq!(right, 1.0);
+        assert!(wrong < 0.9, "CVSS 1.0 against a truth of 10 scored {}", wrong);
+    }
+
+    #[test]
+    fn a_negated_claim_does_not_tie_the_correct_one() {
+        // One word flips the meaning; before the polarity term both scored
+        // 1.0000 (review C2).
+        let q = b"Where is the IP 8.8.8.8?";
+        let gt = b"The IP 8.8.8.8 is located in Germany.";
+        let pos = score(q, gt, b"The data shows the IP 8.8.8.8 is located in Germany.");
+        let neg = score(q, gt, b"The data shows the IP 8.8.8.8 is not located in Germany.");
+        assert!(pos > neg, "positive {} must beat negated {}", pos, neg);
+        assert!(neg < 0.75, "a flat contradiction scored {}", neg);
+    }
+
+    #[test]
+    fn a_ground_truth_blind_field_list_is_not_an_answer() {
+        // A keyword blob written from the intent's field names, with no lookup
+        // and no knowledge of any ground truth, scored 1.0 on live rows (C5).
+        let q = b"Can you look up the geolocation for the IP address 91.146.179.123?";
+        let gt = b"The IP address 91.146.179.123 resolves to Reykjavik, Capital Region, Iceland. It is announced by Ljosleidarinn ehf (AS22057).";
+        let blob = score(q, gt,
+            b"The data shows the country, region, city, latitude, longitude, coordinates, ISP, organisation, autonomous system network, hosting provider, timezone, postal code, continent and address associated with this IP address, including its allocation, registry, abuse contact and reported activity.");
+        let real = score(q, gt, b"The data shows the IP resolves to Reykjavik, Capital Region, Iceland, announced by Ljosleidarinn ehf.");
+        assert!(real > blob, "a real answer {} must beat the field-name blob {}", real, blob);
+        assert!(blob < 0.5, "field-name blob scored {}", blob);
+    }
+
+    #[test]
+    fn coordinates_without_a_degree_sign_still_count() {
+        // The plain-text form was scored 0.0000, identical to the wrong
+        // hemisphere (review M5).
+        let q = b"What are the coordinates?";
+        let gt = b"Approximate coordinates are -34.9011, -56.1645.";
+        let plain = score(q, gt, b"The data shows coordinates 34.9011S, 56.1645W.");
+        let wrong = score(q, gt, b"The data shows coordinates 34.9011N, 56.1645E.");
+        assert!(plain > 0.5, "correct plain-text coordinates scored {}", plain);
+        assert!(plain > wrong, "right {} must beat wrong hemisphere {}", plain, wrong);
     }
 
     #[test]

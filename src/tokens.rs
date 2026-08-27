@@ -11,7 +11,7 @@
 
 use crate::bytes::*;
 use crate::units::{
-    leading_number, suffix_is_negative_hemisphere, unit_word_code, P_BASE, U_NONE,
+    leading_range, suffix_is_negative_hemisphere, unit_word_code, P_BASE, U_DEG, U_NONE,
 };
 use crate::profile::profile;
 
@@ -30,7 +30,8 @@ pub struct Toks {
     pub stem: [u32; MAX_TOKENS],
     pub w: [f32; MAX_TOKENS],
     pub val: [f32; MAX_TOKENS],
-    pub cval: [f32; MAX_TOKENS],
+    /// Upper bound of a hyphenated range; equal to `val` for a plain figure.
+    pub vhi: [f32; MAX_TOKENS],
     pub kind: [u8; MAX_TOKENS],
     pub unit: [u8; MAX_TOKENS],
     /// Unit this token *names* on its own (`km`, `knots`, `°C`), precomputed so
@@ -38,12 +39,21 @@ pub struct Toks {
     pub uword: [u8; MAX_TOKENS],
     /// Source byte immediately after the token, so a trailing `%` is not lost.
     pub nb: [u8; MAX_TOKENS],
+    /// Hash of a neighbouring word that sits where a unit would but names no
+    /// unit we know (`hPa`, `bananas`). Zero when there is none.
+    pub ufword: [u32; MAX_TOKENS],
+    /// Token falls under a negation that has not been closed by a clause break.
+    pub neg: [bool; MAX_TOKENS],
     /// Carries an assertion rather than prose: a figure, an identifier, or a
     /// proper noun. These are what a Tier-A answer is right or wrong about.
     pub decisive: [bool; MAX_TOKENS],
     pub boiler: [bool; MAX_TOKENS],
     pub echo: [bool; MAX_TOKENS],
-    pub sup: [bool; MAX_TOKENS],
+    /// How well the ground truth supports this token, in [0,1]. Graded, not
+    /// boolean: a figure 1% off must not read the same as one that is absent.
+    pub supw: [f32; MAX_TOKENS],
+    /// Index of the ground-truth token this one matched, for polarity checks.
+    pub supi: [u32; MAX_TOKENS],
     pub has_ident: bool,
 }
 
@@ -53,15 +63,18 @@ pub const EMPTY_TOKS: Toks = Toks {
     stem: [0; MAX_TOKENS],
     w: [0.0; MAX_TOKENS],
     val: [0.0; MAX_TOKENS],
-    cval: [0.0; MAX_TOKENS],
+    vhi: [0.0; MAX_TOKENS],
     kind: [K_WORD; MAX_TOKENS],
     unit: [U_NONE; MAX_TOKENS],
     uword: [U_NONE; MAX_TOKENS],
     nb: [0; MAX_TOKENS],
+    ufword: [0; MAX_TOKENS],
+    neg: [false; MAX_TOKENS],
     decisive: [false; MAX_TOKENS],
     boiler: [false; MAX_TOKENS],
     echo: [false; MAX_TOKENS],
-    sup: [false; MAX_TOKENS],
+    supw: [0.0; MAX_TOKENS],
+    supi: [0; MAX_TOKENS],
     has_ident: false,
 };
 
@@ -110,6 +123,31 @@ fn is_stopword(h: u32) -> bool {
     false
 }
 
+/// Negators. `not` and `no` are also stopwords, so before this table they
+/// weighed 0.05 out of a ~15-token pool and a sentence tied its own negation at
+/// 1.0000 (adversarial review C2). Polarity is not a weighting question.
+const NEGATORS: [u32; 14] = [
+    hash_str("not"), hash_str("no"), hash_str("never"), hash_str("none"),
+    hash_str("cannot"), hash_str("cant"), hash_str("wont"), hash_str("didnt"),
+    hash_str("doesnt"), hash_str("isnt"), hash_str("arent"), hash_str("without"),
+    hash_str("nor"), hash_str("neither"),
+];
+
+fn is_negator(h: u32) -> bool {
+    let mut i = 0usize;
+    while i < NEGATORS.len() {
+        if NEGATORS[i] == h {
+            return true;
+        }
+        i += 1;
+    }
+    false
+}
+
+/// How many following tokens a negator reaches over, before a clause boundary
+/// closes it. "no longer" and "n't" both land here as plain negator tokens.
+const NEG_WINDOW: i32 = 5;
+
 fn weight(tok: &[u8], hash: u32, kind: u8, proper: bool, high: bool) -> f32 {
     let p = profile();
     if kind == K_NUMBER {
@@ -146,9 +184,16 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
     t.has_ident = false;
     let n = src.len();
     let mut i = 0usize;
+    let mut negwin: i32 = 0;
 
     while i < n && t.n < MAX_TOKENS {
         if !is_wordbyte(src[i]) {
+            // A clause boundary ends a negation's reach: in "No, the cert
+            // expired" the negation applies to the verdict, not to "expired".
+            let b = src[i];
+            if b == b'.' || b == b',' || b == b';' || b == b'!' || b == b'?' || b == b':' {
+                negwin = 0;
+            }
             i += 1;
             continue;
         }
@@ -189,14 +234,18 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
         // is a figure; anything else mixing letters and digits, or carrying two
         // or more internal separators, is an identifier (IP, CVE id, version,
         // date) and admits no numeric tolerance.
-        let (mut val, used) = leading_number(tok);
+        let (mut val, mut vhi, used) = leading_range(tok);
         let rest = &tok[used..];
         let suffix_unit = if rest.is_empty() {
             U_NONE
         } else {
             unit_word_code(rest)
         };
-        let kind = if used > 0 && (rest.is_empty() || suffix_unit != U_NONE) {
+        // A bare decimal carrying only a hemisphere letter is a coordinate, not
+        // an identifier: `34.9011S` must parse as -34.9011 rather than falling
+        // through to K_IDENT where no tolerance applies (adversarial review M5).
+        let hemi = used > 0 && rest.len() == 1 && is_hemisphere(rest[0]);
+        let kind = if used > 0 && (rest.is_empty() || suffix_unit != U_NONE || hemi) {
             K_NUMBER
         } else if (has_alpha && has_digit) || (has_digit && seps >= 2) {
             K_IDENT
@@ -205,10 +254,15 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
         } else {
             K_WORD
         };
+        if hemi && (lower(rest[0]) == b's' || lower(rest[0]) == b'w') {
+            val = -val;
+            vhi = val;
+        }
 
         // `104.8669°W` is a western longitude: negative, not positive.
         if kind == K_NUMBER && suffix_is_negative_hemisphere(rest) {
             val = -val;
+            vhi = val;
         }
 
         // A leading `-` that is a sign rather than a hyphen. Longitudes and
@@ -218,7 +272,9 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
             && src[start - 1] == b'-'
             && (start < 2 || !is_alnum(src[start - 2]))
         {
+            let span = vhi - val;
             val = -val;
+            vhi = val + span;
         }
 
         let h = hash_bytes(tok);
@@ -229,10 +285,14 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
         t.stem[k] = if kind == K_WORD { stem_hash(tok) } else { h };
         t.kind[k] = kind;
         t.val[k] = val;
-        t.cval[k] = val;
+        t.vhi[k] = if vhi >= val { vhi } else { val };
         // A partial unit (`km` awaiting an `h`) is not a unit on its own.
         t.unit[k] = if kind == K_NUMBER && suffix_unit < P_BASE {
-            suffix_unit
+            if hemi {
+                U_DEG
+            } else {
+                suffix_unit
+            }
         } else {
             U_NONE
         };
@@ -244,9 +304,20 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
         t.decisive[k] = kind != K_WORD || proper;
         t.boiler[k] = false;
         t.echo[k] = false;
-        t.sup[k] = false;
+        t.supw[k] = 0.0;
+        t.supi[k] = 0;
+        t.ufword[k] = 0;
+        t.neg[k] = negwin > 0;
         if kind == K_IDENT {
             t.has_ident = true;
+        }
+        // A negator opens a window over what follows; anything else inside an
+        // open window counts down toward the clause it belongs to.
+        if kind == K_WORD && is_negator(h) {
+            negwin = NEG_WINDOW;
+            t.neg[k] = true;
+        } else if negwin > 0 {
+            negwin -= 1;
         }
         t.n = k + 1;
     }
@@ -260,17 +331,20 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
 /// answers open literally "The data ..." (gate analysis §4.1). These carry no
 /// information about the answer, so they are struck from both sides of the
 /// precision ratio rather than being allowed to inflate it.
-const BOILER: [&[u32]; 12] = [
+/// Only genuinely contentless openers appear here. Four weather-specific
+/// entries (`the weather forecast`, `the current weather`, `the forecast for`,
+/// `the weather in`) were removed: `weather` and `forecast` are *content* words
+/// for a weather intent, so striking them at position 0 scored one phrasing
+/// differently from another — worth up to +0.02 on the storm build — which is a
+/// phrasing match, and the Rule-04 disclosure says no phrasing is matched
+/// (adversarial review M9).
+const BOILER: [&[u32]; 8] = [
     &[hash_str("the"), hash_str("data"), hash_str("shows")],
     &[hash_str("the"), hash_str("data"), hash_str("provides")],
     &[hash_str("the"), hash_str("data"), hash_str("indicates")],
     &[hash_str("the"), hash_str("data"), hash_str("describes")],
     &[hash_str("this"), hash_str("data"), hash_str("shows")],
     &[hash_str("this"), hash_str("data"), hash_str("describes")],
-    &[hash_str("the"), hash_str("weather"), hash_str("forecast")],
-    &[hash_str("the"), hash_str("current"), hash_str("weather")],
-    &[hash_str("the"), hash_str("forecast"), hash_str("for")],
-    &[hash_str("the"), hash_str("weather"), hash_str("in")],
     &[hash_str("the"), hash_str("data")],
     &[hash_str("this"), hash_str("data")],
 ];

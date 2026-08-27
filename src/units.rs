@@ -7,7 +7,7 @@
 #![allow(dead_code)]
 
 use crate::bytes::*;
-use crate::tokens::{Toks, K_NUMBER};
+use crate::tokens::{Toks, K_NUMBER, K_WORD};
 
 // --------------------------------------------------------------------------
 // Unit classes
@@ -32,6 +32,16 @@ pub const U_SEC: u8 = 15;
 pub const U_MIN: u8 = 16;
 pub const U_HOUR: u8 = 17;
 pub const U_DAY: u8 = 18;
+pub const U_TEMP_K: u8 = 19;
+pub const U_HPA: u8 = 20;
+pub const U_MB: u8 = 21;
+pub const U_INHG: u8 = 22;
+pub const U_PSI: u8 = 23;
+pub const U_BAR: u8 = 24;
+pub const U_MI: u8 = 25;
+pub const U_KG: u8 = 26;
+pub const U_LB: u8 = 27;
+pub const U_MSEC: u8 = 28;
 
 /// Dimension of a unit. Two figures are only comparable within one dimension —
 /// a temperature and a wind speed are not a near-miss, they are unrelated.
@@ -44,15 +54,19 @@ pub const D_FRAC: u8 = 3;
 pub const D_ANGLE: u8 = 4;
 pub const D_LEN: u8 = 5;
 pub const D_TIME: u8 = 6;
+pub const D_PRESSURE: u8 = 7;
+pub const D_MASS: u8 = 8;
 
 pub fn dimension(u: u8) -> u8 {
     match u {
-        U_TEMP_C | U_TEMP_F => D_TEMP,
+        U_TEMP_C | U_TEMP_F | U_TEMP_K => D_TEMP,
         U_MS | U_KMH | U_KT | U_MPH => D_SPEED,
         U_PCT => D_FRAC,
         U_DEG => D_ANGLE,
-        U_MM | U_CM | U_M | U_KM | U_IN | U_FT => D_LEN,
-        U_SEC | U_MIN | U_HOUR | U_DAY => D_TIME,
+        U_MM | U_CM | U_M | U_KM | U_IN | U_FT | U_MI => D_LEN,
+        U_SEC | U_MIN | U_HOUR | U_DAY | U_MSEC => D_TIME,
+        U_HPA | U_MB | U_INHG | U_PSI | U_BAR => D_PRESSURE,
+        U_KG | U_LB => D_MASS,
         _ => D_NONE,
     }
 }
@@ -74,6 +88,14 @@ pub fn canonical(v: f32, u: u8) -> f32 {
         U_MIN => v * 60.0,
         U_HOUR => v * 3600.0,
         U_DAY => v * 86400.0,
+        U_MSEC => v / 1000.0,
+        U_TEMP_K => v - 273.15,
+        U_MI => v * 1609.344,
+        // Pressure canonicalises to hPa, mass to kilograms.
+        U_INHG => v * 33.8639,
+        U_PSI => v * 68.9476,
+        U_BAR => v * 1000.0,
+        U_LB => v * 0.453_592,
         _ => v,
     }
 }
@@ -87,7 +109,7 @@ pub const P_M: u8 = 65;
 pub const P_S: u8 = 66;
 pub const P_H: u8 = 67;
 
-const UNIT_TABLE: [(u32, u8); 51] = [
+const UNIT_TABLE: [(u32, u8); 72] = [
     (hash_str("c"), U_TEMP_C),
     (hash_bytes(&[0xC2, 0xB0, b'c']), U_TEMP_C),
     (hash_str("celsius"), U_TEMP_C),
@@ -140,6 +162,30 @@ const UNIT_TABLE: [(u32, u8); 51] = [
     (hash_str("hours"), U_HOUR),
     (hash_str("day"), U_DAY),
     (hash_str("days"), U_DAY),
+    // Units we do not otherwise need, carried so that stating one is read as the
+    // category error it is rather than falling through to "unitless" and
+    // free-matching a figure in some other dimension (adversarial review C6).
+    (hash_str("k"), U_TEMP_K),
+    (hash_str("kelvin"), U_TEMP_K),
+    (hash_str("hpa"), U_HPA),
+    (hash_str("mb"), U_MB),
+    (hash_str("mbar"), U_MB),
+    (hash_str("millibar"), U_MB),
+    (hash_str("millibars"), U_MB),
+    (hash_str("inhg"), U_INHG),
+    (hash_str("psi"), U_PSI),
+    (hash_str("bar"), U_BAR),
+    (hash_str("mi"), U_MI),
+    (hash_str("mile"), U_MI),
+    (hash_str("miles"), U_MI),
+    (hash_str("kg"), U_KG),
+    (hash_str("kgs"), U_KG),
+    (hash_str("kilogram"), U_KG),
+    (hash_str("kilograms"), U_KG),
+    (hash_str("lb"), U_LB),
+    (hash_str("lbs"), U_LB),
+    (hash_str("pound"), U_LB),
+    (hash_str("pounds"), U_LB),
 ];
 
 /// Extra partials that collide with very common words, kept out of the main
@@ -190,6 +236,28 @@ pub fn suffix_is_negative_hemisphere(rest: &[u8]) -> bool {
 /// Parse the leading decimal run of a token. Returns the value and how many
 /// bytes it consumed; `,` is accepted as a thousands separator between digits
 /// and at most one `.` is taken as the decimal point.
+/// Parse a hyphenated range as a range, not as its floor.
+///
+/// The tokeniser absorbs the `-` in `5-50`, so before this existed the token
+/// carried `val = 5.0` and `5-50 m/s` scored identically to `5 m/s` — every
+/// range answer was silently read as its lower bound (adversarial review M6).
+/// Returns `(lo, hi, used)`; `hi == lo` when the token is a plain figure.
+pub fn leading_range(tok: &[u8]) -> (f32, f32, usize) {
+    let (lo, used) = leading_number(tok);
+    if used == 0 || used >= tok.len() {
+        return (lo, lo, used);
+    }
+    // `5-50`, `40-60`. A second `-` would make it an identifier (a date), which
+    // the classifier has already routed elsewhere.
+    if tok[used] == b'-' && used + 1 < tok.len() && is_digit(tok[used + 1]) {
+        let (hi, used2) = leading_number(&tok[used + 1..]);
+        if used2 > 0 && hi >= lo {
+            return (lo, hi, used + 1 + used2);
+        }
+    }
+    (lo, lo, used)
+}
+
 pub fn leading_number(tok: &[u8]) -> (f32, usize) {
     let n = tok.len();
     let mut i = 0usize;
@@ -263,16 +331,43 @@ pub fn annotate_units(t: &mut Toks) {
                 }
             }
         }
-        // A hemisphere letter written apart from the figure: `22.5609° S`.
-        if t.unit[k] == U_DEG && k + 1 < t.n {
+        // A hemisphere letter written apart from the figure: `22.5609° S`, and
+        // — the common plain-text form — a bare decimal followed by a lone
+        // N/S/E/W with no degree sign at all: `34.9011 S`. Before this, only the
+        // `°` form was understood and a correct `34.9011S, 56.1645W` scored
+        // 0.0000, the same as the wrong hemisphere (adversarial review M5).
+        if k + 1 < t.n && (t.unit[k] == U_DEG || t.unit[k] == U_NONE) {
             let h = t.hash[k + 1];
-            if h == hash_str("s") || h == hash_str("w") {
-                if t.val[k] > 0.0 {
+            let south_west = h == hash_str("s") || h == hash_str("w");
+            let north_east = h == hash_str("n") || h == hash_str("e");
+            if south_west || north_east {
+                t.unit[k] = U_DEG;
+                if south_west && t.val[k] > 0.0 {
                     t.val[k] = -t.val[k];
+                    t.vhi[k] = t.val[k];
                 }
             }
         }
-        t.cval[k] = canonical(t.val[k], t.unit[k]);
+
+        // A figure whose neighbouring word looks like a unit we do not know.
+        // Recorded so it can be read as the category error it is, instead of
+        // silently becoming a unitless figure that free-matches any dimension.
+        if t.unit[k] == U_NONE && k + 1 < t.n {
+            let nxt = k + 1;
+            // A unit trails its figure and is not itself followed by another
+            // figure. Without that second test, `wind_kmh=128.7 gust_kmh=175`
+            // reads `gust` as the unit of 128.7 and scores a wholly correct
+            // key=value answer as a category error.
+            let followed_by_figure = (k + 2 < t.n && t.kind[k + 2] == K_NUMBER)
+                || (k + 3 < t.n && t.kind[k + 3] == K_NUMBER);
+            if t.kind[nxt] == K_WORD
+                && t.uword[nxt] == U_NONE
+                && t.w[nxt] > 0.1
+                && !followed_by_figure
+            {
+                t.ufword[k] = t.hash[nxt];
+            }
+        }
         k += 1;
     }
 }

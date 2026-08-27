@@ -203,10 +203,18 @@ pub extern "C" fn breakdown_answer(
     5
 }
 
+/// Trap, never spin.
+///
+/// This was `loop {}`, which turns any reachable bounds check into a **hang**
+/// rather than a fault. The node's fixture gate has a 600 s budget across three
+/// attempts: a hang burns the whole budget and reports nothing, where a trap is
+/// an immediate, diagnosable rejection. Nothing here is expected to panic — the
+/// hot paths use checked accessors — but the failure mode has to be the benign
+/// one (adversarial review M1, GAPS G6).
 #[cfg(all(target_arch = "wasm32", not(test)))]
 #[panic_handler]
 fn panic_handler(_: &core::panic::PanicInfo) -> ! {
-    loop {}
+    core::arch::wasm32::unreachable()
 }
 
 #[cfg(test)]

@@ -17,6 +17,28 @@ use crate::units::*;
 // Agreement
 // --------------------------------------------------------------------------
 
+/// One side of a comparison: a figure, possibly a range, with its unit and the
+/// hash of any unit-shaped word we could not identify.
+#[derive(Clone, Copy)]
+pub struct Fig {
+    pub lo: f32,
+    pub hi: f32,
+    pub unit: u8,
+    /// Non-zero when a word sat where a unit would but named no unit we know.
+    pub foreign: u32,
+}
+
+impl Fig {
+    pub fn of(t: &Toks, i: usize) -> Fig {
+        Fig {
+            lo: t.val[i],
+            hi: t.vhi[i],
+            unit: t.unit[i],
+            foreign: t.ufword[i],
+        }
+    }
+}
+
 /// Graded agreement between an asserted figure and a candidate one, or `None`
 /// when the two are not talking about the same quantity at all.
 ///
@@ -25,51 +47,96 @@ use crate::units::*;
 /// ground truth of 5 m/s is a wrong answer rather than an unverifiable one.
 /// Only when neither side carries a unit do we fall back on a magnitude band to
 /// guess whether the figures are about the same thing.
-pub fn value_agreement(av: f32, au: u8, gv: f32, gu: u8, p: &Profile) -> Option<f32> {
-    let (ad, gd) = (dimension(au), dimension(gu));
+pub fn value_agreement(a: Fig, g: Fig, p: &Profile) -> Option<f32> {
+    let (ad, gd) = (dimension(a.unit), dimension(g.unit));
     if ad != D_NONE && gd != D_NONE && ad != gd {
         // A temperature is not a near-miss for a wind speed; it is unrelated.
         return None;
     }
-    let both_united = ad != D_NONE && gd != D_NONE;
-    let one_united = (ad != D_NONE) != (gd != D_NONE);
 
-    // Agreement under one reading of the pair.
-    let rate = |a: f32, g: f32| -> (f32, f32) {
-        let diff = fabs(a - g);
-        let rel = diff / fmax(fabs(g), 1e-6);
-        let score = if diff <= p.num_abs_tol || rel <= p.num_rel_tol {
+    // Agreement between two intervals. A plain figure is the degenerate case
+    // lo == hi, so a range containing the truth agrees fully and one that misses
+    // decays from whichever bound is nearer (adversarial review M6).
+    let rate = |alo: f32, ahi: f32, glo: f32, ghi: f32| -> (f32, f32) {
+        let gap = if ahi < glo {
+            glo - ahi
+        } else if alo > ghi {
+            alo - ghi
+        } else {
+            0.0
+        };
+        let scale = fmax(fmax(fabs(glo), fabs(ghi)), 1e-6);
+        let rel = gap / scale;
+        let mut score = if gap <= p.num_abs_tol || rel <= p.num_rel_tol {
             1.0
         } else {
             // 1/(1 + k*rel): smooth, bounded, and needs no transcendental.
             1.0 / (1.0 + p.num_rel_k * rel)
         };
+        // A range earns credit for containing the truth, but a range wide enough
+        // to contain almost anything is a hedge, not an answer. Discount by its
+        // own width so "5-50 m/s" cannot bank the same credit as "46-48 m/s".
+        let width = (ahi - alo) / scale;
+        if width > 0.0 {
+            score /= 1.0 + p.m_range_width * width;
+        }
         (score, rel)
     };
 
-    if both_united {
+    let conv = |v: f32, u: u8| canonical(v, u);
+
+    if ad != D_NONE && gd != D_NONE {
         // Same dimension: convert and compare. Always comparable, however far
         // apart — 47 m/s against 5 m/s is a wrong speed, not an unknown one.
-        return Some(rate(canonical(av, au), canonical(gv, gu)).0);
+        return Some(rate(conv(a.lo, a.unit), conv(a.hi, a.unit), conv(g.lo, g.unit), conv(g.hi, g.unit)).0);
     }
 
-    if one_united {
-        // Only one side named a unit, so we cannot know whether the bare figure
-        // was already stated in the canonical unit (`wind_kmh=128.7` beside
-        // `128.7 km/h`) or needs converting (`90%` beside `0.9`). Both readings
-        // are legitimate, so take the better of the two: a genuinely wrong
-        // figure agrees under neither.
-        let raw = rate(av, gv).0;
-        let conv = rate(canonical(av, au), canonical(gv, gu)).0;
-        return Some(fmax(raw, conv));
+    if (ad != D_NONE) != (gd != D_NONE) {
+        // Exactly one side named a unit. A bare figure may already be stated in
+        // the canonical unit (`wind_kmh=128.7` beside `128.7 km/h`) or may need
+        // converting, so both readings are tried — except for a percentage,
+        // where the `%` is explicit and unambiguous. Allowing the raw reading
+        // there let `42%` match both `0.42` and `42`, covering two scales at
+        // once for free (adversarial review M4).
+        let dim = if ad != D_NONE { ad } else { gd };
+        let converted = rate(conv(a.lo, a.unit), conv(a.hi, a.unit), conv(g.lo, g.unit), conv(g.hi, g.unit)).0;
+        let best = if dim == D_FRAC {
+            converted
+        } else {
+            fmax(rate(a.lo, a.hi, g.lo, g.hi).0, converted)
+        };
+
+        // The discount is asymmetric: it applies only when the **answer** is the
+        // side that failed to name a unit. An answer that says `42%` against a
+        // bare ground truth of `0.42` was explicit and is simply right.
+        //
+        // A figure whose unit we could not identify is asserting a quantity in
+        // some other category, and a bare figure is weaker evidence than a
+        // properly-united one. Neither may outrank an honest wrong value: before
+        // this, `47 bananas` scored ~0.97 against a ground truth of `47 km/h`
+        // while an honest `47 m/s` scored 0.015 — a 65x premium for a category
+        // error (adversarial review C6).
+        let discount = if ad != D_NONE {
+            1.0
+        } else if a.foreign != 0 && a.foreign != g.foreign {
+            p.m_foreign_unit
+        } else {
+            p.m_bare_unit
+        };
+        return Some(best * discount);
     }
 
-    let (score, rel) = rate(av, gv);
+    // Neither side named a unit. If both carry the same unrecognised unit word
+    // they are at least talking about the same thing.
+    let (score, rel) = rate(a.lo, a.hi, g.lo, g.hi);
     if rel > p.num_band_rel {
         // Unitless and orders of magnitude apart: almost certainly a different
         // quantity (a year beside a CVSS score), so the answer is unverifiable
         // here rather than wrong.
         return None;
+    }
+    if a.foreign != 0 && g.foreign != 0 && a.foreign != g.foreign {
+        return Some(score * p.m_foreign_unit);
     }
     Some(score)
 }
@@ -99,7 +166,7 @@ pub fn best_agreement(ta: &Toks, i: usize, tg: &Toks, p: &Profile) -> Option<f32
     let mut k = 0usize;
     while k < tg.n {
         if tg.kind[k] == K_NUMBER && (!restrict || dimension(tg.unit[k]) == ad) {
-            if let Some(a) = value_agreement(ta.val[i], ta.unit[i], tg.val[k], tg.unit[k], p) {
+            if let Some(a) = value_agreement(Fig::of(ta, i), Fig::of(tg, k), p) {
                 best = Some(match best {
                     Some(b) if b >= a => b,
                     _ => a,
@@ -141,9 +208,7 @@ pub fn fact_multiplier(ta: &Toks, tg: &Toks, p: &Profile) -> (f32, f32) {
                 // when the ground truth states identifiers to be checked against.
                 if tg.has_ident {
                     id_w += ta.w[i];
-                    if ta.sup[i] {
-                        id_a += ta.w[i];
-                    }
+                    id_a += ta.w[i] * ta.supw[i];
                 }
             }
             _ => {}
@@ -183,6 +248,16 @@ mod tests {
     use crate::profile::base;
     use crate::tokens::tokenize;
 
+    fn f(v: f32, u: u8) -> Fig {
+        Fig { lo: v, hi: v, unit: u, foreign: 0 }
+    }
+    fn rng(lo: f32, hi: f32, u: u8) -> Fig {
+        Fig { lo, hi, unit: u, foreign: 0 }
+    }
+    fn foreign(v: f32, word: &str) -> Fig {
+        Fig { lo: v, hi: v, unit: U_NONE, foreign: hash_str(word) }
+    }
+
     #[test]
     fn parses_decimals_and_thousands() {
         assert_eq!(leading_number(b"10").0, 10.0);
@@ -194,45 +269,100 @@ mod tests {
 
     #[test]
     fn units_normalise_across_dimensions() {
-        // 18 km/h == 5 m/s
         let p = base();
-        assert!(value_agreement(18.0, U_KMH, 5.0, U_MS, &p).unwrap() > 0.99);
-        // 55% == 0.55
-        assert!(value_agreement(55.0, U_PCT, 0.55, U_NONE, &p).unwrap() > 0.99);
+        assert!(value_agreement(f(18.0, U_KMH), f(5.0, U_MS), &p).unwrap() > 0.99);
         // A temperature is not a near-miss for a wind speed: not comparable.
-        assert_eq!(value_agreement(23.0, U_TEMP_C, 23.0, U_MS, &p), None);
+        assert_eq!(value_agreement(f(23.0, U_TEMP_C), f(23.0, U_MS), &p), None);
     }
 
     #[test]
     fn same_dimension_figures_stay_comparable_however_far_apart() {
-        // The bug this pins: 47 m/s against a ground truth of 5 m/s must read as
-        // a WRONG speed, not an unverifiable one that escapes the penalty.
         let p = base();
-        let a = value_agreement(47.0, U_MS, 5.0, U_MS, &p);
+        let a = value_agreement(f(47.0, U_MS), f(5.0, U_MS), &p);
         assert!(a.is_some(), "same-dimension figures are always comparable");
         assert!(a.unwrap() < 0.05, "and a gross miss must score near zero");
     }
 
     #[test]
     fn unitless_figures_far_apart_are_unverifiable_not_wrong() {
-        // "hosted since 2009" beside a ground-truth CVSS of 10 is a different
-        // quantity, so it must abstain rather than be scored as a wrong answer.
         let p = base();
-        assert_eq!(value_agreement(2009.0, U_NONE, 10.0, U_NONE, &p), None);
+        assert_eq!(value_agreement(f(2009.0, U_NONE), f(10.0, U_NONE), &p), None);
     }
 
     #[test]
     fn agreement_degrades_smoothly_not_in_a_cliff() {
         let p = base();
-        let exact = value_agreement(10.0, U_NONE, 10.0, U_NONE, &p).unwrap();
-        let near = value_agreement(9.8, U_NONE, 10.0, U_NONE, &p).unwrap();
-        let off = value_agreement(7.5, U_NONE, 10.0, U_NONE, &p).unwrap();
-        let gross = value_agreement(95.0, U_NONE, 10.0, U_NONE, &p).unwrap();
+        let exact = value_agreement(f(10.0, U_NONE), f(10.0, U_NONE), &p).unwrap();
+        let near = value_agreement(f(9.9, U_NONE), f(10.0, U_NONE), &p).unwrap();
+        let off = value_agreement(f(7.5, U_NONE), f(10.0, U_NONE), &p).unwrap();
+        let gross = value_agreement(f(95.0, U_NONE), f(10.0, U_NONE), &p).unwrap();
         assert_eq!(exact, 1.0);
         assert!(near > off && off > gross);
         assert!(gross < 0.05);
-        // Continuity: a 2% miss must still read as nearly right.
-        assert!(near > 0.5);
+    }
+
+    #[test]
+    fn a_percentage_no_longer_matches_at_two_scales() {
+        // 42% is 0.42, never 42. Taking the better of both readings let one
+        // answer cover both scales for free (adversarial review M4).
+        let p = base();
+        assert!(value_agreement(f(42.0, U_PCT), f(0.42, U_NONE), &p).unwrap() > 0.99);
+        assert!(value_agreement(f(42.0, U_PCT), f(42.0, U_NONE), &p).unwrap() < 0.2);
+    }
+
+    #[test]
+    fn a_near_miss_is_no_longer_inside_tolerance() {
+        // 9.8 and 10 are different answers for a scored severity (review M3).
+        let p = base();
+        assert!(value_agreement(f(9.8, U_NONE), f(10.0, U_NONE), &p).unwrap() < 0.95);
+        assert!(value_agreement(f(9.99, U_NONE), f(10.0, U_NONE), &p).unwrap() > 0.99);
+    }
+
+    #[test]
+    fn a_range_is_scored_as_a_range_not_as_its_floor() {
+        // "5-50 m/s" contains the truth and must beat a flat wrong "5 m/s"
+        // (adversarial review M6).
+        let p = base();
+        let wide = value_agreement(rng(5.0, 50.0, U_MS), f(47.0, U_MS), &p).unwrap();
+        let tight = value_agreement(rng(46.0, 48.0, U_MS), f(47.0, U_MS), &p).unwrap();
+        let floor_only = value_agreement(f(5.0, U_MS), f(47.0, U_MS), &p).unwrap();
+        // The upper bound is visible: a range containing the truth beats a flat
+        // wrong answer at its floor.
+        assert!(wide > floor_only, "wide {} vs floor-only {}", wide, floor_only);
+        // But a range wide enough to contain any outcome is a hedge, and must
+        // not bank the same credit as one that actually pins the value down.
+        assert!(tight > wide * 2.0, "tight {} vs wide hedge {}", tight, wide);
+        assert!(tight > 0.9, "a tight range containing the truth is right: {}", tight);
+        // A range that misses still decays from the nearer bound.
+        let misses = value_agreement(rng(5.0, 10.0, U_MS), f(47.0, U_MS), &p).unwrap();
+        assert!(misses < 0.5);
+    }
+
+    #[test]
+    fn an_unknown_unit_never_beats_an_honest_wrong_value() {
+        // "47 bananas" against a ground truth of "47 km/h" is a category error,
+        // and must not outrank an honest wrong speed (adversarial review C6).
+        let p = base();
+        let honest_wrong = value_agreement(f(47.0, U_MS), f(47.0, U_KMH), &p).unwrap();
+        let category_error = value_agreement(foreign(47.0, "bananas"), f(47.0, U_KMH), &p).unwrap();
+        assert!(
+            category_error <= honest_wrong * 1.5,
+            "category error {} must not tower over honest wrong {}",
+            category_error, honest_wrong
+        );
+        assert!(category_error < 0.1, "category error {} must be near zero", category_error);
+        // A real pressure unit is a different dimension entirely: not comparable.
+        assert_eq!(value_agreement(f(47.0, U_HPA), f(47.0, U_KMH), &p), None);
+        assert_eq!(value_agreement(f(23.1, U_TEMP_K), f(23.1, U_TEMP_C), &p).is_some(), true);
+    }
+
+    #[test]
+    fn a_bare_figure_is_weaker_evidence_than_a_united_one() {
+        let p = base();
+        let united = value_agreement(f(128.7, U_KMH), f(128.7, U_KMH), &p).unwrap();
+        let bare = value_agreement(f(128.7, U_NONE), f(128.7, U_KMH), &p).unwrap();
+        assert_eq!(united, 1.0);
+        assert!(bare < united && bare > 0.5, "bare = {}", bare);
     }
 
     #[test]
@@ -257,8 +387,6 @@ mod tests {
 
     #[test]
     fn unasserted_facts_are_neutral() {
-        // The answer states a figure the ground truth never mentions in any
-        // comparable band; precision-not-recall says that is not an error.
         let p = base();
         let mut tg = Toks::new();
         tokenize(b"Located in the United States.", &mut tg);

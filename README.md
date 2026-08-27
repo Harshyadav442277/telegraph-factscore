@@ -1,6 +1,6 @@
 # scorer — a fact-aware Telegraph scoring module
 
-A freestanding `wasm32-unknown-unknown` scoring module, ~13.9 KB, **zero imports**, no allocator,
+A freestanding `wasm32-unknown-unknown` scoring module, ~17.9 KB, **zero imports**, no allocator,
 no clock, no randomness, no transcendental maths. One Rust source tree compiled once per intent
 via constant profiles, the same shape the incumbent uses.
 
@@ -26,10 +26,18 @@ incumbent rather than a stylistic preference:
    `18 km/h` and `5 m/s` are the same claim, `55%` and `0.55` are the same claim, and a
    temperature is never a near-miss for a wind speed. Identifiers (IPs, CVE ids, versions, dates,
    coordinates) admit no tolerance at all.
-2. **A wrong fact cannot hide.** Channels combine multiplicatively and the numeric channel leans
-   on its *worst* figure, so quoting the right CVE id does not rescue a wrong CVSS score.
+2. **A wrong fact is hard to hide.** Channels combine multiplicatively and the numeric channel
+   leans on its *worst* figure, so quoting the right CVE id does not rescue a wrong CVSS score, and
+   a polarity flip on supported content is scored as contradiction rather than coverage. It is not
+   an absolute: on a five-fact answer with three *word* facts swapped and the figures left intact,
+   the wrong answer still reaches 0.976 against a correct 1.0000 — ordered correctly, but only
+   just. Swapped figures are punished far harder than swapped proper nouns.
 3. **Unasserted facts are neutral.** A figure the ground truth never discusses is unverifiable,
-   not wrong. That is what makes a terse-but-correct answer score like a verbose one.
+   not wrong, so a terse-but-correct answer is not punished for omission. Measured on the review's
+   own strings: terse-correct 1.0000, verbose-correct-all-true 0.9995, verbose-correct-and-hedged
+   0.9716 — close, but a long answer still pays a little for prose the ground truth does not
+   restate. Precision-of-answer without a recall term cannot fully separate "true but unrestated"
+   from "unsupported"; the residual gap is the honest size of that limit.
 4. **Answered-ness is first-class.** After the boilerplate opener is struck, an answer that
    asserts nothing beyond the question's own content scores near zero — *when the ground truth
    carries an answer to be found*.
@@ -105,9 +113,9 @@ All three builds pass `verify.mjs` in full. Artefacts:
 
 | Build | Size | Imports | `wasm-tools validate` |
 |---|---|---|---|
-| `dist/generic.wasm` | 13,869 B | **0** | OK |
-| `dist/ip_geolocation.wasm` | 13,870 B | **0** | OK |
-| `dist/storm_alert.wasm` | 13,852 B | **0** | OK |
+| `dist/generic.wasm` | 17,890 B | **0** | OK |
+| `dist/ip_geolocation.wasm` | 17,884 B | **0** | OK |
+| `dist/storm_alert.wasm` | 17,885 B | **0** | OK |
 
 Exported signatures, read back off the binary — `rank_answer` is **exactly six `i32` returning
 `f32`** (a 3-param build was rejected live):
@@ -146,9 +154,14 @@ Hand cases on the `ip_geolocation` build:
   0.000000  off-topic
   0.000000  empty
 
-  CVSS 10  (correct)   -> 1.000000
-  CVSS 9.8 (near miss) -> 1.000000       <- inside tolerance, still the same claim
-  CVSS 3.1 (wrong)     -> 0.226298       <- degrades, does not fall off a cliff
+  The CVSS score is 1.0   (truth: 10)   -> 0.0018   <- a punctuation regroup is
+  The IP is 192.168.11.0  (truth: .1.10) -> 0.0074     not an "exact match"
+  ... is NOT located in Germany          -> 0.0611   <- polarity is read
+  47 bananas / 47 hPa   (truth 47 km/h)  -> 0.0005 / 0.0076  <- category errors
+
+  CVSS 10   -> 1.0000     CVSS 9.7  -> 0.9877     CVSS 9.0 -> 0.7695
+  CVSS 9.9  -> 1.0000     CVSS 9.5  -> 0.9340     CVSS 3.1 -> 0.2330
+  (monotone the whole way down: support is graded, not a threshold)
 
   5 m/s   (same unit)   -> 1.000000
   18 km/h (same speed)  -> 1.000000      <- unit normalised
@@ -162,13 +175,23 @@ binaries (`ipgeo_reg630`, `storm_rpen_reg453`). **Both intents clear every check
 
 | Check | IP_GEOLOCATION | STORM_ALERT |
 |---|---|---|
-| A stddev > 0.05 | PASS 0.4332 | PASS 0.3895 |
+| A stddev > 0.05 | PASS 0.4459 | PASS 0.3977 |
 | B self-match ≥ max(0.75, incumbent) | PASS 1.0 vs bar 1.0 | PASS 1.0 vs bar 0.9933 |
-| C Spearman ≥ 0.60 | SKIP (1 miner) | **PASS 0.632** |
-| D1 margin > champion (strict) | PASS **0.784** vs 0.596 | PASS **0.581** vs 0.425 |
+| C Spearman ≥ 0.60 | SKIP (1 miner) | **FAIL 0.5926** |
+| D1 margin > champion (strict) | PASS **0.786** vs 0.596 | PASS **0.775** vs 0.425 |
 | D2 margin ≥ 0.15 | PASS | PASS |
-| D3 wins ≥ champion | PASS 27/29 vs 22/29 | PASS 21/29 vs 18/29 |
-| **Verdict** | **would promote** | **would promote** |
+| D3 wins ≥ champion | PASS 24/29 vs 22/29 | PASS 26/29 vs 18/29 |
+| **Verdict** | **would promote** | **would be rejected (check C)** |
+
+**STORM_ALERT does not pass, and that is reported rather than tuned away.** The
+incumbent is a lexical scorer that *rewards* the pathologies this module removes
+— it scores a contentless question echo 0.9933 and ties a flat contradiction at
+0.9961. Check C asks a candidate to rank real traffic the way that scorer does,
+so removing the parrot, the field-name blob and the negation tie necessarily
+means disagreeing with it more: rho fell from 0.632 on the parrot-friendly build
+to 0.593 here. A 72-build sweep found no configuration reaching 0.60 while
+keeping the anti-gaming properties. `tune.md` records the full trade. Register
+IP_GEOLOCATION, which passes every check.
 
 Per-class pairwise ranking accuracy, candidate vs incumbent:
 
@@ -178,9 +201,18 @@ Per-class pairwise ranking accuracy, candidate vs incumbent:
 | UNIT/FORM | **4/4** | 2/4 | **4/4** | 2/4 |
 | LENGTH | **2/2** | 1/2 | **2/2** | 1/2 |
 | CONTRADICTION | 1/1 | 1/1 | **1/1** | 0/1 |
-| REAL-PARROT | **6/8** | 4/8 | 0/8 | 1/8 |
+| REAL-PARROT | 3/8 | 4/8 | **5/8** | 1/8 |
 | OUR-STYLE-WRONG | 1/1 | 1/1 | 1/1 | 1/1 |
 | REFUSAL / STUFFING / EMPTY / CONTENT-FILTER / TEMPORAL | all 1.0 | all 1.0 | all 1.0 | all 1.0 |
+
+REAL-PARROT on IP_GEOLOCATION reads 3/8, below the incumbent's 4/8, and the
+number is honest but misleading on its own: all five losses are ties at the noise
+floor (real answer 0.00000–0.00196 against a parrot at ~0.0025, where the node
+itself scored those same answers 0.005–0.046). They are rows where the recorded
+miner answer is *itself* factually wrong — one claims Brisbane, Australia for a
+private 192.168.1.10 — so scoring it at or below a contentless echo is the
+precision-of-answer thesis working, not failing. On STORM_ALERT, where the echo
+attack was the review's headline, the class moves 1/8 → 5/8.
 
 The FACT-SWAP margins are the clearest exhibit: **0.458** (IP_GEO) and **0.505** (STORM) against
 the incumbent's **0.004**. The incumbent orders those pairs correctly but by a margin four
@@ -192,19 +224,55 @@ mode a Tier-A deterministic intent cannot tolerate.
 - **The corpus is a proxy, not the node's benchmark.** The node's fixtures are closed-source and
   unrecoverable. What transfers is the *comparison* against a pinned incumbent binary,
   not the absolute numbers.
-- **STORM_ALERT trades the parrot exhibit for Spearman.** That intent has ~4 miners, so gate C is
-  enforced, and the incumbent is a lexical scorer that *rewards* contentless echoes. Agreeing with
-  its ranking of real traffic (ρ ≥ 0.60) and fixing its parrot hole are directly opposed. The
-  constants resolve that in favour of passing the gate, and the cost is recorded rather than
-  hidden: REAL-PARROT is 0/8 there, versus 6/8 on IP_GEOLOCATION where Spearman is skipped.
-- **If only one intent is registered first, register IP_GEOLOCATION.** It has no Spearman
-  constraint, the larger margin delta (+0.188 vs +0.156), and it is where the thesis is fully
-  expressed. Its live margin bar is also the highest of any target (~0.992), so re-poll
-  `/api/wasm` for the current bar and register at a local low.
+- **STORM_ALERT cannot pass the automated gate, and that is a finding, not a tuning miss.** The
+  intent has ~4 miners, so the Spearman check (ρ ≥ 0.60 agreement with the incumbent's ranking of
+  real traffic) is enforced — and the incumbent *rewards* contentless echoes there. After the
+  anti-gaming fixes (echoes and GT-blind blobs must score below real answers), a 72-build sweep
+  over the storm profile found a Spearman **ceiling of 0.593**. Agreeing ≥0.60 with a
+  parrot-rewarding ranking and refusing to reward parrots are structurally incompatible: the
+  agreement gate entrenches the incumbent's failure mode. The constants therefore maximize
+  agreement *subject to* the anti-gaming constraints (ρ 0.593, echo mean 0.0058 vs the incumbent's
+  0.0170), and the module is submitted on STORM as evidence about the gate rather than as a
+  promotion candidate.
+- **Register IP_GEOLOCATION.** No Spearman constraint (single miner with history), margin delta
+  +0.190, and the thesis fully expressed. Its live margin bar is the highest of any target
+  (~0.992 at last poll), so re-poll `/api/wasm` for the current bar before sending.
 - **Tuning was measured, not guessed**, but only against this corpus. The sweep imports the
   harness's own `corpus.mjs` so the Spearman set optimised is byte-identical to the one the gate
   reads — an earlier sweep against a hand-rolled proxy reported ρ 0.639 where the harness measured
   0.538, which is precisely the error that makes a candidate fail on-chain after passing locally.
+- **The top-end saturation is only partly fixed (review C4/C5).** The *mechanism* is gone: the
+  ceiling no longer maps every precision at or above 0.800 to a literal 1.0, and a controlled
+  fact-swap sweep that previously read `1.0000 / 1.0000 / 1.0000 / 0.9990` for 0/1/2/3 wrong facts
+  now reads `1.0000 / 0.9985 / 0.9854 / 0.9597` — monotone, no ties. But two things the review
+  measured have **not** improved:
+  - **19 of 75 corpus answers still score exactly 1.0** (distinct values 41, down from 46). These
+    are answers with literally perfect precision — every token they assert is supported — which
+    under precision-of-answer genuinely *are* equivalent. It is a property of the thesis, not a
+    calibration artifact, but it is the same tie mass, and if a second miner ever registers on
+    IP_GEOLOCATION it is what check C would see (GAPS G12).
+  - **The specific inversion is not fixed**: a 3-of-5-wrong answer that keeps the ASN and
+    coordinates still scores 0.9597 against 0.8329 for a correct-but-hedged answer that omits them.
+    Both answers carry roughly equal *unsupported decisive mass* (`Norway/Hordaland/Bergen` versus
+    `WHOIS/RIR` plus hedging prose), so no bag-of-words measure separates them — the wrong answer is
+    not "hiding" a fact so much as sharing more surface with the ground truth. Fixing it needs
+    slot-aware alignment (which GT fact does this clause fill?), which this design does not have.
+    A recall term was evaluated and rejected: the 3-of-5-wrong answer has *higher* decisive recall
+    than the hedged correct one, so recall makes the inversion worse, not better.
+
+- **Known residual limits**, each measured rather than asserted:
+  - *Precision without recall cannot fully separate "true but unrestated" from "unsupported".* A
+    correct verbose answer scores 0.9995 against a correct terse 1.0000, and a five-fact answer
+    with three proper nouns swapped still reaches 0.976. Swapped *figures* are punished far
+    harder than swapped *words*; a recall term would close this but would re-penalise the terse
+    answers that dominate live traffic (A3.8).
+  - *A bare figure and a figure in an unrecognised unit are lexically identical to the module.* The
+    expanded unit table routes real units (hPa, kelvin, mb, psi, inHg) to their own dimensions, and
+    an unrecognised unit-shaped word is discounted hard, but a nonsense unit still lands at 0.0005
+    against an honest wrong value at 0.0004 — both effectively zero, where the pre-fix module
+    scored the category error 0.97 against 0.015.
+  - *Guessing the modal answer still scores well when the mode happens to be right.* No scorer can
+    distinguish a lucky prior from knowledge on a single row.
 - `breakdown_answer` is debug-only and is never called by either gate.
 
 ## Prior art and method

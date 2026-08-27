@@ -57,6 +57,11 @@ pub struct Profile {
     /// earns novelty credit whenever the ground truth is long enough to contain
     /// the same common words.
     pub novel_prose_w: f32,
+    /// Prose novelty weight when the ground truth *does* state decisive facts.
+    /// Much smaller: prose agreement is not assertion. Not zero, because a
+    /// genuine prose-only answer must still outrank a question echo, whose
+    /// tokens are excluded from novelty altogether.
+    pub novel_prose_w_gt: f32,
     /// Floor under the answered-ness gate. Keeps a shut gate from collapsing
     /// every non-answer onto exactly the same value, so the ordering *below* the
     /// gate is still resolved by precision. Ties are what cost Spearman.
@@ -87,6 +92,22 @@ pub struct Profile {
     /// channel zero it, 0.0 disables the channel. Channels multiply.
     pub num_channel_w: f32,
     pub id_channel_w: f32,
+    /// Multiplier on a figure whose unit we could not identify, when the ground
+    /// truth named a real one. Calibrated so that asserting a category error
+    /// ("47 bananas") scores no better than asserting an honest wrong value
+    /// ("47 m/s" where the truth is 47 km/h), which lands near 0.046.
+    pub m_foreign_unit: f32,
+    /// Multiplier on a bare figure matched against a united one. Weaker
+    /// evidence than a properly-united match, but a legitimate shape
+    /// (`wind_kmh=128.7`), so only a light discount.
+    pub m_bare_unit: f32,
+    /// How hard a polarity flip on supported content is punished. A sentence and
+    /// its negation are different claims, not near-matches.
+    pub m_contra: f32,
+    /// How hard a hyphenated range is discounted for its own width, relative to
+    /// the figure it is compared against. A range that contains the truth is
+    /// right; a range wide enough to contain any outcome is a hedge.
+    pub m_range_width: f32,
     /// Floor of the fact multiplier. Keeps a wholly-wrong-figure answer above a
     /// cliff so near-misses stay distinguishable from garbage.
     pub fact_floor: f32,
@@ -126,16 +147,21 @@ pub const fn base() -> Profile {
         ans_sat_min: 0.9,
         decisive_min: 0.5,
         novel_prose_w: 0.35,
+        novel_prose_w_gt: 0.0,
         ans_floor: 0.05,
         gt_decisive_min: 0.8,
 
         num_rel_k: 8.0,
-        num_rel_tol: 0.02,
+        num_rel_tol: 0.005,
         num_abs_tol: 0.02,
         num_band_rel: 10.0,
         num_min_bias: 0.5,
         num_channel_w: 0.9,
         id_channel_w: 0.9,
+        m_foreign_unit: 0.05,
+        m_bare_unit: 0.85,
+        m_contra: 0.85,
+        m_range_width: 2.0,
         fact_floor: 0.10,
 
         prose_w: 0.25,
@@ -181,44 +207,38 @@ pub const fn profile() -> Profile {
     // dominant signal here and deserves a tighter near-miss decay.
     p.num_channel_w = 1.0;
     p.num_rel_k = 10.0;
-    // Risk is a bounded [0,1] score: an absolute epsilon, not a relative one.
-    p.num_abs_tol = 0.05;
-    // ~4 miners means Spearman IS enforced (>= 0.60), and that check is a hard
-    // constraint pulling the opposite way from the rest of this design: the
-    // incumbent is a lexical scorer, so agreeing with its ordering of real
-    // traffic means *being* more lexical. Every constant below was swept
-    // against the two objectives jointly (see tune.md); this is the point that
-    // clears rho >= 0.60 while still beating the incumbent's separation.
-    //
-    // Knots at the full range, so nothing is clipped and every distinct raw
-    // composite keeps a distinct score: saturating either end would pile real
-    // answers onto identical values, and ties are exactly what costs Spearman.
-    // IP_GEOLOCATION, where Spearman is skipped, makes the opposite trade.
+    // Risk is a bounded [0,1] score, so it wants an absolute epsilon. Held at
+    // the base 0.02 rather than the 0.05 used before: on a canonical percentage
+    // 0.05 is five whole points, which made a 1-point and a 5-point miss both
+    // perfect and then dropped 73% of the score at 5.001 (review M4).
+    p.num_abs_tol = 0.02;
+    // ~4 miners means Spearman IS enforced. Full-range knots, so nothing is
+    // clipped and every distinct composite keeps a distinct score: ties are
+    // exactly what costs Spearman.
     p.ss_lo = 0.0;
     p.ss_hi = 1.0;
-    // Ground truths for this intent are frequently themselves refusals ("I
-    // cannot provide the specific 48-hour forecast..."), so the answered-ness
-    // gate must scale down with the GT's own thin content rather than zeroing.
+    // Ground truths for this intent are frequently themselves refusals, so the
+    // answered-ness gate scales down with the GT's own thin content.
     p.ans_gt_frac = 0.40;
-    // Prose carries most of precision here. That is the Spearman tax: the
-    // incumbent ranks real answers lexically, so tracking its ordering means
-    // weighting surface agreement above what A3.4 would otherwise want. It is
-    // deliberately NOT pushed to 1.0 even though that scored slightly better on
-    // this corpus: at 1.0 the decisive-fact pool drops out of precision
-    // entirely, and the build then misranks plainly-correct answers on any
-    // question unlike the ones tuned against. Fact-awareness survives either
-    // way, because the fact term is *multiplicative* and applied after
-    // precision -- FACT-SWAP stays 4/4 here.
+    // Prose carries most of precision here -- the Spearman tax, since the
+    // incumbent ranks real traffic lexically. Not pushed to 1.0: that drops the
+    // decisive-fact pool out of precision entirely and misranks correct answers
+    // on questions unlike the tuning set.
     p.prose_w = 0.7;
-    // A high floor under the answered-ness gate, for the same reason: the
-    // incumbent scores contentless echoes highly, so crushing them to zero is
-    // precisely the disagreement that fails check C. Chosen for headroom on
-    // rho (0.632 against a 0.60 floor), which is the binding constraint here --
-    // the margin bar has far more slack than the agreement bar does. The honest consequence is
-    // that the parrot exhibit is muted on THIS intent; it is fully expressed on
-    // IP_GEOLOCATION, where Spearman is skipped. See tune.md and README.
-    p.ans_floor = 0.75;
-    p.ans_sat = 2.0;
+    // The answered-ness gate is left almost closed. An earlier build set this to
+    // 0.75, which pinned it open and paid a miner MORE for parroting the
+    // question than for answering it: a mechanical echo scored 0.64 on recorded
+    // rows against 0.03 for the real miner answers, and beat every recorded
+    // answer on all 13 of them (review C3).
+    p.ans_floor = 0.05;
+    p.ans_sat = 6.0;
+    // Prose novelty is not zeroed here as it is on IP_GEOLOCATION. Zeroing it
+    // flattens the many prose-only recorded answers onto ~0, which destroys the
+    // rank information the Spearman check reads. This value is the measured
+    // maximum of that check subject to BOTH anti-gaming constraints still
+    // holding (echo 0.0049 and field-name blob 0.0029, against a recorded-answer
+    // mean of 0.0152). See tune.md: the check still does not pass.
+    p.novel_prose_w_gt = 0.12;
     p
 }
 

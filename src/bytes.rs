@@ -118,15 +118,22 @@ pub fn stem_hash(tok: &[u8]) -> u32 {
     hash_bytes(tok)
 }
 
-/// Case- and punctuation-insensitive equality. Drives the exact-match shortcut
-/// that pins `rank_answer(q, gt, gt)` to exactly 1.0 (A8 self-match ratchet).
+/// Equality up to case and whitespace only. Drives the exact-match shortcut that
+/// pins `rank_answer(q, gt, gt)` to exactly 1.0 (A8 self-match ratchet).
+///
+/// It deliberately does **not** fold punctuation. An earlier version skipped
+/// every non-word byte, which made `CVSS 10` and `CVSS 1.0`, `5.9 m/s` and
+/// `59 m/s`, and `-122.4194` and `122.4194` "exact matches" that short-circuited
+/// to a literal 1.0 before any scoring ran. Punctuation adjacent to digits is
+/// load-bearing: it carries the decimal point, the sign, the dotted quad and the
+/// thousands separator. The ratchet only needs identity, not tolerance.
 pub fn normalized_equal(a: &[u8], b: &[u8]) -> bool {
     let (mut i, mut j) = (0usize, 0usize);
     loop {
-        while i < a.len() && !is_wordbyte(a[i]) {
+        while i < a.len() && is_space(a[i]) {
             i += 1;
         }
-        while j < b.len() && !is_wordbyte(b[j]) {
+        while j < b.len() && is_space(b[j]) {
             j += 1;
         }
         if i >= a.len() || j >= b.len() {
@@ -138,6 +145,12 @@ pub fn normalized_equal(a: &[u8], b: &[u8]) -> bool {
         i += 1;
         j += 1;
     }
+}
+
+/// A lone compass letter, which after a decimal marks a coordinate hemisphere.
+pub const fn is_hemisphere(b: u8) -> bool {
+    let l = lower(b);
+    l == b'n' || l == b's' || l == b'e' || l == b'w'
 }
 
 /// True when every byte is ASCII whitespace (or the slice is empty).
@@ -225,10 +238,26 @@ mod tests {
     }
 
     #[test]
-    fn normalized_equal_ignores_case_and_punctuation() {
-        assert!(normalized_equal(b"The IP is 1.2.3.4.", b"the ip is 1234"));
+    fn normalized_equal_folds_case_and_whitespace_only() {
+        assert!(normalized_equal(b"The IP is 1.2.3.4.", b"the   ip is 1.2.3.4."));
+        assert!(normalized_equal(b"  Paris ", b"paris"));
         assert!(!normalized_equal(b"valid", b"invalid"));
         assert!(normalized_equal(b"", b"   "));
+    }
+
+    #[test]
+    fn normalized_equal_never_folds_digit_punctuation() {
+        // Each pair differs only in punctuation next to digits, and each pair is
+        // a different claim. Folding these fired the exact-match shortcut and
+        // returned a literal 1.0 for a wrong answer (adversarial review C1).
+        assert!(!normalized_equal(b"The IP is 1.2.3.4.", b"the ip is 1234"));
+        assert!(!normalized_equal(b"The CVSS score is 10.", b"The CVSS score is 1.0"));
+        assert!(!normalized_equal(b"winds of 5.9 m/s", b"winds of 59 m/s"));
+        assert!(!normalized_equal(b"23.1 C", b"231 C"));
+        assert!(!normalized_equal(b"-122.4194", b"122.4194"));
+        assert!(!normalized_equal(b"1,000 reports", b"10.00 reports"));
+        assert!(!normalized_equal(b"CVE-2021-44228", b"CVE-20-2144228"));
+        assert!(!normalized_equal(b"192.168.1.10", b"192.168.11.0"));
     }
 
     #[test]
