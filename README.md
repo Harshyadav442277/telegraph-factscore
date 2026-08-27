@@ -242,16 +242,20 @@ mode a Tier-A deterministic intent cannot tolerate.
 - **The corpus is a proxy, not the node's benchmark.** The node's fixtures are closed-source and
   unrecoverable. What transfers is the *comparison* against a pinned incumbent binary,
   not the absolute numbers.
-- **STORM_ALERT cannot pass the automated gate, and that is a finding, not a tuning miss.** The
-  intent has ~4 miners, so the Spearman check (ρ ≥ 0.60 agreement with the incumbent's ranking of
-  real traffic) is enforced — and the incumbent *rewards* contentless echoes there. After the
-  anti-gaming fixes (echoes and GT-blind blobs must score below real answers), a 72-build sweep
-  over the storm profile found a Spearman **ceiling of 0.593**. Agreeing ≥0.60 with a
-  parrot-rewarding ranking and refusing to reward parrots are structurally incompatible: the
-  agreement gate entrenches the incumbent's failure mode. The constants therefore maximize
-  agreement *subject to* the anti-gaming constraints (ρ 0.593, echo mean 0.0058 vs the incumbent's
-  0.0170), and the module is submitted on STORM as evidence about the gate rather than as a
-  promotion candidate.
+- **STORM_ALERT passes, but by 0.0005 — and the tension behind that number is the real finding.**
+  The intent has ~4 miners, so the Spearman check (ρ ≥ 0.60 agreement with the incumbent's ranking
+  of real traffic) is enforced — and the incumbent *rewards* contentless echoes there. Refusing to
+  reward them costs agreement directly: a 72-build sweep over the storm profile hit a **ceiling of
+  0.593**, and the module was written off as unpromotable on this intent. The entity-swap fix then
+  lifted it to **ρ 0.6005** as a side effect, and it now clears all six checks (margin 0.804 vs
+  0.385, wins 31/37).
+
+  Both facts matter. The gate *is* passable, so "the agreement check makes the incumbent
+  unassailable" would be too strong a claim. But clearing a floor by five ten-thousandths, on a
+  proxy corpus, against hidden fixtures that rotate, is not a safety margin — and the direction of
+  the pressure is real: every step away from rewarding parroting costs agreement with a scorer
+  that rewards it. IP_GEOLOCATION, where the check is *skipped* outright, is the structurally safe
+  registration; STORM is a cheap, informative second attempt.
 - **Register IP_GEOLOCATION.** No Spearman constraint (single miner with history), margin delta
   +0.190, and the thesis fully expressed. Its live margin bar is the highest of any target
   (~0.992 at last poll), so re-poll `/api/wasm` for the current bar before sending.
