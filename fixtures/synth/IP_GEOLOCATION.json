@@ -703,6 +703,219 @@
         "schema": "IP_GEOLOCATION",
         "fact_seed": 17
       }
+    },
+    {
+      "id": "ip_geolocation-synth-es-01",
+      "intent": "IP_GEOLOCATION",
+      "class": "ENTITY-SWAP",
+      "rationale": "one decisive entity replaced and nothing else; the shipped build scored a single swapped city 1.0000, tying the verbatim-correct answer and outranking a correct rewording",
+      "question": "Can you look up the geolocation for the IP address 142.251.42.174 and provide the city, region, country and announcing organisation?",
+      "ground_truth": "The IP address 142.251.42.174 resolves to Mountain View, California, United States. It is announced by Google LLC (AS15169).",
+      "answers": [
+        {
+          "id": "correct",
+          "text": "The data shows the IP address 142.251.42.174 resolves to Mountain View, California, United States, announced by Google LLC (AS15169).",
+          "quality": 1,
+          "note": "all decisive entities right"
+        },
+        {
+          "id": "correct-paraphrase",
+          "text": "The data shows 142.251.42.174 is located in Mountain View in California, US, and is run by Google LLC, AS15169.",
+          "quality": 1,
+          "note": "same entities, different wording and an abbreviated country"
+        },
+        {
+          "id": "swap-city",
+          "text": "The data shows the IP address 142.251.42.174 resolves to Osaka, California, United States, announced by Google LLC (AS15169).",
+          "quality": 0,
+          "note": "city replaced, every other field identical"
+        },
+        {
+          "id": "swap-org",
+          "text": "The data shows the IP address 142.251.42.174 resolves to Mountain View, California, United States, announced by Nippon Telegraph (AS15169).",
+          "quality": 0,
+          "note": "announcing organisation replaced, every other field identical"
+        },
+        {
+          "id": "swap-country",
+          "text": "The data shows the IP address 142.251.42.174 resolves to Mountain View, California, Japan, announced by Google LLC (AS15169).",
+          "quality": 0,
+          "note": "country replaced, every other field identical"
+        }
+      ],
+      "pairs": [
+        [
+          "correct",
+          "swap-city"
+        ],
+        [
+          "correct-paraphrase",
+          "swap-city"
+        ],
+        [
+          "correct",
+          "swap-org"
+        ],
+        [
+          "correct-paraphrase",
+          "swap-org"
+        ],
+        [
+          "correct",
+          "swap-country"
+        ],
+        [
+          "correct-paraphrase",
+          "swap-country"
+        ]
+      ],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "scratchpad/gen-entity-swap.mjs",
+        "captured": "2026-08-27"
+      }
+    },
+    {
+      "id": "ip_geolocation-synth-es-02",
+      "intent": "IP_GEOLOCATION",
+      "class": "ENTITY-SWAP",
+      "rationale": "one decisive entity replaced and nothing else; the shipped build scored a single swapped city 1.0000, tying the verbatim-correct answer and outranking a correct rewording",
+      "question": "Can you look up the geolocation for the IP address 91.146.179.123 and provide the city, region, country and announcing organisation?",
+      "ground_truth": "The IP address 91.146.179.123 resolves to Reykjavik, Capital Region, Iceland. It is announced by Ljosleidarinn ehf (AS22057).",
+      "answers": [
+        {
+          "id": "correct",
+          "text": "The data shows the IP address 91.146.179.123 resolves to Reykjavik, Capital Region, Iceland, announced by Ljosleidarinn ehf (AS22057).",
+          "quality": 1,
+          "note": "all decisive entities right"
+        },
+        {
+          "id": "correct-paraphrase",
+          "text": "The data shows 91.146.179.123 is located in Reykjavik in Capital Region, IS, and is run by Ljosleidarinn ehf, AS22057.",
+          "quality": 1,
+          "note": "same entities, different wording and an abbreviated country"
+        },
+        {
+          "id": "swap-city",
+          "text": "The data shows the IP address 91.146.179.123 resolves to Osaka, Capital Region, Iceland, announced by Ljosleidarinn ehf (AS22057).",
+          "quality": 0,
+          "note": "city replaced, every other field identical"
+        },
+        {
+          "id": "swap-org",
+          "text": "The data shows the IP address 91.146.179.123 resolves to Reykjavik, Capital Region, Iceland, announced by Nippon Telegraph (AS22057).",
+          "quality": 0,
+          "note": "announcing organisation replaced, every other field identical"
+        },
+        {
+          "id": "swap-country",
+          "text": "The data shows the IP address 91.146.179.123 resolves to Reykjavik, Capital Region, Japan, announced by Ljosleidarinn ehf (AS22057).",
+          "quality": 0,
+          "note": "country replaced, every other field identical"
+        }
+      ],
+      "pairs": [
+        [
+          "correct",
+          "swap-city"
+        ],
+        [
+          "correct-paraphrase",
+          "swap-city"
+        ],
+        [
+          "correct",
+          "swap-org"
+        ],
+        [
+          "correct-paraphrase",
+          "swap-org"
+        ],
+        [
+          "correct",
+          "swap-country"
+        ],
+        [
+          "correct-paraphrase",
+          "swap-country"
+        ]
+      ],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "scratchpad/gen-entity-swap.mjs",
+        "captured": "2026-08-27"
+      }
+    },
+    {
+      "id": "ip_geolocation-synth-es-03",
+      "intent": "IP_GEOLOCATION",
+      "class": "ENTITY-SWAP",
+      "rationale": "one decisive entity replaced and nothing else; the shipped build scored a single swapped city 1.0000, tying the verbatim-correct answer and outranking a correct rewording",
+      "question": "Can you look up the geolocation for the IP address 13.36.15.128 and provide the city, region, country and announcing organisation?",
+      "ground_truth": "The IP address 13.36.15.128 resolves to Montevideo, Montevideo, Uruguay. It is announced by Administracion Nacional (AS1616).",
+      "answers": [
+        {
+          "id": "correct",
+          "text": "The data shows the IP address 13.36.15.128 resolves to Montevideo, Montevideo, Uruguay, announced by Administracion Nacional (AS1616).",
+          "quality": 1,
+          "note": "all decisive entities right"
+        },
+        {
+          "id": "correct-paraphrase",
+          "text": "The data shows 13.36.15.128 is located in Montevideo in Montevideo, UY, and is run by Administracion Nacional, AS1616.",
+          "quality": 1,
+          "note": "same entities, different wording and an abbreviated country"
+        },
+        {
+          "id": "swap-city",
+          "text": "The data shows the IP address 13.36.15.128 resolves to Osaka, Montevideo, Uruguay, announced by Administracion Nacional (AS1616).",
+          "quality": 0,
+          "note": "city replaced, every other field identical"
+        },
+        {
+          "id": "swap-org",
+          "text": "The data shows the IP address 13.36.15.128 resolves to Montevideo, Montevideo, Uruguay, announced by Nippon Telegraph (AS1616).",
+          "quality": 0,
+          "note": "announcing organisation replaced, every other field identical"
+        },
+        {
+          "id": "swap-country",
+          "text": "The data shows the IP address 13.36.15.128 resolves to Montevideo, Montevideo, Japan, announced by Administracion Nacional (AS1616).",
+          "quality": 0,
+          "note": "country replaced, every other field identical"
+        }
+      ],
+      "pairs": [
+        [
+          "correct",
+          "swap-city"
+        ],
+        [
+          "correct-paraphrase",
+          "swap-city"
+        ],
+        [
+          "correct",
+          "swap-org"
+        ],
+        [
+          "correct-paraphrase",
+          "swap-org"
+        ],
+        [
+          "correct",
+          "swap-country"
+        ],
+        [
+          "correct-paraphrase",
+          "swap-country"
+        ]
+      ],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "scratchpad/gen-entity-swap.mjs",
+        "captured": "2026-08-27"
+      }
     }
   ]
 }

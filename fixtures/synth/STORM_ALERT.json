@@ -703,6 +703,120 @@
         "schema": "STORM_ALERT",
         "fact_seed": 17
       }
+    },
+    {
+      "id": "storm_alert-synth-es-01",
+      "intent": "STORM_ALERT",
+      "class": "ENTITY-SWAP",
+      "rationale": "one decisive entity replaced and nothing else; figures alone cannot catch a wrong place name",
+      "question": "Is there a storm alert for Windhoek, Namibia at -22.5609, 17.0658 valid at 2026-09-17T01:00:00Z over the next 6 hours?",
+      "ground_truth": "For Windhoek, Namibia at -22.5609, 17.0658, valid at 2026-09-17T01:00:00Z over the next 6 hours, sustained wind reaches 128.7 km/h with peak gusts of 175 km/h, precipitation totals 72.3 mm, and the storm risk is 0.51 on a 0 to 1 scale.",
+      "answers": [
+        {
+          "id": "correct",
+          "text": "The data shows a storm alert for Windhoek, Namibia: sustained wind reaches 128.7 km/h, peak gusts reach 175 km/h, precipitation totals 72.3 mm, and the risk value is 0.51 on a 0 to 1 scale.",
+          "quality": 1,
+          "note": "all decisive entities and figures right"
+        },
+        {
+          "id": "correct-paraphrase",
+          "text": "The data shows Windhoek in Namibia expects sustained winds of 128.7 km/h, gusting to 175 km/h, with 72.3 mm of precipitation and a risk value of 0.51.",
+          "quality": 1,
+          "note": "same facts, different wording"
+        },
+        {
+          "id": "swap-place",
+          "text": "The data shows a storm alert for Reykjavik, Namibia: sustained wind reaches 128.7 km/h, peak gusts reach 175 km/h, precipitation totals 72.3 mm, and the risk value is 0.51 on a 0 to 1 scale.",
+          "quality": 0,
+          "note": "place replaced, every figure identical"
+        },
+        {
+          "id": "swap-country",
+          "text": "The data shows a storm alert for Windhoek, Iceland: sustained wind reaches 128.7 km/h, peak gusts reach 175 km/h, precipitation totals 72.3 mm, and the risk value is 0.51 on a 0 to 1 scale.",
+          "quality": 0,
+          "note": "country replaced, every figure identical"
+        }
+      ],
+      "pairs": [
+        [
+          "correct",
+          "swap-place"
+        ],
+        [
+          "correct-paraphrase",
+          "swap-place"
+        ],
+        [
+          "correct",
+          "swap-country"
+        ],
+        [
+          "correct-paraphrase",
+          "swap-country"
+        ]
+      ],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "scratchpad/gen-entity-swap.mjs",
+        "captured": "2026-08-27"
+      }
+    },
+    {
+      "id": "storm_alert-synth-es-02",
+      "intent": "STORM_ALERT",
+      "class": "ENTITY-SWAP",
+      "rationale": "one decisive entity replaced and nothing else; figures alone cannot catch a wrong place name",
+      "question": "Is there a storm alert for Ulaanbaatar, Mongolia at 47.8864, 106.9057 valid at 2026-09-15T20:00:00Z over the next 6 hours?",
+      "ground_truth": "For Ulaanbaatar, Mongolia at 47.8864, 106.9057, valid at 2026-09-15T20:00:00Z over the next 6 hours, sustained wind reaches 34 km/h with peak gusts of 47.3 km/h, precipitation totals 34.6 mm, and the storm risk is 0.58 on a 0 to 1 scale.",
+      "answers": [
+        {
+          "id": "correct",
+          "text": "The data shows a storm alert for Ulaanbaatar, Mongolia: sustained wind reaches 34 km/h, peak gusts reach 47.3 km/h, precipitation totals 34.6 mm, and the risk value is 0.58 on a 0 to 1 scale.",
+          "quality": 1,
+          "note": "all decisive entities and figures right"
+        },
+        {
+          "id": "correct-paraphrase",
+          "text": "The data shows Ulaanbaatar in Mongolia expects sustained winds of 34 km/h, gusting to 47.3 km/h, with 34.6 mm of precipitation and a risk value of 0.58.",
+          "quality": 1,
+          "note": "same facts, different wording"
+        },
+        {
+          "id": "swap-place",
+          "text": "The data shows a storm alert for Reykjavik, Mongolia: sustained wind reaches 34 km/h, peak gusts reach 47.3 km/h, precipitation totals 34.6 mm, and the risk value is 0.58 on a 0 to 1 scale.",
+          "quality": 0,
+          "note": "place replaced, every figure identical"
+        },
+        {
+          "id": "swap-country",
+          "text": "The data shows a storm alert for Ulaanbaatar, Iceland: sustained wind reaches 34 km/h, peak gusts reach 47.3 km/h, precipitation totals 34.6 mm, and the risk value is 0.58 on a 0 to 1 scale.",
+          "quality": 0,
+          "note": "country replaced, every figure identical"
+        }
+      ],
+      "pairs": [
+        [
+          "correct",
+          "swap-place"
+        ],
+        [
+          "correct-paraphrase",
+          "swap-place"
+        ],
+        [
+          "correct",
+          "swap-country"
+        ],
+        [
+          "correct-paraphrase",
+          "swap-country"
+        ]
+      ],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "scratchpad/gen-entity-swap.mjs",
+        "captured": "2026-08-27"
+      }
     }
   ]
 }

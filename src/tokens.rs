@@ -44,6 +44,16 @@ pub struct Toks {
     pub ufword: [u32; MAX_TOKENS],
     /// Token falls under a negation that has not been closed by a clause break.
     pub neg: [bool; MAX_TOKENS],
+    /// First letter, lower-cased, so a run of proper nouns can be reduced to the
+    /// acronym a miner may legitimately use instead ("United States" -> "us").
+    pub first: [u8; MAX_TOKENS],
+    /// Capitalised mid-sentence: a proper noun, i.e. a salient entity.
+    pub proper: [bool; MAX_TOKENS],
+    /// An ALL-CAPS token: an acronym, code or technical term ("US", "WHOIS",
+    /// "RIR", "DNS"), not a name. Entity *values* in this corpus are Title-case
+    /// ("Berlin", "Google", "Nippon Telegraph"), so the distinction separates a
+    /// claimed entity from a method or standard the answer merely mentions.
+    pub abbrev: [bool; MAX_TOKENS],
     /// Carries an assertion rather than prose: a figure, an identifier, or a
     /// proper noun. These are what a Tier-A answer is right or wrong about.
     pub decisive: [bool; MAX_TOKENS],
@@ -70,6 +80,9 @@ pub const EMPTY_TOKS: Toks = Toks {
     nb: [0; MAX_TOKENS],
     ufword: [0; MAX_TOKENS],
     neg: [false; MAX_TOKENS],
+    first: [0; MAX_TOKENS],
+    proper: [false; MAX_TOKENS],
+    abbrev: [false; MAX_TOKENS],
     decisive: [false; MAX_TOKENS],
     boiler: [false; MAX_TOKENS],
     echo: [false; MAX_TOKENS],
@@ -185,6 +198,8 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
     let n = src.len();
     let mut i = 0usize;
     let mut negwin: i32 = 0;
+    // A capital that opens a sentence says nothing about proper-noun-hood.
+    let mut sentence_start = true;
 
     while i < n && t.n < MAX_TOKENS {
         if !is_wordbyte(src[i]) {
@@ -193,6 +208,9 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
             let b = src[i];
             if b == b'.' || b == b',' || b == b';' || b == b'!' || b == b'?' || b == b':' {
                 negwin = 0;
+            }
+            if b == b'.' || b == b'!' || b == b'?' {
+                sentence_start = true;
             }
             i += 1;
             continue;
@@ -278,7 +296,12 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
         }
 
         let h = hash_bytes(tok);
-        let proper = start > 0 && has_alpha && tok[0].is_ascii_uppercase();
+        // Sentence-initial capitals are not entities. Without this, a verbose
+        // answer written as several sentences ("Sustained wind ... Peak gusts
+        // ... Precipitation totals ...") reads every sentence opener as a proper
+        // noun the ground truth never states, and the entity channel scores a
+        // wholly correct answer as a pile of contradictions.
+        let proper = start > 0 && has_alpha && tok[0].is_ascii_uppercase() && !sentence_start;
         let k = t.n;
 
         t.hash[k] = h;
@@ -302,6 +325,9 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
         // Every per-token field is written on every push: a field left over from
         // a previous call would make the score depend on call order.
         t.decisive[k] = kind != K_WORD || proper;
+        t.proper[k] = proper && kind == K_WORD;
+        t.abbrev[k] = kind == K_WORD && all_upper(tok);
+        t.first[k] = if is_alpha(tok[0]) { lower(tok[0]) } else { 0 };
         t.boiler[k] = false;
         t.echo[k] = false;
         t.supw[k] = 0.0;
@@ -319,8 +345,25 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
         } else if negwin > 0 {
             negwin -= 1;
         }
+        sentence_start = false;
         t.n = k + 1;
     }
+}
+
+/// Every alphabetic byte upper-case, and there is at least one.
+fn all_upper(tok: &[u8]) -> bool {
+    let mut seen = false;
+    let mut i = 0usize;
+    while i < tok.len() {
+        if is_alpha(tok[i]) {
+            if !tok[i].is_ascii_uppercase() {
+                return false;
+            }
+            seen = true;
+        }
+        i += 1;
+    }
+    seen
 }
 
 // --------------------------------------------------------------------------

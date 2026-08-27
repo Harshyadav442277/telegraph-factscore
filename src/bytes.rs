@@ -147,6 +147,13 @@ pub fn normalized_equal(a: &[u8], b: &[u8]) -> bool {
     }
 }
 
+/// Punctuation that ends a noun phrase. "Mountain View, California" is two
+/// phrases, not one five-word name.
+pub const fn is_phrase_break(b: u8) -> bool {
+    b == b',' || b == b'.' || b == b';' || b == b':' || b == b'!' || b == b'?'
+        || b == b'(' || b == b')' || b == b'\n' || b == b'|' || b == b'/'
+}
+
 /// A lone compass letter, which after a decimal marks a coordinate hemisphere.
 pub const fn is_hemisphere(b: u8) -> bool {
     let l = lower(b);

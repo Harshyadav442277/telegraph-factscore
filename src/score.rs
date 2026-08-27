@@ -28,6 +28,7 @@ static mut TG: Toks = EMPTY_TOKS;
 static mut TA: Toks = EMPTY_TOKS;
 static mut SQ: Set = EMPTY_SET;
 static mut SG: Set = EMPTY_SET;
+static mut SA: Set = EMPTY_SET;
 
 /// The shipped module is single-threaded wasm, where these statics are simply
 /// scratch. `cargo test` on the host runs tests in parallel threads against the
@@ -72,13 +73,14 @@ pub fn breakdown(q: &[u8], gt: &[u8], ma: &[u8]) -> Breakdown {
 
     // SAFETY: single-threaded wasm; the three token buffers and two sets are
     // distinct statics, and every field is rewritten before it is read.
-    let (tq, tg, ta, sq, sg) = unsafe {
+    let (tq, tg, ta, sq, sg, sa) = unsafe {
         (
             &mut *core::ptr::addr_of_mut!(TQ),
             &mut *core::ptr::addr_of_mut!(TG),
             &mut *core::ptr::addr_of_mut!(TA),
             &mut *core::ptr::addr_of_mut!(SQ),
             &mut *core::ptr::addr_of_mut!(SG),
+            &mut *core::ptr::addr_of_mut!(SA),
         )
     };
 
@@ -94,6 +96,13 @@ pub fn breakdown(q: &[u8], gt: &[u8], ma: &[u8]) -> Breakdown {
 
     sq.fill(tq);
     sg.fill(tg);
+    sa.fill(ta);
+    // A miner may legitimately write "US" where the ground truth writes "United
+    // States". Reducing each run of proper nouns to its initials and adding that
+    // as a key covers the general case without a synonym table (which would be a
+    // phrasing match, and Rule-04 says we do not do those).
+    add_acronyms(sg, tg);
+    add_acronyms(sa, ta);
     mark_boilerplate(ta);
 
     // Mark echo and support. Support is **graded**, not boolean: collapsing the
@@ -123,6 +132,7 @@ pub fn breakdown(q: &[u8], gt: &[u8], ma: &[u8]) -> Breakdown {
         i += 1;
     }
 
+    let entity = entity_agreement(ta, tg, sa, &p);
     let precision = precision_of(ta, &p);
     let answered = answeredness(ta, tg, sq, &p);
     let (fmul, fact_raw) = fact_multiplier(ta, tg, &p);
@@ -132,16 +142,141 @@ pub fn breakdown(q: &[u8], gt: &[u8], ma: &[u8]) -> Breakdown {
     // middle; p_concave = 0 leaves precision linear.
     let shaped = (1.0 - p.p_concave) * precision + p.p_concave * (precision * (2.0 - precision));
 
-    let raw = clamp01(shaped * fmul * answered * polarity);
+    let raw = clamp01(shaped * fmul * entity * answered * polarity);
     let final_score = clamp01(smoothstep(p.ss_lo, p.ss_hi, raw));
 
     Breakdown {
         precision,
-        fact: fact_raw * polarity,
+        fact: fact_raw * polarity * entity,
         answered,
         raw,
         final_score,
     }
+}
+
+/// Add, for each run of consecutive proper nouns, the acronym of its initials.
+fn add_acronyms(set: &mut Set, t: &Toks) {
+    let mut i = 0usize;
+    while i < t.n {
+        if !t.proper[i] || t.first[i] == 0 {
+            i += 1;
+            continue;
+        }
+        let mut letters = [0u8; 5];
+        let mut n = 0usize;
+        let mut j = i;
+        loop {
+            if j >= t.n || !t.proper[j] || t.first[j] == 0 || n >= 5 {
+                break;
+            }
+            letters[n] = t.first[j];
+            n += 1;
+            // A run is one *phrase*. Without this, "Mountain View, California,
+            // United States" reads as one five-token run spelling "mvcus", and
+            // the "us" a miner would actually write is never generated.
+            if is_phrase_break(t.nb[j]) {
+                j += 1;
+                break;
+            }
+            j += 1;
+        }
+        // Two initials is the shortest useful acronym ("US"); one is just a letter.
+        let mut len = 2usize;
+        while len <= n {
+            set.insert_key(hash_bytes(&letters[..len]), i);
+            len += 1;
+        }
+        i = if j > i { j } else { i + 1 };
+    }
+}
+
+/// Penalty for asserting a **different entity** than the ground truth does.
+///
+/// Figures and identifiers go through the typed fact term; proper nouns did not,
+/// so a single swapped entity was only diluted precision mass. Measured on the
+/// pre-flight repro: swapping one city in an otherwise verbatim answer scored a
+/// literal 1.0000, tying the correct answer and *outranking* a correctly-reworded
+/// one at 0.9606. A wrong city is not slightly-less-supported prose; it is a
+/// contradiction, and it belongs in a multiplicative channel like every other
+/// wrong fact.
+///
+/// The guard against over-punishing is the pairing rule: an unsupported entity
+/// only counts as a *substitution* to the extent the ground truth has salient
+/// entities of its own that the answer never mentions. An answer that covers
+/// everything the truth says and adds something extra has invented nothing to
+/// contradict — additional unrequested entities stay neutral, per the precision
+/// thesis (A3.8).
+fn entity_agreement(ta: &Toks, tg: &Toks, sa: &Set, p: &Profile) -> f32 {
+    let (mut supported, mut unsupported) = (0.0f32, 0.0f32);
+    let mut i = 0usize;
+    while i < ta.n {
+        if ta.proper[i] && !ta.boiler[i] && !ta.echo[i] {
+            if ta.supw[i] > 0.0 {
+                supported += ta.w[i];
+            } else if !ta.abbrev[i] {
+                unsupported += ta.w[i];
+            }
+            // An unsupported ALL-CAPS token is an acronym, code or technical
+            // term -- "UY" for Uruguay, or the "WHOIS" and "RIR" a careful
+            // answer names as its method. Their expansion cannot be checked
+            // lexically, and entity *values* here are Title-case, so scoring
+            // these as contradictions over-punishes legitimate variation. The
+            // acronym rule already catches the multi-word cases; the rest abstain.
+        }
+        i += 1;
+    }
+
+    // What the ground truth names that the answer never does. Coverage counts
+    // *occurrences*, not mere membership: a ground truth reading "Montevideo,
+    // Montevideo, Uruguay" names that entity in two roles, so an answer that
+    // says it once has left one of them uncovered. Without this, swapping the
+    // city of a city-equals-region record is invisible — the token is still
+    // there, just doing the other job.
+    let mut gt_uncovered = 0.0f32;
+    let mut k = 0usize;
+    while k < tg.n {
+        if tg.proper[k] {
+            if !sa.contains_tok(tg, k) {
+                gt_uncovered += tg.w[k];
+            } else {
+                let mut prior = 0usize;
+                let mut j = 0usize;
+                while j < k {
+                    if tg.proper[j] && tg.hash[j] == tg.hash[k] {
+                        prior += 1;
+                    }
+                    j += 1;
+                }
+                if prior > 0 {
+                    let mut have = 0usize;
+                    let mut a = 0usize;
+                    while a < ta.n {
+                        if ta.proper[a] && ta.hash[a] == tg.hash[k] {
+                            have += 1;
+                        }
+                        a += 1;
+                    }
+                    if have <= prior {
+                        gt_uncovered += tg.w[k];
+                    }
+                }
+            }
+        }
+        k += 1;
+    }
+
+    // Only the paired part is a substitution; the excess is a pure addition.
+    let substituted = fmin(unsupported, gt_uncovered);
+    let total = supported + substituted;
+    if total <= 0.0 {
+        return 1.0;
+    }
+    let mean = supported / total;
+    // Worst-case leaning, exactly as the numeric channel is: one swapped entity
+    // must not hide behind five correct ones.
+    let worst = if substituted > 0.0 { 0.0 } else { 1.0 };
+    let agree = (1.0 - p.ent_min_bias) * mean + p.ent_min_bias * worst;
+    clamp01(1.0 - p.ent_channel_w * (1.0 - agree))
 }
 
 /// Penalty for asserting the opposite of what the ground truth says.
@@ -472,6 +607,51 @@ mod tests {
         let wrong = score(q, gt, b"The data shows coordinates 34.9011N, 56.1645E.");
         assert!(plain > 0.5, "correct plain-text coordinates scored {}", plain);
         assert!(plain > wrong, "right {} must beat wrong hemisphere {}", plain, wrong);
+    }
+
+    const EQ: &[u8] = b"Where is 8.8.8.8 located?";
+    const EGT: &[u8] = b"The data shows 8.8.8.8 is located in Mountain View, California, United States, operated by Google LLC.";
+
+    #[test]
+    fn a_single_swapped_entity_is_a_contradiction_not_a_rounding_error() {
+        // Pre-flight repro: each of these scored a literal 1.0000, tying the
+        // verbatim-correct answer, because a proper noun was only unsupported
+        // precision mass and never reached a multiplicative channel.
+        let right = score(EQ, EGT, EGT);
+        let city = score(EQ, EGT, b"The data shows 8.8.8.8 is located in Berlin, California, United States, operated by Google LLC.");
+        let isp = score(EQ, EGT, b"The data shows 8.8.8.8 is located in Mountain View, California, United States, operated by Cloudflare Inc.");
+        let country = score(EQ, EGT, b"The data shows 8.8.8.8 is located in Mountain View, California, Germany, operated by Google LLC.");
+        assert_eq!(right, 1.0);
+        for (label, s) in [("city", city), ("isp", isp), ("country", country)] {
+            assert!(s < 0.5, "single {} swap scored {}, must be far below correct", label, s);
+        }
+    }
+
+    #[test]
+    fn a_correctly_reworded_answer_outranks_every_wrong_variant() {
+        // "US" for "United States" and "run by" for "operated by" are legitimate
+        // variation, not error. Before the acronym rule this scored 0.1956 --
+        // below the wrong answers.
+        let reworded = score(EQ, EGT, b"The data shows 8.8.8.8 resolves to Mountain View, California, US, run by Google LLC.");
+        let worst_wrong = score(EQ, EGT, b"The data shows 8.8.8.8 is located in Berlin, California, United States, operated by Google LLC.");
+        assert!(reworded > 0.75, "a correct rewording scored {}", reworded);
+        assert!(reworded > worst_wrong * 2.0, "reworded {} vs wrong {}", reworded, worst_wrong);
+    }
+
+    #[test]
+    fn extra_unrequested_entities_stay_neutral() {
+        // The guard on the entity channel: an answer that covers everything the
+        // ground truth names and adds more has contradicted nothing (A3.8).
+        let extra = score(EQ, EGT, b"The data shows 8.8.8.8 is located in Mountain View, California, United States, operated by Google LLC, in the Santa Clara County area.");
+        assert!(extra > 0.75, "an answer with extra true detail scored {}", extra);
+    }
+
+    #[test]
+    fn more_wrong_entities_score_strictly_lower() {
+        let one = score(EQ, EGT, b"The data shows 8.8.8.8 is located in Berlin, California, United States, operated by Google LLC.");
+        let three = score(EQ, EGT, b"The data shows 8.8.8.8 is located in Berlin, Brandenburg, Germany, operated by Google LLC.");
+        let all = score(EQ, EGT, b"The data shows 8.8.8.8 is located in Berlin, Brandenburg, Germany, operated by Deutsche Telekom.");
+        assert!(one > three && three > all, "{} {} {}", one, three, all);
     }
 
     #[test]

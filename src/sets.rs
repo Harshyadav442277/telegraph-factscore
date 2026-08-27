@@ -76,6 +76,13 @@ impl Set {
         }
     }
 
+    /// Add a key that is not a token of its own — used for the acronym of a run
+    /// of proper nouns, so an answer saying "US" finds a ground truth that says
+    /// "United States" without a hard-coded synonym table.
+    pub fn insert_key(&mut self, key: u32, idx: usize) {
+        self.insert(key, idx);
+    }
+
     /// Where token `i` of `t` occurs in this set, by exact form or by stem.
     pub fn find(&self, t: &Toks, i: usize) -> Option<usize> {
         if let Some(k) = self.get(t.hash[i]) {

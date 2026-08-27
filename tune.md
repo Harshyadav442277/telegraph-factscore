@@ -64,6 +64,8 @@ answer assert anything the question did not already contain?
 | `fact_floor` | 0.10 | Floor of the fact multiplier, so a wholly-wrong-figure answer degrades rather than falling off a cliff and near-misses stay distinguishable from garbage. |
 | `m_foreign_unit` | 0.05 | **New (review C6).** Multiplier on a figure whose unit we could not identify, when the ground truth named a real one. Calibrated so a category error ("47 bananas") scores no better than an honest wrong value ("47 m/s" against a truth of 47 km/h ≈ 0.046). |
 | `m_bare_unit` | 0.85 | **New (review C6).** Multiplier on a *bare* figure matched against a united one. Weaker evidence, but a legitimate shape (`wind_kmh=128.7`), so only a light discount. Asymmetric: applied only when the **answer** is the side missing the unit, so `42%` against a bare `0.42` is not punished for being explicit. |
+| `ent_min_bias` | 0.6 | **New (pre-flight ENTITY-SWAP defect).** How much the *worst* entity decides the entity channel rather than the average one. Mirrors `num_min_bias`: swapping one city out of six correct entities must not average away. |
+| `ent_channel_w` | 0.9 | **New.** How far a wrong entity may pull the score down. Paired with the substitution rule, which only counts an unsupported entity against the answer to the extent the ground truth names entities the answer never mentions — so extra true detail stays neutral. |
 | `m_contra` | 0.85 | **New (review C2).** How hard a polarity flip on supported content is punished. Not 1.0, so a partial contradiction degrades rather than zeroing. |
 | `m_range_width` | 2.0 | **New.** Discount on a hyphenated range for its own width. A range containing the truth is right; a range wide enough to contain any outcome is a hedge, and `5-50 m/s` must not bank the credit of `46-48 m/s`. |
 
@@ -94,7 +96,7 @@ a wrong CVSS score.
 | `ans_sat` | 3.5 | The IP is always echoed from the question, so decisive content is country/city/ISP/coordinates only. Demand real novel mass. |
 | `w_ident` | 4.0 | Identifiers are the spine of this intent. |
 | `id_channel_w` | 1.0 | Full authority to zero the fact term on a wrong identifier. |
-| `ss_hi` / `ss_lo` | **1.0 / 0.0** (was 0.88 / 0.02) | Deliberately *not* pulled below 1.0 to buy margin. At 0.88 the concave shaping mapped every precision at or above 0.800 to a literal 1.0: two decisive facts in ten could be wrong for free, a ground-truth-blind field-name blob reached 1.0 on live rows, and 19 of 75 corpus answers tied at the ceiling (review C4/C5). |
+| `ss_hi` / `ss_lo` | **1.0 / 0.0** (was 0.88 / 0.02; the first attempt at this edit silently did not apply, and the shipped build still had 0.88 until pre-flight caught it) | Deliberately *not* pulled below 1.0 to buy margin. At 0.88 the concave shaping mapped every precision at or above 0.800 to a literal 1.0: two decisive facts in ten could be wrong for free, a ground-truth-blind field-name blob reached 1.0 on live rows, and 19 of 75 corpus answers tied at the ceiling (review C4/C5). |
 | `p_concave` | **0.15** (was 0.5) | Concave shaping compounded the same saturation, lifting 0.80 to 0.96 before the smoothstep saw it. Closer to linear keeps the top of the range ranking. |
 | `novel_prose_w_gt` | 0.0 | Strict here, unlike STORM_ALERT: the C5 blob was demonstrated on this intent's *live* rows at a perfect 1.0, and with Spearman skipped there is no rank-correlation cost to paying for it. |
 

@@ -104,6 +104,13 @@ pub struct Profile {
     /// How hard a polarity flip on supported content is punished. A sentence and
     /// its negation are different claims, not near-matches.
     pub m_contra: f32,
+    /// How much the *worst* entity decides the entity channel, rather than the
+    /// average one. Mirrors `num_min_bias`: a single swapped city must not hide
+    /// behind five correct entities.
+    pub ent_min_bias: f32,
+    /// How far a wrong entity may pull the score down. 1.0 lets a wholly-wrong
+    /// entity set zero the term; 0.0 disables the channel.
+    pub ent_channel_w: f32,
     /// How hard a hyphenated range is discounted for its own width, relative to
     /// the figure it is compared against. A range that contains the truth is
     /// right; a range wide enough to contain any outcome is a hedge.
@@ -162,6 +169,8 @@ pub const fn base() -> Profile {
         m_bare_unit: 0.85,
         m_contra: 0.85,
         m_range_width: 2.0,
+        ent_min_bias: 0.6,
+        ent_channel_w: 0.9,
         fact_floor: 0.10,
 
         prose_w: 0.25,
@@ -191,11 +200,18 @@ pub const fn profile() -> Profile {
     // authority to zero the fact term.
     p.w_ident = 4.0;
     p.id_channel_w = 1.0;
-    // Single miner means Spearman is skipped (A6), so calibrate purely for
-    // separation rather than for agreement with the champion's ordering. The
-    // margin bar here is the highest of any target (~0.992), so the top of the
-    // range is deliberately saturated to maximise mean(good) - mean(bad).
-    p.ss_hi = 0.88;
+    // Single miner means Spearman is skipped (A6), so this build can calibrate
+    // for separation rather than for agreement with the champion's ordering.
+    //
+    // The ceiling is NOT pulled below 1.0 to buy margin. At ss_hi = 0.88 the
+    // concave shaping mapped every precision at or above 0.800 to a literal 1.0,
+    // so a wrong city, a wrong ISP and a wrong country each scored a perfect
+    // 1.0000 while a correctly-reworded answer scored 0.9606 (pre-flight repro).
+    p.ss_lo = 0.0;
+    p.ss_hi = 1.0;
+    // Concave shaping compounded it, lifting 0.80 to 0.96 before the smoothstep
+    // saw it. Keep precision closer to linear so the top of the range ranks.
+    p.p_concave = 0.15;
     p
 }
 

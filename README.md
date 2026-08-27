@@ -1,6 +1,6 @@
 # scorer — a fact-aware Telegraph scoring module
 
-A freestanding `wasm32-unknown-unknown` scoring module, ~17.9 KB, **zero imports**, no allocator,
+A freestanding `wasm32-unknown-unknown` scoring module, ~19.6 KB, **zero imports**, no allocator,
 no clock, no randomness, no transcendental maths. One Rust source tree compiled once per intent
 via constant profiles, the same shape the incumbent uses.
 
@@ -26,19 +26,36 @@ incumbent rather than a stylistic preference:
    `18 km/h` and `5 m/s` are the same claim, `55%` and `0.55` are the same claim, and a
    temperature is never a near-miss for a wind speed. Identifiers (IPs, CVE ids, versions, dates,
    coordinates) admit no tolerance at all.
-2. **A wrong fact is hard to hide.** Channels combine multiplicatively and the numeric channel
+2. **A wrong *entity* is a contradiction, not a rounding error.** A swapped city, ISP or country
+   goes through the same multiplicative channel as a swapped figure, worst-case-leaning so one
+   wrong entity cannot hide behind five right ones. The guard is a pairing rule: an unsupported
+   entity only counts as a *substitution* to the extent the ground truth names entities the answer
+   never mentions, so extra true detail stays neutral. Legitimate variation survives — a run of
+   proper nouns is also indexed by its acronym, so `US` matches `United States` with no synonym
+   table, and ALL-CAPS acronyms the answer merely mentions (`WHOIS`, `RIR`) abstain rather than
+   counting as claims.
+
+3. **A wrong fact is hard to hide.** Channels combine multiplicatively and the numeric channel
    leans on its *worst* figure, so quoting the right CVE id does not rescue a wrong CVSS score, and
-   a polarity flip on supported content is scored as contradiction rather than coverage. It is not
-   an absolute: on a five-fact answer with three *word* facts swapped and the figures left intact,
-   the wrong answer still reaches 0.976 against a correct 1.0000 — ordered correctly, but only
-   just. Swapped figures are punished far harder than swapped proper nouns.
-3. **Unasserted facts are neutral.** A figure the ground truth never discusses is unverifiable,
+   a polarity flip on supported content is scored as contradiction rather than coverage. Measured
+   against the ground truth *"8.8.8.8 is located in Mountain View, California, United States,
+   operated by Google LLC"*: swapping **one** entity (city → Berlin) scores **0.3047**, swapping
+   three (city, state, country) scores **0.0702**, and the wrong ISP alone scores **0.2016** —
+   against a verbatim-correct 1.0000 and a *reworded*-correct 0.8785. Legitimate variation is
+   untouched: `US` for `United States` scores **1.0000**, and appending true detail the ground
+   truth never mentions still scores **0.8911**.
+
+   An earlier build of this module failed exactly here — a lone swapped city scored a perfect
+   1.0000, tying a verbatim-correct answer. It was caught by probing the *hosted binary* rather
+   than the fixture corpus, which had never tested a single-entity swap. The `ENTITY-SWAP` fixture
+   class (18 cases) exists so that gap cannot reopen.
+4. **Unasserted facts are neutral.** A figure the ground truth never discusses is unverifiable,
    not wrong, so a terse-but-correct answer is not punished for omission. Measured on the review's
    own strings: terse-correct 1.0000, verbose-correct-all-true 0.9995, verbose-correct-and-hedged
    0.9716 — close, but a long answer still pays a little for prose the ground truth does not
    restate. Precision-of-answer without a recall term cannot fully separate "true but unrestated"
    from "unsupported"; the residual gap is the honest size of that limit.
-4. **Answered-ness is first-class.** After the boilerplate opener is struck, an answer that
+5. **Answered-ness is first-class.** After the boilerplate opener is struck, an answer that
    asserts nothing beyond the question's own content scores near zero — *when the ground truth
    carries an answer to be found*.
 
@@ -93,7 +110,7 @@ Every constant is documented in [tune.md](tune.md) and lives in one block in
 ```bash
 export PATH="/c/Users/hyada/.cargo/bin:$PATH"
 
-cargo test                                                     # 44 unit tests, host target
+cargo test                                                     # 58 unit tests, host target
 cargo build --release --target wasm32-unknown-unknown          # generic
 cargo build --release --target wasm32-unknown-unknown --no-default-features --features ip-geolocation
 cargo build --release --target wasm32-unknown-unknown --no-default-features --features storm-alert
@@ -113,9 +130,9 @@ All three builds pass `verify.mjs` in full. Artefacts:
 
 | Build | Size | Imports | `wasm-tools validate` |
 |---|---|---|---|
-| `dist/generic.wasm` | 17,890 B | **0** | OK |
-| `dist/ip_geolocation.wasm` | 17,884 B | **0** | OK |
-| `dist/storm_alert.wasm` | 17,885 B | **0** | OK |
+| `dist/generic.wasm` | 19,652 B | **0** | OK |
+| `dist/ip_geolocation.wasm` | 19,628 B | **0** | OK |
+| `dist/storm_alert.wasm` | 19,647 B | **0** | OK |
 
 Exported signatures, read back off the binary — `rank_answer` is **exactly six `i32` returning
 `f32`** (a 3-param build was rejected live):
@@ -175,23 +192,23 @@ binaries (`ipgeo_reg630`, `storm_rpen_reg453`). **Both intents clear every check
 
 | Check | IP_GEOLOCATION | STORM_ALERT |
 |---|---|---|
-| A stddev > 0.05 | PASS 0.4459 | PASS 0.3977 |
+| A stddev > 0.05 | PASS 0.4218 | PASS 0.4155 |
 | B self-match ≥ max(0.75, incumbent) | PASS 1.0 vs bar 1.0 | PASS 1.0 vs bar 0.9933 |
-| C Spearman ≥ 0.60 | SKIP (1 miner) | **FAIL 0.5926** |
-| D1 margin > champion (strict) | PASS **0.786** vs 0.596 | PASS **0.775** vs 0.425 |
+| C Spearman ≥ 0.60 | SKIP (1 miner) | **PASS 0.6005** |
+| D1 margin > champion (strict) | PASS **0.814** vs 0.438 | PASS **0.804** vs 0.385 |
 | D2 margin ≥ 0.15 | PASS | PASS |
-| D3 wins ≥ champion | PASS 24/29 vs 22/29 | PASS 26/29 vs 18/29 |
-| **Verdict** | **would promote** | **would be rejected (check C)** |
+| D3 wins ≥ champion | PASS 42/47 vs 31/47 | PASS 31/37 vs 26/37 |
+| **Verdict** | **would promote** | **would promote** |
 
-**STORM_ALERT does not pass, and that is reported rather than tuned away.** The
-incumbent is a lexical scorer that *rewards* the pathologies this module removes
-— it scores a contentless question echo 0.9933 and ties a flat contradiction at
-0.9961. Check C asks a candidate to rank real traffic the way that scorer does,
-so removing the parrot, the field-name blob and the negation tie necessarily
-means disagreeing with it more: rho fell from 0.632 on the parrot-friendly build
-to 0.593 here. A 72-build sweep found no configuration reaching 0.60 while
-keeping the anti-gaming properties. `tune.md` records the full trade. Register
-IP_GEOLOCATION, which passes every check.
+STORM_ALERT's Spearman is **0.6005 against a floor of 0.60** — it passes by 0.0005. Treat that as
+unproven on the node's own fixtures, which are not this corpus: a small rotation could put it
+either side. IP_GEOLOCATION, where the check is skipped entirely and the margin delta is +0.376,
+is the safe first registration.
+
+Check C was *failing* at 0.5926 before the entity channel was added; scoring
+swapped entities as contradictions restored the rank information the check reads
+on real traffic and moved it to 0.6005. The anti-gaming properties it was traded
+against are all still in place — `tune.md` records the history.
 
 Per-class pairwise ranking accuracy, candidate vs incumbent:
 
@@ -201,6 +218,7 @@ Per-class pairwise ranking accuracy, candidate vs incumbent:
 | UNIT/FORM | **4/4** | 2/4 | **4/4** | 2/4 |
 | LENGTH | **2/2** | 1/2 | **2/2** | 1/2 |
 | CONTRADICTION | 1/1 | 1/1 | **1/1** | 0/1 |
+| ENTITY-SWAP | **18/18** | — | **8/8** | — |
 | REAL-PARROT | 3/8 | 4/8 | **5/8** | 1/8 |
 | OUR-STYLE-WRONG | 1/1 | 1/1 | 1/1 | 1/1 |
 | REFUSAL / STUFFING / EMPTY / CONTENT-FILTER / TEMPORAL | all 1.0 | all 1.0 | all 1.0 | all 1.0 |
