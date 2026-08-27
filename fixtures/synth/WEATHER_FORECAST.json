@@ -1,0 +1,708 @@
+{
+  "intent": "WEATHER_FORECAST",
+  "provenance": {
+    "source": "synthetic",
+    "generator": "track2/harness/gen-synth.mjs",
+    "seed": 20260827,
+    "schema_file": "track2/harness/synth-schemas.mjs"
+  },
+  "fixtures": [
+    {
+      "id": "weather_forecast-synth-01",
+      "intent": "WEATHER_FORECAST",
+      "class": "FACT-SWAP",
+      "rationale": "one decisive fact (temperature, numeric) changed and nothing else; lexical overlap barely moves, so a vocabulary-matching baseline keeps the wrong answer at the same score",
+      "question": "Can you provide a 48-hour hourly weather forecast for Bergen, Norway starting 2026-09-18, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-18T02:00:00Z?",
+      "ground_truth": "The 48-hour hourly forecast for Bergen, Norway beginning 2026-09-18 shows temperatures ranging from 11.7°C to 16.1°C, a maximum precipitation probability of 18% with roughly 8.4 mm of accumulation, and wind speeds peaking at 11.5 m/s under heavy rain. The forecast is delivered ahead of the 2026-09-18T02:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers 48-hour forecast for Bergen, Norway starting 2026-09-18. Temperature ranges from 11.7°C to 16.1°C. Precipitation probability peaks at 18% with 8.4 mm accumulation. Wind speed peaks at 11.5 m/s. Conditions are heavy rain. Delivered before the 2026-09-18T02:00:00Z cutoff.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "fact-swap-temperature",
+          "text": "The data covers 48-hour forecast for Bergen, Norway starting 2026-09-18. Temperature ranges from 22.7°C to 30.1°C. Precipitation probability peaks at 18% with 8.4 mm accumulation. Wind speed peaks at 11.5 m/s. Conditions are heavy rain. Delivered before the 2026-09-18T02:00:00Z cutoff.",
+          "quality": 0,
+          "note": "temperature (numeric) wrong, everything else identical"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "fact-swap-temperature"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 1
+      }
+    },
+    {
+      "id": "weather_forecast-synth-02",
+      "intent": "WEATHER_FORECAST",
+      "class": "FACT-SWAP",
+      "rationale": "one decisive fact (condition, categorical) changed and nothing else; lexical overlap barely moves, so a vocabulary-matching baseline keeps the wrong answer at the same score",
+      "question": "Can you provide a 24-hour hourly weather forecast for Reykjavik, Iceland starting 2026-09-19, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-19T09:00:00Z?",
+      "ground_truth": "The 24-hour hourly forecast for Reykjavik, Iceland beginning 2026-09-19 shows temperatures ranging from 14.9°C to 24.2°C, a maximum precipitation probability of 13% with roughly 4.5 mm of accumulation, and wind speeds peaking at 4.7 m/s under clear skies. The forecast is delivered ahead of the 2026-09-19T09:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers 24-hour forecast for Reykjavik, Iceland starting 2026-09-19. Temperature ranges from 14.9°C to 24.2°C. Precipitation probability peaks at 13% with 4.5 mm accumulation. Wind speed peaks at 4.7 m/s. Conditions are clear skies. Delivered before the 2026-09-19T09:00:00Z cutoff.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "fact-swap-condition",
+          "text": "The data covers 24-hour forecast for Reykjavik, Iceland starting 2026-09-19. Temperature ranges from 14.9°C to 24.2°C. Precipitation probability peaks at 87% with 4.5 mm accumulation. Wind speed peaks at 4.7 m/s. Conditions are light drizzle. Delivered before the 2026-09-19T09:00:00Z cutoff.",
+          "quality": 0,
+          "note": "condition (categorical) wrong, everything else identical"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "fact-swap-condition"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 2
+      }
+    },
+    {
+      "id": "weather_forecast-synth-03",
+      "intent": "WEATHER_FORECAST",
+      "class": "FACT-SWAP",
+      "rationale": "one decisive fact (start-date, temporal) changed and nothing else; lexical overlap barely moves, so a vocabulary-matching baseline keeps the wrong answer at the same score",
+      "question": "Can you provide a 96-hour hourly weather forecast for Windhoek, Namibia starting 2026-09-12, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-12T10:00:00Z?",
+      "ground_truth": "The 96-hour hourly forecast for Windhoek, Namibia beginning 2026-09-12 shows temperatures ranging from 10.3°C to 19°C, a maximum precipitation probability of 89% with roughly 13.3 mm of accumulation, and wind speeds peaking at 17.9 m/s under overcast. The forecast is delivered ahead of the 2026-09-12T10:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers 96-hour forecast for Windhoek, Namibia starting 2026-09-12. Temperature ranges from 10.3°C to 19°C. Precipitation probability peaks at 89% with 13.3 mm accumulation. Wind speed peaks at 17.9 m/s. Conditions are overcast. Delivered before the 2026-09-12T10:00:00Z cutoff.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "fact-swap-start-date",
+          "text": "The data covers 96-hour forecast for Windhoek, Namibia starting 2026-09-21. Temperature ranges from 10.3°C to 19°C. Precipitation probability peaks at 89% with 13.3 mm accumulation. Wind speed peaks at 17.9 m/s. Conditions are overcast. Delivered before the 2026-09-12T10:00:00Z cutoff.",
+          "quality": 0,
+          "note": "start-date (temporal) wrong, everything else identical"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "fact-swap-start-date"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 3
+      }
+    },
+    {
+      "id": "weather_forecast-synth-04",
+      "intent": "WEATHER_FORECAST",
+      "class": "FACT-SWAP",
+      "rationale": "one decisive fact (place, identifier) changed and nothing else; lexical overlap barely moves, so a vocabulary-matching baseline keeps the wrong answer at the same score",
+      "question": "Can you provide a 24-hour hourly weather forecast for Valparaiso, Chile starting 2026-09-12, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-12T14:00:00Z?",
+      "ground_truth": "The 24-hour hourly forecast for Valparaiso, Chile beginning 2026-09-12 shows temperatures ranging from 2.6°C to 9.9°C, a maximum precipitation probability of 62% with roughly 3.3 mm of accumulation, and wind speeds peaking at 7.2 m/s under heavy rain. The forecast is delivered ahead of the 2026-09-12T14:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers 24-hour forecast for Valparaiso, Chile starting 2026-09-12. Temperature ranges from 2.6°C to 9.9°C. Precipitation probability peaks at 62% with 3.3 mm accumulation. Wind speed peaks at 7.2 m/s. Conditions are heavy rain. Delivered before the 2026-09-12T14:00:00Z cutoff.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "fact-swap-place",
+          "text": "The data covers 24-hour forecast for Windhoek, Chile starting 2026-09-12. Temperature ranges from 2.6°C to 9.9°C. Precipitation probability peaks at 62% with 3.3 mm accumulation. Wind speed peaks at 7.2 m/s. Conditions are heavy rain. Delivered before the 2026-09-12T14:00:00Z cutoff.",
+          "quality": 0,
+          "note": "place (identifier) wrong, everything else identical"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "fact-swap-place"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 4
+      }
+    },
+    {
+      "id": "weather_forecast-synth-05",
+      "intent": "WEATHER_FORECAST",
+      "class": "REFUSAL",
+      "rationale": "a plain refusal in ground-truth-adjacent boilerplate; must score near zero whenever the ground truth contains an answer",
+      "question": "Can you provide a 24-hour hourly weather forecast for Bergen, Norway starting 2026-09-15, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-15T05:00:00Z?",
+      "ground_truth": "The 24-hour hourly forecast for Bergen, Norway beginning 2026-09-15 shows temperatures ranging from 4.8°C to 14.9°C, a maximum precipitation probability of 54% with roughly 9 mm of accumulation, and wind speeds peaking at 17.9 m/s under moderate rain. The forecast is delivered ahead of the 2026-09-15T05:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers 24-hour forecast for Bergen, Norway starting 2026-09-15. Temperature ranges from 4.8°C to 14.9°C. Precipitation probability peaks at 54% with 9 mm accumulation. Wind speed peaks at 17.9 m/s. Conditions are moderate rain. Delivered before the 2026-09-15T05:00:00Z cutoff.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "refusal-plain",
+          "text": "The data does not include the exact forecast, hourly, temperature requested. The available sources do not contain a complete breakdown for the period and fields named, and the specific values needed to fulfil the request are unavailable. For precise figures a dedicated provider should be consulted closer to the time in question.",
+          "quality": 0,
+          "note": "no decisive facts; refusal boilerplate only"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "refusal-plain"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 5
+      }
+    },
+    {
+      "id": "weather_forecast-synth-06",
+      "intent": "WEATHER_FORECAST",
+      "class": "REFUSAL",
+      "rationale": "a refusal that opens by restating the question's own wording; the archetype of the recorded epoch where a refusal scored 0.99 and a correct forecast 0.007",
+      "question": "Can you provide a 96-hour hourly weather forecast for Bergen, Norway starting 2026-09-06, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-06T04:00:00Z?",
+      "ground_truth": "The 96-hour hourly forecast for Bergen, Norway beginning 2026-09-06 shows temperatures ranging from 1.5°C to 11.3°C, a maximum precipitation probability of 79% with roughly 8.5 mm of accumulation, and wind speeds peaking at 15.8 m/s under overcast. The forecast is delivered ahead of the 2026-09-06T04:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers 96-hour forecast for Bergen, Norway starting 2026-09-06. Temperature ranges from 1.5°C to 11.3°C. Precipitation probability peaks at 79% with 8.5 mm accumulation. Wind speed peaks at 15.8 m/s. Conditions are overcast. Delivered before the 2026-09-06T04:00:00Z cutoff.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "refusal-echo",
+          "text": "Can you provide a 96-hour hourly weather forecast for Bergen, Norway starting 2026-09-06, including — The data does not include the exact forecast, hourly, temperature requested. The available sources do not contain a complete breakdown for the period and fields named, and the specific values needed to fulfil the request are unavailable. For precise figures a dedicated provider should be consulted closer to the time in question.",
+          "quality": 0,
+          "note": "no decisive facts; refusal boilerplate only"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "refusal-echo"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 6
+      }
+    },
+    {
+      "id": "weather_forecast-synth-07",
+      "intent": "WEATHER_FORECAST",
+      "class": "STUFFING",
+      "rationale": "question vocabulary plus intent keywords with no decisive facts and a hedge covering every outcome; must lose to any factually correct answer",
+      "question": "Can you provide a 72-hour hourly weather forecast for Valparaiso, Chile starting 2026-09-15, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-15T11:00:00Z?",
+      "ground_truth": "The 72-hour hourly forecast for Valparaiso, Chile beginning 2026-09-15 shows temperatures ranging from -4.7°C to 2.1°C, a maximum precipitation probability of 63% with roughly 22.8 mm of accumulation, and wind speeds peaking at 7.6 m/s under heavy rain. The forecast is delivered ahead of the 2026-09-15T11:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "correct-terse",
+          "text": "The data shows 72-hour forecast for Valparaiso, Chile starting 2026-09-15: temperature ranges from -4.7°C to 2.1°C; precipitation probability peaks at 63% with 22.8 mm accumulation; wind speed peaks at 7.6 m/s; conditions are heavy rain; delivered before the 2026-09-15T11:00:00Z cutoff.",
+          "quality": 1,
+          "note": "all decisive facts right, one sentence"
+        },
+        {
+          "id": "stuffing-keywords",
+          "text": "The data covers forecast, hourly, temperature, Celsius, precipitation probability, wind speed, cutoff. provide hour hourly weather forecast valparaiso chile starting 2026 including temperature celsius precipitation probability wind speed deliver before cutoff time 15t11. forecast hourly temperature Celsius precipitation probability wind speed cutoff. Any of the possible outcomes is covered here: the value may be high, low, or anywhere in between, and either condition may or may not hold.",
+          "quality": 0,
+          "note": "keyword salad, no decisive facts, hedged both ways"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-terse",
+          "stuffing-keywords"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 7
+      }
+    },
+    {
+      "id": "weather_forecast-synth-08",
+      "intent": "WEATHER_FORECAST",
+      "class": "STUFFING",
+      "rationale": "PREFIX-PARROT: the question's own opening ~17 words restated, carrying zero data — the measured champion hole (contentless echo 0.993 vs data-carrying non-echo 0.004 on WEATHER_FORECAST)",
+      "question": "Can you provide a 72-hour hourly weather forecast for Hobart, Australia starting 2026-09-03, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-03T10:00:00Z?",
+      "ground_truth": "The 72-hour hourly forecast for Hobart, Australia beginning 2026-09-03 shows temperatures ranging from -1.4°C to 10.4°C, a maximum precipitation probability of 34% with roughly 5.9 mm of accumulation, and wind speeds peaking at 14.9 m/s under overcast. The forecast is delivered ahead of the 2026-09-03T10:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers 72-hour forecast for Hobart, Australia starting 2026-09-03. Temperature ranges from -1.4°C to 10.4°C. Precipitation probability peaks at 34% with 5.9 mm accumulation. Wind speed peaks at 14.9 m/s. Conditions are overcast. Delivered before the 2026-09-03T10:00:00Z cutoff.",
+          "quality": 1,
+          "note": "echoes the question AND carries the data"
+        },
+        {
+          "id": "correct-nonecho",
+          "text": "The data reports the following. Delivered before the 2026-09-03T10:00:00Z cutoff. Conditions are overcast. Wind speed peaks at 14.9 m/s. Precipitation probability peaks at 34% with 5.9 mm accumulation. Temperature ranges from -1.4°C to 10.4°C.",
+          "quality": 1,
+          "note": "carries every decisive fact but never restates the question"
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "Provide a 72-hour hourly weather forecast for Hobart, Australia starting 2026-09-03, including temperature in Celsius, precipitation probability — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "restates the question's opening words; contains no data at all"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "prefix-parrot"
+        ],
+        [
+          "correct-nonecho",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-prose",
+            "correct-nonecho"
+          ],
+          "tolerance": 0.15,
+          "note": "both carry every decisive fact; only the framing differs, so scores must not diverge by framing alone"
+        }
+      ],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 8
+      }
+    },
+    {
+      "id": "weather_forecast-synth-09",
+      "intent": "WEATHER_FORECAST",
+      "class": "EMPTY-ANSWER",
+      "rationale": "an empty scored text — ~47% of live converted_answers are empty; must score exactly 0.0, and whitespace-only must too (a 0.0007 was a recorded Stage-1 rejection)",
+      "question": "Can you provide a 24-hour hourly weather forecast for Hobart, Australia starting 2026-09-14, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-14T21:00:00Z?",
+      "ground_truth": "The 24-hour hourly forecast for Hobart, Australia beginning 2026-09-14 shows temperatures ranging from -7.3°C to -3.4°C, a maximum precipitation probability of 3% with roughly 18.6 mm of accumulation, and wind speeds peaking at 10.1 m/s under scattered thunderstorms. The forecast is delivered ahead of the 2026-09-14T21:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers 24-hour forecast for Hobart, Australia starting 2026-09-14. Temperature ranges from -7.3°C to -3.4°C. Precipitation probability peaks at 3% with 18.6 mm accumulation. Wind speed peaks at 10.1 m/s. Conditions are scattered thunderstorms. Delivered before the 2026-09-14T21:00:00Z cutoff.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "empty",
+          "text": "",
+          "quality": 0,
+          "note": "empty converted_answer, the single commonest live row"
+        },
+        {
+          "id": "whitespace-only",
+          "text": "   \t  ",
+          "quality": 0,
+          "note": "whitespace-only converted_answer"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "empty"
+        ],
+        [
+          "correct-prose",
+          "whitespace-only"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 9
+      }
+    },
+    {
+      "id": "weather_forecast-synth-10",
+      "intent": "WEATHER_FORECAST",
+      "class": "CONTENT-FILTER",
+      "rationale": "the platform's own content-filter placeholder, verbatim from live traffic; it carries no answer and must score ~0",
+      "question": "Can you provide a 72-hour hourly weather forecast for Ulaanbaatar, Mongolia starting 2026-09-14, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-14T23:00:00Z?",
+      "ground_truth": "The 72-hour hourly forecast for Ulaanbaatar, Mongolia beginning 2026-09-14 shows temperatures ranging from -0.6°C to 7.9°C, a maximum precipitation probability of 70% with roughly 22 mm of accumulation, and wind speeds peaking at 1.8 m/s under clear skies. The forecast is delivered ahead of the 2026-09-14T23:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers 72-hour forecast for Ulaanbaatar, Mongolia starting 2026-09-14. Temperature ranges from -0.6°C to 7.9°C. Precipitation probability peaks at 70% with 22 mm accumulation. Wind speed peaks at 1.8 m/s. Conditions are clear skies. Delivered before the 2026-09-14T23:00:00Z cutoff.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "content-filter-block",
+          "text": "- The generated text has been blocked by our content filters.",
+          "quality": 0,
+          "note": "verbatim platform placeholder, no decisive facts"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "content-filter-block"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 10
+      }
+    },
+    {
+      "id": "weather_forecast-synth-11",
+      "intent": "WEATHER_FORECAST",
+      "class": "CONTRADICTION",
+      "rationale": "asserts the right and a wrong value for the same fact; hedging both sides is not knowledge and must not beat a clean correct answer",
+      "question": "Can you provide a 24-hour hourly weather forecast for Reykjavik, Iceland starting 2026-09-13, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-13T05:00:00Z?",
+      "ground_truth": "The 24-hour hourly forecast for Reykjavik, Iceland beginning 2026-09-13 shows temperatures ranging from 5°C to 16.4°C, a maximum precipitation probability of 45% with roughly 5.4 mm of accumulation, and wind speeds peaking at 15.5 m/s under moderate rain. The forecast is delivered ahead of the 2026-09-13T05:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers 24-hour forecast for Reykjavik, Iceland starting 2026-09-13. Temperature ranges from 5°C to 16.4°C. Precipitation probability peaks at 45% with 5.4 mm accumulation. Wind speed peaks at 15.5 m/s. Conditions are moderate rain. Delivered before the 2026-09-13T05:00:00Z cutoff.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "contradiction-both",
+          "text": "The data covers 24-hour forecast for Reykjavik, Iceland starting 2026-09-13. Temperature ranges from 5°C to 16.4°C, although other sources indicate temperature ranges from 17°C to 28.4°C. Precipitation probability peaks at 45% with 5.4 mm accumulation. Wind speed peaks at 15.5 m/s. Conditions are moderate rain. Delivered before the 2026-09-13T05:00:00Z cutoff.",
+          "quality": 0,
+          "note": "states both the right and a wrong temperature"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "contradiction-both"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 11
+      }
+    },
+    {
+      "id": "weather_forecast-synth-12",
+      "intent": "WEATHER_FORECAST",
+      "class": "FORMAT-EQUIVALENCE",
+      "rationale": "the same facts as JSON, full prose and one terse sentence; scores must be near-equal — the fairness/legitimacy exhibit (ARCHITECTURE A4)",
+      "question": "Can you provide a 72-hour hourly weather forecast for Hobart, Australia starting 2026-09-09, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-09T06:00:00Z?",
+      "ground_truth": "The 72-hour hourly forecast for Hobart, Australia beginning 2026-09-09 shows temperatures ranging from -5.1°C to 4.4°C, a maximum precipitation probability of 63% with roughly 19.1 mm of accumulation, and wind speeds peaking at 14 m/s under heavy rain. The forecast is delivered ahead of the 2026-09-09T06:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers 72-hour forecast for Hobart, Australia starting 2026-09-09. Temperature ranges from -5.1°C to 4.4°C. Precipitation probability peaks at 63% with 19.1 mm accumulation. Wind speed peaks at 14 m/s. Conditions are heavy rain. Delivered before the 2026-09-09T06:00:00Z cutoff.",
+          "quality": 1,
+          "note": "full prose"
+        },
+        {
+          "id": "correct-terse",
+          "text": "The data shows 72-hour forecast for Hobart, Australia starting 2026-09-09: temperature ranges from -5.1°C to 4.4°C; precipitation probability peaks at 63% with 19.1 mm accumulation; wind speed peaks at 14 m/s; conditions are heavy rain; delivered before the 2026-09-09T06:00:00Z cutoff.",
+          "quality": 1,
+          "note": "one terse sentence"
+        },
+        {
+          "id": "correct-json",
+          "text": "{\"place\":\"Hobart, Australia\",\"start\":\"2026-09-09\",\"horizon_hours\":72,\"temp_min_c\":-5.1,\"temp_max_c\":4.4,\"precip_probability_pct\":63,\"precip_mm\":19.1,\"wind_ms\":14,\"condition\":\"heavy rain\",\"cutoff\":\"2026-09-09T06:00:00Z\"}",
+          "quality": 1,
+          "note": "the same facts as a JSON record"
+        }
+      ],
+      "pairs": [],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-prose",
+            "correct-terse",
+            "correct-json"
+          ],
+          "tolerance": 0.1,
+          "note": "identical facts, three surfaces; a format-sensitive scorer punishes correctness for its shape"
+        }
+      ],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 12
+      }
+    },
+    {
+      "id": "weather_forecast-synth-13",
+      "intent": "WEATHER_FORECAST",
+      "class": "UNIT/FORM",
+      "rationale": "the same facts in other units and notations (km/h vs m/s, percent vs 0-1, ISO vs prose dates, DMS vs signed decimals); must still count as correct and must still beat a wrong number",
+      "question": "Can you provide a 72-hour hourly weather forecast for Bergen, Norway starting 2026-09-15, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-15T23:00:00Z?",
+      "ground_truth": "The 72-hour hourly forecast for Bergen, Norway beginning 2026-09-15 shows temperatures ranging from 12.3°C to 15.9°C, a maximum precipitation probability of 97% with roughly 4 mm of accumulation, and wind speeds peaking at 4.6 m/s under clear skies. The forecast is delivered ahead of the 2026-09-15T23:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers 72-hour forecast for Bergen, Norway starting 2026-09-15. Temperature ranges from 12.3°C to 15.9°C. Precipitation probability peaks at 97% with 4 mm accumulation. Wind speed peaks at 4.6 m/s. Conditions are clear skies. Delivered before the 2026-09-15T23:00:00Z cutoff.",
+          "quality": 1,
+          "note": "canonical units"
+        },
+        {
+          "id": "unitform-alt",
+          "text": "The data covers 72-hour forecast for Bergen, Norway starting September 15, 2026. Temperature ranges from 54.1°F to 60.6°F. Precipitation probability peaks at 0.97 on a 0-1 scale with 0.40 cm accumulation. Wind speed peaks at 16.6 km/h. Conditions are clear skies. Delivered before the 2026-09-15T23:00:00Z cutoff.",
+          "quality": 1,
+          "note": "same facts, converted units and notations"
+        },
+        {
+          "id": "fact-swap-temperature",
+          "text": "The data covers 72-hour forecast for Bergen, Norway starting 2026-09-15. Temperature ranges from 27.3°C to 30.9°C. Precipitation probability peaks at 97% with 4 mm accumulation. Wind speed peaks at 4.6 m/s. Conditions are clear skies. Delivered before the 2026-09-15T23:00:00Z cutoff.",
+          "quality": 0,
+          "note": "temperature wrong, canonical units"
+        }
+      ],
+      "pairs": [
+        [
+          "unitform-alt",
+          "fact-swap-temperature"
+        ],
+        [
+          "correct-prose",
+          "fact-swap-temperature"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-prose",
+            "unitform-alt"
+          ],
+          "tolerance": 0.1,
+          "note": "unit normalisation before comparison; a surface-matching scorer marks the converted answer wrong"
+        }
+      ],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 13
+      }
+    },
+    {
+      "id": "weather_forecast-synth-14",
+      "intent": "WEATHER_FORECAST",
+      "class": "UNIT/FORM",
+      "rationale": "the same facts in other units and notations (km/h vs m/s, percent vs 0-1, ISO vs prose dates, DMS vs signed decimals); must still count as correct and must still beat a wrong number",
+      "question": "Can you provide a 72-hour hourly weather forecast for Bergen, Norway starting 2026-09-17, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-17T13:00:00Z?",
+      "ground_truth": "The 72-hour hourly forecast for Bergen, Norway beginning 2026-09-17 shows temperatures ranging from 16.9°C to 26.4°C, a maximum precipitation probability of 76% with roughly 16.3 mm of accumulation, and wind speeds peaking at 7.8 m/s under light drizzle. The forecast is delivered ahead of the 2026-09-17T13:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers 72-hour forecast for Bergen, Norway starting 2026-09-17. Temperature ranges from 16.9°C to 26.4°C. Precipitation probability peaks at 76% with 16.3 mm accumulation. Wind speed peaks at 7.8 m/s. Conditions are light drizzle. Delivered before the 2026-09-17T13:00:00Z cutoff.",
+          "quality": 1,
+          "note": "canonical units"
+        },
+        {
+          "id": "unitform-alt",
+          "text": "The data covers 72-hour forecast for Bergen, Norway starting September 17, 2026. Temperature ranges from 62.4°F to 79.5°F. Precipitation probability peaks at 0.76 on a 0-1 scale with 1.63 cm accumulation. Wind speed peaks at 28.1 km/h. Conditions are light drizzle. Delivered before the 2026-09-17T13:00:00Z cutoff.",
+          "quality": 1,
+          "note": "same facts, converted units and notations"
+        },
+        {
+          "id": "fact-swap-temperature",
+          "text": "The data covers 72-hour forecast for Bergen, Norway starting 2026-09-17. Temperature ranges from 28.9°C to 39.4°C. Precipitation probability peaks at 76% with 16.3 mm accumulation. Wind speed peaks at 7.8 m/s. Conditions are light drizzle. Delivered before the 2026-09-17T13:00:00Z cutoff.",
+          "quality": 0,
+          "note": "temperature wrong, canonical units"
+        }
+      ],
+      "pairs": [
+        [
+          "unitform-alt",
+          "fact-swap-temperature"
+        ],
+        [
+          "correct-prose",
+          "fact-swap-temperature"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-prose",
+            "unitform-alt"
+          ],
+          "tolerance": 0.1,
+          "note": "unit normalisation before comparison; a surface-matching scorer marks the converted answer wrong"
+        }
+      ],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 14
+      }
+    },
+    {
+      "id": "weather_forecast-synth-15",
+      "intent": "WEATHER_FORECAST",
+      "class": "TEMPORAL",
+      "rationale": "the right value asserted for the wrong time (point-vs-window, or a shifted window); a right value for the wrong time is a wrong answer",
+      "question": "Can you provide a 48-hour hourly weather forecast for Bergen, Norway starting 2026-09-19, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-19T00:00:00Z?",
+      "ground_truth": "The 48-hour hourly forecast for Bergen, Norway beginning 2026-09-19 shows temperatures ranging from 2.3°C to 7.1°C, a maximum precipitation probability of 41% with roughly 3.1 mm of accumulation, and wind speeds peaking at 13.9 m/s under moderate rain. The forecast is delivered ahead of the 2026-09-19T00:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers 48-hour forecast for Bergen, Norway starting 2026-09-19. Temperature ranges from 2.3°C to 7.1°C. Precipitation probability peaks at 41% with 3.1 mm accumulation. Wind speed peaks at 13.9 m/s. Conditions are moderate rain. Delivered before the 2026-09-19T00:00:00Z cutoff.",
+          "quality": 1,
+          "note": "right value, right time"
+        },
+        {
+          "id": "temporal-shift",
+          "text": "The data covers 48-hour forecast for Bergen, Norway starting 2026-09-23. Temperature at hour 48 is exactly 7.1°C. Precipitation probability at hour 48 is exactly 41%. Wind speed at hour 48 is exactly 13.9 m/s.",
+          "quality": 0,
+          "note": "same figures, wrong time semantics"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "temporal-shift"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 15
+      }
+    },
+    {
+      "id": "weather_forecast-synth-16",
+      "intent": "WEATHER_FORECAST",
+      "class": "LENGTH",
+      "rationale": "correct-terse vs correct-verbose must be near-equal, and a correct verbose answer must beat a wrong terse one; probes a length penalty that rewards brevity over truth",
+      "question": "Can you provide a 24-hour hourly weather forecast for Bergen, Norway starting 2026-09-13, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-13T01:00:00Z?",
+      "ground_truth": "The 24-hour hourly forecast for Bergen, Norway beginning 2026-09-13 shows temperatures ranging from -5.1°C to -1.1°C, a maximum precipitation probability of 76% with roughly 15.2 mm of accumulation, and wind speeds peaking at 6 m/s under light drizzle. The forecast is delivered ahead of the 2026-09-13T01:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "correct-verbose",
+          "text": "The data covers 24-hour forecast for Bergen, Norway starting 2026-09-13. Temperature ranges from -5.1°C to -1.1°C. Precipitation probability peaks at 76% with 15.2 mm accumulation. Wind speed peaks at 6 m/s. Conditions are light drizzle. Delivered before the 2026-09-13T01:00:00Z cutoff. The values above were taken directly from the upstream provider and are reported without rounding or interpolation. Each field named in the request is answered exactly once, in the order it was asked. No other fields were inferred, and nothing was substituted where a value was unavailable.",
+          "quality": 1,
+          "note": "correct, padded with fact-free method prose"
+        },
+        {
+          "id": "correct-terse",
+          "text": "The data shows 24-hour forecast for Bergen, Norway starting 2026-09-13: temperature ranges from -5.1°C to -1.1°C; precipitation probability peaks at 76% with 15.2 mm accumulation; wind speed peaks at 6 m/s; conditions are light drizzle; delivered before the 2026-09-13T01:00:00Z cutoff.",
+          "quality": 1,
+          "note": "correct, one sentence"
+        },
+        {
+          "id": "wrong-terse",
+          "text": "The data shows 24-hour forecast for Bergen, Norway starting 2026-09-13: temperature ranges from -5.1°C to -1.1°C; precipitation probability peaks at 24% with 15.2 mm accumulation; wind speed peaks at 6 m/s; conditions are heavy rain; delivered before the 2026-09-13T01:00:00Z cutoff.",
+          "quality": 0,
+          "note": "condition wrong, one sentence"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-verbose",
+          "wrong-terse"
+        ],
+        [
+          "correct-terse",
+          "wrong-terse"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-verbose",
+            "correct-terse"
+          ],
+          "tolerance": 0.15,
+          "note": "same facts, different length; at most a mild style delta is defensible"
+        }
+      ],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 16
+      }
+    },
+    {
+      "id": "weather_forecast-synth-17",
+      "intent": "WEATHER_FORECAST",
+      "class": "OUR-STYLE-WRONG",
+      "rationale": "a livecert-shaped answer (verdict/confidence/reason) with WRONG facts against a competitor-shaped bare record with right facts; the anti-fingerprint proof — our own style must lose when it is wrong",
+      "question": "Can you provide a 72-hour hourly weather forecast for Valparaiso, Chile starting 2026-09-11, including temperature in Celsius, precipitation probability, and wind speed, and deliver the forecast before the cutoff time of 2026-09-11T11:00:00Z?",
+      "ground_truth": "The 72-hour hourly forecast for Valparaiso, Chile beginning 2026-09-11 shows temperatures ranging from 3.5°C to 13.5°C, a maximum precipitation probability of 91% with roughly 19.4 mm of accumulation, and wind speeds peaking at 9.4 m/s under scattered thunderstorms. The forecast is delivered ahead of the 2026-09-11T11:00:00Z cutoff.",
+      "answers": [
+        {
+          "id": "competitor-right",
+          "text": "place=Valparaiso, Chile start=2026-09-11 horizon_hours=72 temp_min_c=3.5 temp_max_c=13.5 precip_probability_pct=91 precip_mm=19.4 wind_ms=9.4 condition=scattered thunderstorms cutoff=2026-09-11T11:00:00Z grade=A",
+          "quality": 1,
+          "note": "bare key=value record, grade-report style, facts right"
+        },
+        {
+          "id": "livecert-wrong",
+          "text": "verdict: temperature ranges from 3.5°C to 13.5°C | confidence: 0.94 | subject: 72-hour forecast for Reykjavik, Chile starting 2026-09-11 | reason: precipitation probability peaks at 91% with 19.4 mm accumulation; wind speed peaks at 9.4 m/s; conditions are scattered thunderstorms; delivered before the 2026-09-11T11:00:00Z cutoff | checked_at: recorded",
+          "quality": 0,
+          "note": "our miner's own answer shape, place wrong"
+        }
+      ],
+      "pairs": [
+        [
+          "competitor-right",
+          "livecert-wrong"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "WEATHER_FORECAST",
+        "fact_seed": 17
+      }
+    }
+  ]
+}

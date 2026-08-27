@@ -1,0 +1,708 @@
+{
+  "intent": "CVE_LOOKUP",
+  "provenance": {
+    "source": "synthetic",
+    "generator": "track2/harness/gen-synth.mjs",
+    "seed": 20260827,
+    "schema_file": "track2/harness/synth-schemas.mjs"
+  },
+  "fixtures": [
+    {
+      "id": "cve_lookup-synth-01",
+      "intent": "CVE_LOOKUP",
+      "class": "FACT-SWAP",
+      "rationale": "one decisive fact (cvss, numeric) changed and nothing else; lexical overlap barely moves, so a vocabulary-matching baseline keeps the wrong answer at the same score",
+      "question": "Look up CVE-2026-16832 affecting libmesh: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2026-16832 affects libmesh and is rated MEDIUM with a CVSS base score of 5.7. Versions 3.0.0 through 3.3.4 are affected over a adjacent attack vector; the issue is fixed in 3.11.0. The advisory was published on 2026-09-21.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers CVE-2026-16832 in libmesh. Severity is MEDIUM. The CVSS base score is 5.7. Versions 3.0.0 through 3.3.4 are affected. It is fixed in 3.11.0. The attack vector is adjacent.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "fact-swap-cvss",
+          "text": "The data covers CVE-2026-16832 in libmesh. Severity is MEDIUM. The CVSS base score is 1.5. Versions 3.0.0 through 3.3.4 are affected. It is fixed in 3.11.0. The attack vector is adjacent.",
+          "quality": 0,
+          "note": "cvss (numeric) wrong, everything else identical"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "fact-swap-cvss"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 1
+      }
+    },
+    {
+      "id": "cve_lookup-synth-02",
+      "intent": "CVE_LOOKUP",
+      "class": "FACT-SWAP",
+      "rationale": "one decisive fact (severity, categorical) changed and nothing else; lexical overlap barely moves, so a vocabulary-matching baseline keeps the wrong answer at the same score",
+      "question": "Look up CVE-2026-39934 affecting quill-parser: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2026-39934 affects quill-parser and is rated LOW with a CVSS base score of 2.2. Versions 2.0.0 through 2.3.8 are affected over a adjacent attack vector; the issue is fixed in 2.12.0. The advisory was published on 2026-09-20.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers CVE-2026-39934 in quill-parser. Severity is LOW. The CVSS base score is 2.2. Versions 2.0.0 through 2.3.8 are affected. It is fixed in 2.12.0. The attack vector is adjacent.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "fact-swap-severity",
+          "text": "The data covers CVE-2026-39934 in quill-parser. Severity is HIGH. The CVSS base score is 2.2. Versions 2.0.0 through 2.3.8 are affected. It is fixed in 2.12.0. The attack vector is adjacent.",
+          "quality": 0,
+          "note": "severity (categorical) wrong, everything else identical"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "fact-swap-severity"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 2
+      }
+    },
+    {
+      "id": "cve_lookup-synth-03",
+      "intent": "CVE_LOOKUP",
+      "class": "FACT-SWAP",
+      "rationale": "one decisive fact (cve-id, identifier) changed and nothing else; lexical overlap barely moves, so a vocabulary-matching baseline keeps the wrong answer at the same score",
+      "question": "Look up CVE-2025-46318 affecting quill-parser: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2025-46318 affects quill-parser and is rated HIGH with a CVSS base score of 7.1. Versions 1.0.0 through 1.6.4 are affected over a network attack vector; the issue is fixed in 1.10.0. The advisory was published on 2026-09-11.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers CVE-2025-46318 in quill-parser. Severity is HIGH. The CVSS base score is 7.1. Versions 1.0.0 through 1.6.4 are affected. It is fixed in 1.10.0. The attack vector is network.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "fact-swap-cve-id",
+          "text": "The data covers CVE-2025-86653 in quill-parser. Severity is HIGH. The CVSS base score is 7.1. Versions 1.0.0 through 1.6.4 are affected. It is fixed in 1.10.0. The attack vector is network.",
+          "quality": 0,
+          "note": "cve-id (identifier) wrong, everything else identical"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "fact-swap-cve-id"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 3
+      }
+    },
+    {
+      "id": "cve_lookup-synth-04",
+      "intent": "CVE_LOOKUP",
+      "class": "FACT-SWAP",
+      "rationale": "one decisive fact (fixed-version, temporal) changed and nothing else; lexical overlap barely moves, so a vocabulary-matching baseline keeps the wrong answer at the same score",
+      "question": "Look up CVE-2022-45696 affecting libmesh: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2022-45696 affects libmesh and is rated MEDIUM with a CVSS base score of 5.4. Versions 5.0.0 through 5.2.6 are affected over a network attack vector; the issue is fixed in 5.10.0. The advisory was published on 2026-09-02.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers CVE-2022-45696 in libmesh. Severity is MEDIUM. The CVSS base score is 5.4. Versions 5.0.0 through 5.2.6 are affected. It is fixed in 5.10.0. The attack vector is network.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "fact-swap-fixed-version",
+          "text": "The data covers CVE-2022-45696 in libmesh. Severity is MEDIUM. The CVSS base score is 5.4. Versions 5.0.0 through 5.2.6 are affected. It is fixed in 8.2.0. The attack vector is network.",
+          "quality": 0,
+          "note": "fixed-version (temporal) wrong, everything else identical"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "fact-swap-fixed-version"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 4
+      }
+    },
+    {
+      "id": "cve_lookup-synth-05",
+      "intent": "CVE_LOOKUP",
+      "class": "REFUSAL",
+      "rationale": "a plain refusal in ground-truth-adjacent boilerplate; must score near zero whenever the ground truth contains an answer",
+      "question": "Look up CVE-2022-14567 affecting vellum-tls: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2022-14567 affects vellum-tls and is rated LOW with a CVSS base score of 1.6. Versions 3.0.0 through 3.4.4 are affected over a adjacent attack vector; the issue is fixed in 3.11.0. The advisory was published on 2026-09-12.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers CVE-2022-14567 in vellum-tls. Severity is LOW. The CVSS base score is 1.6. Versions 3.0.0 through 3.4.4 are affected. It is fixed in 3.11.0. The attack vector is adjacent.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "refusal-plain",
+          "text": "The data does not include the exact CVE, vulnerability, CVSS requested. The available sources do not contain a complete breakdown for the period and fields named, and the specific values needed to fulfil the request are unavailable. For precise figures a dedicated provider should be consulted closer to the time in question.",
+          "quality": 0,
+          "note": "no decisive facts; refusal boilerplate only"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "refusal-plain"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 5
+      }
+    },
+    {
+      "id": "cve_lookup-synth-06",
+      "intent": "CVE_LOOKUP",
+      "class": "REFUSAL",
+      "rationale": "a refusal that opens by restating the question's own wording; the archetype of the recorded epoch where a refusal scored 0.99 and a correct forecast 0.007",
+      "question": "Look up CVE-2025-39355 affecting corvid-router: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2025-39355 affects corvid-router and is rated LOW with a CVSS base score of 1. Versions 3.0.0 through 3.1.4 are affected over a network attack vector; the issue is fixed in 3.9.0. The advisory was published on 2026-09-24.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers CVE-2025-39355 in corvid-router. Severity is LOW. The CVSS base score is 1. Versions 3.0.0 through 3.1.4 are affected. It is fixed in 3.9.0. The attack vector is network.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "refusal-echo",
+          "text": "Look up CVE-2025-39355 affecting corvid-router: what is its severity rating, what CVSS base score — The data does not include the exact CVE, vulnerability, CVSS requested. The available sources do not contain a complete breakdown for the period and fields named, and the specific values needed to fulfil the request are unavailable. For precise figures a dedicated provider should be consulted closer to the time in question.",
+          "quality": 0,
+          "note": "no decisive facts; refusal boilerplate only"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "refusal-echo"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 6
+      }
+    },
+    {
+      "id": "cve_lookup-synth-07",
+      "intent": "CVE_LOOKUP",
+      "class": "STUFFING",
+      "rationale": "question vocabulary plus intent keywords with no decisive facts and a hedge covering every outcome; must lose to any factually correct answer",
+      "question": "Look up CVE-2024-13708 affecting vellum-tls: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2024-13708 affects vellum-tls and is rated MEDIUM with a CVSS base score of 4.4. Versions 5.0.0 through 5.7.6 are affected over a local attack vector; the issue is fixed in 5.12.0. The advisory was published on 2026-09-04.",
+      "answers": [
+        {
+          "id": "correct-terse",
+          "text": "The data shows CVE-2024-13708 in vellum-tls: severity is MEDIUM; the CVSS base score is 4.4; versions 5.0.0 through 5.7.6 are affected; it is fixed in 5.12.0; the attack vector is local.",
+          "quality": 1,
+          "note": "all decisive facts right, one sentence"
+        },
+        {
+          "id": "stuffing-keywords",
+          "text": "The data covers CVE, vulnerability, CVSS, severity, affected versions, patched, advisory. look 2024 13708 affecting vellum what severity rating cvss base score assigned which versions affected release fixed. CVE vulnerability CVSS severity affected versions patched advisory. Any of the possible outcomes is covered here: the value may be high, low, or anywhere in between, and either condition may or may not hold.",
+          "quality": 0,
+          "note": "keyword salad, no decisive facts, hedged both ways"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-terse",
+          "stuffing-keywords"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 7
+      }
+    },
+    {
+      "id": "cve_lookup-synth-08",
+      "intent": "CVE_LOOKUP",
+      "class": "STUFFING",
+      "rationale": "PREFIX-PARROT: the question's own opening ~17 words restated, carrying zero data — the measured champion hole (contentless echo 0.993 vs data-carrying non-echo 0.004 on WEATHER_FORECAST)",
+      "question": "Look up CVE-2024-30395 affecting vellum-tls: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2024-30395 affects vellum-tls and is rated LOW with a CVSS base score of 1.2. Versions 5.0.0 through 5.3.2 are affected over a network attack vector; the issue is fixed in 5.9.0. The advisory was published on 2026-09-24.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers CVE-2024-30395 in vellum-tls. Severity is LOW. The CVSS base score is 1.2. Versions 5.0.0 through 5.3.2 are affected. It is fixed in 5.9.0. The attack vector is network.",
+          "quality": 1,
+          "note": "echoes the question AND carries the data"
+        },
+        {
+          "id": "correct-nonecho",
+          "text": "The data reports the following. The attack vector is network. It is fixed in 5.9.0. Versions 5.0.0 through 5.3.2 are affected. The CVSS base score is 1.2. Severity is LOW.",
+          "quality": 1,
+          "note": "carries every decisive fact but never restates the question"
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "CVE-2024-30395 affecting vellum-tls: what is its severity rating, what CVSS base score was assigned, which versions are — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "restates the question's opening words; contains no data at all"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "prefix-parrot"
+        ],
+        [
+          "correct-nonecho",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-prose",
+            "correct-nonecho"
+          ],
+          "tolerance": 0.15,
+          "note": "both carry every decisive fact; only the framing differs, so scores must not diverge by framing alone"
+        }
+      ],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 8
+      }
+    },
+    {
+      "id": "cve_lookup-synth-09",
+      "intent": "CVE_LOOKUP",
+      "class": "EMPTY-ANSWER",
+      "rationale": "an empty scored text — ~47% of live converted_answers are empty; must score exactly 0.0, and whitespace-only must too (a 0.0007 was a recorded Stage-1 rejection)",
+      "question": "Look up CVE-2022-34904 affecting atlas-cache: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2022-34904 affects atlas-cache and is rated CRITICAL with a CVSS base score of 9. Versions 4.0.0 through 4.6.3 are affected over a adjacent attack vector; the issue is fixed in 4.12.0. The advisory was published on 2026-09-22.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers CVE-2022-34904 in atlas-cache. Severity is CRITICAL. The CVSS base score is 9. Versions 4.0.0 through 4.6.3 are affected. It is fixed in 4.12.0. The attack vector is adjacent.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "empty",
+          "text": "",
+          "quality": 0,
+          "note": "empty converted_answer, the single commonest live row"
+        },
+        {
+          "id": "whitespace-only",
+          "text": "   \t  ",
+          "quality": 0,
+          "note": "whitespace-only converted_answer"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "empty"
+        ],
+        [
+          "correct-prose",
+          "whitespace-only"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 9
+      }
+    },
+    {
+      "id": "cve_lookup-synth-10",
+      "intent": "CVE_LOOKUP",
+      "class": "CONTENT-FILTER",
+      "rationale": "the platform's own content-filter placeholder, verbatim from live traffic; it carries no answer and must score ~0",
+      "question": "Look up CVE-2023-16079 affecting vellum-tls: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2023-16079 affects vellum-tls and is rated MEDIUM with a CVSS base score of 4.1. Versions 6.0.0 through 6.1.1 are affected over a local attack vector; the issue is fixed in 6.11.0. The advisory was published on 2026-09-11.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers CVE-2023-16079 in vellum-tls. Severity is MEDIUM. The CVSS base score is 4.1. Versions 6.0.0 through 6.1.1 are affected. It is fixed in 6.11.0. The attack vector is local.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "content-filter-block",
+          "text": "- The generated text has been blocked by our content filters.",
+          "quality": 0,
+          "note": "verbatim platform placeholder, no decisive facts"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "content-filter-block"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 10
+      }
+    },
+    {
+      "id": "cve_lookup-synth-11",
+      "intent": "CVE_LOOKUP",
+      "class": "CONTRADICTION",
+      "rationale": "asserts the right and a wrong value for the same fact; hedging both sides is not knowledge and must not beat a clean correct answer",
+      "question": "Look up CVE-2026-38488 affecting atlas-cache: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2026-38488 affects atlas-cache and is rated CRITICAL with a CVSS base score of 9.7. Versions 4.0.0 through 4.6.2 are affected over a network attack vector; the issue is fixed in 4.12.0. The advisory was published on 2026-09-22.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers CVE-2026-38488 in atlas-cache. Severity is CRITICAL. The CVSS base score is 9.7. Versions 4.0.0 through 4.6.2 are affected. It is fixed in 4.12.0. The attack vector is network.",
+          "quality": 1,
+          "note": "all decisive facts right"
+        },
+        {
+          "id": "contradiction-both",
+          "text": "The data covers CVE-2026-38488 in atlas-cache. Severity is CRITICAL. The CVSS base score is 9.7, although other sources indicate the CVSS base score is 5.5. Versions 4.0.0 through 4.6.2 are affected. It is fixed in 4.12.0. The attack vector is network.",
+          "quality": 0,
+          "note": "states both the right and a wrong cvss"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "contradiction-both"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 11
+      }
+    },
+    {
+      "id": "cve_lookup-synth-12",
+      "intent": "CVE_LOOKUP",
+      "class": "FORMAT-EQUIVALENCE",
+      "rationale": "the same facts as JSON, full prose and one terse sentence; scores must be near-equal — the fairness/legitimacy exhibit (ARCHITECTURE A4)",
+      "question": "Look up CVE-2023-29581 affecting vellum-tls: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2023-29581 affects vellum-tls and is rated HIGH with a CVSS base score of 8.7. Versions 5.0.0 through 5.5.8 are affected over a network attack vector; the issue is fixed in 5.10.0. The advisory was published on 2026-09-02.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers CVE-2023-29581 in vellum-tls. Severity is HIGH. The CVSS base score is 8.7. Versions 5.0.0 through 5.5.8 are affected. It is fixed in 5.10.0. The attack vector is network.",
+          "quality": 1,
+          "note": "full prose"
+        },
+        {
+          "id": "correct-terse",
+          "text": "The data shows CVE-2023-29581 in vellum-tls: severity is HIGH; the CVSS base score is 8.7; versions 5.0.0 through 5.5.8 are affected; it is fixed in 5.10.0; the attack vector is network.",
+          "quality": 1,
+          "note": "one terse sentence"
+        },
+        {
+          "id": "correct-json",
+          "text": "{\"cve\":\"CVE-2023-29581\",\"product\":\"vellum-tls\",\"severity\":\"HIGH\",\"cvss_base\":8.7,\"affected\":\"5.0.0 - 5.5.8\",\"fixed_in\":\"5.10.0\",\"vector\":\"network\",\"published\":\"2026-09-02\"}",
+          "quality": 1,
+          "note": "the same facts as a JSON record"
+        }
+      ],
+      "pairs": [],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-prose",
+            "correct-terse",
+            "correct-json"
+          ],
+          "tolerance": 0.1,
+          "note": "identical facts, three surfaces; a format-sensitive scorer punishes correctness for its shape"
+        }
+      ],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 12
+      }
+    },
+    {
+      "id": "cve_lookup-synth-13",
+      "intent": "CVE_LOOKUP",
+      "class": "UNIT/FORM",
+      "rationale": "the same facts in other units and notations (km/h vs m/s, percent vs 0-1, ISO vs prose dates, DMS vs signed decimals); must still count as correct and must still beat a wrong number",
+      "question": "Look up CVE-2026-14313 affecting vellum-tls: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2026-14313 affects vellum-tls and is rated HIGH with a CVSS base score of 8.3. Versions 4.0.0 through 4.4.9 are affected over a local attack vector; the issue is fixed in 4.9.0. The advisory was published on 2026-09-01.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers CVE-2026-14313 in vellum-tls. Severity is HIGH. The CVSS base score is 8.3. Versions 4.0.0 through 4.4.9 are affected. It is fixed in 4.9.0. The attack vector is local.",
+          "quality": 1,
+          "note": "canonical units"
+        },
+        {
+          "id": "unitform-alt",
+          "text": "The data covers CVE-2026-14313 in vellum-tls. Severity band: high. CVSS v3.1 base 8.3/10 (0.83 normalised). Affected range >=4.0.0, <=4.4.9. First fixed release 4.9.0. AV:L (local).",
+          "quality": 1,
+          "note": "same facts, converted units and notations"
+        },
+        {
+          "id": "fact-swap-cvss",
+          "text": "The data covers CVE-2026-14313 in vellum-tls. Severity is HIGH. The CVSS base score is 4.1. Versions 4.0.0 through 4.4.9 are affected. It is fixed in 4.9.0. The attack vector is local.",
+          "quality": 0,
+          "note": "cvss wrong, canonical units"
+        }
+      ],
+      "pairs": [
+        [
+          "unitform-alt",
+          "fact-swap-cvss"
+        ],
+        [
+          "correct-prose",
+          "fact-swap-cvss"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-prose",
+            "unitform-alt"
+          ],
+          "tolerance": 0.1,
+          "note": "unit normalisation before comparison; a surface-matching scorer marks the converted answer wrong"
+        }
+      ],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 13
+      }
+    },
+    {
+      "id": "cve_lookup-synth-14",
+      "intent": "CVE_LOOKUP",
+      "class": "UNIT/FORM",
+      "rationale": "the same facts in other units and notations (km/h vs m/s, percent vs 0-1, ISO vs prose dates, DMS vs signed decimals); must still count as correct and must still beat a wrong number",
+      "question": "Look up CVE-2023-30644 affecting libmesh: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2023-30644 affects libmesh and is rated MEDIUM with a CVSS base score of 5.7. Versions 2.0.0 through 2.5.3 are affected over a local attack vector; the issue is fixed in 2.10.0. The advisory was published on 2026-09-12.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers CVE-2023-30644 in libmesh. Severity is MEDIUM. The CVSS base score is 5.7. Versions 2.0.0 through 2.5.3 are affected. It is fixed in 2.10.0. The attack vector is local.",
+          "quality": 1,
+          "note": "canonical units"
+        },
+        {
+          "id": "unitform-alt",
+          "text": "The data covers CVE-2023-30644 in libmesh. Severity band: medium. CVSS v3.1 base 5.7/10 (0.57 normalised). Affected range >=2.0.0, <=2.5.3. First fixed release 2.10.0. AV:L (local).",
+          "quality": 1,
+          "note": "same facts, converted units and notations"
+        },
+        {
+          "id": "fact-swap-cvss",
+          "text": "The data covers CVE-2023-30644 in libmesh. Severity is MEDIUM. The CVSS base score is 1.5. Versions 2.0.0 through 2.5.3 are affected. It is fixed in 2.10.0. The attack vector is local.",
+          "quality": 0,
+          "note": "cvss wrong, canonical units"
+        }
+      ],
+      "pairs": [
+        [
+          "unitform-alt",
+          "fact-swap-cvss"
+        ],
+        [
+          "correct-prose",
+          "fact-swap-cvss"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-prose",
+            "unitform-alt"
+          ],
+          "tolerance": 0.1,
+          "note": "unit normalisation before comparison; a surface-matching scorer marks the converted answer wrong"
+        }
+      ],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 14
+      }
+    },
+    {
+      "id": "cve_lookup-synth-15",
+      "intent": "CVE_LOOKUP",
+      "class": "TEMPORAL",
+      "rationale": "the right value asserted for the wrong time (point-vs-window, or a shifted window); a right value for the wrong time is a wrong answer",
+      "question": "Look up CVE-2026-17716 affecting vellum-tls: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2026-17716 affects vellum-tls and is rated HIGH with a CVSS base score of 7. Versions 5.0.0 through 5.1.3 are affected over a adjacent attack vector; the issue is fixed in 5.10.0. The advisory was published on 2026-09-07.",
+      "answers": [
+        {
+          "id": "correct-prose",
+          "text": "The data covers CVE-2026-17716 in vellum-tls. Severity is HIGH. The CVSS base score is 7. Versions 5.0.0 through 5.1.3 are affected. It is fixed in 5.10.0. The attack vector is adjacent.",
+          "quality": 1,
+          "note": "right value, right time"
+        },
+        {
+          "id": "temporal-shift",
+          "text": "The data covers CVE-2026-17716 in vellum-tls. Severity is HIGH. The CVSS base score is 7. 5.10.0 is an affected version and 5.1.3 is the fixed release.",
+          "quality": 0,
+          "note": "same figures, wrong time semantics"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-prose",
+          "temporal-shift"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 15
+      }
+    },
+    {
+      "id": "cve_lookup-synth-16",
+      "intent": "CVE_LOOKUP",
+      "class": "LENGTH",
+      "rationale": "correct-terse vs correct-verbose must be near-equal, and a correct verbose answer must beat a wrong terse one; probes a length penalty that rewards brevity over truth",
+      "question": "Look up CVE-2026-13241 affecting quill-parser: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2026-13241 affects quill-parser and is rated HIGH with a CVSS base score of 7.9. Versions 1.0.0 through 1.5.8 are affected over a adjacent attack vector; the issue is fixed in 1.10.0. The advisory was published on 2026-09-11.",
+      "answers": [
+        {
+          "id": "correct-verbose",
+          "text": "The data covers CVE-2026-13241 in quill-parser. Severity is HIGH. The CVSS base score is 7.9. Versions 1.0.0 through 1.5.8 are affected. It is fixed in 1.10.0. The attack vector is adjacent. The values above were taken directly from the upstream provider and are reported without rounding or interpolation. Each field named in the request is answered exactly once, in the order it was asked. No other fields were inferred, and nothing was substituted where a value was unavailable.",
+          "quality": 1,
+          "note": "correct, padded with fact-free method prose"
+        },
+        {
+          "id": "correct-terse",
+          "text": "The data shows CVE-2026-13241 in quill-parser: severity is HIGH; the CVSS base score is 7.9; versions 1.0.0 through 1.5.8 are affected; it is fixed in 1.10.0; the attack vector is adjacent.",
+          "quality": 1,
+          "note": "correct, one sentence"
+        },
+        {
+          "id": "wrong-terse",
+          "text": "The data shows CVE-2026-13241 in quill-parser: severity is MEDIUM; the CVSS base score is 7.9; versions 1.0.0 through 1.5.8 are affected; it is fixed in 1.10.0; the attack vector is adjacent.",
+          "quality": 0,
+          "note": "severity wrong, one sentence"
+        }
+      ],
+      "pairs": [
+        [
+          "correct-verbose",
+          "wrong-terse"
+        ],
+        [
+          "correct-terse",
+          "wrong-terse"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-verbose",
+            "correct-terse"
+          ],
+          "tolerance": 0.15,
+          "note": "same facts, different length; at most a mild style delta is defensible"
+        }
+      ],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 16
+      }
+    },
+    {
+      "id": "cve_lookup-synth-17",
+      "intent": "CVE_LOOKUP",
+      "class": "OUR-STYLE-WRONG",
+      "rationale": "a livecert-shaped answer (verdict/confidence/reason) with WRONG facts against a competitor-shaped bare record with right facts; the anti-fingerprint proof — our own style must lose when it is wrong",
+      "question": "Look up CVE-2022-21247 affecting corvid-router: what is its severity rating, what CVSS base score was assigned, which versions are affected, and in which release was it fixed?",
+      "ground_truth": "CVE-2022-21247 affects corvid-router and is rated CRITICAL with a CVSS base score of 9.9. Versions 6.0.0 through 6.1.8 are affected over a network attack vector; the issue is fixed in 6.10.0. The advisory was published on 2026-09-01.",
+      "answers": [
+        {
+          "id": "competitor-right",
+          "text": "cve=CVE-2022-21247 product=corvid-router severity=CRITICAL cvss_base=9.9 affected=6.0.0 - 6.1.8 fixed_in=6.10.0 vector=network published=2026-09-01 grade=A",
+          "quality": 1,
+          "note": "bare key=value record, grade-report style, facts right"
+        },
+        {
+          "id": "livecert-wrong",
+          "text": "verdict: severity is CRITICAL | confidence: 0.94 | subject: CVE-2022-21247 in corvid-router | reason: the CVSS base score is 5.7; versions 6.0.0 through 6.1.8 are affected; it is fixed in 6.10.0; the attack vector is network | checked_at: recorded",
+          "quality": 0,
+          "note": "our miner's own answer shape, cvss wrong"
+        }
+      ],
+      "pairs": [
+        [
+          "competitor-right",
+          "livecert-wrong"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "synthetic",
+        "generator": "track2/harness/gen-synth.mjs",
+        "schema": "CVE_LOOKUP",
+        "fact_seed": 17
+      }
+    }
+  ]
+}

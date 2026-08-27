@@ -1,0 +1,863 @@
+{
+  "intent": "STOCK_PRICE",
+  "class": "REAL",
+  "provenance": {
+    "source": "scores-api",
+    "url": "https://devnode.telegraphprotocol.com/scores?intent=STOCK_PRICE&limit=300",
+    "captured": "2026-08-27T08:05:39.131Z",
+    "rows_returned": 62,
+    "rows_available": 62,
+    "epoch_min": 260,
+    "epoch_max": 285,
+    "scored_text_field": "converted_answer",
+    "selection": "top 15 (question, ground_truth) groups by distinct scored answers",
+    "empty_converted_answers": 24,
+    "empty_converted_answer_share": 0.3871,
+    "empty_converted_answer_max_live_score": 0.09234467,
+    "ground_truth_refusal_shaped": 0
+  },
+  "fixtures": [
+    {
+      "id": "stock_price-real-01",
+      "intent": "STOCK_PRICE",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the current share price of Microsoft (MSFT) as retrieved through the GLOBAL_QUOTE function?",
+      "ground_truth": "The current share price of Microsoft (MSFT) is $496.35 as of August 26, 2026, at 12:59:59 PM Pacific Time.",
+      "answers": [
+        {
+          "id": "real-txlens-e285",
+          "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 26, 2026, at $496.37 USD.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "5234f5ab-a8d1-488a-9393-7a825da27391",
+            "miner_slug": "txlens",
+            "epoch_id": 285,
+            "live_score": 0.019611645,
+            "live_rank": 1,
+            "scored_at": "2026-08-27T00:50:55.337964Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"as_of\":\"2026-08-26T13:30:00.000Z\",\"canonical\":\"ticker:MSFT:496.37\",\"confidence\":1,\"currency\":\"USD\",\"exchange\":\"NASDAQ\",\"price_source\":\"twelve_data\",\"price_usd\":496.37,\"query\":\"MSFT\",\"status\":\"ok\",\"summary\":\"MSFT is $496.37\"}"
+          }
+        },
+        {
+          "id": "real-chainsight-oracle-e285",
+          "text": "The current share price of Microsoft (MSFT) is $496.37 USD, with a 0.95% increase over the last 24 hours.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "0c5c4424-d022-4349-b33b-8470b221ff81",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 285,
+            "live_score": 0.008154249,
+            "live_rank": 3,
+            "scored_at": "2026-08-27T00:50:55.337964Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_pct\":0.9477,\"high\":497.4,\"low\":487.31,\"name\":\"Microsoft\",\"open\":487.85,\"prev_close\":491.71,\"price_usd\":496.37,\"signal\":\"The current share price of Microsoft (MSFT) is $496.37 USD. It has changed +0.95% over the last 24 hours.\",\"source\":\"finnhub\",\"symbol\":\"MSFT\"}"
+          }
+        },
+        {
+          "id": "real-alphavantage-e285",
+          "text": "This data shows the current price of Microsoft stock (MSFT) at $496.37, with a 0.95% increase from the previous day's close.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "19da17cc-c7b9-407e-9d7f-969ca489c10c",
+            "miner_slug": "alphavantage",
+            "epoch_id": 285,
+            "live_score": 0.007771203,
+            "live_rank": 4,
+            "scored_at": "2026-08-27T00:50:55.337964Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"Global Quote\":{\"01. symbol\":\"MSFT\",\"02. open\":\"487.8500\",\"03. high\":\"497.4000\",\"04. low\":\"487.3100\",\"05. price\":\"496.3700\",\"06. volume\":\"19941978\",\"07. latest trading day\":\"2026-08-26\",\"08. previous close\":\"491.7100\",\"09. change\":\"4.6600\",\"10. change percent\":\"0.9477%\"}}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STOCK_PRICE&limit=300",
+        "epoch_min": 285,
+        "epoch_max": 285,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 3,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "stock_price-real-02",
+      "intent": "STOCK_PRICE",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the current share price of Apple (AAPL) as retrieved by the GLOBAL_QUOTE function?",
+      "ground_truth": "The current share price of Apple (AAPL) is **$313.12** as retrieved by the GLOBAL_QUOTE function.",
+      "answers": [
+        {
+          "id": "real-chainsight-oracle-e284",
+          "text": "The current share price of Apple (AAPL) is $313.54 USD, with a 1.17% increase over the last 24 hours.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "d9c8dfb1-77ff-4507-9299-dfdf50923525",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 284,
+            "live_score": 0.006866657,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T15:51:33.060921Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_pct\":1.1746,\"high\":313.58,\"low\":308.8001,\"name\":\"Apple\",\"open\":310.02,\"prev_close\":309.9,\"price_usd\":313.54,\"signal\":\"The current share price of Apple (AAPL) is $313.54 USD. It has changed +1.17% over the last 24 hours.\",\"source\":\"finnhub\",\"symbol\":\"AAPL\"}"
+          }
+        },
+        {
+          "id": "real-alphavantage-e284",
+          "text": "This data shows the current price of Apple Inc. (AAPL) stock at $309.90, with a 0.14% decrease from the previous day's close.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "3293a3aa-5d02-47b6-a952-ef5829993fb8",
+            "miner_slug": "alphavantage",
+            "epoch_id": 284,
+            "live_score": 0.005633443,
+            "live_rank": 3,
+            "scored_at": "2026-08-26T15:51:33.060921Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"Global Quote\":{\"01. symbol\":\"AAPL\",\"02. open\":\"310.7900\",\"03. high\":\"313.5900\",\"04. low\":\"308.2100\",\"05. price\":\"309.9000\",\"06. volume\":\"25869807\",\"07. latest trading day\":\"2026-08-25\",\"08. previous close\":\"310.3400\",\"09. change\":\"-0.4400\",\"10. change percent\":\"-0.1418%\"}}"
+          }
+        },
+        {
+          "id": "real-txlens-e284",
+          "text": "The data shows the current price of Apple Inc. (AAPL) stock on NASDAQ as of August 26, 2026, at $313.56 USD.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "11c261be-442e-45bd-a14d-9bc814ec4cff",
+            "miner_slug": "txlens",
+            "epoch_id": 284,
+            "live_score": 0.0055683767,
+            "live_rank": 4,
+            "scored_at": "2026-08-26T15:51:33.060921Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"as_of\":\"2026-08-26T13:30:00.000Z\",\"canonical\":\"ticker:AAPL:313.56\",\"confidence\":1,\"currency\":\"USD\",\"exchange\":\"NASDAQ\",\"price_source\":\"twelve_data\",\"price_usd\":313.56,\"query\":\"AAPL\",\"status\":\"ok\",\"summary\":\"AAPL is $313.56\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STOCK_PRICE&limit=300",
+        "epoch_min": 284,
+        "epoch_max": 284,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 3,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "stock_price-real-03",
+      "intent": "STOCK_PRICE",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the current share price of Microsoft (MSFT) as retrieved through the GLOBAL_QUOTE function?",
+      "ground_truth": "The current share price of Microsoft (MSFT) is $491.54 as of August 25, 2026, at 12:59:55 PM Pacific Time.",
+      "answers": [
+        {
+          "id": "real-txlens-e283",
+          "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 25, 2026, at $491.71 USD.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "f5fe2351-d001-4c41-9250-257f0b02de48",
+            "miner_slug": "txlens",
+            "epoch_id": 283,
+            "live_score": 0.019449286,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T13:10:49.986671Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"as_of\":\"2026-08-25T13:30:00.000Z\",\"canonical\":\"ticker:MSFT:491.70999\",\"confidence\":1,\"currency\":\"USD\",\"exchange\":\"NASDAQ\",\"price_source\":\"twelve_data\",\"price_usd\":491.70999,\"query\":\"MSFT\",\"status\":\"ok\",\"summary\":\"MSFT is $491.71\"}"
+          }
+        },
+        {
+          "id": "real-chainsight-oracle-e283",
+          "text": "The current share price of Microsoft (MSFT) is $491.71 USD, with a 0.90% increase over the last 24 hours.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "f4397c31-6aa4-47ea-a5c7-acfd20e09efa",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 283,
+            "live_score": 0.00800918,
+            "live_rank": 2,
+            "scored_at": "2026-08-26T13:10:49.986671Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_pct\":0.9029,\"high\":492.435,\"low\":484.3,\"name\":\"Microsoft\",\"open\":485.44,\"prev_close\":487.31,\"price_usd\":491.71,\"signal\":\"The current share price of Microsoft (MSFT) is $491.71 USD. It has changed +0.90% over the last 24 hours.\",\"source\":\"finnhub\",\"symbol\":\"MSFT\"}"
+          }
+        },
+        {
+          "id": "real-alphavantage-e283",
+          "text": "This data shows the current price of Microsoft stock (MSFT) at $491.71, with a 0.90% increase from the previous day's close.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "af65f87d-18b9-4d2e-939f-f338f64dce2c",
+            "miner_slug": "alphavantage",
+            "epoch_id": 283,
+            "live_score": 0.007603772,
+            "live_rank": 3,
+            "scored_at": "2026-08-26T13:10:49.986671Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"Global Quote\":{\"01. symbol\":\"MSFT\",\"02. open\":\"485.4400\",\"03. high\":\"492.4350\",\"04. low\":\"484.3000\",\"05. price\":\"491.7100\",\"06. volume\":\"19518987\",\"07. latest trading day\":\"2026-08-25\",\"08. previous close\":\"487.3100\",\"09. change\":\"4.4000\",\"10. change percent\":\"0.9029%\"}}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STOCK_PRICE&limit=300",
+        "epoch_min": 283,
+        "epoch_max": 283,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 3,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "stock_price-real-04",
+      "intent": "STOCK_PRICE",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the current share price of Microsoft () using the GLOBAL_QUOTE function?",
+      "ground_truth": "The current share price of Microsoft (MSFT) is **$491.54** as of August 25, 2026, at 19:59:55 UTC.",
+      "answers": [
+        {
+          "id": "real-txlens-e282",
+          "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 25, 2026, at $491.71 USD.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "1e445ee0-34ac-4e39-b6c3-399ce58ad41d",
+            "miner_slug": "txlens",
+            "epoch_id": 282,
+            "live_score": 0.020852376,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T12:32:16.340445Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"as_of\":\"2026-08-25T13:30:00.000Z\",\"canonical\":\"ticker:MSFT:491.70999\",\"confidence\":1,\"currency\":\"USD\",\"exchange\":\"NASDAQ\",\"price_source\":\"twelve_data\",\"price_usd\":491.70999,\"query\":\"MSFT\",\"status\":\"ok\",\"summary\":\"MSFT is $491.71\"}"
+          }
+        },
+        {
+          "id": "real-chainsight-oracle-e282",
+          "text": "The current share price of Microsoft (MSFT) is $491.71 USD, with a 0.90% increase over the last 24 hours.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "e28e19cf-cac2-4510-b039-ef25263f09aa",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 282,
+            "live_score": 0.007932806,
+            "live_rank": 2,
+            "scored_at": "2026-08-26T12:32:16.340445Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_pct\":0.9029,\"high\":492.435,\"low\":484.3,\"name\":\"Microsoft\",\"open\":485.44,\"prev_close\":487.31,\"price_usd\":491.71,\"signal\":\"The current share price of Microsoft (MSFT) is $491.71 USD. It has changed +0.90% over the last 24 hours.\",\"source\":\"finnhub\",\"symbol\":\"MSFT\"}"
+          }
+        },
+        {
+          "id": "real-alphavantage-e282",
+          "text": "This data shows the current price of Microsoft stock (MSFT) at $491.71, with a 0.90% increase from the previous day's close.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "9c112a37-6e3b-46b8-9329-65dbdc9939a3",
+            "miner_slug": "alphavantage",
+            "epoch_id": 282,
+            "live_score": 0.0070073837,
+            "live_rank": 3,
+            "scored_at": "2026-08-26T12:32:16.340445Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"Global Quote\":{\"01. symbol\":\"MSFT\",\"02. open\":\"485.4400\",\"03. high\":\"492.4350\",\"04. low\":\"484.3000\",\"05. price\":\"491.7100\",\"06. volume\":\"19518987\",\"07. latest trading day\":\"2026-08-25\",\"08. previous close\":\"487.3100\",\"09. change\":\"4.4000\",\"10. change percent\":\"0.9029%\"}}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STOCK_PRICE&limit=300",
+        "epoch_min": 282,
+        "epoch_max": 282,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 3,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "stock_price-real-05",
+      "intent": "STOCK_PRICE",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the current share price of Microsoft (MSFT) as retrieved through the GLOBAL_QUOTE function?",
+      "ground_truth": "The current share price of Microsoft (MSFT) is $491.54 as of August 25, 2026, 19:59:55 UTC-0.",
+      "answers": [
+        {
+          "id": "real-txlens-e281",
+          "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 25, 2026, at $491.71 USD.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "ee26aee4-b191-475d-8f6a-95d11d92ddbf",
+            "miner_slug": "txlens",
+            "epoch_id": 281,
+            "live_score": 0.017876262,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T10:44:21.500331Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"as_of\":\"2026-08-25T13:30:00.000Z\",\"canonical\":\"ticker:MSFT:491.70999\",\"confidence\":1,\"currency\":\"USD\",\"exchange\":\"NASDAQ\",\"price_source\":\"twelve_data\",\"price_usd\":491.70999,\"query\":\"MSFT\",\"status\":\"ok\",\"summary\":\"MSFT is $491.71\"}"
+          }
+        },
+        {
+          "id": "real-chainsight-oracle-e281",
+          "text": "The current share price of Microsoft (MSFT) is $491.71 USD, with a 0.90% increase over the last 24 hours.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "f40fcc46-f95e-4352-8100-bc1ac69569ab",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 281,
+            "live_score": 0.0060384045,
+            "live_rank": 3,
+            "scored_at": "2026-08-26T10:44:21.500331Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_pct\":0.9029,\"high\":492.435,\"low\":484.3,\"name\":\"Microsoft\",\"open\":485.44,\"prev_close\":487.31,\"price_usd\":491.71,\"signal\":\"The current share price of Microsoft (MSFT) is $491.71 USD. It has changed +0.90% over the last 24 hours.\",\"source\":\"finnhub\",\"symbol\":\"MSFT\"}"
+          }
+        },
+        {
+          "id": "real-alphavantage-e281",
+          "text": "This data shows the current price of Microsoft stock (MSFT) at $491.71, with a 0.90% increase from the previous day's close.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "baebb2b3-5c67-414b-ae8a-5af65782f0e4",
+            "miner_slug": "alphavantage",
+            "epoch_id": 281,
+            "live_score": 0.0049146893,
+            "live_rank": 4,
+            "scored_at": "2026-08-26T10:44:21.500331Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"Global Quote\":{\"01. symbol\":\"MSFT\",\"02. open\":\"485.4400\",\"03. high\":\"492.4350\",\"04. low\":\"484.3000\",\"05. price\":\"491.7100\",\"06. volume\":\"19518987\",\"07. latest trading day\":\"2026-08-25\",\"08. previous close\":\"487.3100\",\"09. change\":\"4.4000\",\"10. change percent\":\"0.9029%\"}}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STOCK_PRICE&limit=300",
+        "epoch_min": 281,
+        "epoch_max": 281,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 3,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "stock_price-real-06",
+      "intent": "STOCK_PRICE",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the current share price of Microsoft (MSFT) as retrieved by the GLOBAL_QUOTE function?",
+      "ground_truth": "The current share price of Microsoft (MSFT) is $491.54 as of August 25, 2026, at 12:59:55 PM Pacific Time:\n\n- Latest price: $491.54- Exchange: NASDAQ (XNAS)- Timestamp (UTC): August 25, 2026, 19:59:55 UTC- Timestamp (Pacific): August 25, 2026, 12:59:55 America/Los_Angeles",
+      "answers": [
+        {
+          "id": "real-txlens-e280",
+          "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 25, 2026, at $491.71 USD.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "be49d101-6ce9-473d-9661-3dc123f85653",
+            "miner_slug": "txlens",
+            "epoch_id": 280,
+            "live_score": 0.01854952,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T09:25:29.358345Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"as_of\":\"2026-08-25T13:30:00.000Z\",\"canonical\":\"ticker:MSFT:491.70999\",\"confidence\":1,\"currency\":\"USD\",\"exchange\":\"NASDAQ\",\"price_source\":\"twelve_data\",\"price_usd\":491.70999,\"query\":\"MSFT\",\"status\":\"ok\",\"summary\":\"MSFT is $491.71\"}"
+          }
+        },
+        {
+          "id": "real-chainsight-oracle-e280",
+          "text": "The current share price of Microsoft (MSFT) is $491.71 USD, with a 0.90% increase over the last 24 hours.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "c6b2dd99-e41b-4757-ad1f-6fb6d0294979",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 280,
+            "live_score": 0.004412781,
+            "live_rank": 2,
+            "scored_at": "2026-08-26T09:25:29.358345Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_pct\":0.9029,\"high\":492.435,\"low\":484.3,\"name\":\"Microsoft\",\"open\":485.44,\"prev_close\":487.31,\"price_usd\":491.71,\"signal\":\"The current share price of Microsoft (MSFT) is $491.71 USD. It has changed +0.90% over the last 24 hours.\",\"source\":\"finnhub\",\"symbol\":\"MSFT\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STOCK_PRICE&limit=300",
+        "epoch_min": 280,
+        "epoch_max": 280,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 2,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "stock_price-real-07",
+      "intent": "STOCK_PRICE",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the current share price of Apple Inc. (AAPL) as of August 25, 2026?",
+      "ground_truth": "The current share price of Apple Inc. (AAPL) as of August 25, 2026, is **$310.01**. This price reflects the intraday trading activity where the stock moved within a range of $309.90 to $310.53. The stock is trading slightly below its session's peak but above its intraday low.",
+      "answers": [
+        {
+          "id": "real-alphavantage-e275",
+          "text": "The data shows the current stock information for Apple Inc. (AAPL) with an opening price of 311.47, a high of 313.36, a low of 309.97, and a current price of 310.34, along with a trading volume of 34,673,582 shares.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "f9a911b4-412c-4319-bdca-be5133c2acc1",
+            "miner_slug": "alphavantage",
+            "epoch_id": 275,
+            "live_score": 0.009038953,
+            "live_rank": 1,
+            "scored_at": "2026-08-25T11:43:08.893793Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"Global Quote\":{\"01. symbol\":\"AAPL\",\"02. open\":\"311.4700\",\"03. high\":\"313.3600\",\"04. low\":\"309.9700\",\"05. price\":\"310.3400\",\"06. volume\":\"34673582\",\"07. latest trading day\":\"2026-08-24\",\"08. previous close\":\"309.3500\",\"09. change\":\"0.9900\",\"10. change percent\":\"0.3200%\"}}"
+          }
+        },
+        {
+          "id": "real-chainsight-oracle-e275",
+          "text": "The data shows that Apple's (AAPL) current share price is $310.34 USD, with a 0.32% increase over the last 24 hours, opening at $311.47, and ranging between a high of $313.36 and a low of $309.97.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "b6a8e3ff-9d2a-4e66-84f6-6c0fe99c0df8",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 275,
+            "live_score": 0.0007968473,
+            "live_rank": 2,
+            "scored_at": "2026-08-25T11:43:08.893793Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_pct\":0.32,\"high\":313.36,\"low\":309.97,\"name\":\"Apple\",\"open\":311.47,\"prev_close\":309.35,\"price_usd\":310.34,\"signal\":\"The current share price of Apple (AAPL) is $310.34 USD. It has changed +0.32% over the last 24 hours.\",\"source\":\"finnhub\",\"symbol\":\"AAPL\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STOCK_PRICE&limit=300",
+        "epoch_min": 275,
+        "epoch_max": 275,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 2,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "stock_price-real-08",
+      "intent": "STOCK_PRICE",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the current share price of Microsoft (MSFT) as retrieved via the GLOBAL_QUOTE function?",
+      "ground_truth": "The current share price of Microsoft (MSFT) is $487.37 as of August 24, 2026, 19:59:55 UTC-0.",
+      "answers": [
+        {
+          "id": "real-chainsight-oracle-e274",
+          "text": "The data shows that Microsoft's (MSFT) current share price is $487.31 USD, with a 24-hour change of +0.84%, opening at $483.205, and ranging between a high of $490.605 and a low of $481.86.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "9d64d889-3e79-45df-a97b-fddef347800d",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 274,
+            "live_score": 0.008821338,
+            "live_rank": 1,
+            "scored_at": "2026-08-25T10:17:48.889527Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_pct\":0.8422,\"high\":490.605,\"low\":481.86,\"name\":\"Microsoft\",\"open\":483.205,\"prev_close\":483.24,\"price_usd\":487.31,\"signal\":\"The current share price of Microsoft (MSFT) is $487.31 USD. It has changed +0.84% over the last 24 hours.\",\"source\":\"finnhub\",\"symbol\":\"MSFT\"}"
+          }
+        },
+        {
+          "id": "real-alphavantage-e274",
+          "text": "The data shows the current stock information for Microsoft (MSFT) with a current price of $487.31, a trading volume of 17,230,751 shares, and a 0.8422% increase from the previous close of $483.24.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "2621f7b1-9e93-4b8a-ae17-281982a88625",
+            "miner_slug": "alphavantage",
+            "epoch_id": 274,
+            "live_score": 0.0052452767,
+            "live_rank": 2,
+            "scored_at": "2026-08-25T10:17:48.889527Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"Global Quote\":{\"01. symbol\":\"MSFT\",\"02. open\":\"483.2050\",\"03. high\":\"490.6050\",\"04. low\":\"481.8600\",\"05. price\":\"487.3100\",\"06. volume\":\"17230751\",\"07. latest trading day\":\"2026-08-24\",\"08. previous close\":\"483.2400\",\"09. change\":\"4.0700\",\"10. change percent\":\"0.8422%\"}}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STOCK_PRICE&limit=300",
+        "epoch_min": 274,
+        "epoch_max": 274,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 2,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "stock_price-real-09",
+      "intent": "STOCK_PRICE",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the current share price of Tesla (TSLA) using the GLOBAL_QUOTE function?",
+      "ground_truth": "The current share price of Tesla (TSLA) is $362.74 as of August 21, 2026, at 19:59:59 UTC-0.\n\nThe price has fluctuated between $346.90 and $366.50 on that day, with a market capitalization of approximately $1.43 trillion.",
+      "answers": [
+        {
+          "id": "real-alphavantage-e270",
+          "text": "The data shows the current stock information for Tesla (TSLA) with an open price of 349.88, a high of 366.50, a low of 346.90, and a current price of 362.86, along with a trading volume of 59,223,958 shares, a previous close of 345.13, and a change of 17.73 (5.1372%).",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "c22bf73c-9b05-457f-8b1e-adb1edf9f170",
+            "miner_slug": "alphavantage",
+            "epoch_id": 270,
+            "live_score": 0.008731155,
+            "live_rank": 1,
+            "scored_at": "2026-08-24T07:54:25.991821Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"Global Quote\":{\"01. symbol\":\"TSLA\",\"02. open\":\"349.8800\",\"03. high\":\"366.5000\",\"04. low\":\"346.9000\",\"05. price\":\"362.8600\",\"06. volume\":\"59223958\",\"07. latest trading day\":\"2026-08-21\",\"08. previous close\":\"345.1300\",\"09. change\":\"17.7300\",\"10. change percent\":\"5.1372%\"}}"
+          }
+        },
+        {
+          "id": "real-chainsight-oracle-e270",
+          "text": "The data shows that Tesla's (TSLA) current share price is $362.86 USD, with a 24-hour change of +5.14%, opening at $349.88, and ranging between a high of $366.5 and a low of $346.9.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "808afa9c-b019-4ed8-99cc-5b781be3f5d3",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 270,
+            "live_score": 0.00462572,
+            "live_rank": 2,
+            "scored_at": "2026-08-24T07:54:25.991821Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_pct\":5.1372,\"high\":366.5,\"low\":346.9,\"name\":\"Tesla\",\"open\":349.88,\"prev_close\":345.13,\"price_usd\":362.86,\"signal\":\"The current share price of Tesla (TSLA) is $362.86 USD. It has changed +5.14% over the last 24 hours.\",\"source\":\"finnhub\",\"symbol\":\"TSLA\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STOCK_PRICE&limit=300",
+        "epoch_min": 270,
+        "epoch_max": 270,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 2,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "stock_price-real-10",
+      "intent": "STOCK_PRICE",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you retrieve the current share price for Apple Inc. (AAPL) using the GLOBAL_QUOTE function?",
+      "ground_truth": "The current share price for Apple Inc. (AAPL) is **$309.25** as of August 21, 2026, at 12:59 PM PDT.\n\nHere are some additional details:\n- **Day's Range**: $307.01 - $312.38- **52-Week Range**: $224.69 - $344.57- **Market Cap**: Approximately $4.51 trillion- **P/E Ratio**: 35.48- **Dividend Yield**: 0.35%",
+      "answers": [
+        {
+          "id": "real-chainsight-oracle-e269",
+          "text": "The data shows that Apple's (AAPL) current share price is $309.35 USD, with a 24-hour change of -0.63%, opening at $312.05, and ranging between a high of $312.38 and a low of $307.01.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "0b91293a-da79-48a4-bc43-4cb1b90b872f",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 269,
+            "live_score": 0.006977704,
+            "live_rank": 1,
+            "scored_at": "2026-08-23T15:57:00.17212Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_pct\":-0.6264,\"high\":312.38,\"low\":307.01,\"name\":\"Apple\",\"open\":312.05,\"prev_close\":311.3,\"price_usd\":309.35,\"signal\":\"The current share price of Apple (AAPL) is $309.35 USD. It has changed -0.63% over the last 24 hours.\",\"source\":\"finnhub\",\"symbol\":\"AAPL\"}"
+          }
+        },
+        {
+          "id": "real-alphavantage-e269",
+          "text": "The data shows the current stock information for Apple Inc. (AAPL) with an open price of 312.05, a high of 312.38, a low of 307.01, and a current price of 309.35, along with a trading volume of 46,876,815 shares, a previous close of 311.30, and a change of -1.95 (-0.6264%).",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "40eea194-c4a0-4339-8bbc-839c5bd424b4",
+            "miner_slug": "alphavantage",
+            "epoch_id": 269,
+            "live_score": 0.0067595826,
+            "live_rank": 2,
+            "scored_at": "2026-08-23T15:57:00.17212Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"Global Quote\":{\"01. symbol\":\"AAPL\",\"02. open\":\"312.0500\",\"03. high\":\"312.3800\",\"04. low\":\"307.0100\",\"05. price\":\"309.3500\",\"06. volume\":\"46876815\",\"07. latest trading day\":\"2026-08-21\",\"08. previous close\":\"311.3000\",\"09. change\":\"-1.9500\",\"10. change percent\":\"-0.6264%\"}}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STOCK_PRICE&limit=300",
+        "epoch_min": 269,
+        "epoch_max": 269,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 2,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "stock_price-real-11",
+      "intent": "STOCK_PRICE",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the current share price of Apple () using the GLOBAL_QUOTE function?",
+      "ground_truth": "The current share price of Apple (AAPL) is $309.25 as of August 21, 2026, at 12:59:55 PM Pacific Time.",
+      "answers": [
+        {
+          "id": "real-chainsight-oracle-e268",
+          "text": "The data shows that Apple's (AAPL) current share price is $309.35 USD, with a 24-hour change of -0.63%, opening at $312.05, and ranging between a high of $312.38 and a low of $307.01.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "21dccbe4-466f-4f4a-9d21-0dff11f96d25",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 268,
+            "live_score": 0.006025259,
+            "live_rank": 1,
+            "scored_at": "2026-08-23T13:24:58.338027Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_pct\":-0.6264,\"high\":312.38,\"low\":307.01,\"name\":\"Apple\",\"open\":312.05,\"prev_close\":311.3,\"price_usd\":309.35,\"signal\":\"The current share price of Apple (AAPL) is $309.35 USD. It has changed -0.63% over the last 24 hours.\",\"source\":\"finnhub\",\"symbol\":\"AAPL\"}"
+          }
+        },
+        {
+          "id": "real-alphavantage-e268",
+          "text": "The data shows the current stock information for Apple Inc. (AAPL) with an open price of 312.05, a high of 312.38, a low of 307.01, and a current price of 309.35, along with a trading volume of 46,876,815 shares, a previous close of 311.30, and a change of -1.95 (-0.6264%).",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "814400ad-9be8-4d2f-94a3-faf830a64474",
+            "miner_slug": "alphavantage",
+            "epoch_id": 268,
+            "live_score": 0.0058063082,
+            "live_rank": 2,
+            "scored_at": "2026-08-23T13:24:58.338027Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"Global Quote\":{\"01. symbol\":\"AAPL\",\"02. open\":\"312.0500\",\"03. high\":\"312.3800\",\"04. low\":\"307.0100\",\"05. price\":\"309.3500\",\"06. volume\":\"46876815\",\"07. latest trading day\":\"2026-08-21\",\"08. previous close\":\"311.3000\",\"09. change\":\"-1.9500\",\"10. change percent\":\"-0.6264%\"}}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STOCK_PRICE&limit=300",
+        "epoch_min": 268,
+        "epoch_max": 268,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 2,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "stock_price-real-12",
+      "intent": "STOCK_PRICE",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the current share price of Apple Inc. (AAPL) as retrieved by the GLOBAL_QUOTE function?",
+      "ground_truth": "The current share price of Apple Inc. (AAPL) is **$309.91** as of the latest timestamp on August 25, 2026, at 19:59:58 UTC (12:59:58 PM Pacific Time):\n\n- **Source**: Nasdaq real-time data retrieved via GLOBAL_QUOTE function. \n\nThis price reflects the most recent trading activity for AAPL on the NASDAQ exchange.",
+      "answers": [
+        {
+          "id": "real-alphavantage-e277",
+          "text": "The data shows the stock performance of AAPL on August 25, 2026, with a closing price of $309.90, down by $0.44 (-0.1418%) from the previous close of $310.34, and a trading volume of 25,869,807 shares. The day's trading range was between a low of $308.21 and a high of $313.59.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "24d55bf5-3ad6-464b-8944-447eb1c14cff",
+            "miner_slug": "alphavantage",
+            "epoch_id": 277,
+            "live_score": 0.008790774,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T06:47:09.101023Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"Global Quote\":{\"01. symbol\":\"AAPL\",\"02. open\":\"310.7900\",\"03. high\":\"313.5900\",\"04. low\":\"308.2100\",\"05. price\":\"309.9000\",\"06. volume\":\"25869807\",\"07. latest trading day\":\"2026-08-25\",\"08. previous close\":\"310.3400\",\"09. change\":\"-0.4400\",\"10. change percent\":\"-0.1418%\"}}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STOCK_PRICE&limit=300",
+        "epoch_min": 277,
+        "epoch_max": 277,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "stock_price-real-13",
+      "intent": "STOCK_PRICE",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the current share price of Amazon (AMZN) using the GLOBAL_QUOTE function?",
+      "ground_truth": "The current share price of Amazon (AMZN) is $262.07.",
+      "answers": [
+        {
+          "id": "real-chainsight-oracle-e276",
+          "text": "The data shows that Amazon.com's (AMZN) current share price is $261.06 USD, with a 24-hour change of -0.39%, and has fluctuated between a high of $263.89 and a low of $259.83.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "9d4c469b-ba4a-4218-91f3-a61d92e03bb9",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 276,
+            "live_score": 0.009381283,
+            "live_rank": 1,
+            "scored_at": "2026-08-25T21:43:13.628184Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_pct\":-0.3854,\"high\":263.89,\"low\":259.83,\"name\":\"Amazon.com\",\"open\":262.51,\"prev_close\":262.07,\"price_usd\":261.06,\"signal\":\"The current share price of Amazon.com (AMZN) is $261.06 USD. It has changed -0.39% over the last 24 hours.\",\"source\":\"finnhub\",\"symbol\":\"AMZN\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STOCK_PRICE&limit=300",
+        "epoch_min": 276,
+        "epoch_max": 276,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "stock_price-real-14",
+      "intent": "STOCK_PRICE",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the current share price of Apple (AAPL) as retrieved by the GLOBAL_QUOTE function?",
+      "ground_truth": "The current share price of Apple (AAPL) is $309.25 as retrieved by the GLOBAL_QUOTE function.",
+      "answers": [
+        {
+          "id": "real-alphavantage-e271",
+          "text": "The data shows the current stock information for Apple Inc. (AAPL) with an open price of 312.05, a high of 312.38, a low of 307.01, and a current price of 309.35, along with a trading volume of 46,876,815 shares, a previous close of 311.30, and a change of -1.95 (-0.6264%).",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "8e51d367-f0f5-4cbc-9096-e88d6abc8310",
+            "miner_slug": "alphavantage",
+            "epoch_id": 271,
+            "live_score": 0.005704972,
+            "live_rank": 1,
+            "scored_at": "2026-08-24T08:16:53.512791Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"Global Quote\":{\"01. symbol\":\"AAPL\",\"02. open\":\"312.0500\",\"03. high\":\"312.3800\",\"04. low\":\"307.0100\",\"05. price\":\"309.3500\",\"06. volume\":\"46876815\",\"07. latest trading day\":\"2026-08-21\",\"08. previous close\":\"311.3000\",\"09. change\":\"-1.9500\",\"10. change percent\":\"-0.6264%\"}}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STOCK_PRICE&limit=300",
+        "epoch_min": 271,
+        "epoch_max": 271,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "stock_price-real-15",
+      "intent": "STOCK_PRICE",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "What is the current share price of Microsoft (MSFT) as retrieved through the GLOBAL_QUOTE function?",
+      "ground_truth": "The current share price of Microsoft (MSFT) is **483.24** USD.",
+      "answers": [
+        {
+          "id": "real-chainsight-oracle-e267",
+          "text": "The data shows Microsoft's (MSFT) current share price at $483.24 with a 24-hour change of +0.43%, opening at $479.88, reaching a high of $486.36, a low of $478.53, and a previous close of $481.15.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "1b7d2f50-1952-47ee-aa52-9040f4b131e0",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 267,
+            "live_score": 0.66840833,
+            "live_rank": 1,
+            "scored_at": "2026-08-23T03:46:41.582429Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_pct\":0.4344,\"high\":486.36,\"low\":478.53,\"name\":\"Microsoft\",\"open\":479.88,\"prev_close\":481.15,\"price_usd\":483.24,\"signal\":\"Microsoft (MSFT) current share price is $483.24 as retrieved through the GLOBAL_QUOTE function. The 24h change is +0.43%, with the day open at $479.88. During the day, the high is $486.36 and the low is $478.53, and the previous close is $481.15.\",\"source\":\"finnhub\",\"symbol\":\"MSFT\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STOCK_PRICE&limit=300",
+        "epoch_min": 267,
+        "epoch_max": 267,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    }
+  ]
+}

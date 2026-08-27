@@ -1,0 +1,439 @@
+{
+  "intent": "IP_GEOLOCATION",
+  "class": "REAL",
+  "provenance": {
+    "source": "scores-api",
+    "url": "https://devnode.telegraphprotocol.com/scores?intent=IP_GEOLOCATION&limit=300",
+    "captured": "2026-08-27T08:05:39.131Z",
+    "rows_returned": 21,
+    "rows_available": 21,
+    "epoch_min": 260,
+    "epoch_max": 285,
+    "scored_text_field": "converted_answer",
+    "selection": "top 15 (question, ground_truth) groups by distinct scored answers",
+    "empty_converted_answers": 10,
+    "empty_converted_answer_share": 0.4762,
+    "empty_converted_answer_max_live_score": 0,
+    "ground_truth_refusal_shaped": 0
+  },
+  "fixtures": [
+    {
+      "id": "ip_geolocation-real-01",
+      "intent": "IP_GEOLOCATION",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you determine the geographic location and abuse history for the IP address 192.168.1.10?",
+      "ground_truth": "The IP address **192.168.1.10** is a **private/internal network address** commonly used for local area networks (LANs). \n\n- **Geographic Location**: Private IP addresses like 192.168.x.x do not have a public geographic location because they are not routable on the internet. They are used only within private networks. \n- **Abuse History**: Since this is a private IP address, it does not appear in public abuse databases or blacklists. Abuse reports and histories are typically tracked for public IP addresses that are exposed on the internet. \n\nIn summary, **192.168.1.10** has no public geographic location and no abuse history because it is designed for internal use only.",
+      "answers": [
+        {
+          "id": "real-iplocate-e279",
+          "text": "The data describes an IP address (`192.168.1.10`) associated with the network range `192.0.0.0 - 192.255.255.255`, registered to \"Various Registries (Maintained by ARIN)\" and located in Brisbane, Australia, with abuse contact information provided. The IP is marked as a bogon and is not linked to any privacy services such as Tor, VPN, or proxy.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "17a5965c-c385-4fe4-95a3-29d76dcbc72b",
+            "miner_slug": "iplocate",
+            "epoch_id": 279,
+            "live_score": 0.0084637785,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T08:18:22.926847Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"abuse\":{\"address\":\"Brisbane, Australia\",\"email\":\"helpdesk@apnic.net\",\"name\":\"ABUSE APNICAP\",\"network\":\"192.0.0.0 - 192.255.255.255\",\"phone\":\"+000000000\"},\"calling_code\":null,\"city\":null,\"company\":{\"country_code\":null,\"domain\":\"arin.net\",\"name\":\"Various Registries (Maintained by ARIN)\",\"type\":\"business\"},\"continent\":null,\"country\":null,\"country_code\":null,\"currency_code\":null,\"ip\":\"192.168.1.10\",\"is_anycast\":false,\"is_eu\":false,\"is_satellite\":false,\"latitude\":null,\"longitude\":null,\"postal_code\":null,\"privacy\":{\"is_abuser\":false,\"is_anonymous\":false,\"is_bogon\":true,\"is_hosting\":false,\"is_icloud_relay\":false,\"is_proxy\":false,\"is_tor\":false,\"is_vpn\":false},\"subdivision\":null,\"time_zone\":null}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=IP_GEOLOCATION&limit=300",
+        "epoch_min": 279,
+        "epoch_max": 279,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "ip_geolocation-real-02",
+      "intent": "IP_GEOLOCATION",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you look up the geolocation details for the IP address 142.251.42.174 and provide the country, city, and ISP information?",
+      "ground_truth": "The IP address **142.251.42.174** is associated with **Google LLC** and is located in the **United States**. The specific city and other details are not provided in the search results, but the ISP is clearly identified as Google LLC, indicating this is likely a Google server or service IP address.",
+      "answers": [
+        {
+          "id": "real-iplocate-e278",
+          "text": "The data provides geolocation and network information for the IP address `142.251.42.174`, indicating it is located in Mumbai, India, and is hosted by Google LLC under the network range `142.250.0.0/15`. The IP is not associated with any privacy services like proxies, VPNs, or Tor, and it is identified as a hosting service.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "11bcb94f-f1dc-4e47-8dda-6b88b1d73fbd",
+            "miner_slug": "iplocate",
+            "epoch_id": 278,
+            "live_score": 0.99595594,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T07:45:53.678188Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"abuse\":{\"address\":null,\"country_code\":\"US\",\"email\":null,\"name\":null,\"network\":\"142.250.0.0 - 142.251.255.255\",\"phone\":null},\"asn\":{\"asn\":\"AS15169\",\"country_code\":\"US\",\"domain\":\"google.com\",\"name\":\"Google LLC\",\"netname\":\"GOOGLE\",\"rir\":\"ARIN\",\"route\":\"142.251.42.0/24\",\"type\":\"hosting\"},\"calling_code\":\"91\",\"city\":\"Mumbai\",\"company\":{\"country_code\":\"US\",\"domain\":\"google.com\",\"name\":\"Google LLC\",\"type\":\"hosting\"},\"continent\":\"Asia\",\"country\":\"India\",\"country_code\":\"IN\",\"currency_code\":\"INR\",\"hosting\":{\"domain\":\"cloud.google.com\",\"network\":\"142.250.0.0/15\",\"provider\":\"Google Cloud\"},\"ip\":\"142.251.42.174\",\"is_anycast\":false,\"is_eu\":false,\"is_satellite\":false,\"latitude\":19.07283,\"longitude\":72.88261,\"postal_code\":\"400001\",\"privacy\":{\"is_abuser\":false,\"is_anonymous\":false,\"is_bogon\":false,\"is_hosting\":true,\"is_icloud_relay\":false,\"is_proxy\":false,\"is_tor\":false,\"is_vpn\":false},\"subdivision\":\"Maharashtra\",\"time_zone\":\"Asia/Kolkata\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=IP_GEOLOCATION&limit=300",
+        "epoch_min": 278,
+        "epoch_max": 278,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "ip_geolocation-real-03",
+      "intent": "IP_GEOLOCATION",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you look up the geographic location and abuse history for the IP address 192.0.2.1 and report any suspicious activity detected?",
+      "ground_truth": "The IP address **192.0.2.1** is part of the **TEST-NET-1** range (**192.0.2.0/24**), which is explicitly reserved for documentation and examples purposes and should never appear on the public internet. \n\nThis IP range is not assigned to any real user or network and is used only in technical documentation, tutorials, and examples to avoid conflicts with real IP addresses. \n\nIf you see traffic to or from this address in logs or network monitoring tools, it typically indicates one of the following:\n \n- **Misconfigured or simulated traffic**: The traffic may originate from a device or script using placeholder documentation addresses.\n- **Internal testing**: The address might be used in a lab environment or during internal network testing.\n- **False positive or misinterpretation**: Monitoring tools or security systems might incorrectly flag or misinterpret the traffic.\n\nThere is no geographic location associated with this IP because it is not a routable address on the public internet. Similarly, there is no abuse history or suspicious activity linked to it, as it is not used for real-world communications. \n\nIf you continue to see this address in your logs or security alerts, investigate the source within your internal network or review any configurations that might be using placeholder addresses inappropriately.",
+      "answers": [
+        {
+          "id": "real-iplocate-e276",
+          "text": "The data shows an IP address \"192.0.2.1\" marked as a bogon (invalid or reserved IP space) with associated abuse contact details for a network range \"192.0.0.0 - 192.255.255.255\" managed by \"Various Registries (Maintained by ARIN).\"",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "8ece5dab-d267-4f08-ae1e-7d74b17f05ae",
+            "miner_slug": "iplocate",
+            "epoch_id": 276,
+            "live_score": 0.0077921003,
+            "live_rank": 1,
+            "scored_at": "2026-08-25T21:43:12.570066Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"abuse\":{\"address\":\"Brisbane, Australia\",\"email\":\"helpdesk@apnic.net\",\"name\":\"ABUSE APNICAP\",\"network\":\"192.0.0.0 - 192.255.255.255\",\"phone\":\"+000000000\"},\"calling_code\":null,\"city\":null,\"company\":{\"country_code\":null,\"domain\":\"arin.net\",\"name\":\"Various Registries (Maintained by ARIN)\",\"type\":\"business\"},\"continent\":null,\"country\":null,\"country_code\":null,\"currency_code\":null,\"ip\":\"192.0.2.1\",\"is_anycast\":false,\"is_eu\":false,\"is_satellite\":false,\"latitude\":null,\"longitude\":null,\"postal_code\":null,\"privacy\":{\"is_abuser\":false,\"is_anonymous\":false,\"is_bogon\":true,\"is_hosting\":false,\"is_icloud_relay\":false,\"is_proxy\":false,\"is_tor\":false,\"is_vpn\":false},\"subdivision\":null,\"time_zone\":null}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=IP_GEOLOCATION&limit=300",
+        "epoch_min": 276,
+        "epoch_max": 276,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "ip_geolocation-real-04",
+      "intent": "IP_GEOLOCATION",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you check the abuse history and geographic location for the IP address 192.168.1.10 and tell me if it's been flagged for any malicious activity recently?",
+      "ground_truth": "The IP address **192.168.1.10** is a **private/internal network address** commonly used in home and small office networks. It does not have a public presence on the internet and therefore cannot be tracked for abuse or malicious activity in the same way public IPs can.\n\n### Key Points:\n1. **Private IP Range**:  \n   192.168.1.0 – 192.168.1.255 is part of the private IP address range defined in RFC 1918. These addresses are not routable on the public internet and are used exclusively for internal network communication.\n\n2. **No Public Abuse History**:  \n   Since this is a private address, it **cannot** appear in public abuse databases (e.g., AbuseIPDB, Spamhaus) or be flagged for malicious activity on the open internet.\n\n3. **Geographic Location**:  \n   Private IPs have **no geographic location** associated with them because they are not exposed to the internet. Tools that claim to geolocate private IPs are either misrepresenting data or simply showing placeholder information.\n\n4. **Potential Misinterpretation**:  \n   If you encountered this IP in logs or security tools, it likely originated from a device **within your own network** (e.g., a computer, phone, or IoT device). It does **not** indicate external malicious activity.\n\n### What to Do Instead:\n- **Investigate Internal Activity**:  \n  If you suspect malicious behavior, focus on the **device using this IP** (e.g., scan for malware, review firewall logs, or isolate the device for inspection).\n  \n- **Monitor for Anomalies**:  \n  Use tools like Wireshark or IDS solutions to detect unusual traffic patterns from devices on your internal network.\n\nIn summary, **192.168.1.10 has no abuse history and no geographic location** because it is a private IP address used only within your local network. Any security concerns should be addressed internally.",
+      "answers": [
+        {
+          "id": "real-iplocate-e270",
+          "text": "The data provides information about an IP address, indicating it is within a specific network range managed by various registries, and includes details about an abuse contact for that network, while also noting that the IP is not associated with any privacy concerns like being a proxy, VPN, or TOR node.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "374a73a3-e33f-4c6b-a8f1-5f04e387a536",
+            "miner_slug": "iplocate",
+            "epoch_id": 270,
+            "live_score": 0.009308951,
+            "live_rank": 1,
+            "scored_at": "2026-08-24T07:54:36.306544Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"abuse\":{\"address\":\"Brisbane, Australia\",\"email\":\"helpdesk@apnic.net\",\"name\":\"ABUSE APNICAP\",\"network\":\"192.0.0.0 - 192.255.255.255\",\"phone\":\"+000000000\"},\"calling_code\":null,\"city\":null,\"company\":{\"country_code\":null,\"domain\":\"arin.net\",\"name\":\"Various Registries (Maintained by ARIN)\",\"type\":\"business\"},\"continent\":null,\"country\":null,\"country_code\":null,\"currency_code\":null,\"ip\":\"192.168.1.10\",\"is_anycast\":false,\"is_eu\":false,\"is_satellite\":false,\"latitude\":null,\"longitude\":null,\"postal_code\":null,\"privacy\":{\"is_abuser\":false,\"is_anonymous\":false,\"is_bogon\":true,\"is_hosting\":false,\"is_icloud_relay\":false,\"is_proxy\":false,\"is_tor\":false,\"is_vpn\":false},\"subdivision\":null,\"time_zone\":null}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=IP_GEOLOCATION&limit=300",
+        "epoch_min": 270,
+        "epoch_max": 270,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "ip_geolocation-real-05",
+      "intent": "IP_GEOLOCATION",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you check the abuse history and geographic location for IP address 192.0.2.1 and summarize what you find?",
+      "ground_truth": "The IP address **192.0.2.1** is part of a special range designated for documentation and examples, specifically known as **TEST-NET-1** (192.0.2.0/24). \n\n### Abuse History\nThis IP address **does not have an abuse history** because it is reserved for documentation and should not appear on the public internet. It is explicitly mentioned that addresses in this range should not be used in real-world scenarios and are meant for examples in documentation, tutorials, or testing environments.\n\n### Geographic Location \nSince this IP address is reserved for documentation and not routable on the public internet, **it does not have a geographic location**. It will not resolve to any real-world country, city, or ISP.\n\n### Summary\n- **Abuse History**: None, as it is a reserved documentation IP and should not be used in production or appear in logs.  \n- **Geographic Location**: None, because it is not a public IP and cannot be geolocated.  \n\nThis IP is safe to use in examples but should never be encountered in real network traffic.",
+      "answers": [
+        {
+          "id": "real-iplocate-e269",
+          "text": "The data shows an IP address \"192.0.2.1\" that is marked as a bogon (invalid on the public internet) and is associated with the network range \"192.0.0.0 - 192.255.255.255\" managed by various registries maintained by ARIN, with abuse contact details provided for \"ABUSE APNICAP\" in Brisbane, Australia.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "5c7d851a-7f6e-47ed-b94e-bdf00fa416b1",
+            "miner_slug": "iplocate",
+            "epoch_id": 269,
+            "live_score": 0.045735113,
+            "live_rank": 1,
+            "scored_at": "2026-08-23T15:57:00.107848Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"abuse\":{\"address\":\"Brisbane, Australia\",\"email\":\"helpdesk@apnic.net\",\"name\":\"ABUSE APNICAP\",\"network\":\"192.0.0.0 - 192.255.255.255\",\"phone\":\"+000000000\"},\"calling_code\":null,\"city\":null,\"company\":{\"country_code\":null,\"domain\":\"arin.net\",\"name\":\"Various Registries (Maintained by ARIN)\",\"type\":\"business\"},\"continent\":null,\"country\":null,\"country_code\":null,\"currency_code\":null,\"ip\":\"192.0.2.1\",\"is_anycast\":false,\"is_eu\":false,\"is_satellite\":false,\"latitude\":null,\"longitude\":null,\"postal_code\":null,\"privacy\":{\"is_abuser\":false,\"is_anonymous\":false,\"is_bogon\":true,\"is_hosting\":false,\"is_icloud_relay\":false,\"is_proxy\":false,\"is_tor\":false,\"is_vpn\":false},\"subdivision\":null,\"time_zone\":null}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=IP_GEOLOCATION&limit=300",
+        "epoch_min": 269,
+        "epoch_max": 269,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "ip_geolocation-real-06",
+      "intent": "IP_GEOLOCATION",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you determine the geographic location for the IP address 208.67.222.222 and check its abuse history?",
+      "ground_truth": "The IP address **208.67.222.222** is associated with **OpenDNS**, now known as **Cisco Umbrella**, a DNS resolution service provided by Cisco. This IP is one of the public DNS resolver addresses offered by OpenDNS, alongside **208.67.220.220**, and is used for resolving domain names into IP addresses.\n\n### Abuse History:\nRegarding the abuse history, the IP address **208.67.222.222** does not appear to have any notable abuse reports or malicious activity associated with it in publicly available databases such as AbuseIPDB or other IP reputation services. This IP is a well-known and legitimate service used by millions of users worldwide for DNS resolution. It is not typically flagged for abuse or malicious behavior.\n\n### Summary:\n- **Location**: The IP is associated with Cisco's infrastructure, likely located in Ashburn, Virginia, USA, where many large tech companies have data centers.\n- **Abuse History**: No significant abuse reports are found for this IP. It is a trusted and widely used public DNS service.\n\nThis IP is safe for general use and is not linked to any malicious activity.",
+      "answers": [
+        {
+          "id": "real-iplocate-e268",
+          "text": "The data provides information about the IP address 208.67.222.222, which is associated with Cisco OpenDNS, LLC, located in San Jose, California, and includes details such as contact information, network range, ASN details, geographic coordinates, and various flags indicating the nature of the IP.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "8b555a24-a137-4dfc-9809-1fa747bafb62",
+            "miner_slug": "iplocate",
+            "epoch_id": 268,
+            "live_score": 0.29705068,
+            "live_rank": 1,
+            "scored_at": "2026-08-23T13:27:08.635628Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"abuse\":{\"address\":\"170 West Tasman Drive, San Jose, CA, 95134, US\",\"country_code\":\"US\",\"email\":\"rir-abuse@cisco.com\",\"name\":\"Cisco OpenDNS, LLC\",\"network\":\"208.67.216.0 - 208.67.223.255\",\"phone\":\"+1-408-525-0560\"},\"asn\":{\"asn\":\"AS36692\",\"country_code\":\"US\",\"domain\":\"cisco.com\",\"name\":\"Cisco OpenDNS, LLC\",\"netname\":\"CISCO-UMBRELLA\",\"rir\":\"ARIN\",\"route\":\"208.67.222.0/24\",\"type\":\"hosting\"},\"calling_code\":\"1\",\"city\":\"San Jose\",\"company\":{\"country_code\":\"US\",\"domain\":\"cisco.com\",\"name\":\"Cisco OpenDNS, LLC\",\"type\":\"hosting\"},\"continent\":\"North America\",\"country\":\"United States\",\"country_code\":\"US\",\"currency_code\":\"USD\",\"ip\":\"208.67.222.222\",\"is_anycast\":true,\"is_eu\":false,\"is_satellite\":false,\"latitude\":37.33939,\"longitude\":-121.89496,\"postal_code\":\"95025\",\"privacy\":{\"is_abuser\":false,\"is_anonymous\":false,\"is_bogon\":false,\"is_hosting\":false,\"is_icloud_relay\":false,\"is_proxy\":false,\"is_tor\":false,\"is_vpn\":false},\"subdivision\":\"California\",\"time_zone\":\"America/Los_Angeles\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=IP_GEOLOCATION&limit=300",
+        "epoch_min": 268,
+        "epoch_max": 268,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "ip_geolocation-real-07",
+      "intent": "IP_GEOLOCATION",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you check the abuse history and geographic location for the IP address 193.142.144.10 and advise if it's safe to allow access from this IP?",
+      "ground_truth": "The IP address **193.142.144.10** is associated with **Gigabit LLC** in **Russia**. \n\nThere is no clear evidence of abuse or malicious activity linked to this IP in the databases I checked, but it originates from a Russian network provider, which may raise concerns depending on your security policies regarding traffic from certain geographic regions. \n\nConsider reviewing your organization's policies on allowing access from Russian IP addresses before granting access. If needed, conduct deeper investigation using specialized threat intelligence platforms.",
+      "answers": [
+        {
+          "id": "real-iplocate-e267",
+          "text": "- The generated text has been blocked by our content filters.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "51145a51-0b84-4e12-be0d-77bbb23c61d9",
+            "miner_slug": "iplocate",
+            "epoch_id": 267,
+            "live_score": 0.0047324067,
+            "live_rank": 1,
+            "scored_at": "2026-08-23T03:45:15.966272Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"abuse\":{\"address\":\"Mira st., n. 14/10, of. 18, 301361, Alexin, Tula region, RUSSIAN FEDERATION\",\"country_code\":\"RU\",\"email\":\"crm@ggbt.ru\",\"name\":\"Alexey Trutnev\",\"network\":\"193.142.144.0 - 193.142.144.255\",\"phone\":\"+7 962 271 1010\"},\"asn\":{\"asn\":\"AS197793\",\"country_code\":\"RU\",\"domain\":\"ggbt.ru\",\"name\":\"Gigabit LLC\",\"netname\":\"GIGABIT-NET\",\"rir\":\"RIPE\",\"route\":\"193.142.144.0/24\",\"type\":\"business\"},\"calling_code\":\"7\",\"city\":\"Moscow\",\"company\":{\"country_code\":\"RU\",\"domain\":\"ggbt.ru\",\"name\":\"Gigabit LLC\",\"type\":\"business\"},\"continent\":\"Europe\",\"country\":\"Russia\",\"country_code\":\"RU\",\"currency_code\":\"RUB\",\"ip\":\"193.142.144.10\",\"is_anycast\":false,\"is_eu\":false,\"is_satellite\":false,\"latitude\":55.75222,\"longitude\":37.61556,\"postal_code\":\"101000\",\"privacy\":{\"is_abuser\":false,\"is_anonymous\":false,\"is_bogon\":false,\"is_hosting\":false,\"is_icloud_relay\":false,\"is_proxy\":false,\"is_tor\":false,\"is_vpn\":false},\"subdivision\":\"Moscow\",\"time_zone\":\"Europe/Moscow\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=IP_GEOLOCATION&limit=300",
+        "epoch_min": 267,
+        "epoch_max": 267,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "ip_geolocation-real-08",
+      "intent": "IP_GEOLOCATION",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you look up the geographic location and abuse history for the IP address 208.67.222.222 and tell me where it's located and if it has any known abuse reports?",
+      "ground_truth": "The IP address **208.67.222.222** is associated with **OpenDNS (now Cisco Umbrella)**, a public DNS service. Geographically, it is located in **Ashburn, Virginia, USA**, operated by **Cisco Systems, Inc.**.\n\nRegarding abuse history, searches across multiple abuse databases (such as AbuseIPDB, IPQS, and others) did not return any recent or historical reports of malicious activity directly linked to this specific IP address. This IP is part of a well-known infrastructure used for DNS resolution and does not appear to have any documented abuse reports.",
+      "answers": [
+        {
+          "id": "real-iplocate-e266",
+          "text": "The data provides information about the IP address 208.67.222.222, which is associated with Cisco OpenDNS, LLC, located in San Jose, California, and includes details such as the company's contact information, network range, ASN, geographic coordinates, and various flags indicating the IP's characteristics.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "e22c0b50-2917-4697-844d-98e5ee37fd7f",
+            "miner_slug": "iplocate",
+            "epoch_id": 266,
+            "live_score": 0.30462903,
+            "live_rank": 1,
+            "scored_at": "2026-08-22T18:45:44.112258Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"abuse\":{\"address\":\"170 West Tasman Drive, San Jose, CA, 95134, US\",\"country_code\":\"US\",\"email\":\"rir-abuse@cisco.com\",\"name\":\"Cisco OpenDNS, LLC\",\"network\":\"208.67.216.0 - 208.67.223.255\",\"phone\":\"+1-408-525-0560\"},\"asn\":{\"asn\":\"AS36692\",\"country_code\":\"US\",\"domain\":\"cisco.com\",\"name\":\"Cisco OpenDNS, LLC\",\"netname\":\"CISCO-UMBRELLA\",\"rir\":\"ARIN\",\"route\":\"208.67.222.0/24\",\"type\":\"hosting\"},\"calling_code\":\"1\",\"city\":\"San Jose\",\"company\":{\"country_code\":\"US\",\"domain\":\"cisco.com\",\"name\":\"Cisco OpenDNS, LLC\",\"type\":\"hosting\"},\"continent\":\"North America\",\"country\":\"United States\",\"country_code\":\"US\",\"currency_code\":\"USD\",\"ip\":\"208.67.222.222\",\"is_anycast\":true,\"is_eu\":false,\"is_satellite\":false,\"latitude\":37.33939,\"longitude\":-121.89496,\"postal_code\":\"95025\",\"privacy\":{\"is_abuser\":false,\"is_anonymous\":false,\"is_bogon\":false,\"is_hosting\":false,\"is_icloud_relay\":false,\"is_proxy\":false,\"is_tor\":false,\"is_vpn\":false},\"subdivision\":\"California\",\"time_zone\":\"America/Los_Angeles\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=IP_GEOLOCATION&limit=300",
+        "epoch_min": 266,
+        "epoch_max": 266,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "ip_geolocation-real-09",
+      "intent": "IP_GEOLOCATION",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you determine the geographic location of the IP address 208.67.222.222 and check its abuse history using IP_REPUTATION?",
+      "ground_truth": "The IP address **208.67.222.222** is associated with **OpenDNS**, a service provided by **Cisco**. Geographically, this IP is located in **Ashburn, Virginia, United States**.\n\nThis IP is commonly used for **DNS resolution** and **internet security services**, and it generally does not have an abuse history, as it is part of a reputable service. However, like any IP, it could potentially be misused or exploited, so monitoring and proper configuration are always recommended.",
+      "answers": [
+        {
+          "id": "real-iplocate-e265",
+          "text": "The data provides information about the IP address 208.67.222.222, which is associated with Cisco OpenDNS, LLC, located in San Jose, California, and includes details about the network, ASN, geographic location, and various flags indicating the IP's characteristics.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "6c23c775-474c-40db-adab-501c9f87daee",
+            "miner_slug": "iplocate",
+            "epoch_id": 265,
+            "live_score": 0.31316993,
+            "live_rank": 1,
+            "scored_at": "2026-08-22T11:36:29.876427Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"abuse\":{\"address\":\"170 West Tasman Drive, San Jose, CA, 95134, US\",\"country_code\":\"US\",\"email\":\"rir-abuse@cisco.com\",\"name\":\"Cisco OpenDNS, LLC\",\"network\":\"208.67.216.0 - 208.67.223.255\",\"phone\":\"+1-408-525-0560\"},\"asn\":{\"asn\":\"AS36692\",\"country_code\":\"US\",\"domain\":\"cisco.com\",\"name\":\"Cisco OpenDNS, LLC\",\"netname\":\"CISCO-UMBRELLA\",\"rir\":\"ARIN\",\"route\":\"208.67.222.0/24\",\"type\":\"hosting\"},\"calling_code\":\"1\",\"city\":\"San Jose\",\"company\":{\"country_code\":\"US\",\"domain\":\"cisco.com\",\"name\":\"Cisco OpenDNS, LLC\",\"type\":\"hosting\"},\"continent\":\"North America\",\"country\":\"United States\",\"country_code\":\"US\",\"currency_code\":\"USD\",\"ip\":\"208.67.222.222\",\"is_anycast\":true,\"is_eu\":false,\"is_satellite\":false,\"latitude\":37.33939,\"longitude\":-121.89496,\"postal_code\":\"95025\",\"privacy\":{\"is_abuser\":false,\"is_anonymous\":false,\"is_bogon\":false,\"is_hosting\":false,\"is_icloud_relay\":false,\"is_proxy\":false,\"is_tor\":false,\"is_vpn\":false},\"subdivision\":\"California\",\"time_zone\":\"America/Los_Angeles\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=IP_GEOLOCATION&limit=300",
+        "epoch_min": 265,
+        "epoch_max": 265,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "ip_geolocation-real-10",
+      "intent": "IP_GEOLOCATION",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you tell me the geographic location and any abuse history for the IP address 142.251.42.174?",
+      "ground_truth": "The IP address **142.251.42.174** is associated with **Google LLC** and is located in **Japan**, specifically in the Shimo’ochiai area (postal code 162-0843). \n\nThere is **no abuse history** reported for this IP address across multiple reputable sources, including AbuseIPDB, IPQS, and LiveIPMap. The IP is categorized as **unsuspicious**, with no known malicious activity such as spam, brute-force attacks, or fraud. \n\nThis IP is part of Google's infrastructure, commonly used for services like search, cloud, and advertising, and is not flagged for any malicious behavior.",
+      "answers": [
+        {
+          "id": "real-iplocate-e264",
+          "text": "The data provides information about the geolocation and network details of an IP address (142.251.42.174) associated with Google LLC, indicating it is hosted by Google Cloud in Mumbai, India, with specific coordinates, and includes details about the autonomous system number, abuse contact information, and various flags related to privacy and network type.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "b292c1aa-4cf8-4e92-bea2-f5c34893ae19",
+            "miner_slug": "iplocate",
+            "epoch_id": 264,
+            "live_score": 0.2381946,
+            "live_rank": 1,
+            "scored_at": "2026-08-22T02:36:01.82562Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"abuse\":{\"address\":\"1600 Amphitheatre Parkway, Mountain View, CA, 94043, US\",\"country_code\":\"US\",\"email\":\"network-abuse@google.com\",\"name\":\"Google LLC\",\"network\":\"142.250.0.0 - 142.251.255.255\",\"phone\":\"+1-650-253-0000\"},\"asn\":{\"asn\":\"AS15169\",\"country_code\":\"US\",\"domain\":\"google.com\",\"name\":\"Google LLC\",\"netname\":\"GOOGLE\",\"rir\":\"ARIN\",\"route\":\"142.251.42.0/24\",\"type\":\"hosting\"},\"calling_code\":\"91\",\"city\":\"Mumbai\",\"company\":{\"country_code\":\"US\",\"domain\":\"google.com\",\"name\":\"Google LLC\",\"type\":\"hosting\"},\"continent\":\"Asia\",\"country\":\"India\",\"country_code\":\"IN\",\"currency_code\":\"INR\",\"hosting\":{\"domain\":\"cloud.google.com\",\"network\":\"142.250.0.0/15\",\"provider\":\"Google Cloud\"},\"ip\":\"142.251.42.174\",\"is_anycast\":false,\"is_eu\":false,\"is_satellite\":false,\"latitude\":19.07283,\"longitude\":72.88261,\"postal_code\":\"400001\",\"privacy\":{\"is_abuser\":false,\"is_anonymous\":false,\"is_bogon\":false,\"is_hosting\":true,\"is_icloud_relay\":false,\"is_proxy\":false,\"is_tor\":false,\"is_vpn\":false},\"subdivision\":\"Maharashtra\",\"time_zone\":\"Asia/Kolkata\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=IP_GEOLOCATION&limit=300",
+        "epoch_min": 264,
+        "epoch_max": 264,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    },
+    {
+      "id": "ip_geolocation-real-11",
+      "intent": "IP_GEOLOCATION",
+      "class": "REAL",
+      "rationale": "recorded traffic: verifies the harness on the answers the node actually scored",
+      "question": "Can you look up the geographic location and any available abuse history for the IP address 142.251.42.174 and return the results in a structured format?",
+      "ground_truth": "The IP address **142.251.42.174** is associated with **Google LLC** and is located in **Tokyo, Japan**.\n\n### Geolocation Details:\n- **Country**: Japan\n- **City**: Tokyo (Shimo’ochiai)\n- **Latitude/Longitude**: Approximately 35.6963° N, 139.7386° E\n- **ISP**: Google LLC\n- **ASN**: AS15169 (Google LLC)\n\n### Abuse History:\nThere is **no publicly reported abuse history** for this specific IP address based on available databases like AbuseIPDB. However, the IP belongs to **Google**, which operates many infrastructure services (e.g., search, cloud, YouTube). Such IPs are generally not flagged for abuse unless involved in malicious activities, which is uncommon for infrastructure-level IPs.\n\nIf you suspect abuse from this IP, consider:\n1. **Checking timestamps/logs** for suspicious activity.\n2. **Using tools like VirusTotal** to scan associated URLs or files.\n3. **Reporting to AbuseIPDB** if evidence of misuse is found.\n\nFor ongoing monitoring, you can use services like [AbuseIPDB](https://www.abuseipdb.com) or integrate API checks into your security tools.",
+      "answers": [
+        {
+          "id": "real-iplocate-e263",
+          "text": "The data provides information about the IP address 142.251.42.174, which is associated with Google LLC, located in Mumbai, India, and is part of the Google Cloud hosting network with various details including contact information, geographical coordinates, and network specifics. It also indicates that the IP is not associated with any abusive, anonymous, or privacy-concerned services like proxy, TOR, or VPN.",
+          "quality": null,
+          "note": "recorded answer; live score is metadata, not truth",
+          "meta": {
+            "record_id": "e97fd07a-4d36-4b26-97b5-bbad271059f3",
+            "miner_slug": "iplocate",
+            "epoch_id": 263,
+            "live_score": 0.20052177,
+            "live_rank": 1,
+            "scored_at": "2026-08-21T17:33:10.279119Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"abuse\":{\"address\":\"1600 Amphitheatre Parkway, Mountain View, CA, 94043, US\",\"country_code\":\"US\",\"email\":\"network-abuse@google.com\",\"name\":\"Google LLC\",\"network\":\"142.250.0.0 - 142.251.255.255\",\"phone\":\"+1-650-253-0000\"},\"asn\":{\"asn\":\"AS15169\",\"country_code\":\"US\",\"domain\":\"google.com\",\"name\":\"Google LLC\",\"netname\":\"GOOGLE\",\"rir\":\"ARIN\",\"route\":\"142.251.42.0/24\",\"type\":\"hosting\"},\"calling_code\":\"91\",\"city\":\"Mumbai\",\"company\":{\"country_code\":\"US\",\"domain\":\"google.com\",\"name\":\"Google LLC\",\"type\":\"hosting\"},\"continent\":\"Asia\",\"country\":\"India\",\"country_code\":\"IN\",\"currency_code\":\"INR\",\"hosting\":{\"domain\":\"cloud.google.com\",\"network\":\"142.250.0.0/15\",\"provider\":\"Google Cloud\"},\"ip\":\"142.251.42.174\",\"is_anycast\":false,\"is_eu\":false,\"is_satellite\":false,\"latitude\":19.07283,\"longitude\":72.88261,\"postal_code\":\"400001\",\"privacy\":{\"is_abuser\":false,\"is_anonymous\":false,\"is_bogon\":false,\"is_hosting\":true,\"is_icloud_relay\":false,\"is_proxy\":false,\"is_tor\":false,\"is_vpn\":false},\"subdivision\":\"Maharashtra\",\"time_zone\":\"Asia/Kolkata\"}"
+          }
+        }
+      ],
+      "pairs": [],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=IP_GEOLOCATION&limit=300",
+        "epoch_min": 263,
+        "epoch_max": 263,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "distinct_answers": 1,
+        "ground_truth_looks_like_refusal": false
+      }
+    }
+  ]
+}

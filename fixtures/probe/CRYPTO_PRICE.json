@@ -1,0 +1,595 @@
+{
+  "intent": "CRYPTO_PRICE",
+  "class": "REAL-PARROT",
+  "provenance": {
+    "source": "derived from track2/fixtures/real",
+    "generator": "track2/harness/gen-probes.mjs",
+    "real_capture": "2026-08-27T08:05:39.131Z"
+  },
+  "fixtures": [
+    {
+      "id": "crypto_price-probe-01",
+      "intent": "CRYPTO_PRICE",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "What is the current price of Solana (SOL) in USD?",
+      "ground_truth": "The current price of Solana (SOL) is approximately $101.03 USD, based on the latest data available as of August 27, 2026, at 12:44 AM UTC. The price has shown a 24-hour increase of about +4.78%. \n\nThe market cap stands at around $59 billion, with a 24-hour trading volume of $3.7 billion. The circulating supply is approximately 584.1 million SOL tokens%.\n\nPlease note that cryptocurrency prices can be highly volatile and change rapidly. For the most up-to-date information, always check a reliable financial news source or a cryptocurrency tracking platform.",
+      "answers": [
+        {
+          "id": "real-optivis-crypto-price-e285",
+          "text": "The data shows the absence of information for both Ethereum (ETH) and Solana (SOL) cryptocurrencies.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "639b2b45-a358-4212-93bf-2a0865d2e35b",
+            "miner_slug": "optivis-crypto-price",
+            "epoch_id": 285,
+            "live_score": 1.3733335e-8,
+            "live_rank": 1,
+            "scored_at": "2026-08-27T00:51:51.328046Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"eth\":{},\"sol\":{}}"
+          }
+        },
+        {
+          "id": "real-coingecko-e285",
+          "text": "The data shows the current price of Solana (SOL) in USD, which is $100.97.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "e83861ef-9332-451e-857b-0cdc0f65fb39",
+            "miner_slug": "coingecko",
+            "epoch_id": 285,
+            "live_score": 1.697288e-18,
+            "live_rank": 6,
+            "scored_at": "2026-08-27T00:51:51.328046Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"solana\":{\"usd\":100.97}}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "The current price of Solana (SOL) in USD? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "The current price of Solana (SOL) in USD? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data shows the absence of information for both Ethereum (ETH) and Solana (SOL) cryptocurrencies.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-optivis-crypto-price-e285",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "crypto_price-real-01",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CRYPTO_PRICE&limit=300",
+        "epoch_min": 285,
+        "epoch_max": 285,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "crypto_price-probe-02",
+      "intent": "CRYPTO_PRICE",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "What is the current price of Solana (SOL) in USD?",
+      "ground_truth": "The current price of Solana (SOL) is approximately **$95.98** USD, according to the latest data as of August 26, 2026, at 3:36 PM UTC. The price has decreased by about **-2.09%** over the past 24 hours, with a circulating supply of around **583.4 million SOL**.\n\nOther sources indicate slightly varying prices, such as **$96.69**, **$97.05**, and **$97.50**, reflecting minor fluctuations across different platforms and time stamps. These minor discrepancies are typical due to market volatility and differences in data reporting times.\n\nIn summary, the SOL price is hovering around the **$96–$98** range as of the latest updates.",
+      "answers": [
+        {
+          "id": "real-chainsight-oracle-e284",
+          "text": "The current price of Solana (SOL) is approximately $96.21 USD, reflecting a 24-hour decrease of about 1.74%, with a market capitalization of about $56.14 billion and a circulating supply of about 583.4 million SOL.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "51818fcf-902b-4929-9951-04300c41cb0c",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 284,
+            "live_score": 0.071036026,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T15:57:53.9245Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_24h_pct\":-1.73567,\"circulating_supply\":583375027.6218187,\"coingecko_id\":\"solana\",\"currency\":\"USD\",\"market_cap_usd\":56136654927,\"price_usd\":96.21,\"signal\":\"The current price of Solana (SOL) is approximately $96.21 USD, reflecting a 24-hour change of -1.74%, with a market capitalization of about $56.14 billion and a circulating supply of about 583.4 million SOL.\",\"source\":\"coingecko\",\"symbol\":\"SOL\"}"
+          }
+        },
+        {
+          "id": "real-coingecko-e284",
+          "text": "The Solana cryptocurrency is trading at approximately $96.22 USD.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "d4aedcb6-b6f8-4347-82e2-128f14080eed",
+            "miner_slug": "coingecko",
+            "epoch_id": 284,
+            "live_score": 4.8142793e-18,
+            "live_rank": 5,
+            "scored_at": "2026-08-26T15:57:53.9245Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"solana\":{\"usd\":96.22}}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "The current price of Solana (SOL) in USD? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "The current price of Solana (SOL) in USD? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The current price of Solana (SOL) is approximately $96.21 USD, reflecting a 24-hour decrease of about 1.74%, with a market capitalization of about $56.14 billion and a circulating supply of about 583.4 million SOL.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-chainsight-oracle-e284",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "crypto_price-real-02",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CRYPTO_PRICE&limit=300",
+        "epoch_min": 284,
+        "epoch_max": 284,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "crypto_price-probe-03",
+      "intent": "CRYPTO_PRICE",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "What is the current price of Solana (SOL) in USD?",
+      "ground_truth": "The current price of Solana (SOL) is approximately **$97.07 USD** as of August 26, 2026, at 12:54 PM UTC.\n\nThe price fluctuates slightly across different sources, with recent values ranging from **$96.69 to $97.50 USD** depending on the exchange and time of measurement. \n\nSolana’s market cap is around **$56.6 billion**, and the 24-hour trading volume is approximately **$3.6–$5.5 billion**. \n\nThe price has decreased by around **1.53–4.98%** in the last 24 hours, but it is up **25–30%** compared to one week ago. \n\nFor the most precise and up-to-date price, check a reliable cryptocurrency tracking platform or exchange like Binance or Coinbase.",
+      "answers": [
+        {
+          "id": "real-chainsight-oracle-e283",
+          "text": "The current price of Solana (SOL) is approximately $96.53 USD, reflecting a 24-hour decrease of about 1.70%, with a market capitalization of about $56.32 billion and a circulating supply of about 583.4 million SOL.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "eda7575d-9ea6-48c5-ac97-8430fa025d59",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 283,
+            "live_score": 0.065839,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T13:17:42.374785Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_24h_pct\":-1.70205,\"circulating_supply\":583375130.6056637,\"coingecko_id\":\"solana\",\"currency\":\"USD\",\"market_cap_usd\":56318055072,\"price_usd\":96.53,\"signal\":\"The current price of Solana (SOL) is approximately $96.53 USD, reflecting a 24-hour change of -1.70%, with a market capitalization of about $56.32 billion and a circulating supply of about 583.4 million SOL.\",\"source\":\"coingecko\",\"symbol\":\"SOL\"}"
+          }
+        },
+        {
+          "id": "real-sentinel-risk-oracle-e283",
+          "text": "The AI service indicates that the ETH (Ethereum) price data is temporarily unavailable from its upstream sources, with a confidence score of 50.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "eb3e6e4b-72e7-4d11-98a9-f04d3cd11a98",
+            "miner_slug": "sentinel-risk-oracle",
+            "epoch_id": 283,
+            "live_score": 2.3488807e-19,
+            "live_rank": 5,
+            "scored_at": "2026-08-26T13:17:42.374785Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"answer\":\"ETH price data temporarily unavailable from upstream sources.\",\"asset\":\"ETH\",\"confidence_score\":50,\"intent\":\"CRYPTO_PRICE\",\"miner_id\":501,\"price_usd\":null,\"status\":\"success\",\"timestamp\":\"2026-08-26T13:17:39.545Z\"}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "The current price of Solana (SOL) in USD? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "The current price of Solana (SOL) in USD? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The current price of Solana (SOL) is approximately $96.53 USD, reflecting a 24-hour decrease of about 1.70%, with a market capitalization of about $56.32 billion and a circulating supply of about 583.4 million SOL.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-chainsight-oracle-e283",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "crypto_price-real-03",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CRYPTO_PRICE&limit=300",
+        "epoch_min": 283,
+        "epoch_max": 283,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "crypto_price-probe-04",
+      "intent": "CRYPTO_PRICE",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "What is the current price of Ethereum (ETH) in USD?",
+      "ground_truth": "The current price of Ethereum (ETH) is approximately **$2,459.68 USD**, as of the latest update on August 26, 2026, at 12:17 PM UTC. \n\nOther sources indicate slightly varying prices, such as **$2,449.70 USD** and **$2,463.46 USD**, reflecting minor fluctuations in the market throughout the day. \n\nThe price has shown a slight decrease of about **-0.63%** over the past 24 hours, with a circulating supply of approximately **120.7 million ETH** and a market capitalization around **$295.6 billion USD**. \n\nThese values are subject to real-time changes due to market dynamics.",
+      "answers": [
+        {
+          "id": "real-chainsight-oracle-e282",
+          "text": "The current price of Ethereum (ETH) is approximately $2,469.84 USD, reflecting a 24-hour decrease of about 0.22%, with a market capitalization of about $297.92 billion and a circulating supply of about 120.7 million ETH.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "3a7f2abc-a8d5-4e9a-bf1f-917cf4d8dbd9",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 282,
+            "live_score": 0.08869575,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T12:33:08.885346Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_24h_pct\":-0.22081,\"circulating_supply\":120681271.17235316,\"coingecko_id\":\"ethereum\",\"currency\":\"USD\",\"market_cap_usd\":297919095861,\"price_usd\":2469.84,\"signal\":\"The current price of Ethereum (ETH) is approximately $2,469.84 USD, reflecting a 24-hour change of -0.22%, with a market capitalization of about $297.92 billion and a circulating supply of about 120.7 million ETH.\",\"source\":\"coingecko\",\"symbol\":\"ETH\"}"
+          }
+        },
+        {
+          "id": "real-sentinel-risk-oracle-e282",
+          "text": "The AI service indicates that the ETH (Ethereum) price data is temporarily unavailable from its upstream sources, with a confidence score of 50.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "99b3a395-bd49-45a7-99f0-c6840ca98413",
+            "miner_slug": "sentinel-risk-oracle",
+            "epoch_id": 282,
+            "live_score": 2.234432e-24,
+            "live_rank": 5,
+            "scored_at": "2026-08-26T12:33:08.885346Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"answer\":\"ETH price data temporarily unavailable from upstream sources.\",\"asset\":\"ETH\",\"confidence_score\":50,\"intent\":\"CRYPTO_PRICE\",\"miner_id\":501,\"price_usd\":null,\"status\":\"success\",\"timestamp\":\"2026-08-26T12:33:06.174Z\"}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "The current price of Ethereum (ETH) in USD? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "The current price of Ethereum (ETH) in USD? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The current price of Ethereum (ETH) is approximately $2,469.84 USD, reflecting a 24-hour decrease of about 0.22%, with a market capitalization of about $297.92 billion and a circulating supply of about 120.7 million ETH.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-chainsight-oracle-e282",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "crypto_price-real-04",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CRYPTO_PRICE&limit=300",
+        "epoch_min": 282,
+        "epoch_max": 282,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "crypto_price-probe-05",
+      "intent": "CRYPTO_PRICE",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "What is the current price of Solana (SOL) in USD?",
+      "ground_truth": "The current price of Solana (SOL) is approximately **$100.88** USD, as indicated by recent market data. This reflects a 7% increase from the price 24 hours ago and is 33% higher than the price one week prior. \n\nOther sources provide slightly varying figures, with prices ranging from around **$94.75** to **$101.47** USD, depending on the exchange and the specific time of measurement. These minor discrepancies are typical in cryptocurrency markets due to high volatility and real-time trading dynamics.\n\nThe price of Solana has shown significant growth over the past year, though it remains well below its all-time high of approximately **$294.85** USD, reached on January 19, 2025. The market capitalization of Solana is currently around **$58.1 billion**, with a 24-hour trading volume of about **$7.8 billion**.",
+      "answers": [
+        {
+          "id": "real-chainsight-oracle-e274",
+          "text": "The data shows that the current price of Solana (SOL) is approximately $99.35 USD with a 24-hour price increase of 4.77%, a market capitalization of about $57.95 billion, and a circulating supply of about 583.4 million SOL.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "94b5eba1-3bf8-4ae1-8b0c-75f5d73d0aa2",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 274,
+            "live_score": 0.074199386,
+            "live_rank": 1,
+            "scored_at": "2026-08-25T10:18:54.065406Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_24h_pct\":4.77196,\"circulating_supply\":583376132.9404316,\"coingecko_id\":\"solana\",\"currency\":\"USD\",\"market_cap_usd\":57953008261,\"price_usd\":99.35,\"signal\":\"The current price of Solana (SOL) is approximately $99.35 USD, reflecting a 24-hour change of +4.77%, with a market capitalization of about $57.95 billion and a circulating supply of about 583.4 million SOL.\",\"source\":\"coingecko\",\"symbol\":\"SOL\"}"
+          }
+        },
+        {
+          "id": "real-coingecko-e274",
+          "text": "The data indicates that the current price of Solana is 99.36 USD.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "da435ccf-21ee-4c98-b8af-395d6a3e9312",
+            "miner_slug": "coingecko",
+            "epoch_id": 274,
+            "live_score": 2.2510518e-17,
+            "live_rank": 3,
+            "scored_at": "2026-08-25T10:18:54.065406Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"solana\":{\"usd\":99.36}}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "The current price of Solana (SOL) in USD? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "The current price of Solana (SOL) in USD? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data shows that the current price of Solana (SOL) is approximately $99.35 USD with a 24-hour price increase of 4.77%, a market capitalization of about $57.95 billion, and a circulating supply of about 583.4 million SOL.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-chainsight-oracle-e274",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "crypto_price-real-05",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CRYPTO_PRICE&limit=300",
+        "epoch_min": 274,
+        "epoch_max": 274,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "crypto_price-probe-06",
+      "intent": "CRYPTO_PRICE",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "What is the current price of Bitcoin (BTC) in USD?",
+      "ground_truth": "The current price of Bitcoin (BTC) is approximately **$80,346.38 USD**, as of August 25, 2026, at 4:39 AM UTC. \n\nThis price reflects a 24-hour increase of about **+3.90%**, with a circulating supply of around **20.1 million BTC** and a market capitalization of roughly **$1.61 trillion**. \n\nBitcoin’s value can fluctuate rapidly due to market conditions, so for the most up-to-date information, check a reliable exchange or financial news source.",
+      "answers": [
+        {
+          "id": "real-chainsight-oracle-e272",
+          "text": "The data shows that Bitcoin (BTC) is currently priced at approximately $80,490 USD with a 24-hour increase of 3.96%, a market capitalization of about $1.62 trillion, and a circulating supply of about 20.1 million BTC.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "d3655bdf-4a15-4fd0-a980-77cfafe8edb8",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 272,
+            "live_score": 0.09169922,
+            "live_rank": 1,
+            "scored_at": "2026-08-25T06:57:28.539418Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_24h_pct\":3.95631,\"circulating_supply\":20074793,\"coingecko_id\":\"bitcoin\",\"currency\":\"USD\",\"market_cap_usd\":1616006577474,\"price_usd\":80490,\"signal\":\"The current price of Bitcoin (BTC) is approximately $80,490.00 USD, reflecting a 24-hour change of +3.96%, with a market capitalization of about $1.62 trillion and a circulating supply of about 20.1 million BTC.\",\"source\":\"coingecko\",\"symbol\":\"BTC\"}"
+          }
+        },
+        {
+          "id": "real-txlens-e272",
+          "text": "The data shows that the price of Bitcoin (BTC) is $80,467.058033 with a confidence level of 1.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "828398c5-d372-4d90-9ddb-2fab809c3c66",
+            "miner_slug": "txlens",
+            "epoch_id": 272,
+            "live_score": 6.096075e-18,
+            "live_rank": 3,
+            "scored_at": "2026-08-25T06:57:28.539418Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"as_of\":\"2026-08-25T06:52:50.000Z\",\"canonical\":\"coin_id:bitcoin:80467.05803302866\",\"confidence\":1,\"price_usd\":80467.05803302866,\"query\":\"bitcoin\",\"query_type\":\"coin_id\",\"status\":\"ok\",\"summary\":\"BTC is $80,467.058033\",\"symbol\":\"BTC\"}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "The current price of Bitcoin (BTC) in USD? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "The current price of Bitcoin (BTC) in USD? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data shows that Bitcoin (BTC) is currently priced at approximately $80,490 USD with a 24-hour increase of 3.96%, a market capitalization of about $1.62 trillion, and a circulating supply of about 20.1 million BTC.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-chainsight-oracle-e272",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "crypto_price-real-06",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CRYPTO_PRICE&limit=300",
+        "epoch_min": 272,
+        "epoch_max": 272,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "crypto_price-probe-07",
+      "intent": "CRYPTO_PRICE",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "What is the current price of Solana (SOL) in USD?",
+      "ground_truth": "The current price of Solana (SOL) is approximately **$95.46** USD, based on the latest data available as of August 23, 2026. This price reflects a slight increase from the previous day and is significantly higher than the price one week prior. The market cap of Solana is around **$55.8 billion**, and the 24-hour trading volume is approximately **$4.9 billion**. The circulating supply of SOL is about **583.3 million tokens**.",
+      "answers": [
+        {
+          "id": "real-chainsight-oracle-e269",
+          "text": "The data shows that Solana (SOL) has a current price of $95.50 USD, a 24-hour price increase of 1.10%, a market capitalization of $55.70 billion, and a circulating supply of 583.3 million SOL.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "52a87c0a-c44a-4b44-9310-118a7717fdb0",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 269,
+            "live_score": 0.09786319,
+            "live_rank": 1,
+            "scored_at": "2026-08-23T15:57:01.849876Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_24h_pct\":1.1,\"circulating_supply\":583276908.3312539,\"coingecko_id\":\"solana\",\"currency\":\"USD\",\"market_cap_usd\":55701969983,\"price_usd\":95.5,\"signal\":\"The current price of Solana (SOL) is approximately $95.50 USD, reflecting a 24-hour change of +1.10%, with a market capitalization of about $55.70 billion and a circulating supply of about 583.3 million SOL.\",\"source\":\"coingecko\",\"symbol\":\"SOL\"}"
+          }
+        },
+        {
+          "id": "real-coingecko-e269",
+          "text": "The data shows that the value of Solana cryptocurrency is 95.52 USD.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "a287c0be-42ec-45b0-82f8-dd91b358e270",
+            "miner_slug": "coingecko",
+            "epoch_id": 269,
+            "live_score": 2.2825189e-17,
+            "live_rank": 2,
+            "scored_at": "2026-08-23T15:57:01.849876Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"solana\":{\"usd\":95.52}}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "The current price of Solana (SOL) in USD? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "The current price of Solana (SOL) in USD? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data shows that Solana (SOL) has a current price of $95.50 USD, a 24-hour price increase of 1.10%, a market capitalization of $55.70 billion, and a circulating supply of 583.3 million SOL.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-chainsight-oracle-e269",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "crypto_price-real-07",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CRYPTO_PRICE&limit=300",
+        "epoch_min": 269,
+        "epoch_max": 269,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "crypto_price-probe-08",
+      "intent": "CRYPTO_PRICE",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "What is the current price of Solana (SOL) in USD?",
+      "ground_truth": "The current price of Solana (SOL) is approximately **$94.71 USD**, according to recent data from multiple sources, including Coinbase and Binance, updated as of August 23, 2026, around 1:05 PM UTC.\n\nThe price has shown slight increases over the past 24 hours, ranging from about **$91.61 to $97.26**. The market cap for Solana is roughly **$55.17 billion**, with a circulating supply of around **583.3 million SOL**.\n\nThese figures reflect real-time market conditions and may fluctuate rapidly due to trading activity and market dynamics.",
+      "answers": [
+        {
+          "id": "real-chainsight-oracle-e268",
+          "text": "The data shows that the current price of Solana (SOL) is approximately $95.18 USD with a 24-hour increase of 1.4%, a market capitalization of about $55.50 billion, and a circulating supply of about 583.3 million SOL.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "83dad00f-8b5b-4f4d-a24c-7de14764ec5f",
+            "miner_slug": "chainsight-oracle",
+            "epoch_id": 268,
+            "live_score": 0.0818172,
+            "live_rank": 1,
+            "scored_at": "2026-08-23T13:26:33.34984Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"change_24h_pct\":1.4,\"circulating_supply\":583277002.1022965,\"coingecko_id\":\"solana\",\"currency\":\"USD\",\"market_cap_usd\":55501132923,\"price_usd\":95.18,\"signal\":\"The current price of Solana (SOL) is approximately $95.18 USD, reflecting a 24-hour change of +1.40%, with a market capitalization of about $55.50 billion and a circulating supply of about 583.3 million SOL.\",\"source\":\"coingecko\",\"symbol\":\"SOL\"}"
+          }
+        },
+        {
+          "id": "real-coingecko-e268",
+          "text": "The data shows that the value of Solana is 95.26 USD.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "c74f2c9c-373d-4099-9a6b-eead83d7d9be",
+            "miner_slug": "coingecko",
+            "epoch_id": 268,
+            "live_score": 2.4948295e-18,
+            "live_rank": 2,
+            "scored_at": "2026-08-23T13:26:33.34984Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"solana\":{\"usd\":95.26}}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "The current price of Solana (SOL) in USD? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "The current price of Solana (SOL) in USD? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data shows that the current price of Solana (SOL) is approximately $95.18 USD with a 24-hour increase of 1.4%, a market capitalization of about $55.50 billion, and a circulating supply of about 583.3 million SOL.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-chainsight-oracle-e268",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "crypto_price-real-08",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=CRYPTO_PRICE&limit=300",
+        "epoch_min": 268,
+        "epoch_max": 268,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    }
+  ]
+}

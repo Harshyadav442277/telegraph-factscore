@@ -1,0 +1,544 @@
+{
+  "intent": "SSL_VERIFICATION",
+  "class": "REAL-PARROT",
+  "provenance": {
+    "source": "derived from track2/fixtures/real",
+    "generator": "track2/harness/gen-probes.mjs",
+    "real_capture": "2026-08-27T08:05:39.131Z"
+  },
+  "fixtures": [
+    {
+      "id": "ssl_verification-probe-01",
+      "intent": "SSL_VERIFICATION",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "Can you analyze the TLS/SSL certificate configuration for api.example.com, including chain completeness and hostname validation?",
+      "ground_truth": "To analyze the TLS/SSL certificate configuration for `api.example.com`, including chain completeness and hostname validation, follow these steps using OpenSSL and SSL Labs tools:\n\n### **Step 1: Use OpenSSL to Inspect the Certificate Chain**\n\nRun the following command to fetch and display the certificate chain:\n\n```bash\nopenssl s_client -connect api.example.com:443 -showcerts\n```\n\n**Interpretation of Output:**\n\n1. **Certificate Chain Completeness**:\n   - The server should present **both the leaf certificate** (issued to `api.example.com`) **and intermediate certificates**.\n   - If only the leaf certificate is shown, the chain is **incomplete**. The server must send all intermediate certificates required to build a trust path to a root CA.\n   - Example of a complete chain:\n     ```\n     0 s:CN=api.example.com\n       i:CN=Intermediate CA, O=CA Organization\n     1 s:CN=Intermediate CA, O=CA Organization\n       i:CN=Root CA, O=CA Organization\n     ```\n\n2. **Hostname Validation**:\n   - Check the **Subject Alternative Name (SAN)** extension in the leaf certificate. It must include `api.example.com`.\n   - Use this command to extract SANs:\n     ```bash\n     openssl s_client -connect api.example.com:443 -showcerts 2>/dev/null | openssl x509 -noout -ext subjectAltName\n     ```\n   - If the output shows `DNS:api.example.com`, hostname validation passes.\n\n---\n\n### **Step 2: Use SSL Labs for Comprehensive Analysis**\n\nVisit the **SSL Labs Server Test** page:  \n[https://www.ssllabs.com/ssltest/](https://www.ssllabs.com/ssltest/)\n\n**Steps:**\n\n1. Enter `api.example.com` and start the test.\n2. Review the results for:\n   - **Certificate Chain**: Ensure all intermediates are present.\n   - **Hostname Validation**: Confirm the certificate covers `api.example.com`.\n   - **Overall Grade**: Aim for **A** or **A+**.\n\n---\n\n### **Step 3: Programmatic Analysis with SSL Labs API**\n\nUse the SSL Labs API for automated testing:\n\n1. **Register for an API Key**:\n   - Visit [https://www.ssllabs.com/api/v4/](https://www.ssllabs.com/api/v4/) and register.\n2. **Initiate a Test**:\n   ```bash\n   curl -X POST \"https://api.ss",
+      "answers": [
+        {
+          "id": "real-txlens-e284",
+          "text": "The data indicates that the AI service detected an issue with the TLS connection to the domain 'api.example.com', specifically that it is currently unreachable.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "24089e4d-6268-4b3d-b01b-18f7a8cb7120",
+            "miner_slug": "txlens",
+            "epoch_id": 284,
+            "live_score": 0.0060074595,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T15:37:52.19011Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"canonical\":\"ssl:api.example.com:unreachable\",\"confidence\":1,\"query\":\"api.example.com\",\"status\":\"unreachable\",\"summary\":\"TLS connection to 'api.example.com' failed: getaddrinfo ENOTFOUND api.example.com\",\"valid\":null}"
+          }
+        },
+        {
+          "id": "real-livecert-e284",
+          "text": "The data indicates that an attempt to verify the TLS certificate for `api.example.com` on August 26, 2026, at 15:36:55 UTC failed due to a DNS lookup error, resulting in an unreachable verdict.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "83b0ec05-bce0-456e-9982-72554b08d337",
+            "miner_slug": "livecert",
+            "epoch_id": 284,
+            "live_score": 0.0044928235,
+            "live_rank": 3,
+            "scored_at": "2026-08-26T15:37:52.19011Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"checked_at\":\"2026-08-26T15:36:55.879Z\",\"confidence\":1,\"days_remaining\":null,\"domain\":\"api.example.com\",\"expired\":false,\"hostname_match\":false,\"issuer\":null,\"reason\":\"No TLS certificate could be retrieved for api.example.com: DNS lookup failed: EBUSY.\",\"subject\":null,\"tls_protocol\":null,\"trusted\":false,\"valid\":false,\"valid_from\":null,\"valid_to\":null,\"verdict\":\"unreachable\"}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "Analyze the TLS/SSL certificate configuration for api.example.com, including chain completeness and hostname validation? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "Analyze the TLS/SSL certificate configuration for api.example.com, including chain completeness and hostname validation? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data indicates that the AI service detected an issue with the TLS connection to the domain 'api.example.com', specifically that it is currently unreachable.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-txlens-e284",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "ssl_verification-real-01",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=SSL_VERIFICATION&limit=300",
+        "epoch_min": 284,
+        "epoch_max": 284,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "ssl_verification-probe-02",
+      "intent": "SSL_VERIFICATION",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "Can you analyze the TLS/SSL certificate configuration for api.github.com including certificate validity, chain trust, and hostname verification?",
+      "ground_truth": "The TLS/SSL certificate configuration for api.github.com appears to be properly configured with valid certificates, a trusted chain, and correct hostname verification based on the following analysis:\n\n### Certificate Validity\n- The certificate for api.github.com is issued by DigiCert Global CA, a well-known and trusted Certificate Authority (CA).\n- The certificate is valid and not expired. It has a validity period spanning several years, ensuring continuous secure communication.\n\n### Chain Trust\n- The certificate chain is complete and properly structured. It includes the necessary intermediate certificates to establish trust with the root CA.\n- The chain of trust is verified by commonly used tools such as browsers and command-line utilities like `curl` and `openssl`, indicating that the certificates are recognized and trusted by standard systems.\n\n### Hostname Verification\n- The certificate is correctly configured for the hostname api.github.com. This is confirmed by the Subject Alternative Name (SAN) extension in the certificate, which includes api.github.com as a valid domain.\n- Hostname verification is successfully performed during the TLS handshake, ensuring that the client is communicating with the intended server and not an imposter.\n\n### Additional Observations\n- The certificate uses a strong encryption algorithm (RSA with a 2048-bit key) and supports modern TLS versions (TLS 1.2 and TLS 1.3), providing robust security.\n- The certificate is regularly renewed by GitHub, ensuring that it remains valid and secure over time.\n\nIn summary, the TLS/SSL certificate configuration for api.github.com is robust, with valid certificates, a trusted chain, and proper hostname verification, ensuring secure and reliable communication for users and applications.",
+      "answers": [
+        {
+          "id": "real-txlens-e285",
+          "text": "The data indicates that the certificate for `api.github.com` is valid and will expire in 33 days, issued by Sectigo Limited.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "3b3c9066-746e-4b65-a7f3-77a6b2a03150",
+            "miner_slug": "txlens",
+            "epoch_id": 285,
+            "live_score": 0.0082647465,
+            "live_rank": 1,
+            "scored_at": "2026-08-27T00:41:25.369614Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"authorization_error\":null,\"authorized\":true,\"canonical\":\"ssl:api.github.com:valid:33\",\"confidence\":1,\"days_until_expiry\":33,\"issuer\":\"Sectigo Limited\",\"query\":\"api.github.com\",\"status\":\"ok\",\"summary\":\"api.github.com has a valid certificate, expiring in 33 days (issued by Sectigo Limited)\",\"valid\":true,\"valid_from\":\"2026-07-02T00:00:00.000Z\",\"valid_to\":\"2026-09-29T23:59:59.000Z\"}"
+          }
+        },
+        {
+          "id": "real-ssllabs-e285",
+          "text": "This data shows a successful test of a GitHub API endpoint with a grade of A+ and a status of READY, indicating that the endpoint is functioning correctly.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "f40be162-963c-494c-a78d-31129f814c4b",
+            "miner_slug": "ssllabs",
+            "epoch_id": 285,
+            "live_score": 0.0069353483,
+            "live_rank": 3,
+            "scored_at": "2026-08-27T00:41:25.369614Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"criteriaVersion\":\"2009q\",\"endpoints\":[{\"delegation\":1,\"duration\":97417,\"grade\":\"A+\",\"gradeTrustIgnored\":\"A+\",\"hasWarnings\":false,\"ipAddress\":\"140.82.112.5\",\"isExceptional\":true,\"progress\":100,\"serverName\":\"lb-140-82-112-5-iad.github.com\",\"statusMessage\":\"Ready\"}],\"engineVersion\":\"2.4.3\",\"host\":\"api.github.com\",\"isPublic\":true,\"port\":443,\"protocol\":\"http\",\"startTime\":1787786675382,\"status\":\"READY\",\"testTime\":1787786772818}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "Analyze the TLS/SSL certificate configuration for api.github.com including certificate validity, chain trust, and hostname verification? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "Analyze the TLS/SSL certificate configuration for api.github.com including certificate validity, chain trust, and hostname verification? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data indicates that the certificate for `api.github.com` is valid and will expire in 33 days, issued by Sectigo Limited.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-txlens-e285",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "ssl_verification-real-02",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=SSL_VERIFICATION&limit=300",
+        "epoch_min": 285,
+        "epoch_max": 285,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "ssl_verification-probe-03",
+      "intent": "SSL_VERIFICATION",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "Can you analyze the TLS/SSL certificate configuration and chain for api.example.com to verify its security and validity?",
+      "ground_truth": "To analyze the TLS/SSL certificate configuration and chain for `api.example.com`, we would typically need direct access to the server or use online tools like SSL Labs, but since we can't perform live checks here, I'll outline the **general steps and key aspects** to examine for security and validity:\n\n---\n\n### **1. Certificate Chain Validation**\nA valid TLS/SSL certificate must have a **complete chain of trust** that leads back to a trusted root Certificate Authority (CA). For `api.example.com`, you would:\n- **Check the certificate chain** using tools like `openssl s_client` or online scanners (e.g., SSL Labs):\n  ```bash\n  openssl s_client -connect api.example.com:443 -showcerts\n  ```\n  This displays the server’s certificate and the entire chain.\n\n- **Verify each certificate** in the chain:\n  - **End-entity certificate**: Issued specifically for `api.example.com`.\n  - **Intermediate certificates**: Issued by a CA to the server.\n  - **Root certificate**: Self-signed and trusted by the client’s OS/browser.\n\n  The chain must be **complete and unbroken**—missing intermediates will cause trust issues.\n\n---\n\n### **2. Certificate Validity**\n- **Expiration Date**: Ensure the certificate isn’t expired. Use:\n  ```bash\n  openssl x509 -in certificate.pem -noout -dates\n  ```\n  or inspect via browser/dev tools.\n\n- **Issuing Authority**: Confirm the certificate is issued by a **trusted CA** (e.g., Let’s Encrypt, DigiCert). Avoid self-signed certificates in production unless explicitly trusted.\n\n---\n\n### **3. Security Configuration**\n- **Protocol Support**:\n  - **Disable outdated protocols** like SSLv2, SSLv3, and TLS 1.0/TLS 1.1. Modern servers should support **TLS 1.2+**.\n  - Use **TLS 1.3** if possible for improved performance and security.\n\n- **Cipher Suites**:\n  - Prefer **strong cipher suites** (e.g., `TLS_AES_256_GCM_SHA384`, `TLS_CHACHA20_POLY1305_SHA256`).\n  - Disable weak ciphers (e.g., those using RC4, DES, or MD5).\n\n- **Key Exchange**:\n  - Use **ECDHE**",
+      "answers": [
+        {
+          "id": "real-txlens-e283",
+          "text": "The data indicates that the AI service detected an issue with the TLS connection to the domain 'api.example.com', specifically that it is currently unreachable.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "104e721e-fa72-4c1f-9c07-063be5dfeca2",
+            "miner_slug": "txlens",
+            "epoch_id": 283,
+            "live_score": 0.0062764767,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T13:08:58.14011Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"canonical\":\"ssl:api.example.com:unreachable\",\"confidence\":1,\"query\":\"api.example.com\",\"status\":\"unreachable\",\"summary\":\"TLS connection to 'api.example.com' failed: getaddrinfo ENOTFOUND api.example.com\",\"valid\":null}"
+          }
+        },
+        {
+          "id": "real-ssllabs-e283",
+          "text": "The data indicates that the API request encountered an error due to the hostname being blacklisted.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "4b811434-2b95-4066-addf-50401865f0a5",
+            "miner_slug": "ssllabs",
+            "epoch_id": 283,
+            "live_score": 0.0041632387,
+            "live_rank": 2,
+            "scored_at": "2026-08-26T13:08:58.14011Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"criteriaVersion\":\"2009q\",\"engineVersion\":\"2.4.3\",\"host\":\"api.example.com\",\"port\":443,\"protocol\":\"http\",\"status\":\"ERROR\",\"statusMessage\":\"Hostname blacklisted\"}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "Analyze the TLS/SSL certificate configuration and chain for api.example.com to verify its security and validity? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "Analyze the TLS/SSL certificate configuration and chain for api.example.com to verify its security and validity? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data indicates that the AI service detected an issue with the TLS connection to the domain 'api.example.com', specifically that it is currently unreachable.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-txlens-e283",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "ssl_verification-real-03",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=SSL_VERIFICATION&limit=300",
+        "epoch_min": 283,
+        "epoch_max": 283,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "ssl_verification-probe-04",
+      "intent": "SSL_VERIFICATION",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "Can you analyze the TLS/SSL certificate configuration and chain for api.github.com to verify its validity, issuer, and hostname match as of August 26, 2026?",
+      "ground_truth": "The TLS/SSL certificate for `api.github.com` as of August 26, 2026, is valid and correctly configured. Here are the key details:\n\n### **Issuer**\nThe certificate is issued by **Let's Encrypt**, specifically the **R3: RSADSI** certificate authority. This is a widely trusted CA that provides free SSL certificates.\n\n### **Validity Period**\n- **Not Before**: August 18, 2026  \n- **Not After**: November 16, 2026  \n\nThe certificate is valid for approximately 90 days, which aligns with Let's Encrypt's standard certificate lifetime. This ensures regular renewal and improved security.\n\n### **Hostname Match**\nThe certificate correctly covers the domain `api.github.com`. This includes:\n- **Subject Alternative Names (SANs)**: `api.github.com`, `*.github.com`, `github.com`, `*.github.io`, `vercel.app`, `*.vercel.app`, `vercel.com`, `*.vercel.com`, `github.dev`, `*.github.dev`  \n\nThis ensures the certificate is valid for all subdomains and related services.\n\n### **Chain of Trust**\nThe certificate chain is complete and properly configured:\n1. **Leaf Certificate**: `api.github.com`  \n2. **Intermediate Certificate**: `Let's Encrypt R3`  \n3. **Root Certificate**: `ISRG Root X1`  \n\nAll certificates in the chain are valid and trusted by major browsers and operating systems.\n\n### **Conclusion**\nThe TLS/SSL certificate for `api.github.com` is **valid**, **properly issued**, and **correctly configured** as of August 26, 2026. There are no issues with the certificate’s validity, issuer, or hostname match.",
+      "answers": [
+        {
+          "id": "real-txlens-e281",
+          "text": "The data indicates that the certificate for `api.github.com` is valid and will expire in 34 days, issued by Sectigo Limited.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "896bff84-a732-4e5a-a0c0-40dbaf770e70",
+            "miner_slug": "txlens",
+            "epoch_id": 281,
+            "live_score": 0.00834718,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T10:44:21.535657Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"authorization_error\":null,\"authorized\":true,\"canonical\":\"ssl:api.github.com:valid:34\",\"confidence\":1,\"days_until_expiry\":34,\"issuer\":\"Sectigo Limited\",\"query\":\"api.github.com\",\"status\":\"ok\",\"summary\":\"api.github.com has a valid certificate, expiring in 34 days (issued by Sectigo Limited)\",\"valid\":true,\"valid_from\":\"2026-07-02T00:00:00.000Z\",\"valid_to\":\"2026-09-29T23:59:59.000Z\"}"
+          }
+        },
+        {
+          "id": "real-ssllabs-e281",
+          "text": "This data shows a successful test of a GitHub API endpoint with a grade of A+ and a status of READY, indicating that the endpoint is functioning correctly.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "0551c77f-a4ed-4fcf-9891-28c38770d7a1",
+            "miner_slug": "ssllabs",
+            "epoch_id": 281,
+            "live_score": 0.006811343,
+            "live_rank": 2,
+            "scored_at": "2026-08-26T10:44:21.535657Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"criteriaVersion\":\"2009q\",\"endpoints\":[{\"delegation\":1,\"duration\":97145,\"grade\":\"A+\",\"gradeTrustIgnored\":\"A+\",\"hasWarnings\":false,\"ipAddress\":\"140.82.114.5\",\"isExceptional\":true,\"progress\":100,\"serverName\":\"lb-140-82-114-5-iad.github.com\",\"statusMessage\":\"Ready\"}],\"engineVersion\":\"2.4.3\",\"host\":\"api.github.com\",\"isPublic\":false,\"port\":443,\"protocol\":\"http\",\"startTime\":1787671353169,\"status\":\"READY\",\"testTime\":1787671450377}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "Analyze the TLS/SSL certificate configuration and chain for api.github.com to verify its validity, issuer, and hostname match — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "Analyze the TLS/SSL certificate configuration and chain for api.github.com to verify its validity, issuer, and hostname match — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data indicates that the certificate for `api.github.com` is valid and will expire in 34 days, issued by Sectigo Limited.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-txlens-e281",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "ssl_verification-real-04",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=SSL_VERIFICATION&limit=300",
+        "epoch_min": 281,
+        "epoch_max": 281,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "ssl_verification-probe-05",
+      "intent": "SSL_VERIFICATION",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "Can you verify the TLS/SSL certificate chain and configuration for api.example.com to ensure it uses modern encryption standards and is properly trusted by browsers as of August 25, 2026?",
+      "ground_truth": "I cannot directly verify the TLS/SSL certificate chain and configuration for api.example.com as of August 25, 2026, because real-time certificate validation requires live testing tools like SSL Labs, OpenSSL, or browser developer tools. However, I can outline the key checks you should perform to ensure modern encryption standards and browser trust.\n\nTo verify api.example.com’s TLS/SSL configuration, do the following:\n\n1. **Use SSL Labs Server Test**: Submit api.example.com to Qualys SSL Labs for a comprehensive analysis. The test will grade your configuration (A+ to F) and highlight weaknesses like weak protocols, missing HSTS, or incomplete chains.\n2. **Check Certificate Validity**: Ensure the certificate is issued by a trusted CA (e.g., Let’s Encrypt, DigiCert), matches api.example.com’s domain, and is not expired. Browsers enforce these checks strictly.\n3. **Validate Chain Completeness**: The server must send the full certificate chain (leaf → intermediates → root) to avoid “certificate chain issues” that break trust on some clients, especially mobile devices.\n4. **Enforce Modern Protocols**: Only allow TLS 1.2 and TLS 1.3. Disable TLS 1.0/1.1 to prevent POODLE/BEAST attacks — these are blocked by browsers but still scanned for compliance.\n5. **Use Strong Cipher Suites**: Prefer ECDHE key exchange, AES-GCM/ChaCha20 encryption, and ECDSA/RSA signatures. Avoid static RSA, DES, or RC4.\n6. **Enable HSTS**: Add `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload` to force HTTPS and prevent downgrade attacks.\n7. **Configure OCSP Stapling**: This improves performance and security by letting the server provide revocation status without clients querying OCSP responders.\n8. **Test with Browsers**: Use Chrome/Firefox DevTools to inspect the certificate, check for mixed-content warnings, and verify that the padlock appears green with no errors.\n\nFor automated monitoring, consider",
+      "answers": [
+        {
+          "id": "real-ssllabs-cert-verification-e275",
+          "text": "The data indicates an error status due to a blacklisted hostname when attempting to connect to the API service at `api.example.com` using HTTPS on port 443 with engine version 2.4.3 and criteria version 2009q.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "4c917aa8-fb95-4878-bbc7-55bd03b4ed62",
+            "miner_slug": "ssllabs-cert-verification",
+            "epoch_id": 275,
+            "live_score": 0.0043542488,
+            "live_rank": 1,
+            "scored_at": "2026-08-25T11:43:39.012012Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"criteriaVersion\":\"2009q\",\"engineVersion\":\"2.4.3\",\"host\":\"api.example.com\",\"port\":443,\"protocol\":\"http\",\"status\":\"ERROR\",\"statusMessage\":\"Hostname blacklisted\"}"
+          }
+        },
+        {
+          "id": "real-ssllabs-e275",
+          "text": "The data indicates that an error occurred during a connection attempt to the host \"api.example.com\" on port 443 using the HTTP protocol, due to the hostname being blacklisted, according to criteria version 2009q and engine version 2.4.3.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "5ae61b49-5fe4-40cf-8014-1378f170c03f",
+            "miner_slug": "ssllabs",
+            "epoch_id": 275,
+            "live_score": 0.0040883715,
+            "live_rank": 2,
+            "scored_at": "2026-08-25T11:43:39.012012Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"criteriaVersion\":\"2009q\",\"engineVersion\":\"2.4.3\",\"host\":\"api.example.com\",\"port\":443,\"protocol\":\"http\",\"status\":\"ERROR\",\"statusMessage\":\"Hostname blacklisted\"}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "Verify the TLS/SSL certificate chain and configuration for api.example.com to ensure it uses modern encryption standards and — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "Verify the TLS/SSL certificate chain and configuration for api.example.com to ensure it uses modern encryption standards and — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data indicates an error status due to a blacklisted hostname when attempting to connect to the API service at `api.example.com` using HTTPS on port 443 with engine version 2.4.3 and criteria version 2009q.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-ssllabs-cert-verification-e275",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "ssl_verification-real-05",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=SSL_VERIFICATION&limit=300",
+        "epoch_min": 275,
+        "epoch_max": 275,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": true,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "ssl_verification-probe-06",
+      "intent": "SSL_VERIFICATION",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "Can you analyze the TLS/SSL certificate configuration for api.example.com and report any issues with chain completeness or hostname matching?",
+      "ground_truth": "To analyze the TLS/SSL certificate configuration for `api.example.com` and report any issues with chain completeness or hostname matching, we would typically use tools such as **SSL Labs' SSL Server Test** or **OpenSSL**. Since I cannot directly test live websites or execute commands, I’ll explain how you can perform this analysis yourself and what to look for.\n\n---\n\n### 🔍 Steps to Analyze TLS/SSL Certificate for `api.example.com`\n\n---\n\n## **1. Use SSL Labs SSL Server Test**\n\nThe **SSL Labs SSL Server Test** is a widely used tool that provides a detailed analysis of SSL/TLS configurations, including:\n\n- **Certificate chain completeness**\n- **Hostname matching**\n- **Protocol support**\n- **Cipher suite strength**\n- ** Vulnerabilities**\n\n### 🔗 How to Use:\n1. Go to: [https://www.ssllabs.com/ssltest/](https://www.ssllabs.com/ssltest/)\n2. Enter: `api.example.com`\n3. Click **Submit**\n\n### ✅ What to Look For:\n\n#### **Certificate Chain Completeness**\n- **Pass**: The server sends the full certificate chain — leaf certificate + all intermediate certificates.\n- **Fail**: If the chain is incomplete, you’ll see a warning like:\n  > _“This server's certificate chain is incomplete. Grade capped to B.”_\n\n#### **Hostname Matching**\n- **Pass**: The certificate includes a **Subject Alternative Name (SAN)** or **Common Name (CN)** that matches `api.example.com`.\n- **Fail**: If the certificate doesn’t cover `api.example.com`, you’ll see:\n  > _“Hostname does not match certificate.”_\n\n#### **Overall Grade**\n- **A / A+** → Strong configuration.\n- **B / C / D / F** → Potential issues (e.g., incomplete chain, weak protocols, etc.)\n\n---\n\n## **2. Use OpenSSL (Command Line)**\n\nIf you have access to a terminal or command prompt, you can use **OpenSSL** to inspect the certificate and chain manually.\n\n### 🔧 Command to Retrieve Certificate Chain:\n```bash\nopenssl s_client -connect api.example.com:443 -showcerts\n```\n\n### 🔍 What to Look For:\n\n#### **Certificate Chain Completeness**\n- The output should show **multiple certificates**, including:\n  - **Leaf certificate** (for `api.example.com`)\n  - **Intermediate certificates**\n  - **Root certificate** (usually omitted by servers but should be trusted by the client)\n\nIf only the leaf",
+      "answers": [
+        {
+          "id": "real-txlens-e282",
+          "text": "The data indicates that the AI service detected an issue with the TLS connection to the domain 'api.example.com', specifically that it is currently unreachable.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "6b54aa90-3a09-4439-89d6-39900d70268c",
+            "miner_slug": "txlens",
+            "epoch_id": 282,
+            "live_score": 0.0058353543,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T12:32:01.012474Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"canonical\":\"ssl:api.example.com:unreachable\",\"confidence\":1,\"query\":\"api.example.com\",\"status\":\"unreachable\",\"summary\":\"TLS connection to 'api.example.com' failed: getaddrinfo ENOTFOUND api.example.com\",\"valid\":null}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "Analyze the TLS/SSL certificate configuration for api.example.com and report any issues with chain completeness or hostname matching? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "Analyze the TLS/SSL certificate configuration for api.example.com and report any issues with chain completeness or hostname matching? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data indicates that the AI service detected an issue with the TLS connection to the domain 'api.example.com', specifically that it is currently unreachable.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-txlens-e282",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "ssl_verification-real-06",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=SSL_VERIFICATION&limit=300",
+        "epoch_min": 282,
+        "epoch_max": 282,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": true,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "ssl_verification-probe-07",
+      "intent": "SSL_VERIFICATION",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "Can you analyze the TLS/SSL certificate configuration for api.github.com, including validity, chain completeness, and hostname verification?",
+      "ground_truth": "The TLS/SSL certificate configuration for api.github.com demonstrates robust security practices:\n\nValidity\nThe certificate is valid and issued by DigiCert High Assurance TLS Hybrid ECC SHA256 2020 CA1, indicating it's from a trusted Certificate Authority. It has a reasonable validity period, ensuring it won't expire soon and maintaining continuous security.\n\nChain Completeness\nThe certificate chain appears complete, including intermediate certificates necessary for proper validation. This ensures that clients can verify the certificate's authenticity by tracing it back to a trusted root CA.\n\nHostname Verification\nHostname verification is correctly implemented. The certificate includes Subject Alternative Names (SANs) covering github.com and www.github.com, ensuring that connections to api.github.com are properly validated against the certificate's allowed domains.\n\nOverall, api.github.com maintains a strong TLS/SSL configuration with valid certificates, complete chains, and proper hostname verification, contributing to a secure connection for its users.",
+      "answers": [
+        {
+          "id": "real-txlens-e278",
+          "text": "The data indicates that the domain `api.github.com` has a valid SSL certificate issued by Sectigo Limited, which will expire in 34 days. The certificate is currently authorized and valid.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "2bd486fa-561a-41bb-87e5-637ffc8e5cd5",
+            "miner_slug": "txlens",
+            "epoch_id": 278,
+            "live_score": 0.00723278,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T07:44:53.981981Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"authorization_error\":null,\"authorized\":true,\"canonical\":\"ssl:api.github.com:valid:34\",\"confidence\":1,\"days_until_expiry\":34,\"issuer\":\"Sectigo Limited\",\"query\":\"api.github.com\",\"status\":\"ok\",\"summary\":\"api.github.com has a valid certificate, expiring in 34 days (issued by Sectigo Limited)\",\"valid\":true,\"valid_from\":\"2026-07-02T00:00:00.000Z\",\"valid_to\":\"2026-09-29T23:59:59.000Z\"}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "Analyze the TLS/SSL certificate configuration for api.github.com, including validity, chain completeness, and hostname verification? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "Analyze the TLS/SSL certificate configuration for api.github.com, including validity, chain completeness, and hostname verification? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data indicates that the domain `api.github.com` has a valid SSL certificate issued by Sectigo Limited, which will expire in 34 days. The certificate is currently authorized and valid.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-txlens-e278",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "ssl_verification-real-07",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=SSL_VERIFICATION&limit=300",
+        "epoch_min": 278,
+        "epoch_max": 278,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "ssl_verification-probe-08",
+      "intent": "SSL_VERIFICATION",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "Can you analyze the TLS/SSL certificate configuration for api.example.com and report any issues with hostname matching or chain completeness?",
+      "ground_truth": "I cannot directly analyze the TLS/SSL certificate configuration for api.example.com because the domain does not resolve to an actual server on the public internet. The SSL Labs tools and other SSL checkers require a resolvable public hostname to perform a live analysis of the TLS certificate chain and hostname matching.\n\nTo analyze a real domain's TLS configuration, you would need to:\n\n1. Use a real public domain name that resolves to a server with an SSL certificate\n2. Visit https://www.ssllabs.com/ssltest/ and enter the domain name\n3. Or use the command-line tool `ssllabs-scan` if you have access to it\n\nThe search results show that SSL certificate analysis typically checks:\n- Chain completeness (whether all intermediate certificates are provided)\n- Hostname matching (whether the certificate's SAN/CN matches the requested hostname)\n- Protocol support and cipher suites\n- HSTS configuration\n- OCSP/CRL status\n- Certificate expiration\n\nWithout a real resolvable domain, I cannot perform the actual analysis requested. If you have a specific public domain you'd like analyzed, please share it and I can guide you through the process of checking its TLS configuration.",
+      "answers": [
+        {
+          "id": "real-ssllabs-cert-verification-e272",
+          "text": "The data indicates an error occurred during a connection attempt to the host \"api.example.com\" using HTTPS on port 443, due to the hostname being blacklisted, according to criteria version 2009q and engine version 2.4.3.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "fb623422-6e50-400e-b85f-90b0fae5400b",
+            "miner_slug": "ssllabs-cert-verification",
+            "epoch_id": 272,
+            "live_score": 0.005364844,
+            "live_rank": 1,
+            "scored_at": "2026-08-25T06:57:43.494933Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"criteriaVersion\":\"2009q\",\"engineVersion\":\"2.4.3\",\"host\":\"api.example.com\",\"port\":443,\"protocol\":\"http\",\"status\":\"ERROR\",\"statusMessage\":\"Hostname blacklisted\"}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "Analyze the TLS/SSL certificate configuration for api.example.com and report any issues with hostname matching or chain completeness? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "Analyze the TLS/SSL certificate configuration for api.example.com and report any issues with hostname matching or chain completeness? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data indicates an error occurred during a connection attempt to the host \"api.example.com\" using HTTPS on port 443, due to the hostname being blacklisted, according to criteria version 2009q and engine version 2.4.3.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-ssllabs-cert-verification-e272",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "ssl_verification-real-08",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=SSL_VERIFICATION&limit=300",
+        "epoch_min": 272,
+        "epoch_max": 272,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": true,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    }
+  ]
+}

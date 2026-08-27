@@ -1,0 +1,527 @@
+{
+  "intent": "STORM_ALERT",
+  "class": "REAL-PARROT",
+  "provenance": {
+    "source": "derived from track2/fixtures/real",
+    "generator": "track2/harness/gen-probes.mjs",
+    "real_capture": "2026-08-27T08:05:39.131Z"
+  },
+  "fixtures": [
+    {
+      "id": "storm_alert-probe-01",
+      "intent": "STORM_ALERT",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "Are wind speeds over Islamabad strong enough to cause disruptions today?",
+      "ground_truth": "Islamabad sits at the foot of the Margalla Hills and experiences moderate winds under normal conditions, with 100m wind speeds typically between 2 and 8 m/s. Wind speeds exceeding 12 m/s at 100m altitude indicate potential for storm disruption, downed trees, and flight turbulence in the region.",
+      "answers": [
+        {
+          "id": "real-bittensor-sn18-zeus-e202",
+          "text": "The data shows hourly wind speed measurements in meters per second from 06:00 to 05:00 the next day at a specific location, indicating a gradual decrease followed by a steady increase in wind speed.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "981d01d0-b5af-40e3-89fb-d085f4a24960",
+            "miner_slug": "bittensor-sn18-zeus",
+            "epoch_id": 202,
+            "live_score": 0.44208023,
+            "live_rank": 1,
+            "scored_at": "2026-08-18T07:51:09.871266Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"hourly\":{\"100u\":[0.59375,0.80859375,0.9589844,1.015625,0.7260742,0.057922363,-0.6875,-1.6064453,-2.6425781,-3.265625,-3.4824219,-3.6328125,-3.6875,-3.6191406,-3.46875,-3.3125,-3.1777344,-3.0371094,-2.890625,-2.7089844,-2.4453125,-2.125,-1.5810547,-0.9267578],\"time\":[\"2026-08-18T06:00:00Z\",\"2026-08-18T07:00:00Z\",\"2026-08-18T08:00:00Z\",\"2026-08-18T09:00:00Z\",\"2026-08-18T10:00:00Z\",\"2026-08-18T11:00:00Z\",\"2026-08-18T12:00:00Z\",\"2026-08-18T13:00:00Z\",\"2026-08-18T14:00:00Z\",\"2026-08-18T15:00:00Z\",\"2026-08-18T16:00:00Z\",\"2026-08-18T17:00:00Z\",\"2026-08-18T18:00:00Z\",\"2026-08-18T19:00:00Z\",\"2026-08-18T20:00:00Z\",\"2026-08-18T21:00:00Z\",\"2026-08-18T22:00:00Z\",\"2026-08-18T23:00:00Z\",\"2026-08-19T00:00:00Z\",\"2026-08-19T01:00:00Z\",\"2026-08-19T02:00:00Z\",\"2026-08-19T03:00:00Z\",\"2026-08-19T04:00:00Z\",\"2026-08-19T05:00:00Z\"]},\"hourly_provenance\":{\"100u\":\"5CnqnXiLxkTWiXfYkub4CheZFZgbodFmvUjWKnNJyBxPuinx (Rank 1)\"},\"hourly_steps\":24,\"hourly_units\":{\"100u\":\"m s**-1\",\"time\":\"iso8601\"},\"ingested_at\":\"2026-08-18T07:35:33Z\",\"latitude\":33.75,\"longitude\":73,\"model\":\"zeus\",\"reference_time\":\"2026-08-18T06:00:00Z\"}"
+          }
+        },
+        {
+          "id": "real-bittensor-sn18-zeus-e257",
+          "text": "The data shows hourly wind speed measurements in meters per second for a 24-hour period starting from August 21, 2026, at 6:00 AM UTC.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "0c1e5d69-a7cf-4b88-9625-47df6461b3ba",
+            "miner_slug": "bittensor-sn18-zeus",
+            "epoch_id": 257,
+            "live_score": 4.148653e-13,
+            "live_rank": 1,
+            "scored_at": "2026-08-21T09:38:06.30731Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"hourly\":{\"100u\":[0.8833008,0.9790039,1.0419922,1.0478516,0.8696289,0.47094727,0.03152466,-0.49047852,-1.1035156,-1.5292969,-1.7324219,-1.8759766,-1.9990234,-2.1601562,-2.2773438,-2.328125,-2.140625,-1.7011719,-1.0761719,-1.3945312,-1.4677734,-1.4423828,-1.1064453,-0.48120117],\"time\":[\"2026-08-21T06:00:00Z\",\"2026-08-21T07:00:00Z\",\"2026-08-21T08:00:00Z\",\"2026-08-21T09:00:00Z\",\"2026-08-21T10:00:00Z\",\"2026-08-21T11:00:00Z\",\"2026-08-21T12:00:00Z\",\"2026-08-21T13:00:00Z\",\"2026-08-21T14:00:00Z\",\"2026-08-21T15:00:00Z\",\"2026-08-21T16:00:00Z\",\"2026-08-21T17:00:00Z\",\"2026-08-21T18:00:00Z\",\"2026-08-21T19:00:00Z\",\"2026-08-21T20:00:00Z\",\"2026-08-21T21:00:00Z\",\"2026-08-21T22:00:00Z\",\"2026-08-21T23:00:00Z\",\"2026-08-22T00:00:00Z\",\"2026-08-22T01:00:00Z\",\"2026-08-22T02:00:00Z\",\"2026-08-22T03:00:00Z\",\"2026-08-22T04:00:00Z\",\"2026-08-22T05:00:00Z\"]},\"hourly_provenance\":{\"100u\":\"5FkF684znSsYy1bjsaTDYpZDYN983Z5kavsvv6bNYyuNZQHy (Rank 1)\"},\"hourly_steps\":24,\"hourly_units\":{\"100u\":\"m s**-1\",\"time\":\"iso8601\"},\"ingested_at\":\"2026-08-21T07:34:29Z\",\"latitude\":33.75,\"longitude\":73,\"model\":\"zeus\",\"reference_time\":\"2026-08-21T06:00:00Z\"}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "Are wind speeds over Islamabad strong enough to cause disruptions today? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "Are wind speeds over Islamabad strong enough to cause disruptions today? — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data shows hourly wind speed measurements in meters per second from 06:00 to 05:00 the next day at a specific location, indicating a gradual decrease followed by a steady increase in wind speed.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-bittensor-sn18-zeus-e202",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "storm_alert-real-01",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STORM_ALERT&limit=300",
+        "epoch_min": 9,
+        "epoch_max": 259,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "storm_alert-probe-02",
+      "intent": "STORM_ALERT",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "Can you provide a 48-hour wind speed forecast for latitude 37.7749 and longitude -122.4194, using the '100u' variable for u-component wind velocity?",
+      "ground_truth": "I cannot provide the specific 48-hour wind speed forecast for latitude 37.7749 and longitude -122.4194 using the '100u' variable for u-component wind velocity because the available search results do not contain this precise data. The results show general weather forecasts for the San Francisco Bay Area, including wind speeds and directions, but they do not include model-specific variables like '100u' or detailed 48-hour forecasts with that granularity.\n\nFor this specialized request, you would typically need to access numerical weather prediction model outputs directly (e.g., GFS, ECMWF) through meteorological data portals or APIs that provide model grid data, where you could extract the '100u' variable (which usually represents wind velocity component in meters per second at a specific pressure level or model level) and interpolate to your exact coordinates. The available public forecasts only provide surface wind information and general trends, not the model-level variables at specific grid points requested.",
+      "answers": [
+        {
+          "id": "real-bittensor-sn18-zeus-e285",
+          "text": "The data shows hourly wind speeds in meters per second (m/s) for a period from 6 PM to 6 AM on August 26-27, 2026, at a specific location with coordinates 37.75°N, -122.5°W.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "a0d250f4-dda3-4b47-bb00-54e4dd8d0e07",
+            "miner_slug": "bittensor-sn18-zeus",
+            "epoch_id": 285,
+            "live_score": 0.008023364,
+            "live_rank": 1,
+            "scored_at": "2026-08-27T00:40:37.618983Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"hourly\":{\"100u\":[3.515625,4,4.8671875,5.5625,5.9648438,6.2851562,6.484375,6.4726562,6.4375,6.390625,6.25,6.0039062,5.765625,5.5859375,5.4101562,5.203125,4.9101562,4.5664062,4.265625,3.9921875,3.7480469,3.640625,3.6679688,3.7441406,3.859375,4.4296875,5.3476562,5.828125,5.8085938,5.6835938,5.34375,5.2890625,5.2226562,5.140625,5.015625,4.8710938,4.796875,4.7890625,4.7890625,4.78125,4.59375,4.2460938,4.03125,3.9980469,3.9804688,3.953125,3.875,3.7714844],\"time\":[\"2026-08-26T18:00:00Z\",\"2026-08-26T19:00:00Z\",\"2026-08-26T20:00:00Z\",\"2026-08-26T21:00:00Z\",\"2026-08-26T22:00:00Z\",\"2026-08-26T23:00:00Z\",\"2026-08-27T00:00:00Z\",\"2026-08-27T01:00:00Z\",\"2026-08-27T02:00:00Z\",\"2026-08-27T03:00:00Z\",\"2026-08-27T04:00:00Z\",\"2026-08-27T05:00:00Z\",\"2026-08-27T06:00:00Z\",\"2026-08-27T07:00:00Z\",\"2026-08-27T08:00:00Z\",\"2026-08-27T09:00:00Z\",\"2026-08-27T10:00:00Z\",\"2026-08-27T11:00:00Z\",\"2026-08-27T12:00:00Z\",\"2026-08-27T13:00:00Z\",\"2026-08-27T14:00:00Z\",\"2026-08-27T15:00:00Z\",\"2026-08-27T16:00:00Z\",\"2026-08-27T17:00:00Z\",\"2026-08-27T18:00:00Z\",\"2026-08-27T19:00:00Z\",\"2026-08-27T20:00:00Z\",\"2026-08-27T21:00:00Z\",\"2026-08-27T22:00:00Z\",\"2026-08-27T23:00:00Z\",\"2026-08-28T00:00:00Z\",\"2026-08-28T01:00:00Z\",\"2026-08-28T02:00:00Z\",\"2026-08-28T03:00:00Z\",\"2026-08-28T04:00:00Z\",\"2026-08-28T05:00:00Z\",\"2026-08-28T06:00:00Z\",\"2026-08-28T07:00:00Z\",\"2026-08-28T08:00:00Z\",\"2026-08-28T09:00:00Z\",\"2026-08-28T10:00:00Z\",\"2026-08-28T11:00:00Z\",\"2026-08-28T12:00:00Z\",\"2026-08-28T13:00:00Z\",\"2026-08-28T14:00:00Z\",\"2026-08-28T15:00:00Z\",\"2026-08-28T16:00:00Z\",\"2026-08-28T17:00:00Z\"]},\"hourly_provenance\":{\"100u\":\"5EbpCNGKUFZHTrZ7pHctAZZQF9gMPYUYZEK2rCiP2j3mHkTp (Rank 1)\"},\"hourly_steps\":48,\"hourly_units\":{\"100u\":\"m s**-1\",\"time\":\"iso8601\"},\"ingested_at\":\"2026-08-26T19:34:36Z\",\"latitude\":37.75,\"longitude\":-122.5,\"model\":\"zeus\",\"reference_time\":\"2026-08-26T18:00:00Z\"}"
+          }
+        },
+        {
+          "id": "real-amanat-weather-risk-e285",
+          "text": "The weather forecast for August 27, 2026, in San Francisco, predicts clear skies with a temperature range of 14.5 to 23.0 degrees Celsius, and a low storm risk of 0.429.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "aac14192-b5b5-40f0-b2ec-4ed4768e2268",
+            "miner_slug": "amanat-weather-risk",
+            "epoch_id": 285,
+            "live_score": 0.0050339964,
+            "live_rank": 3,
+            "scored_at": "2026-08-27T00:40:37.618983Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"breach\":false,\"condition\":\"Clear sky\",\"gust_kmh\":36.4,\"hours\":0,\"lat\":37.7749,\"lon\":-122.4194,\"place\":null,\"precip_mm\":0,\"risk\":0.429,\"source\":\"open-meteo\",\"summary\":\"2026-08-27: Clear sky, 14.5-23.0 °C. At 2026-08-27T00:00Z the forecast for 37.77, -122.42 is 23.0 °C with wind 26.6 km/h, gusts 36.4 km/h and 0.0 mm precipitation. Storm risk is low (0.429).\",\"temp_c\":23,\"temp_max_c\":23,\"temp_min_c\":14.5,\"valid_at\":\"2026-08-27T00:00Z\",\"weather_code\":0,\"wind_kmh\":26.6}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "Provide a 48-hour wind speed forecast for latitude 37.7749 and longitude -122.4194, using the '100u' variable for — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "Provide a 48-hour wind speed forecast for latitude 37.7749 and longitude -122.4194, using the '100u' variable for — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data shows hourly wind speeds in meters per second (m/s) for a period from 6 PM to 6 AM on August 26-27, 2026, at a specific location with coordinates 37.75°N, -122.5°W.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-bittensor-sn18-zeus-e285",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "storm_alert-real-02",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STORM_ALERT&limit=300",
+        "epoch_min": 285,
+        "epoch_max": 285,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": true,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "storm_alert-probe-03",
+      "intent": "STORM_ALERT",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "For the location at latitude 40.7128 and longitude -74.0060, what active storm systems or high wind disruptions are forecast for the next 24 hours, and should I expect any severe weather alerts?",
+      "ground_truth": "Based on the latest forecasts and alerts for New York City (latitude 40.7128, longitude -74.0060) for the next 24 hours:\n\nThere are **no active severe weather alerts** currently in effect for New York City as of the latest updates. The National Weather Service and local emergency management indicate \"Weather Alerts There is currently no severe weather\" .\n\nHowever, there are **potential storm systems and disruptions** to monitor:\n\n- **Thunderstorms are possible** today and tomorrow, particularly in the afternoon and evening hours. Some storms could produce heavy rain and gusty winds, mainly north and west of the city .\n  \n- **High wind disruptions** are possible with gusts up to 50 mph in some areas, especially during severe thunderstorms. The city has activated emergency plans for potential flash floods and wind-related issues .\n\n- **Travel advisories** are in place due to the potential for heavy rain and thunderstorms today, with moderate flood risk levels issued by the National Weather Service .\n\nIn summary, while no active severe alerts exist right now, **monitor conditions closely today and tomorrow** as thunderstorms with heavy rain and gusty winds are possible, particularly in the afternoon and evening. Be prepared for potential travel disruptions and follow local advisories.",
+      "answers": [
+        {
+          "id": "real-amanat-weather-risk-e277",
+          "text": "The data provides a weather forecast for a location (latitude 40.7128, longitude -74.0060) on August 27, 2026, indicating overcast conditions with a temperature of 20.8 °C, a maximum of 25.6 °C, and a minimum of 20.5 °C. Wind speeds are 9.1 km/h with gusts up to 24.1 km/h, and there is no precipitation expected, with a low storm risk.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "30bbb1fa-a311-4038-bda8-9b0c02654fc2",
+            "miner_slug": "amanat-weather-risk",
+            "epoch_id": 277,
+            "live_score": 0.009192367,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T06:48:09.685207Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"breach\":false,\"condition\":\"Overcast\",\"gust_kmh\":24.1,\"hours\":24,\"lat\":40.7128,\"lon\":-74.006,\"place\":null,\"precip_mm\":0,\"risk\":0.268,\"source\":\"open-meteo\",\"summary\":\"2026-08-27: Overcast, 20.5-25.6 °C. At 2026-08-27T06:00Z the forecast for 40.71, -74.01 is 20.8 °C with wind 9.1 km/h, gusts 24.1 km/h and 0.0 mm precipitation. Storm risk is low (0.268).\",\"temp_c\":20.8,\"temp_max_c\":25.6,\"temp_min_c\":20.5,\"valid_at\":\"2026-08-27T06:00Z\",\"weather_code\":3,\"wind_kmh\":9.1}"
+          }
+        },
+        {
+          "id": "real-bittensor-sn18-zeus-e277",
+          "text": "The data shows hourly wind speed measurements (in meters per second) for a location at latitude 40.75 and longitude -74 over a 24-hour period starting from August 26, 2026. Wind speeds vary throughout the day, generally decreasing from approximately 3.9 m/s in the early morning to near zero by late evening.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "6283bcd6-8808-4c13-8cd0-9d1373aadaf6",
+            "miner_slug": "bittensor-sn18-zeus",
+            "epoch_id": 277,
+            "live_score": 0.0068447273,
+            "live_rank": 3,
+            "scored_at": "2026-08-26T06:48:09.685207Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"hourly\":{\"100u\":[3.8808594,3.9667969,3.9746094,3.9570312,3.7792969,3.4296875,3.140625,2.9804688,2.8496094,2.6738281,2.2109375,1.5595703,1.1601562,1.0585938,1.0195312,1.0507812,1.2441406,1.5478516,1.7041016,1.1367188,0.018936157,-0.8779297,-1.3486328,-1.7197266],\"time\":[\"2026-08-26T00:00:00Z\",\"2026-08-26T01:00:00Z\",\"2026-08-26T02:00:00Z\",\"2026-08-26T03:00:00Z\",\"2026-08-26T04:00:00Z\",\"2026-08-26T05:00:00Z\",\"2026-08-26T06:00:00Z\",\"2026-08-26T07:00:00Z\",\"2026-08-26T08:00:00Z\",\"2026-08-26T09:00:00Z\",\"2026-08-26T10:00:00Z\",\"2026-08-26T11:00:00Z\",\"2026-08-26T12:00:00Z\",\"2026-08-26T13:00:00Z\",\"2026-08-26T14:00:00Z\",\"2026-08-26T15:00:00Z\",\"2026-08-26T16:00:00Z\",\"2026-08-26T17:00:00Z\",\"2026-08-26T18:00:00Z\",\"2026-08-26T19:00:00Z\",\"2026-08-26T20:00:00Z\",\"2026-08-26T21:00:00Z\",\"2026-08-26T22:00:00Z\",\"2026-08-26T23:00:00Z\"]},\"hourly_provenance\":{\"100u\":\"5FkF684znSsYy1bjsaTDYpZDYN983Z5kavsvv6bNYyuNZQHy (Rank 3)\"},\"hourly_steps\":24,\"hourly_units\":{\"100u\":\"m s**-1\",\"time\":\"iso8601\"},\"ingested_at\":\"2026-08-26T01:35:01Z\",\"latitude\":40.75,\"longitude\":-74,\"model\":\"zeus\",\"reference_time\":\"2026-08-26T00:00:00Z\"}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "For the location at latitude 40.7128 and longitude -74.0060, what active storm systems or high wind disruptions — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "For the location at latitude 40.7128 and longitude -74.0060, what active storm systems or high wind disruptions — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data provides a weather forecast for a location (latitude 40.7128, longitude -74.0060) on August 27, 2026, indicating overcast conditions with a temperature of 20.8 °C, a maximum of 25.6 °C, and a minimum of 20.5 °C. Wind speeds are 9.1 km/h with gusts up to 24.1 km/h, and there is no precipitation expected, with a low storm risk.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-amanat-weather-risk-e277",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "storm_alert-real-03",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STORM_ALERT&limit=300",
+        "epoch_min": 277,
+        "epoch_max": 277,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "storm_alert-probe-04",
+      "intent": "STORM_ALERT",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "Will there be disruptive wind gusts or active storm systems affecting wind farm operations at the Vindhyachal Super Thermal Power Station (lat: 24.5833, lon: 82.6167) over the next 48 hours?",
+      "ground_truth": "There will be disruptive wind gusts and active storm systems affecting wind farm operations at the Vindhyachal Super Thermal Power Station over the next 48 hours, with thunderstorms and high winds expected.",
+      "answers": [
+        {
+          "id": "real-bittensor-sn18-zeus-e283",
+          "text": "This data shows hourly wind speed and direction measurements from a location at 24.5°N, 82.5°E, with wind speed ranging from 0.14 m/s to 3.78 m/s and wind direction fluctuating between -1.15 m/s and 3.17 m/s, recorded from 6 AM to 6 AM the next day.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "c814a9b5-925a-49d1-b40d-61c971ad45eb",
+            "miner_slug": "bittensor-sn18-zeus",
+            "epoch_id": 283,
+            "live_score": 0.006576764,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T13:11:30.445391Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"hourly\":{\"100u\":[2.5625,2.4589844,2.3886719,2.3125,2.203125,2.0878906,2.015625,1.984375,1.9619141,1.953125,2.1210938,2.4648438,2.75,2.9296875,3.078125,3.140625,3.1289062,3.0800781,2.96875,3.0996094,3.1679688,3.1875,3.0976562,2.9335938,2.84375,2.875,2.953125,3.046875,3.1796875,3.3515625,3.5,3.625,3.734375,3.78125,3.7519531,3.7011719,3.671875,3.6757812,3.6835938,3.6875,3.6464844,3.5429688,3.40625,3.3378906,3.2402344,3.125,2.9335938,2.7050781],\"100v\":[1.5625,1.5332031,1.515625,1.484375,1.3261719,1.0810547,0.953125,1.2890625,1.9189453,2.28125,2.3144531,2.3359375,2.34375,2.3066406,2.2167969,2.109375,1.9853516,1.8261719,1.640625,1.5820312,1.4824219,1.359375,1.1806641,0.9458008,0.71875,0.52246094,0.3322754,0.140625,-0.100097656,-0.3425293,-0.453125,-0.31933594,-0.07116699,0.0625,0.04135132,-0.0110321045,-0.078125,-0.17553711,-0.3137207,-0.46875,-0.6376953,-0.83203125,-1.046875,-1.1181641,-1.1494141,-1.15625,-1.0957031,-0.9794922],\"time\":[\"2026-08-26T06:00:00Z\",\"2026-08-26T07:00:00Z\",\"2026-08-26T08:00:00Z\",\"2026-08-26T09:00:00Z\",\"2026-08-26T10:00:00Z\",\"2026-08-26T11:00:00Z\",\"2026-08-26T12:00:00Z\",\"2026-08-26T13:00:00Z\",\"2026-08-26T14:00:00Z\",\"2026-08-26T15:00:00Z\",\"2026-08-26T16:00:00Z\",\"2026-08-26T17:00:00Z\",\"2026-08-26T18:00:00Z\",\"2026-08-26T19:00:00Z\",\"2026-08-26T20:00:00Z\",\"2026-08-26T21:00:00Z\",\"2026-08-26T22:00:00Z\",\"2026-08-26T23:00:00Z\",\"2026-08-27T00:00:00Z\",\"2026-08-27T01:00:00Z\",\"2026-08-27T02:00:00Z\",\"2026-08-27T03:00:00Z\",\"2026-08-27T04:00:00Z\",\"2026-08-27T05:00:00Z\",\"2026-08-27T06:00:00Z\",\"2026-08-27T07:00:00Z\",\"2026-08-27T08:00:00Z\",\"2026-08-27T09:00:00Z\",\"2026-08-27T10:00:00Z\",\"2026-08-27T11:00:00Z\",\"2026-08-27T12:00:00Z\",\"2026-08-27T13:00:00Z\",\"2026-08-27T14:00:00Z\",\"2026-08-27T15:00:00Z\",\"2026-08-27T16:00:00Z\",\"2026-08-27T17:00:00Z\",\"2026-08-27T18:00:00Z\",\"2026-08-27T19:00:00Z\",\"2026-08-27T20:00:00Z\",\"2026-08-27T21:00:00Z\",\"2026-08-27T22:00:00Z\",\"2026-08-27T23:00:00Z\",\"2026-08-28T00:00:00Z\",\"2026-08-28T01:00:00Z\",\"2026-08-28T02:00:00Z\",\"2026-08-28T03:00:00Z\",\"2026-08-28T04:00:00Z\",\"2026-08-28T05:00:00Z\"]},\"hourly_provenance\":{\"100u\":\"5EbpCNGKUFZHTrZ7pHctAZZQF9gMPYUYZEK2rCiP2j3mHkTp (Rank 1)\",\"100v\":\"5EbpCNGKUFZHTrZ7pHctAZZQF9gMPYUYZEK2rCiP2j3mHkTp (Rank 1)\"},\"hourly_steps\":48,\"hourly_units\":{\"100u\":\"m s**-1\",\"100v\":\"m s**-1\",\"time\":\"iso8601\"},\"ingested_at\":\"2026-08-26T07:34:41Z\",\"latitude\":24.5,\"longitude\":82.5,\"model\":\"zeus\",\"reference_time\":\"2026-08-26T06:00:00Z\"}"
+          }
+        },
+        {
+          "id": "real-amanat-weather-risk-e283",
+          "text": "The weather forecast for a specific location on August 28, 2026, predicts light drizzle with a temperature range of 24.3 to 29.6 degrees Celsius. The forecasted temperature at 13:00 UTC is 26.3 degrees Celsius, with a wind speed of 4.3 kilometers per hour and gusts up to 11.2 kilometers per hour, accompanied by 0.1 millimeters of precipitation. The storm risk is low at 0.124.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (lowest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "b65a95f4-1be5-4cc4-9d8d-b2588a669c7f",
+            "miner_slug": "amanat-weather-risk",
+            "epoch_id": 283,
+            "live_score": 0.0057797423,
+            "live_rank": 2,
+            "scored_at": "2026-08-26T13:11:30.445391Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"breach\":false,\"condition\":\"Light drizzle\",\"gust_kmh\":11.2,\"hours\":48,\"lat\":24.5833,\"lon\":82.6167,\"place\":null,\"precip_mm\":0.1,\"risk\":0.124,\"source\":\"open-meteo\",\"summary\":\"2026-08-28: Light drizzle, 24.3-29.6 °C. At 2026-08-28T13:00Z the forecast for 24.58, 82.62 is 26.3 °C with wind 4.3 km/h, gusts 11.2 km/h and 0.1 mm precipitation. Storm risk is low (0.124).\",\"temp_c\":26.3,\"temp_max_c\":29.6,\"temp_min_c\":24.3,\"valid_at\":\"2026-08-28T13:00Z\",\"weather_code\":51,\"wind_kmh\":4.3}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "Will there be disruptive wind gusts or active storm systems affecting wind farm operations at the Vindhyachal — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "Will there be disruptive wind gusts or active storm systems affecting wind farm operations at the Vindhyachal — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. This data shows hourly wind speed and direction measurements from a location at 24.5°N, 82.5°E, with wind speed ranging from 0.14 m/s to 3.78 m/s and wind direction fluctuating between -1.15 m/s and 3.17 m/s, recorded from 6 AM to 6 AM the next day.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-bittensor-sn18-zeus-e283",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "storm_alert-real-04",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STORM_ALERT&limit=300",
+        "epoch_min": 283,
+        "epoch_max": 283,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "storm_alert-probe-05",
+      "intent": "STORM_ALERT",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "Can you provide a 48-hour wind speed forecast (variable '10u') for the construction site at latitude 40.7128 and longitude -74.0060, and flag any periods with sustained winds above 25 knots that could delay crane operations?",
+      "ground_truth": "Based on the available weather data for New York City (latitude 40.7128, longitude -74.0060), here is the 48-hour wind speed forecast and identification of periods with sustained winds above 25 knots that could delay crane operations:\n\nThe available data shows the following wind conditions over the next 48 hours:\n\nDay 1 (Today):\n- Morning: Light and variable winds becoming south 8 to 13 mph (approximately 7-11 knots)\n- Afternoon: South winds 8 to 16 mph (approximately 7-14 knots)\n- Evening: West winds 7 to 9 mph (approximately 6-8 knots)\n- Night: West winds 5 to 8 mph (approximately 4-7 knots)\n\nDay 2 (Tomorrow):\n- Morning: Light winds becoming south around 8 mph (approximately 7 knots)\n- Afternoon: South winds 8 to 16 mph (approximately 7-14 knots)\n- Evening: West winds 7 to 9 mph (approximately 6-8 knots)\n- Night: West winds 5 to 8 mph (approximately 4-7 knots)\n\nThere are no periods in the next 48 hours with sustained winds above 25 knots (approximately 29 mph) that would delay crane operations. The strongest sustained winds forecasted are around 16 mph (14 knots), which is well below the threshold that would typically cause crane operation delays.\n\nAll wind speeds mentioned are approximate conversions from mph to knots (1 knot = 1.15078 mph). The actual wind conditions may vary slightly from these forecasts.",
+      "answers": [
+        {
+          "id": "real-amanat-weather-risk-e284",
+          "text": "The weather forecast for August 26, 2026, at 3:00 PM in New York City (40.7128°N, -74.006°W) predicts mainly clear skies with a temperature of 23.1°C, light winds at 5.9 km/h, and no precipitation. The storm risk is low at 0.168.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "8e0c3144-ee49-49b9-9461-0df16a601d08",
+            "miner_slug": "amanat-weather-risk",
+            "epoch_id": 284,
+            "live_score": 0.006512491,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T15:52:38.680603Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"breach\":false,\"condition\":\"Mainly clear\",\"gust_kmh\":15.1,\"hours\":0,\"lat\":40.7128,\"lon\":-74.006,\"place\":null,\"precip_mm\":0,\"risk\":0.168,\"source\":\"open-meteo\",\"summary\":\"2026-08-26: Mainly clear, 17.3-28.3 °C. At 2026-08-26T15:00Z the forecast for 40.71, -74.01 is 23.1 °C with wind 5.9 km/h, gusts 15.1 km/h and 0.0 mm precipitation. Storm risk is low (0.168).\",\"temp_c\":23.1,\"temp_max_c\":28.3,\"temp_min_c\":17.3,\"valid_at\":\"2026-08-26T15:00Z\",\"weather_code\":1,\"wind_kmh\":5.9}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "Provide a 48-hour wind speed forecast (variable '10u') for the construction site at latitude 40.7128 and longitude — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "Provide a 48-hour wind speed forecast (variable '10u') for the construction site at latitude 40.7128 and longitude — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The weather forecast for August 26, 2026, at 3:00 PM in New York City (40.7128°N, -74.006°W) predicts mainly clear skies with a temperature of 23.1°C, light winds at 5.9 km/h, and no precipitation. The storm risk is low at 0.168.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-amanat-weather-risk-e284",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "storm_alert-real-05",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STORM_ALERT&limit=300",
+        "epoch_min": 284,
+        "epoch_max": 284,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "storm_alert-probe-06",
+      "intent": "STORM_ALERT",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "Can you provide a 48-hour forecast for wind speeds at 10 meters above ground level for the construction site located at latitude 40.7128 and longitude -74.0060, including any expected periods of sustained winds above 25 knots that might disrupt crane operations?",
+      "ground_truth": "The 48-hour wind forecast for the construction site at latitude 40.7128 and longitude -74.0060 (New York City) indicates the following conditions for wind speeds at 10 meters above ground level:\n\n- **Today (August 26, 2026)**: Light winds are expected, generally below 10 knots, with mostly sunny conditions. There is a slight chance of showers in the morning and afternoon, but no significant wind events are anticipated that would disrupt crane operations.\n\n- **Tomorrow (August 27, 2026)**: Winds are expected to increase slightly, with speeds ranging from 10 to 15 knots, primarily from the south. There is a chance of thunderstorms developing later in the day, which could bring gusty winds up to 25 knots. These conditions may pose a risk for crane operations, particularly in the afternoon.\n\n**Summary of Sustained Winds Above 25 Knots**:\n- **Today**: No periods of sustained winds above 25 knots are expected.\n- **Tomorrow**: There is a potential for gusts up to 25 knots in the afternoon associated with thunderstorms. Sustained winds above 25 knots are not expected, but gusts could impact crane operations.\n\nCrane operations should monitor weather updates closely, especially on August 27, as thunderstorms could bring gusty conditions that may require temporary suspension of activities.",
+      "answers": [
+        {
+          "id": "real-amanat-weather-risk-e282",
+          "text": "The weather forecast for August 26, 2026, at 12:00 PM in New York City (40.7128°N, -74.006°W) predicts clear skies with a temperature range of 17.3 to 28.1°C, light winds at 8.7 km/h with gusts up to 16.9 km/h, and no precipitation. The storm risk is low at 0.188.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "4c3c19cb-ca6d-418a-9768-ece093a4c8af",
+            "miner_slug": "amanat-weather-risk",
+            "epoch_id": 282,
+            "live_score": 0.0077284537,
+            "live_rank": 1,
+            "scored_at": "2026-08-26T12:33:35.901153Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"breach\":false,\"condition\":\"Clear sky\",\"gust_kmh\":16.9,\"hours\":0,\"lat\":40.7128,\"lon\":-74.006,\"place\":null,\"precip_mm\":0,\"risk\":0.188,\"source\":\"open-meteo\",\"summary\":\"2026-08-26: Clear sky, 17.3-28.1 °C. At 2026-08-26T12:00Z the forecast for 40.71, -74.01 is 18.9 °C with wind 8.7 km/h, gusts 16.9 km/h and 0.0 mm precipitation. Storm risk is low (0.188).\",\"temp_c\":18.9,\"temp_max_c\":28.1,\"temp_min_c\":17.3,\"valid_at\":\"2026-08-26T12:00Z\",\"weather_code\":0,\"wind_kmh\":8.7}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "Provide a 48-hour forecast for wind speeds at 10 meters above ground level for the construction site — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "Provide a 48-hour forecast for wind speeds at 10 meters above ground level for the construction site — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The weather forecast for August 26, 2026, at 12:00 PM in New York City (40.7128°N, -74.006°W) predicts clear skies with a temperature range of 17.3 to 28.1°C, light winds at 8.7 km/h with gusts up to 16.9 km/h, and no precipitation. The storm risk is low at 0.188.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-amanat-weather-risk-e282",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "storm_alert-real-06",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STORM_ALERT&limit=300",
+        "epoch_min": 282,
+        "epoch_max": 282,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "storm_alert-probe-07",
+      "intent": "STORM_ALERT",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "If I'm monitoring weather conditions for potential storm disruptions at the Cherry Creek Reservoir in Denver, Colorado (39.6438° N, 104.8669° W) for the next 48 hours, can you provide a forecast for wind speeds and precipitation using the ERA5 hourly variables '100u' and '100v'?",
+      "ground_truth": "I can provide you with the latest available forecast information for Cherry Creek Reservoir in Denver, Colorado, but please note that the ERA5 hourly variables '100u' and '100v' (which represent wind components) are specialized meteorological data typically accessed through professional meteorological portals rather than standard public weather forecasts.\n\nHere's the current forecast summary for Cherry Creek Reservoir for the next 48 hours based on available National Weather Service data:\n\n### Wind Forecast (General Direction and Speed):\n- **Tonight**: East wind 6-11 mph, gusting up to 18 mph- **Tomorrow**: Light variable wind becoming NNE 5-9 mph, gusting to 16 mph- **Tomorrow Night**: East wind 7-10 mph becoming SSW, gusting to 17 mph- **Day After Tomorrow**: Calm wind becoming NE 5-8 mph, gusting to 15 mph### Precipitation Forecast:\n- **Tonight**: No significant precipitation expected- **Tomorrow**: No precipitation expected- **Tomorrow Night**: No precipitation expected- **Day After Tomorrow**: No precipitation expectedFor the specific ERA5 '100u' (eastward wind component) and '100v' (northward wind component) variables at hourly resolution, you would need to access specialized meteorological databases such as:\n- The Copernicus Climate Data Store (CDS)\n- National Centers for Environmental Prediction (NCEP) websites\n- University meteorological department data portals\n\nThese typically require account registration and often have terms of use for research or operational applications. The values are usually provided in meters per second and require conversion for practical use.",
+      "answers": [
+        {
+          "id": "real-amanat-weather-risk-e272",
+          "text": "The data shows a weather forecast for August 27, 2026, at 6:00 AM UTC, indicating a temperature of 18.8°C, wind speed of 15.4 km/h, wind gusts of 40.3 km/h, 0.1 mm of precipitation, and a low storm risk of 0.448.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "c062b636-1c80-44e8-bfcf-de877d3ef402",
+            "miner_slug": "amanat-weather-risk",
+            "epoch_id": 272,
+            "live_score": 0.006020499,
+            "live_rank": 1,
+            "scored_at": "2026-08-25T06:57:27.803632Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"breach\":false,\"gust_kmh\":40.3,\"precip_mm\":0.1,\"risk\":0.448,\"source\":\"open-meteo\",\"summary\":\"At 2026-08-27T06:00Z the forecast for 39.64, -104.87 is 18.8 °C with wind 15.4 km/h, gusts 40.3 km/h and 0.1 mm precipitation. Storm risk is low (0.448).\",\"temp_c\":18.8,\"valid_at\":\"2026-08-27T06:00Z\",\"wind_kmh\":15.4}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "If I'm monitoring weather conditions for potential storm disruptions at the Cherry Creek Reservoir in Denver, Colorado — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "If I'm monitoring weather conditions for potential storm disruptions at the Cherry Creek Reservoir in Denver, Colorado — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data shows a weather forecast for August 27, 2026, at 6:00 AM UTC, indicating a temperature of 18.8°C, wind speed of 15.4 km/h, wind gusts of 40.3 km/h, 0.1 mm of precipitation, and a low storm risk of 0.448.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-amanat-weather-risk-e272",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "storm_alert-real-07",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STORM_ALERT&limit=300",
+        "epoch_min": 272,
+        "epoch_max": 272,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    },
+    {
+      "id": "storm_alert-probe-08",
+      "intent": "STORM_ALERT",
+      "class": "REAL-PARROT",
+      "rationale": "the measured champion hole on real inputs: a contentless restatement of the question's opening words against a real miner answer that carries data but does not echo the question",
+      "question": "What is the active storm system forecast for the next 48 hours at latitude 37.7749 and longitude -122.4194, and will there be high wind disruptions affecting operations?",
+      "ground_truth": "The active storm system forecast for the next 48 hours at latitude 37.7749 and longitude -122.4194 (San Francisco, CA) shows mostly clear to partly sunny conditions with no significant storm activity expected.  \n\nHigh wind disruptions are not anticipated to significantly affect operations during this period. While there may be occasional gusts up to 20 mph, these are within typical operational tolerances and not expected to cause major disruptions.  \n\nThe National Weather Service forecasts light west-southwest winds becoming west at 8 to 13 mph in the morning, with gusts potentially reaching 20 mph, but no high wind warnings or advisories are in effect for this timeframe.",
+      "answers": [
+        {
+          "id": "real-bittensor-sn18-zeus-e268",
+          "text": "The data shows hourly wind speed measurements in meters per second for components '100u' and '100v' over a 48-hour period starting from August 23, 2026.",
+          "quality": null,
+          "note": "recorded miner answer, verbatim (highest live score of this fixture's data answers); carries data, does not open by restating the question",
+          "meta": {
+            "record_id": "96a100b6-2171-4fcf-a7f5-b9a3b86f4691",
+            "miner_slug": "bittensor-sn18-zeus",
+            "epoch_id": 268,
+            "live_score": 0.005856463,
+            "live_rank": 1,
+            "scored_at": "2026-08-23T13:25:54.286856Z",
+            "failure_reason": "",
+            "looks_like_refusal": false,
+            "raw_miner_answer": "{\"hourly\":{\"100u\":[5.796875,5.5117188,5.234375,4.921875,4.5625,4.15625,3.703125,3.0664062,2.3554688,1.921875,1.7617188,1.6513672,1.609375,2.1113281,3.1328125,3.953125,4.40625,4.765625,4.984375,4.6679688,4.3671875,4.078125,3.7480469,3.4296875,3.28125,3.2734375,3.2675781,3.265625,3.2695312,3.2773438,3.28125,3.2246094,3.1191406,3.0625,3.1191406,3.2617188,3.453125,3.796875,4.3007812,4.78125,5.1757812,5.5546875,5.90625,5.6679688,5.4179688,5.15625,4.8515625,4.5351562],\"100v\":[-1.90625,-1.6962891,-1.5146484,-1.28125,-0.8574219,-0.3215332,0.078125,0.29052734,0.45117188,0.59375,0.7553711,0.9038086,0.96875,0.9526367,0.9086914,0.84375,0.6796875,0.37280273,-0.015625,0.20739746,0.47021484,0.765625,1.1982422,1.6796875,1.90625,1.8847656,1.828125,1.75,1.5380859,1.2304688,1.0625,1.0498047,1.0429688,1.03125,0.97753906,0.88427734,0.796875,0.7416992,0.69140625,0.609375,0.3544922,-0.12561035,-0.734375,-1.0566406,-1.2675781,-1.34375,-1.2646484,-1.0976562],\"time\":[\"2026-08-23T06:00:00Z\",\"2026-08-23T07:00:00Z\",\"2026-08-23T08:00:00Z\",\"2026-08-23T09:00:00Z\",\"2026-08-23T10:00:00Z\",\"2026-08-23T11:00:00Z\",\"2026-08-23T12:00:00Z\",\"2026-08-23T13:00:00Z\",\"2026-08-23T14:00:00Z\",\"2026-08-23T15:00:00Z\",\"2026-08-23T16:00:00Z\",\"2026-08-23T17:00:00Z\",\"2026-08-23T18:00:00Z\",\"2026-08-23T19:00:00Z\",\"2026-08-23T20:00:00Z\",\"2026-08-23T21:00:00Z\",\"2026-08-23T22:00:00Z\",\"2026-08-23T23:00:00Z\",\"2026-08-24T00:00:00Z\",\"2026-08-24T01:00:00Z\",\"2026-08-24T02:00:00Z\",\"2026-08-24T03:00:00Z\",\"2026-08-24T04:00:00Z\",\"2026-08-24T05:00:00Z\",\"2026-08-24T06:00:00Z\",\"2026-08-24T07:00:00Z\",\"2026-08-24T08:00:00Z\",\"2026-08-24T09:00:00Z\",\"2026-08-24T10:00:00Z\",\"2026-08-24T11:00:00Z\",\"2026-08-24T12:00:00Z\",\"2026-08-24T13:00:00Z\",\"2026-08-24T14:00:00Z\",\"2026-08-24T15:00:00Z\",\"2026-08-24T16:00:00Z\",\"2026-08-24T17:00:00Z\",\"2026-08-24T18:00:00Z\",\"2026-08-24T19:00:00Z\",\"2026-08-24T20:00:00Z\",\"2026-08-24T21:00:00Z\",\"2026-08-24T22:00:00Z\",\"2026-08-24T23:00:00Z\",\"2026-08-25T00:00:00Z\",\"2026-08-25T01:00:00Z\",\"2026-08-25T02:00:00Z\",\"2026-08-25T03:00:00Z\",\"2026-08-25T04:00:00Z\",\"2026-08-25T05:00:00Z\"]},\"hourly_provenance\":{\"100u\":\"5EbpCNGKUFZHTrZ7pHctAZZQF9gMPYUYZEK2rCiP2j3mHkTp (Rank 1)\",\"100v\":\"5EbpCNGKUFZHTrZ7pHctAZZQF9gMPYUYZEK2rCiP2j3mHkTp (Rank 1)\"},\"hourly_steps\":48,\"hourly_units\":{\"100u\":\"m s**-1\",\"100v\":\"m s**-1\",\"time\":\"iso8601\"},\"ingested_at\":\"2026-08-23T07:34:58Z\",\"latitude\":37.75,\"longitude\":-122.5,\"model\":\"zeus\",\"reference_time\":\"2026-08-23T06:00:00Z\"}"
+          }
+        },
+        {
+          "id": "prefix-parrot",
+          "text": "The active storm system forecast for the next 48 hours at latitude 37.7749 and longitude -122.4194, and — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them.",
+          "quality": 0,
+          "note": "the question's opening ~17 words restated; contains no data whatsoever"
+        },
+        {
+          "id": "parrot-plus-data",
+          "text": "The active storm system forecast for the next 48 hours at latitude 37.7749 and longitude -122.4194, and — that is exactly what is addressed here, in the same terms, at the same scope, covering each dimension the request named, in the order the request named them. The data shows hourly wind speed measurements in meters per second for components '100u' and '100v' over a 48-hour period starting from August 23, 2026.",
+          "quality": null,
+          "note": "the same parrot with the real answer appended; isolates what the echo alone is worth"
+        }
+      ],
+      "pairs": [
+        [
+          "real-bittensor-sn18-zeus-e268",
+          "prefix-parrot"
+        ]
+      ],
+      "constraints": [],
+      "provenance": {
+        "source": "scores-api + mechanical question echo",
+        "derived_from": "storm_alert-real-08",
+        "url": "https://devnode.telegraphprotocol.com/scores?intent=STORM_ALERT&limit=300",
+        "epoch_min": 268,
+        "epoch_max": 268,
+        "captured": "2026-08-27T08:05:39.131Z",
+        "ground_truth_looks_like_refusal": false,
+        "generator": "track2/harness/gen-probes.mjs"
+      }
+    }
+  ]
+}
