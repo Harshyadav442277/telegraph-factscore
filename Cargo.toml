@@ -1,0 +1,28 @@
+[package]
+name = "scorer"
+version = "0.1.0"
+edition = "2021"
+
+# Standalone: never inherit a parent workspace.
+[workspace]
+
+[lib]
+name = "scorer"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+
+[features]
+# One source, compiled once per intent (ARCHITECTURE A6). Exactly one of these
+# should be enabled per build; `generic` is the default and is intent-neutral.
+default = ["generic"]
+generic = []
+ip-geolocation = []
+storm-alert = []
+
+[profile.release]
+opt-level = "s"
+lto = true
+panic = "abort"
+strip = true
+codegen-units = 1
