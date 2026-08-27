@@ -242,6 +242,16 @@ mode a Tier-A deterministic intent cannot tolerate.
 - **The corpus is a proxy, not the node's benchmark.** The node's fixtures are closed-source and
   unrecoverable. What transfers is the *comparison* against a pinned incumbent binary,
   not the absolute numbers.
+- **It does not beat the incumbent everywhere, and here is a case where it loses.** Run the
+  *generic* build against `SSL_VERIFICATION` (champion reg 631) and it **fails the gate**: wins
+  16/29 against the incumbent's 17/29, and Spearman **−0.2222** over 18 real answers — our ranking
+  of that intent's live traffic is close to the *opposite* of the champion's. Two honest readings,
+  and we cannot yet separate them: either the SSL champion encodes something about certificate
+  answers that pure fact-precision misses, or SSL's recorded traffic is dominated by answers whose
+  correctness our extractor cannot see (that intent has no per-intent extractor — the generic
+  build has no notion of a chain, a SAN, or an expiry). Either way the claim we make is the narrow
+  one: measured wins on `IP_GEOLOCATION` and `STORM_ALERT`, against pinned binaries, with the
+  method published so the losses are as reproducible as the wins.
 - **STORM_ALERT passes, but by 0.0005 — and the tension behind that number is the real finding.**
   The intent has ~4 miners, so the Spearman check (ρ ≥ 0.60 agreement with the incumbent's ranking
   of real traffic) is enforced — and the incumbent *rewards* contentless echoes there. Refusing to
