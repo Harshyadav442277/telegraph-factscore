@@ -20,6 +20,7 @@ generic = []
 ip-geolocation = []
 storm-alert = []
 content-verification = []
+text-authenticity = []
 
 [profile.release]
 opt-level = "s"

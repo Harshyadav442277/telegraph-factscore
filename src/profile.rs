@@ -357,11 +357,70 @@ pub const fn profile() -> Profile {
     p
 }
 
+#[cfg(feature = "text-authenticity")]
+pub const fn profile() -> Profile {
+    let mut p = base();
+    // TEXT_AUTHENTICITY_CHECK. Same question as content verification -- is this
+    // text original, AI-generated or human-written -- so it shares the profile:
+    // a polar verdict, a confidence/similarity figure, and a named source. The
+    // antonym axis (src/antonyms.rs) already carries this vocabulary.
+    //
+    // Zero miners with scoring history (historical_rows_evaluated: 0 on the
+    // champion and on every recent challenger), so Spearman is SKIPPED here too
+    // and the profile can calibrate for separation outright. The decisive content is a polar
+    // verdict (plagiarised vs original, AI-generated vs human), a similarity
+    // percentage, and the matched source. All three are things an answer either
+    // gets right or gets backwards, so this profile leans on the polarity and
+    // identifier channels rather than on prose.
+    //
+    // A verdict flip is the characteristic wrong answer here, and it shares
+    // almost all its vocabulary with the correct one ("the text IS original" vs
+    // "the text is NOT original"), so the contradiction path must dominate.
+    p.w_ident = 4.0;
+    p.id_channel_w = 1.0;
+    // Similarity is a bounded percentage: an absolute epsilon, not a relative
+    // one, or "12%" and "82%" both read as near-misses of a 47% truth.
+    p.num_abs_tol = 0.02;
+    // Steep. A similarity percentage is the finding, not a measurement with
+    // tolerance: reporting 21% against a truth of 68% is a wrong answer, not a
+    // near miss. Swept 10/25/60/150 -- margin 0.8668/0.8754/0.8793/0.8812, so
+    // this is the knee. 150 was rejected as over-punishing: it makes a 1% error
+    // look like a 100% one, which would misrank genuinely close answers on
+    // questions unlike the tuning set.
+    // Worst figure decides the numeric channel outright. On this intent every
+    // figure IS the finding -- the similarity percentage and the passage count
+    // are what a plagiarism report exists to state -- so one wrong figure must
+    // not average away behind the right ones. Swept 0.5(base)/0.6/0.85/1.0 ->
+    // margin 0.8793/0.9014/0.9463/0.9634, correct answers unmoved at 0.9999
+    // throughout, so this buys separation at no cost to correctness.
+    //
+    // The entity mirror (`ent_min_bias`) was swept too and left at the base 0.6:
+    // raising it to 0.8/1.0 REDUCED margin (0.9543/0.9483), because a wrong
+    // source is one entity among several correct ones and worst-biasing it
+    // dragged the whole entity channel rather than sharpening it.
+    p.num_min_bias = 1.0;
+    p.num_rel_k = 60.0;
+    p.num_channel_w = 1.0;
+    // Single miner with no scoring history (historical_rows_evaluated: 0), so
+    // the Spearman traffic check is SKIPPED for this intent. That frees this
+    // build to calibrate for separation outright, exactly as IP_GEOLOCATION
+    // does, without the agreement tax that STORM_ALERT pays.
+    p.ss_lo = 0.0;
+    p.ss_hi = 1.0;
+    p.p_concave = 0.15;
+    // The matched source and the verdict are the answer; a fluent restatement
+    // of the submitted passage is not. Demand real novel mass before the
+    // answered-ness gate opens.
+    p.ans_sat = 3.5;
+    p
+}
+
 #[cfg(all(
     feature = "generic",
     not(feature = "ip-geolocation"),
     not(feature = "storm-alert"),
-    not(feature = "content-verification")
+    not(feature = "content-verification"),
+    not(feature = "text-authenticity")
 ))]
 pub const fn profile() -> Profile {
     base()
@@ -374,11 +433,14 @@ const fn intent_tag() -> [u8; 32] {
     let name = b"STORM_ALERT";
     #[cfg(feature = "content-verification")]
     let name = b"CONTENT_VERIFICATION";
+    #[cfg(feature = "text-authenticity")]
+    let name = b"TEXT_AUTHENTICITY_CHECK";
     #[cfg(all(
         feature = "generic",
         not(feature = "ip-geolocation"),
         not(feature = "storm-alert"),
-        not(feature = "content-verification")
+        not(feature = "content-verification"),
+        not(feature = "text-authenticity")
     ))]
     let name = b"GENERIC";
 
