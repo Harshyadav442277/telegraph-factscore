@@ -323,7 +323,13 @@ pub const fn profile() -> Profile {
     // Similarity is a bounded percentage: an absolute epsilon, not a relative
     // one, or "12%" and "82%" both read as near-misses of a 47% truth.
     p.num_abs_tol = 0.02;
-    p.num_rel_k = 10.0;
+    // Steep. A similarity percentage is the finding, not a measurement with
+    // tolerance: reporting 21% against a truth of 68% is a wrong answer, not a
+    // near miss. Swept 10/25/60/150 -- margin 0.8668/0.8754/0.8793/0.8812, so
+    // this is the knee. 150 was rejected as over-punishing: it makes a 1% error
+    // look like a 100% one, which would misrank genuinely close answers on
+    // questions unlike the tuning set.
+    p.num_rel_k = 60.0;
     p.num_channel_w = 1.0;
     // Single miner with no scoring history (historical_rows_evaluated: 0), so
     // the Spearman traffic check is SKIPPED for this intent. That frees this
