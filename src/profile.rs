@@ -329,6 +329,18 @@ pub const fn profile() -> Profile {
     // this is the knee. 150 was rejected as over-punishing: it makes a 1% error
     // look like a 100% one, which would misrank genuinely close answers on
     // questions unlike the tuning set.
+    // Worst figure decides the numeric channel outright. On this intent every
+    // figure IS the finding -- the similarity percentage and the passage count
+    // are what a plagiarism report exists to state -- so one wrong figure must
+    // not average away behind the right ones. Swept 0.5(base)/0.6/0.85/1.0 ->
+    // margin 0.8793/0.9014/0.9463/0.9634, correct answers unmoved at 0.9999
+    // throughout, so this buys separation at no cost to correctness.
+    //
+    // The entity mirror (`ent_min_bias`) was swept too and left at the base 0.6:
+    // raising it to 0.8/1.0 REDUCED margin (0.9543/0.9483), because a wrong
+    // source is one entity among several correct ones and worst-biasing it
+    // dragged the whole entity channel rather than sharpening it.
+    p.num_min_bias = 1.0;
     p.num_rel_k = 60.0;
     p.num_channel_w = 1.0;
     // Single miner with no scoring history (historical_rows_evaluated: 0), so
