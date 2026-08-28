@@ -51,6 +51,91 @@ pub const fn is_sep(b: u8) -> bool {
 }
 
 // --------------------------------------------------------------------------
+// Unicode punctuation folding
+// --------------------------------------------------------------------------
+
+/// If `src[i..]` begins with a Unicode punctuation or space character that has
+/// an ASCII equivalent, return `(byte_length, ascii_equivalent)`.
+///
+/// Bytes >= 0x80 are otherwise opaque *word* bytes (never decoded, so emoji and
+/// CJK cannot trap), which means a curly apostrophe glues its neighbours into
+/// one token while the ASCII apostrophe splits them. Measured against a ground
+/// truth reading `Shimo\u{2019}ochiai`, the identical answer written with an
+/// ASCII `'` scored **0.2592** where the curly form scored 0.9997 — a correct
+/// answer failed on typography alone. LLM output uses curly quotes and en-dashes
+/// constantly, so this is not an edge case.
+///
+/// Only characters with a genuine ASCII equivalent are folded. Everything else
+/// above 0x80 stays opaque.
+pub const fn unicode_punct(src: &[u8], i: usize) -> Option<(usize, u8)> {
+    let n = src.len();
+    if i + 1 < n && src[i] == 0xC2 {
+        // U+00A0 NO-BREAK SPACE, U+00AD SOFT HYPHEN
+        match src[i + 1] {
+            0xA0 => return Some((2, b' ')),
+            0xAD => return Some((2, b'-')),
+            _ => {}
+        }
+    }
+    if i + 2 < n && src[i] == 0xE2 && src[i + 1] == 0x80 {
+        match src[i + 2] {
+            // U+2018/2019 single quotes, U+201A/201B variants, U+2032 prime
+            0x98..=0x9B => return Some((3, b'\'')),
+            // U+201C/201D/201E/201F double quotes
+            0x9C..=0x9F => return Some((3, b'"')),
+            // U+2010..U+2015 hyphens and dashes
+            0x90..=0x95 => return Some((3, b'-')),
+            // U+2026 ellipsis
+            0xA6 => return Some((3, b'.')),
+            // U+2000..U+200A spaces, U+2007 figure space, U+202F narrow NBSP
+            0x80..=0x8A | 0xAF => return Some((3, b' ')),
+            _ => {}
+        }
+    }
+    if i + 2 < n && src[i] == 0xE2 && src[i + 1] == 0x80 && src[i + 2] == 0xB2 {
+        return Some((3, b'\''));
+    }
+    // U+2212 MINUS SIGN
+    if i + 2 < n && src[i] == 0xE2 && src[i + 1] == 0x88 && src[i + 2] == 0x92 {
+        return Some((3, b'-'));
+    }
+    // U+3000 IDEOGRAPHIC SPACE
+    if i + 2 < n && src[i] == 0xE3 && src[i + 1] == 0x80 && src[i + 2] == 0x80 {
+        return Some((3, b' '));
+    }
+    None
+}
+
+/// Fold Unicode punctuation to ASCII into `dst`, returning the length written.
+///
+/// The mapping only ever shrinks the text (three bytes to one), so `dst` of the
+/// source's length always suffices. Returns `None` when `dst` is too small,
+/// where the caller falls back to the raw bytes: an over-long input is an
+/// adversarial Stage-1 probe whose only requirement is not to trap.
+pub fn fold_punct(src: &[u8], dst: &mut [u8]) -> Option<usize> {
+    if src.len() > dst.len() {
+        return None;
+    }
+    let mut i = 0usize;
+    let mut o = 0usize;
+    while i < src.len() {
+        match unicode_punct(src, i) {
+            Some((len, ascii)) => {
+                dst[o] = ascii;
+                o += 1;
+                i += len;
+            }
+            None => {
+                dst[o] = src[i];
+                o += 1;
+                i += 1;
+            }
+        }
+    }
+    Some(o)
+}
+
+// --------------------------------------------------------------------------
 // FNV-1a over case-folded bytes. `const fn` so the stopword / boilerplate /
 // unit tables are compile-time constants rather than runtime initialisation.
 // --------------------------------------------------------------------------
@@ -150,8 +235,17 @@ pub fn normalized_equal(a: &[u8], b: &[u8]) -> bool {
 /// Punctuation that ends a noun phrase. "Mountain View, California" is two
 /// phrases, not one five-word name.
 pub const fn is_phrase_break(b: u8) -> bool {
-    b == b',' || b == b'.' || b == b';' || b == b':' || b == b'!' || b == b'?'
-        || b == b'(' || b == b')' || b == b'\n' || b == b'|' || b == b'/'
+    b == b','
+        || b == b'.'
+        || b == b';'
+        || b == b':'
+        || b == b'!'
+        || b == b'?'
+        || b == b'('
+        || b == b')'
+        || b == b'\n'
+        || b == b'|'
+        || b == b'/'
 }
 
 /// A lone compass letter, which after a decimal marks a coordinate hemisphere.
@@ -246,7 +340,10 @@ mod tests {
 
     #[test]
     fn normalized_equal_folds_case_and_whitespace_only() {
-        assert!(normalized_equal(b"The IP is 1.2.3.4.", b"the   ip is 1.2.3.4."));
+        assert!(normalized_equal(
+            b"The IP is 1.2.3.4.",
+            b"the   ip is 1.2.3.4."
+        ));
         assert!(normalized_equal(b"  Paris ", b"paris"));
         assert!(!normalized_equal(b"valid", b"invalid"));
         assert!(normalized_equal(b"", b"   "));
@@ -258,7 +355,10 @@ mod tests {
         // a different claim. Folding these fired the exact-match shortcut and
         // returned a literal 1.0 for a wrong answer (adversarial review C1).
         assert!(!normalized_equal(b"The IP is 1.2.3.4.", b"the ip is 1234"));
-        assert!(!normalized_equal(b"The CVSS score is 10.", b"The CVSS score is 1.0"));
+        assert!(!normalized_equal(
+            b"The CVSS score is 10.",
+            b"The CVSS score is 1.0"
+        ));
         assert!(!normalized_equal(b"winds of 5.9 m/s", b"winds of 59 m/s"));
         assert!(!normalized_equal(b"23.1 C", b"231 C"));
         assert!(!normalized_equal(b"-122.4194", b"122.4194"));

@@ -10,10 +10,10 @@
 #![allow(dead_code)]
 
 use crate::bytes::*;
+use crate::profile::profile;
 use crate::units::{
     leading_range, suffix_is_negative_hemisphere, unit_word_code, P_BASE, U_DEG, U_NONE,
 };
-use crate::profile::profile;
 
 /// Ample: a live `converted_answer` runs ~50 tokens and the longest ground truth
 /// in the corpus is a few hundred. Only the ~54 KB adversarial Stage-1 input
@@ -49,10 +49,19 @@ pub struct Toks {
     pub first: [u8; MAX_TOKENS],
     /// Capitalised mid-sentence: a proper noun, i.e. a salient entity.
     pub proper: [bool; MAX_TOKENS],
-    /// An ALL-CAPS token: an acronym, code or technical term ("US", "WHOIS",
-    /// "RIR", "DNS"), not a name. Entity *values* in this corpus are Title-case
-    /// ("Berlin", "Google", "Nippon Telegraph"), so the distinction separates a
-    /// claimed entity from a method or standard the answer merely mentions.
+    /// A **two-letter** ALL-CAPS token: a standard code, not a name. ISO 3166
+    /// country codes and US/Canadian state codes are exactly two letters ("US",
+    /// "UY", "IS", "CA", "NY"), and their expansion cannot be derived from the
+    /// spelling — "UY" is not reachable from "Uruguay" by any lexical rule, so
+    /// the acronym pass in `score.rs` (which builds initials from a *run* of
+    /// proper nouns) can never produce it. Such a token has to abstain rather
+    /// than read as a wrong entity.
+    ///
+    /// The length bound is what makes this safe. It used to cover every ALL-CAPS
+    /// token, and a wrong ISP written as an acronym went free: "operated by AWS"
+    /// against a truth of "Google LLC" scored 0.9829 while the same swap spelled
+    /// "Cloudflare Inc." scored 0.2248. Organisation acronyms are three letters
+    /// or more; standard geographic codes are two.
     pub abbrev: [bool; MAX_TOKENS],
     /// Carries an assertion rather than prose: a figure, an identifier, or a
     /// proper noun. These are what a Tier-A answer is right or wrong about.
@@ -104,25 +113,98 @@ impl Toks {
 /// ~90 function words. A stopword still weighs a little, so that padding an
 /// answer with them dilutes its precision denominator instead of being free.
 const STOPWORDS: [u32; 92] = [
-    hash_str("the"), hash_str("a"), hash_str("an"), hash_str("and"), hash_str("or"),
-    hash_str("but"), hash_str("if"), hash_str("of"), hash_str("to"), hash_str("in"),
-    hash_str("on"), hash_str("at"), hash_str("by"), hash_str("for"), hash_str("with"),
-    hash_str("from"), hash_str("as"), hash_str("is"), hash_str("are"), hash_str("was"),
-    hash_str("were"), hash_str("be"), hash_str("been"), hash_str("being"), hash_str("am"),
-    hash_str("has"), hash_str("have"), hash_str("had"), hash_str("do"), hash_str("does"),
-    hash_str("did"), hash_str("will"), hash_str("would"), hash_str("shall"), hash_str("should"),
-    hash_str("can"), hash_str("could"), hash_str("may"), hash_str("might"), hash_str("must"),
-    hash_str("this"), hash_str("that"), hash_str("these"), hash_str("those"), hash_str("it"),
-    hash_str("its"), hash_str("they"), hash_str("them"), hash_str("their"), hash_str("there"),
-    hash_str("here"), hash_str("what"), hash_str("which"), hash_str("who"), hash_str("whom"),
-    hash_str("whose"), hash_str("when"), hash_str("where"), hash_str("why"), hash_str("how"),
-    hash_str("all"), hash_str("any"), hash_str("both"), hash_str("each"), hash_str("few"),
-    hash_str("more"), hash_str("most"), hash_str("some"), hash_str("such"), hash_str("than"),
-    hash_str("too"), hash_str("very"), hash_str("just"), hash_str("also"), hash_str("into"),
-    hash_str("over"), hash_str("under"), hash_str("about"), hash_str("between"), hash_str("during"),
-    hash_str("you"), hash_str("your"), hash_str("i"), hash_str("we"), hash_str("our"),
-    hash_str("he"), hash_str("she"), hash_str("his"), hash_str("her"), hash_str("not"),
-    hash_str("no"), hash_str("s"),
+    hash_str("the"),
+    hash_str("a"),
+    hash_str("an"),
+    hash_str("and"),
+    hash_str("or"),
+    hash_str("but"),
+    hash_str("if"),
+    hash_str("of"),
+    hash_str("to"),
+    hash_str("in"),
+    hash_str("on"),
+    hash_str("at"),
+    hash_str("by"),
+    hash_str("for"),
+    hash_str("with"),
+    hash_str("from"),
+    hash_str("as"),
+    hash_str("is"),
+    hash_str("are"),
+    hash_str("was"),
+    hash_str("were"),
+    hash_str("be"),
+    hash_str("been"),
+    hash_str("being"),
+    hash_str("am"),
+    hash_str("has"),
+    hash_str("have"),
+    hash_str("had"),
+    hash_str("do"),
+    hash_str("does"),
+    hash_str("did"),
+    hash_str("will"),
+    hash_str("would"),
+    hash_str("shall"),
+    hash_str("should"),
+    hash_str("can"),
+    hash_str("could"),
+    hash_str("may"),
+    hash_str("might"),
+    hash_str("must"),
+    hash_str("this"),
+    hash_str("that"),
+    hash_str("these"),
+    hash_str("those"),
+    hash_str("it"),
+    hash_str("its"),
+    hash_str("they"),
+    hash_str("them"),
+    hash_str("their"),
+    hash_str("there"),
+    hash_str("here"),
+    hash_str("what"),
+    hash_str("which"),
+    hash_str("who"),
+    hash_str("whom"),
+    hash_str("whose"),
+    hash_str("when"),
+    hash_str("where"),
+    hash_str("why"),
+    hash_str("how"),
+    hash_str("all"),
+    hash_str("any"),
+    hash_str("both"),
+    hash_str("each"),
+    hash_str("few"),
+    hash_str("more"),
+    hash_str("most"),
+    hash_str("some"),
+    hash_str("such"),
+    hash_str("than"),
+    hash_str("too"),
+    hash_str("very"),
+    hash_str("just"),
+    hash_str("also"),
+    hash_str("into"),
+    hash_str("over"),
+    hash_str("under"),
+    hash_str("about"),
+    hash_str("between"),
+    hash_str("during"),
+    hash_str("you"),
+    hash_str("your"),
+    hash_str("i"),
+    hash_str("we"),
+    hash_str("our"),
+    hash_str("he"),
+    hash_str("she"),
+    hash_str("his"),
+    hash_str("her"),
+    hash_str("not"),
+    hash_str("no"),
+    hash_str("s"),
 ];
 
 fn is_stopword(h: u32) -> bool {
@@ -140,10 +222,20 @@ fn is_stopword(h: u32) -> bool {
 /// weighed 0.05 out of a ~15-token pool and a sentence tied its own negation at
 /// 1.0000 (adversarial review C2). Polarity is not a weighting question.
 const NEGATORS: [u32; 14] = [
-    hash_str("not"), hash_str("no"), hash_str("never"), hash_str("none"),
-    hash_str("cannot"), hash_str("cant"), hash_str("wont"), hash_str("didnt"),
-    hash_str("doesnt"), hash_str("isnt"), hash_str("arent"), hash_str("without"),
-    hash_str("nor"), hash_str("neither"),
+    hash_str("not"),
+    hash_str("no"),
+    hash_str("never"),
+    hash_str("none"),
+    hash_str("cannot"),
+    hash_str("cant"),
+    hash_str("wont"),
+    hash_str("didnt"),
+    hash_str("doesnt"),
+    hash_str("isnt"),
+    hash_str("arent"),
+    hash_str("without"),
+    hash_str("nor"),
+    hash_str("neither"),
 ];
 
 fn is_negator(h: u32) -> bool {
@@ -326,7 +418,7 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
         // a previous call would make the score depend on call order.
         t.decisive[k] = kind != K_WORD || proper;
         t.proper[k] = proper && kind == K_WORD;
-        t.abbrev[k] = kind == K_WORD && all_upper(tok);
+        t.abbrev[k] = kind == K_WORD && all_upper(tok) && tok.len() <= 2;
         t.first[k] = if is_alpha(tok[0]) { lower(tok[0]) } else { 0 };
         t.boiler[k] = false;
         t.echo[k] = false;

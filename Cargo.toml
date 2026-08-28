@@ -19,6 +19,7 @@ default = ["generic"]
 generic = []
 ip-geolocation = []
 storm-alert = []
+content-verification = []
 
 [profile.release]
 opt-level = "s"

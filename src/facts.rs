@@ -10,6 +10,7 @@
 
 use crate::bytes::*;
 use crate::profile::Profile;
+use crate::sets::Set;
 use crate::tokens::{Toks, K_IDENT, K_NUMBER};
 use crate::units::*;
 
@@ -74,9 +75,19 @@ pub fn value_agreement(a: Fig, g: Fig, p: &Profile) -> Option<f32> {
             1.0 / (1.0 + p.num_rel_k * rel)
         };
         // A range earns credit for containing the truth, but a range wide enough
-        // to contain almost anything is a hedge, not an answer. Discount by its
-        // own width so "5-50 m/s" cannot bank the same credit as "46-48 m/s".
-        let width = (ahi - alo) / scale;
+        // to contain almost anything is a hedge, not an answer. Discount by the
+        // width the answer adds OVER the ground truth's own, so "5-50 m/s"
+        // cannot bank the same credit as "46-48 m/s".
+        //
+        // The excess is what matters, not the absolute width. Charging absolute
+        // width punished an answer for restating a hyphenated figure the truth
+        // itself states: a Japanese postal code "162-0843" parses as the range
+        // 162..843, and quoting it back verbatim scored 0.382 on the numeric
+        // channel — dragging an otherwise perfect answer to 0.4632 (measured,
+        // CLEAN-PAIR fixture ip_geolocation-cleanpair-10). Verbatim copies were
+        // spared only because the exact-match short-circuit never reaches here,
+        // so every *reworded* correct answer paid it and no test saw it.
+        let width = fmax((ahi - alo) - (ghi - glo), 0.0) / scale;
         if width > 0.0 {
             score /= 1.0 + p.m_range_width * width;
         }
@@ -88,7 +99,15 @@ pub fn value_agreement(a: Fig, g: Fig, p: &Profile) -> Option<f32> {
     if ad != D_NONE && gd != D_NONE {
         // Same dimension: convert and compare. Always comparable, however far
         // apart — 47 m/s against 5 m/s is a wrong speed, not an unknown one.
-        return Some(rate(conv(a.lo, a.unit), conv(a.hi, a.unit), conv(g.lo, g.unit), conv(g.hi, g.unit)).0);
+        return Some(
+            rate(
+                conv(a.lo, a.unit),
+                conv(a.hi, a.unit),
+                conv(g.lo, g.unit),
+                conv(g.hi, g.unit),
+            )
+            .0,
+        );
     }
 
     if (ad != D_NONE) != (gd != D_NONE) {
@@ -99,7 +118,13 @@ pub fn value_agreement(a: Fig, g: Fig, p: &Profile) -> Option<f32> {
         // there let `42%` match both `0.42` and `42`, covering two scales at
         // once for free (adversarial review M4).
         let dim = if ad != D_NONE { ad } else { gd };
-        let converted = rate(conv(a.lo, a.unit), conv(a.hi, a.unit), conv(g.lo, g.unit), conv(g.hi, g.unit)).0;
+        let converted = rate(
+            conv(a.lo, a.unit),
+            conv(a.hi, a.unit),
+            conv(g.lo, g.unit),
+            conv(g.hi, g.unit),
+        )
+        .0;
         let best = if dim == D_FRAC {
             converted
         } else {
@@ -182,10 +207,27 @@ pub fn best_agreement(ta: &Toks, i: usize, tg: &Toks, p: &Profile) -> Option<f32
 ///
 /// Returns `(multiplier, raw_agreement)` — the second value is exposed only
 /// through `breakdown_answer` for debugging.
-pub fn fact_multiplier(ta: &Toks, tg: &Toks, p: &Profile) -> (f32, f32) {
+pub fn fact_multiplier(ta: &Toks, tg: &Toks, sa: &Set, p: &Profile) -> (f32, f32) {
     let (mut num_w, mut num_a) = (0.0f32, 0.0f32);
-    let (mut id_w, mut id_a) = (0.0f32, 0.0f32);
+    let (mut id_sup, mut id_uns) = (0.0f32, 0.0f32);
     let mut num_min = 1.0f32;
+
+    // Identifier mass the ground truth states that the answer never mentions.
+    // The identifier channel needs the same substitution-versus-addition rule
+    // the entity channel has: an answer that quotes the IP the truth names and
+    // *also* gives the AS number has invented nothing to contradict, while one
+    // that quotes a different IP has. Before this, `tg.has_ident` alone put every
+    // unmatched identifier in the wrong column, so a correct answer carrying one
+    // extra true identifier scored 0.46 against 1.00 for the same answer without
+    // it (A3.8: precision of the assertion, not recall of the truth).
+    let mut gt_id_uncovered = 0.0f32;
+    let mut k = 0usize;
+    while k < tg.n {
+        if tg.kind[k] == K_IDENT && !sa.contains_tok(tg, k) {
+            gt_id_uncovered += tg.w[k];
+        }
+        k += 1;
+    }
 
     let mut i = 0usize;
     while i < ta.n {
@@ -203,12 +245,13 @@ pub fn fact_multiplier(ta: &Toks, tg: &Toks, p: &Profile) -> (f32, f32) {
                     num_min = fmin(num_min, best);
                 }
             }
-            K_IDENT => {
-                // Identifiers admit no tolerance. They only enter the channel
-                // when the ground truth states identifiers to be checked against.
-                if tg.has_ident {
-                    id_w += ta.w[i];
-                    id_a += ta.w[i] * ta.supw[i];
+            // Identifiers admit no tolerance. They only enter the channel
+            // when the ground truth states identifiers to be checked against.
+            K_IDENT if tg.has_ident => {
+                if ta.supw[i] > 0.0 {
+                    id_sup += ta.w[i];
+                } else {
+                    id_uns += ta.w[i];
                 }
             }
             _ => {}
@@ -230,8 +273,16 @@ pub fn fact_multiplier(ta: &Toks, tg: &Toks, p: &Profile) -> (f32, f32) {
         let agree = (1.0 - p.num_min_bias) * mean + p.num_min_bias * num_min;
         f *= clamp01(1.0 - p.num_channel_w * (1.0 - agree));
     }
+    // Only the paired part of the unsupported mass is a substitution. The excess
+    // is a pure addition: it displaced nothing, but at `add_w = 0` an answer
+    // could append an invented IP or ASN to an otherwise perfect answer for
+    // free (measured >= 0.9999), so it enters the denominator at a reduced
+    // weight rather than not at all.
+    let id_sub = fmin(id_uns, gt_id_uncovered);
+    let id_add = fmax(id_uns - id_sub, 0.0);
+    let id_w = id_sup + id_sub + p.add_w * id_add;
     if id_w > 0.0 {
-        f *= clamp01(1.0 - p.id_channel_w * (1.0 - id_a / id_w));
+        f *= clamp01(1.0 - p.id_channel_w * (1.0 - id_sup / id_w));
     }
     if num_w <= 0.0 && id_w <= 0.0 {
         // No typed facts on either side: the fact channel abstains entirely
@@ -249,13 +300,28 @@ mod tests {
     use crate::tokens::tokenize;
 
     fn f(v: f32, u: u8) -> Fig {
-        Fig { lo: v, hi: v, unit: u, foreign: 0 }
+        Fig {
+            lo: v,
+            hi: v,
+            unit: u,
+            foreign: 0,
+        }
     }
     fn rng(lo: f32, hi: f32, u: u8) -> Fig {
-        Fig { lo, hi, unit: u, foreign: 0 }
+        Fig {
+            lo,
+            hi,
+            unit: u,
+            foreign: 0,
+        }
     }
     fn foreign(v: f32, word: &str) -> Fig {
-        Fig { lo: v, hi: v, unit: U_NONE, foreign: hash_str(word) }
+        Fig {
+            lo: v,
+            hi: v,
+            unit: U_NONE,
+            foreign: hash_str(word),
+        }
     }
 
     #[test]
@@ -286,7 +352,10 @@ mod tests {
     #[test]
     fn unitless_figures_far_apart_are_unverifiable_not_wrong() {
         let p = base();
-        assert_eq!(value_agreement(f(2009.0, U_NONE), f(10.0, U_NONE), &p), None);
+        assert_eq!(
+            value_agreement(f(2009.0, U_NONE), f(10.0, U_NONE), &p),
+            None
+        );
     }
 
     #[test]
@@ -328,11 +397,20 @@ mod tests {
         let floor_only = value_agreement(f(5.0, U_MS), f(47.0, U_MS), &p).unwrap();
         // The upper bound is visible: a range containing the truth beats a flat
         // wrong answer at its floor.
-        assert!(wide > floor_only, "wide {} vs floor-only {}", wide, floor_only);
+        assert!(
+            wide > floor_only,
+            "wide {} vs floor-only {}",
+            wide,
+            floor_only
+        );
         // But a range wide enough to contain any outcome is a hedge, and must
         // not bank the same credit as one that actually pins the value down.
         assert!(tight > wide * 2.0, "tight {} vs wide hedge {}", tight, wide);
-        assert!(tight > 0.9, "a tight range containing the truth is right: {}", tight);
+        assert!(
+            tight > 0.9,
+            "a tight range containing the truth is right: {}",
+            tight
+        );
         // A range that misses still decays from the nearer bound.
         let misses = value_agreement(rng(5.0, 10.0, U_MS), f(47.0, U_MS), &p).unwrap();
         assert!(misses < 0.5);
@@ -348,12 +426,17 @@ mod tests {
         assert!(
             category_error <= honest_wrong * 1.5,
             "category error {} must not tower over honest wrong {}",
-            category_error, honest_wrong
+            category_error,
+            honest_wrong
         );
-        assert!(category_error < 0.1, "category error {} must be near zero", category_error);
+        assert!(
+            category_error < 0.1,
+            "category error {} must be near zero",
+            category_error
+        );
         // A real pressure unit is a different dimension entirely: not comparable.
         assert_eq!(value_agreement(f(47.0, U_HPA), f(47.0, U_KMH), &p), None);
-        assert_eq!(value_agreement(f(23.1, U_TEMP_K), f(23.1, U_TEMP_C), &p).is_some(), true);
+        assert!(value_agreement(f(23.1, U_TEMP_K), f(23.1, U_TEMP_C), &p).is_some());
     }
 
     #[test]
@@ -379,8 +462,12 @@ mod tests {
         tokenize(b"a CVSS score of 7.5", &mut wrong);
         annotate_units(&mut wrong);
 
-        let (mr, _) = fact_multiplier(&right, &tg, &p);
-        let (mw, _) = fact_multiplier(&wrong, &tg, &p);
+        let mut sr = crate::sets::EMPTY_SET;
+        sr.fill(&right);
+        let (mr, _) = fact_multiplier(&right, &tg, &sr, &p);
+        let mut sw = crate::sets::EMPTY_SET;
+        sw.fill(&wrong);
+        let (mw, _) = fact_multiplier(&wrong, &tg, &sw, &p);
         assert!(mr > mw, "right {} must beat wrong {}", mr, mw);
         assert!(mw > p.fact_floor * 0.9, "wrong must not fall off a cliff");
     }
@@ -394,7 +481,9 @@ mod tests {
         let mut ta = Toks::new();
         tokenize(b"Hosted by Google LLC since 2009", &mut ta);
         annotate_units(&mut ta);
-        let (m, _) = fact_multiplier(&ta, &tg, &p);
+        let mut sa = crate::sets::EMPTY_SET;
+        sa.fill(&ta);
+        let (m, _) = fact_multiplier(&ta, &tg, &sa, &p);
         assert_eq!(m, 1.0);
     }
 }

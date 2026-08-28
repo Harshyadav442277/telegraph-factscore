@@ -14,6 +14,10 @@ pub struct Set {
     val: [u32; SET_SLOTS],
 }
 
+// Deliberately a `const`, not a `static`: it is an initializer copied into a
+// local at each use, so there is no shared mutable state and no relocation.
+// A `static` would force a borrow and defeat that.
+#[allow(clippy::large_const_arrays)]
 pub const EMPTY_SET: Set = Set {
     key: [0; SET_SLOTS],
     val: [0; SET_SLOTS],

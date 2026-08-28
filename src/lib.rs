@@ -23,6 +23,7 @@
 
 #![cfg_attr(target_arch = "wasm32", no_std)]
 
+mod aliases;
 mod bytes;
 mod facts;
 mod profile;
@@ -45,13 +46,13 @@ const HEAP_SIZE: usize = 1024 * 1024;
 static mut HEAP: [u8; HEAP_SIZE] = [0u8; HEAP_SIZE];
 static mut BUMP: usize = 0;
 
-/// Bump-allocate `size` bytes, 8-byte aligned, wrapping when the arena fills.
-///
-/// Wrapping rather than failing is deliberate: the gate makes thousands of calls
-/// and never calls `dealloc`, so a strict allocator would return 0 partway
-/// through the run and the host would fail the call. The host also refuses to
-/// grow memory, so the pointer must stay inside already-committed linear memory
-/// (gate analysis §5) — which a fixed static arena guarantees.
+// Bump-allocate `size` bytes, 8-byte aligned, wrapping when the arena fills.
+//
+// Wrapping rather than failing is deliberate: the gate makes thousands of calls
+// and never calls `dealloc`, so a strict allocator would return 0 partway
+// through the run and the host would fail the call. The host also refuses to
+// grow memory, so the pointer must stay inside already-committed linear memory
+// (gate analysis §5) — which a fixed static arena guarantees.
 
 /// Where the next allocation lands, and where the bump pointer moves to.
 /// Split out so the wrap-around arithmetic is unit-testable without fabricating
@@ -257,7 +258,12 @@ mod abi_tests {
 
     #[test]
     fn output_is_always_in_range() {
-        let cases: [&[u8]; 4] = [b"Paris", b"", b"   ", b"\xff\xfe\xfd garbage \xf0\x9f\x97\xbc"];
+        let cases: [&[u8]; 4] = [
+            b"Paris",
+            b"",
+            b"   ",
+            b"\xff\xfe\xfd garbage \xf0\x9f\x97\xbc",
+        ];
         for c in cases.iter() {
             let s = call(b"q", b"Paris", c);
             assert!((0.0..=1.0).contains(&s), "out of range: {}", s);
@@ -297,7 +303,10 @@ mod abi_tests {
         let mut bump = 0usize;
         for _ in 0..500 {
             let (start, next) = bump_next(bump, 64 * 1024);
-            assert!(start + 64 * 1024 <= HEAP_SIZE, "allocation escaped the arena");
+            assert!(
+                start + 64 * 1024 <= HEAP_SIZE,
+                "allocation escaped the arena"
+            );
             bump = next;
         }
     }

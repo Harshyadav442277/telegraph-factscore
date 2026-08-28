@@ -118,6 +118,24 @@ pub struct Profile {
     /// Floor of the fact multiplier. Keeps a wholly-wrong-figure answer above a
     /// cliff so near-misses stay distinguishable from garbage.
     pub fact_floor: f32,
+    /// What an unsupported assertion costs when it displaced nothing — the
+    /// answer already covers every entity and identifier the ground truth names,
+    /// and then asserts one more.
+    ///
+    /// 0.0 makes such an addition free, which is the pure precision-of-answer
+    /// reading (A3.8) and how this scorer behaved until it was measured:
+    /// appending a false IP, a false ASN, a false country or a false city to an
+    /// otherwise perfect answer all scored >= 0.9999. That is a real hole — an
+    /// answer can pad itself with invented facts at no cost.
+    ///
+    /// 1.0 would treat the addition as a substitution, which is the recall
+    /// reading and punishes an answer for volunteering *true* detail the ground
+    /// truth happens not to restate. Nothing in the text distinguishes the two:
+    /// with no slot schema, an extra true city and an extra false city look
+    /// identical. So this is deliberately small — enough that padding is not
+    /// free, small enough that a correct, generous answer stays at the top of
+    /// the range. The asymmetry we cannot resolve is recorded in the README.
+    pub add_w: f32,
 
     // ---- prose vs assertion (A3.4) ------------------------------------
     /// Share of precision carried by ordinary prose rather than by decisive
@@ -172,8 +190,20 @@ pub const fn base() -> Profile {
         ent_min_bias: 0.6,
         ent_channel_w: 0.9,
         fact_floor: 0.10,
+        add_w: 0.35,
 
-        prose_w: 0.25,
+        // Unsupported prose is very nearly free. Prose the ground truth does not
+        // restate is neither a decisive fact nor a contradiction, so it is not
+        // evidence of a wrong answer, and none of the three anti-gaming channels
+        // depends on it: parroting is caught by the answered-ness gate (novel
+        // *supported* mass), wrong facts by the multiplicative fact/entity term,
+        // contradictions by the polarity term. At the old 0.25 a *correct*
+        // answer lost 12 points for wording the truth differently -- verbatim
+        // 1.0000, reworded 0.8785 -- which is what cost registration 1377 the
+        // ordering on the node's clean fixtures. Not literally zero, so padding
+        // an answer with filler still dilutes it slightly. STORM_ALERT overrides
+        // this back up; see the block below and tune.md for that trade.
+        prose_w: 0.02,
 
         p_concave: 0.5,
         // Knots deliberately short of 0 and 1: clipping either end piles real
@@ -212,6 +242,12 @@ pub const fn profile() -> Profile {
     // Concave shaping compounded it, lifting 0.80 to 0.96 before the smoothstep
     // saw it. Keep precision closer to linear so the top of the range ranks.
     p.p_concave = 0.15;
+    // `prose_w` is the base 0.02 -- the fix that this intent's rejection
+    // (registration 1377) paid for. Left in `base()` rather than restated here
+    // because the finding is general: only STORM_ALERT, which must agree with a
+    // lexical incumbent to clear Spearman, overrides it. Measured on this
+    // profile: every correct phrasing >= 0.999 (was 0.8785 reworded) while a
+    // wrong city, a wrong ISP and a swapped country all moved DOWN.
     p
 }
 
@@ -258,7 +294,45 @@ pub const fn profile() -> Profile {
     p
 }
 
-#[cfg(all(feature = "generic", not(feature = "ip-geolocation"), not(feature = "storm-alert")))]
+#[cfg(feature = "content-verification")]
+pub const fn profile() -> Profile {
+    let mut p = base();
+    // Plagiarism / authenticity checking. The decisive content is a polar
+    // verdict (plagiarised vs original, AI-generated vs human), a similarity
+    // percentage, and the matched source. All three are things an answer either
+    // gets right or gets backwards, so this profile leans on the polarity and
+    // identifier channels rather than on prose.
+    //
+    // A verdict flip is the characteristic wrong answer here, and it shares
+    // almost all its vocabulary with the correct one ("the text IS original" vs
+    // "the text is NOT original"), so the contradiction path must dominate.
+    p.w_ident = 4.0;
+    p.id_channel_w = 1.0;
+    // Similarity is a bounded percentage: an absolute epsilon, not a relative
+    // one, or "12%" and "82%" both read as near-misses of a 47% truth.
+    p.num_abs_tol = 0.02;
+    p.num_rel_k = 10.0;
+    p.num_channel_w = 1.0;
+    // Single miner with no scoring history (historical_rows_evaluated: 0), so
+    // the Spearman traffic check is SKIPPED for this intent. That frees this
+    // build to calibrate for separation outright, exactly as IP_GEOLOCATION
+    // does, without the agreement tax that STORM_ALERT pays.
+    p.ss_lo = 0.0;
+    p.ss_hi = 1.0;
+    p.p_concave = 0.15;
+    // The matched source and the verdict are the answer; a fluent restatement
+    // of the submitted passage is not. Demand real novel mass before the
+    // answered-ness gate opens.
+    p.ans_sat = 3.5;
+    p
+}
+
+#[cfg(all(
+    feature = "generic",
+    not(feature = "ip-geolocation"),
+    not(feature = "storm-alert"),
+    not(feature = "content-verification")
+))]
 pub const fn profile() -> Profile {
     base()
 }
@@ -268,7 +342,14 @@ const fn intent_tag() -> [u8; 32] {
     let name = b"IP_GEOLOCATION";
     #[cfg(feature = "storm-alert")]
     let name = b"STORM_ALERT";
-    #[cfg(all(feature = "generic", not(feature = "ip-geolocation"), not(feature = "storm-alert")))]
+    #[cfg(feature = "content-verification")]
+    let name = b"CONTENT_VERIFICATION";
+    #[cfg(all(
+        feature = "generic",
+        not(feature = "ip-geolocation"),
+        not(feature = "storm-alert"),
+        not(feature = "content-verification")
+    ))]
     let name = b"GENERIC";
 
     let mut out = [0u8; 32];

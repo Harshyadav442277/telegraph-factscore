@@ -299,12 +299,51 @@ pub fn leading_number(tok: &[u8]) -> (f32, usize) {
 /// Second pass over the token stream: attach units that live in the *next*
 /// token(s) rather than in the figure itself (`5.9 km/h` tokenises as
 /// `5.9`,`km`,`h`), and read a trailing `%` off the source byte after the token.
+/// A lone `n`/`s`/`e`/`w` token — the plain-text hemisphere marker.
+fn hemisphere_letter(h: u32) -> bool {
+    h == hash_str("n") || h == hash_str("s") || h == hash_str("e") || h == hash_str("w")
+}
+
+/// Could this figure be a latitude or longitude? Coordinates are fractional and
+/// bounded; a duration in seconds or a count is neither. This is what keeps
+/// `30 s` a duration while `34.9011 S` is a southern latitude.
+fn coordinate_shaped(v: f32) -> bool {
+    let a = fabs(v);
+    a <= 180.0 && a != ((a as i32) as f32)
+}
+
 pub fn annotate_units(t: &mut Toks) {
     let mut k = 0usize;
     while k < t.n {
         if t.kind[k] != K_NUMBER {
             k += 1;
             continue;
+        }
+        // A lone hemisphere letter is read BEFORE the unit-word table, because
+        // three of the four letters name units: `s` is seconds, `n` and `e` are
+        // SI prefixes. Only `w` was not in the table, which is why `56.1645 W`
+        // was understood while `34.9011 S`, `... N` and `... E` were silently
+        // read as times and quantities — a correct southern latitude scored
+        // 0.0000 against a ground truth of `-34.9011`, the same as the wrong
+        // hemisphere (the attached form `34.9011S` was fine, so no test caught
+        // it). The guard is what keeps `30 s` a duration: a hemisphere marker
+        // follows a *fractional* magnitude within coordinate range.
+        let hemisphere = k + 1 < t.n
+            && (t.unit[k] == U_DEG || t.unit[k] == U_NONE)
+            && coordinate_shaped(t.val[k])
+            && hemisphere_letter(t.hash[k + 1]);
+        if hemisphere {
+            t.unit[k] = U_DEG;
+            let h = t.hash[k + 1];
+            if (h == hash_str("s") || h == hash_str("w")) && t.val[k] > 0.0 {
+                t.val[k] = -t.val[k];
+                t.vhi[k] = t.val[k];
+            }
+            // The letter is notation belonging to the figure, not a word the
+            // answer asserts. Left in the content pool it read as unsupported
+            // prose, and the two spelling of the same coordinate differed by
+            // 0.052 -- just outside the 0.05 equivalence tolerance.
+            t.boiler[k + 1] = true;
         }
         if t.unit[k] == U_NONE {
             if t.nb[k] == b'%' {
@@ -331,24 +370,6 @@ pub fn annotate_units(t: &mut Toks) {
                 }
             }
         }
-        // A hemisphere letter written apart from the figure: `22.5609° S`, and
-        // — the common plain-text form — a bare decimal followed by a lone
-        // N/S/E/W with no degree sign at all: `34.9011 S`. Before this, only the
-        // `°` form was understood and a correct `34.9011S, 56.1645W` scored
-        // 0.0000, the same as the wrong hemisphere (adversarial review M5).
-        if k + 1 < t.n && (t.unit[k] == U_DEG || t.unit[k] == U_NONE) {
-            let h = t.hash[k + 1];
-            let south_west = h == hash_str("s") || h == hash_str("w");
-            let north_east = h == hash_str("n") || h == hash_str("e");
-            if south_west || north_east {
-                t.unit[k] = U_DEG;
-                if south_west && t.val[k] > 0.0 {
-                    t.val[k] = -t.val[k];
-                    t.vhi[k] = t.val[k];
-                }
-            }
-        }
-
         // A figure whose neighbouring word looks like a unit we do not know.
         // Recorded so it can be read as the category error it is, instead of
         // silently becoming a unitless figure that free-matches any dimension.
@@ -360,7 +381,19 @@ pub fn annotate_units(t: &mut Toks) {
             // key=value answer as a category error.
             let followed_by_figure = (k + 2 < t.n && t.kind[k + 2] == K_NUMBER)
                 || (k + 3 < t.n && t.kind[k + 3] == K_NUMBER);
-            if t.kind[nxt] == K_WORD
+            // A unit abuts its figure: "47 km/h", "47bananas". Punctuation
+            // between them means the word begins a new clause and is not a unit
+            // at all. Without this test every enumerated list poisoned its own
+            // markers -- "2. Using tools" read as "2 <Using>", a figure in an
+            // unknown category, so a correct answer that wrote "2. tools"
+            // instead disagreed with the ground truth on a made-up dimension and
+            // the whole numeric channel collapsed to 0.145 (measured, CLEAN-PAIR
+            // fixture ip_geolocation-cleanpair-11: a faithful terse answer
+            // scored 0.5241). Verbatim copies never showed it because the
+            // exact-match short-circuit returns before this runs.
+            let abuts = t.nb[k] == b' ' || is_alpha(t.nb[k]);
+            if abuts
+                && t.kind[nxt] == K_WORD
                 && t.uword[nxt] == U_NONE
                 && t.w[nxt] > 0.1
                 && !followed_by_figure
