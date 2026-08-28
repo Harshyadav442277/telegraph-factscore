@@ -1,0 +1,1435 @@
+{
+ "generator": "gen-cv-pairs.mjs",
+ "generated_from": "TRUTHS table, 12 documents",
+ "fixtures": [
+  {
+   "id": "content_verification-cleanpair-01",
+   "intent": "CONTENT_VERIFICATION",
+   "class": "CLEAN-PAIR",
+   "rationale": "Every wrong answer differs from a correct one in exactly one decisive slot (verdict, similarity, or matched source) and is otherwise fluent and identically worded, so ordering it requires reading the fact rather than noticing broken prose.",
+   "question": "Verify the originality of the submitted essay 'Coastal Erosion in Kerala'. Report the verdict, the similarity percentage, the number of matching passages, and the matched source.",
+   "ground_truth": "The submitted essay 'Coastal Erosion in Kerala' is assessed as plagiarised. Similarity to the reference corpus is 68%, derived from 7 matching passages against Journal of Coastal Research, 2019. Confidence in this assessment is 0.94.",
+   "answers": [
+    {
+     "id": "correct-verbatim",
+     "text": "The submitted essay 'Coastal Erosion in Kerala' is assessed as plagiarised. Similarity to the reference corpus is 68%, derived from 7 matching passages against Journal of Coastal Research, 2019. Confidence in this assessment is 0.94.",
+     "quality": 1,
+     "note": "the ground truth itself"
+    },
+    {
+     "id": "correct-reworded",
+     "text": "The data shows the submitted essay 'Coastal Erosion in Kerala' to be plagiarised, with 68% similarity to the reference corpus across 7 matching passages traced to Journal of Coastal Research, 2019, at a confidence of 0.94.",
+     "quality": 1,
+     "note": "same facts, different wording"
+    },
+    {
+     "id": "correct-terse",
+     "text": "plagiarised; 68% similar; 7 matches; Journal of Coastal Research, 2019.",
+     "quality": 1,
+     "note": "same facts, minimal prose"
+    },
+    {
+     "id": "wrong-verdict",
+     "text": "The data shows the submitted essay 'Coastal Erosion in Kerala' to be original, with 68% similarity to the reference corpus across 7 matching passages traced to Journal of Coastal Research, 2019, at a confidence of 0.94.",
+     "quality": 0,
+     "note": "verdict flipped, everything else right"
+    },
+    {
+     "id": "wrong-similarity",
+     "text": "The data shows the submitted essay 'Coastal Erosion in Kerala' to be plagiarised, with 37% similarity to the reference corpus across 7 matching passages traced to Journal of Coastal Research, 2019, at a confidence of 0.94.",
+     "quality": 0,
+     "note": "similarity figure wrong, everything else right"
+    },
+    {
+     "id": "wrong-source",
+     "text": "The data shows the submitted essay 'Coastal Erosion in Kerala' to be plagiarised, with 68% similarity to the reference corpus across 7 matching passages traced to Nature Climate Change, 2016, at a confidence of 0.94.",
+     "quality": 0,
+     "note": "matched source wrong, everything else right"
+    },
+    {
+     "id": "wrong-unrelated",
+     "text": "The data shows the current gas price on Ethereum mainnet is 14 gwei, with a base fee of 12 gwei and a priority tip of 2 gwei.",
+     "quality": 0,
+     "note": "off-topic control"
+    }
+   ],
+   "pairs": [
+    [
+     "correct-verbatim",
+     "wrong-verdict"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-similarity"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-source"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-reworded",
+     "wrong-verdict"
+    ],
+    [
+     "correct-reworded",
+     "wrong-similarity"
+    ],
+    [
+     "correct-reworded",
+     "wrong-source"
+    ],
+    [
+     "correct-reworded",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-terse",
+     "wrong-verdict"
+    ],
+    [
+     "correct-terse",
+     "wrong-similarity"
+    ],
+    [
+     "correct-terse",
+     "wrong-source"
+    ],
+    [
+     "correct-terse",
+     "wrong-unrelated"
+    ]
+   ],
+   "constraints": [
+    {
+     "kind": "near-equal",
+     "ids": [
+      "correct-verbatim",
+      "correct-reworded",
+      "correct-terse"
+     ],
+     "tolerance": 0.05,
+     "note": "all correct phrasings must score within 0.05 of each other"
+    }
+   ],
+   "provenance": {
+    "source": "synthetic",
+    "generator": "gen-cv-pairs.mjs",
+    "created": "2026-08-28"
+   }
+  },
+  {
+   "id": "content_verification-cleanpair-02",
+   "intent": "CONTENT_VERIFICATION",
+   "class": "CLEAN-PAIR",
+   "rationale": "Every wrong answer differs from a correct one in exactly one decisive slot (verdict, similarity, or matched source) and is otherwise fluent and identically worded, so ordering it requires reading the fact rather than noticing broken prose.",
+   "question": "Verify the originality of the manuscript 'Neural Substrates of Memory'. Report the verdict, the similarity percentage, the number of matching passages, and the matched source.",
+   "ground_truth": "The manuscript 'Neural Substrates of Memory' is assessed as original. Similarity to the reference corpus is 4%, derived from 0 matching passages against no significant source. Confidence in this assessment is 0.91.",
+   "answers": [
+    {
+     "id": "correct-verbatim",
+     "text": "The manuscript 'Neural Substrates of Memory' is assessed as original. Similarity to the reference corpus is 4%, derived from 0 matching passages against no significant source. Confidence in this assessment is 0.91.",
+     "quality": 1,
+     "note": "the ground truth itself"
+    },
+    {
+     "id": "correct-reworded",
+     "text": "The data shows the manuscript 'Neural Substrates of Memory' to be original, with 4% similarity to the reference corpus across 0 matching passages traced to no significant source, at a confidence of 0.91.",
+     "quality": 1,
+     "note": "same facts, different wording"
+    },
+    {
+     "id": "correct-terse",
+     "text": "original; 4% similar; 0 matches; no significant source.",
+     "quality": 1,
+     "note": "same facts, minimal prose"
+    },
+    {
+     "id": "wrong-verdict",
+     "text": "The data shows the manuscript 'Neural Substrates of Memory' to be plagiarised, with 4% similarity to the reference corpus across 0 matching passages traced to no significant source, at a confidence of 0.91.",
+     "quality": 0,
+     "note": "verdict flipped, everything else right"
+    },
+    {
+     "id": "wrong-similarity",
+     "text": "The data shows the manuscript 'Neural Substrates of Memory' to be original, with 51% similarity to the reference corpus across 0 matching passages traced to no significant source, at a confidence of 0.91.",
+     "quality": 0,
+     "note": "similarity figure wrong, everything else right"
+    },
+    {
+     "id": "wrong-source",
+     "text": "The data shows the manuscript 'Neural Substrates of Memory' to be original, with 4% similarity to the reference corpus across 0 matching passages traced to Wikipedia article 'Erosion', at a confidence of 0.91.",
+     "quality": 0,
+     "note": "matched source wrong, everything else right"
+    },
+    {
+     "id": "wrong-unrelated",
+     "text": "The data shows the current gas price on Ethereum mainnet is 14 gwei, with a base fee of 12 gwei and a priority tip of 2 gwei.",
+     "quality": 0,
+     "note": "off-topic control"
+    }
+   ],
+   "pairs": [
+    [
+     "correct-verbatim",
+     "wrong-verdict"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-similarity"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-source"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-reworded",
+     "wrong-verdict"
+    ],
+    [
+     "correct-reworded",
+     "wrong-similarity"
+    ],
+    [
+     "correct-reworded",
+     "wrong-source"
+    ],
+    [
+     "correct-reworded",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-terse",
+     "wrong-verdict"
+    ],
+    [
+     "correct-terse",
+     "wrong-similarity"
+    ],
+    [
+     "correct-terse",
+     "wrong-source"
+    ],
+    [
+     "correct-terse",
+     "wrong-unrelated"
+    ]
+   ],
+   "constraints": [
+    {
+     "kind": "near-equal",
+     "ids": [
+      "correct-verbatim",
+      "correct-reworded",
+      "correct-terse"
+     ],
+     "tolerance": 0.05,
+     "note": "all correct phrasings must score within 0.05 of each other"
+    }
+   ],
+   "provenance": {
+    "source": "synthetic",
+    "generator": "gen-cv-pairs.mjs",
+    "created": "2026-08-28"
+   }
+  },
+  {
+   "id": "content_verification-cleanpair-03",
+   "intent": "CONTENT_VERIFICATION",
+   "class": "CLEAN-PAIR",
+   "rationale": "Every wrong answer differs from a correct one in exactly one decisive slot (verdict, similarity, or matched source) and is otherwise fluent and identically worded, so ordering it requires reading the fact rather than noticing broken prose.",
+   "question": "Verify the originality of the blog post 'Ten Rules for Remote Teams'. Report the verdict, the similarity percentage, the number of matching passages, and the matched source.",
+   "ground_truth": "The blog post 'Ten Rules for Remote Teams' is assessed as AI-generated. Similarity to the reference corpus is 22%, derived from 3 matching passages against GPT-style language model. Confidence in this assessment is 0.88.",
+   "answers": [
+    {
+     "id": "correct-verbatim",
+     "text": "The blog post 'Ten Rules for Remote Teams' is assessed as AI-generated. Similarity to the reference corpus is 22%, derived from 3 matching passages against GPT-style language model. Confidence in this assessment is 0.88.",
+     "quality": 1,
+     "note": "the ground truth itself"
+    },
+    {
+     "id": "correct-reworded",
+     "text": "The data shows the blog post 'Ten Rules for Remote Teams' to be AI-generated, with 22% similarity to the reference corpus across 3 matching passages traced to GPT-style language model, at a confidence of 0.88.",
+     "quality": 1,
+     "note": "same facts, different wording"
+    },
+    {
+     "id": "correct-terse",
+     "text": "AI-generated; 22% similar; 3 matches; GPT-style language model.",
+     "quality": 1,
+     "note": "same facts, minimal prose"
+    },
+    {
+     "id": "wrong-verdict",
+     "text": "The data shows the blog post 'Ten Rules for Remote Teams' to be human-written, with 22% similarity to the reference corpus across 3 matching passages traced to GPT-style language model, at a confidence of 0.88.",
+     "quality": 0,
+     "note": "verdict flipped, everything else right"
+    },
+    {
+     "id": "wrong-similarity",
+     "text": "The data shows the blog post 'Ten Rules for Remote Teams' to be AI-generated, with 69% similarity to the reference corpus across 3 matching passages traced to GPT-style language model, at a confidence of 0.88.",
+     "quality": 0,
+     "note": "similarity figure wrong, everything else right"
+    },
+    {
+     "id": "wrong-source",
+     "text": "The data shows the blog post 'Ten Rules for Remote Teams' to be AI-generated, with 22% similarity to the reference corpus across 3 matching passages traced to Proceedings of NeurIPS 2017, at a confidence of 0.88.",
+     "quality": 0,
+     "note": "matched source wrong, everything else right"
+    },
+    {
+     "id": "wrong-unrelated",
+     "text": "The data shows the current gas price on Ethereum mainnet is 14 gwei, with a base fee of 12 gwei and a priority tip of 2 gwei.",
+     "quality": 0,
+     "note": "off-topic control"
+    }
+   ],
+   "pairs": [
+    [
+     "correct-verbatim",
+     "wrong-verdict"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-similarity"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-source"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-reworded",
+     "wrong-verdict"
+    ],
+    [
+     "correct-reworded",
+     "wrong-similarity"
+    ],
+    [
+     "correct-reworded",
+     "wrong-source"
+    ],
+    [
+     "correct-reworded",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-terse",
+     "wrong-verdict"
+    ],
+    [
+     "correct-terse",
+     "wrong-similarity"
+    ],
+    [
+     "correct-terse",
+     "wrong-source"
+    ],
+    [
+     "correct-terse",
+     "wrong-unrelated"
+    ]
+   ],
+   "constraints": [
+    {
+     "kind": "near-equal",
+     "ids": [
+      "correct-verbatim",
+      "correct-reworded",
+      "correct-terse"
+     ],
+     "tolerance": 0.05,
+     "note": "all correct phrasings must score within 0.05 of each other"
+    }
+   ],
+   "provenance": {
+    "source": "synthetic",
+    "generator": "gen-cv-pairs.mjs",
+    "created": "2026-08-28"
+   }
+  },
+  {
+   "id": "content_verification-cleanpair-04",
+   "intent": "CONTENT_VERIFICATION",
+   "class": "CLEAN-PAIR",
+   "rationale": "Every wrong answer differs from a correct one in exactly one decisive slot (verdict, similarity, or matched source) and is otherwise fluent and identically worded, so ordering it requires reading the fact rather than noticing broken prose.",
+   "question": "Verify the originality of the student report 'Monetary Policy 2021'. Report the verdict, the similarity percentage, the number of matching passages, and the matched source.",
+   "ground_truth": "The student report 'Monetary Policy 2021' is assessed as plagiarised. Similarity to the reference corpus is 41%, derived from 5 matching passages against Reserve Bank of India Annual Report 2021. Confidence in this assessment is 0.9.",
+   "answers": [
+    {
+     "id": "correct-verbatim",
+     "text": "The student report 'Monetary Policy 2021' is assessed as plagiarised. Similarity to the reference corpus is 41%, derived from 5 matching passages against Reserve Bank of India Annual Report 2021. Confidence in this assessment is 0.9.",
+     "quality": 1,
+     "note": "the ground truth itself"
+    },
+    {
+     "id": "correct-reworded",
+     "text": "The data shows the student report 'Monetary Policy 2021' to be plagiarised, with 41% similarity to the reference corpus across 5 matching passages traced to Reserve Bank of India Annual Report 2021, at a confidence of 0.9.",
+     "quality": 1,
+     "note": "same facts, different wording"
+    },
+    {
+     "id": "correct-terse",
+     "text": "plagiarised; 41% similar; 5 matches; Reserve Bank of India Annual Report 2021.",
+     "quality": 1,
+     "note": "same facts, minimal prose"
+    },
+    {
+     "id": "wrong-verdict",
+     "text": "The data shows the student report 'Monetary Policy 2021' to be original, with 41% similarity to the reference corpus across 5 matching passages traced to Reserve Bank of India Annual Report 2021, at a confidence of 0.9.",
+     "quality": 0,
+     "note": "verdict flipped, everything else right"
+    },
+    {
+     "id": "wrong-similarity",
+     "text": "The data shows the student report 'Monetary Policy 2021' to be plagiarised, with 88% similarity to the reference corpus across 5 matching passages traced to Reserve Bank of India Annual Report 2021, at a confidence of 0.9.",
+     "quality": 0,
+     "note": "similarity figure wrong, everything else right"
+    },
+    {
+     "id": "wrong-source",
+     "text": "The data shows the student report 'Monetary Policy 2021' to be plagiarised, with 41% similarity to the reference corpus across 5 matching passages traced to World Bank Development Report 1998, at a confidence of 0.9.",
+     "quality": 0,
+     "note": "matched source wrong, everything else right"
+    },
+    {
+     "id": "wrong-unrelated",
+     "text": "The data shows the current gas price on Ethereum mainnet is 14 gwei, with a base fee of 12 gwei and a priority tip of 2 gwei.",
+     "quality": 0,
+     "note": "off-topic control"
+    }
+   ],
+   "pairs": [
+    [
+     "correct-verbatim",
+     "wrong-verdict"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-similarity"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-source"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-reworded",
+     "wrong-verdict"
+    ],
+    [
+     "correct-reworded",
+     "wrong-similarity"
+    ],
+    [
+     "correct-reworded",
+     "wrong-source"
+    ],
+    [
+     "correct-reworded",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-terse",
+     "wrong-verdict"
+    ],
+    [
+     "correct-terse",
+     "wrong-similarity"
+    ],
+    [
+     "correct-terse",
+     "wrong-source"
+    ],
+    [
+     "correct-terse",
+     "wrong-unrelated"
+    ]
+   ],
+   "constraints": [
+    {
+     "kind": "near-equal",
+     "ids": [
+      "correct-verbatim",
+      "correct-reworded",
+      "correct-terse"
+     ],
+     "tolerance": 0.05,
+     "note": "all correct phrasings must score within 0.05 of each other"
+    }
+   ],
+   "provenance": {
+    "source": "synthetic",
+    "generator": "gen-cv-pairs.mjs",
+    "created": "2026-08-28"
+   }
+  },
+  {
+   "id": "content_verification-cleanpair-05",
+   "intent": "CONTENT_VERIFICATION",
+   "class": "CLEAN-PAIR",
+   "rationale": "Every wrong answer differs from a correct one in exactly one decisive slot (verdict, similarity, or matched source) and is otherwise fluent and identically worded, so ordering it requires reading the fact rather than noticing broken prose.",
+   "question": "Verify the originality of the article 'Solar Adoption in Rajasthan'. Report the verdict, the similarity percentage, the number of matching passages, and the matched source.",
+   "ground_truth": "The article 'Solar Adoption in Rajasthan' is assessed as human-written. Similarity to the reference corpus is 9%, derived from 1 matching passage against no significant source. Confidence in this assessment is 0.86.",
+   "answers": [
+    {
+     "id": "correct-verbatim",
+     "text": "The article 'Solar Adoption in Rajasthan' is assessed as human-written. Similarity to the reference corpus is 9%, derived from 1 matching passage against no significant source. Confidence in this assessment is 0.86.",
+     "quality": 1,
+     "note": "the ground truth itself"
+    },
+    {
+     "id": "correct-reworded",
+     "text": "The data shows the article 'Solar Adoption in Rajasthan' to be human-written, with 9% similarity to the reference corpus across 1 matching passage traced to no significant source, at a confidence of 0.86.",
+     "quality": 1,
+     "note": "same facts, different wording"
+    },
+    {
+     "id": "correct-terse",
+     "text": "human-written; 9% similar; 1 match; no significant source.",
+     "quality": 1,
+     "note": "same facts, minimal prose"
+    },
+    {
+     "id": "wrong-verdict",
+     "text": "The data shows the article 'Solar Adoption in Rajasthan' to be AI-generated, with 9% similarity to the reference corpus across 1 matching passage traced to no significant source, at a confidence of 0.86.",
+     "quality": 0,
+     "note": "verdict flipped, everything else right"
+    },
+    {
+     "id": "wrong-similarity",
+     "text": "The data shows the article 'Solar Adoption in Rajasthan' to be human-written, with 56% similarity to the reference corpus across 1 matching passage traced to no significant source, at a confidence of 0.86.",
+     "quality": 0,
+     "note": "similarity figure wrong, everything else right"
+    },
+    {
+     "id": "wrong-source",
+     "text": "The data shows the article 'Solar Adoption in Rajasthan' to be human-written, with 9% similarity to the reference corpus across 1 matching passage traced to Nature Climate Change, 2016, at a confidence of 0.86.",
+     "quality": 0,
+     "note": "matched source wrong, everything else right"
+    },
+    {
+     "id": "wrong-unrelated",
+     "text": "The data shows the current gas price on Ethereum mainnet is 14 gwei, with a base fee of 12 gwei and a priority tip of 2 gwei.",
+     "quality": 0,
+     "note": "off-topic control"
+    }
+   ],
+   "pairs": [
+    [
+     "correct-verbatim",
+     "wrong-verdict"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-similarity"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-source"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-reworded",
+     "wrong-verdict"
+    ],
+    [
+     "correct-reworded",
+     "wrong-similarity"
+    ],
+    [
+     "correct-reworded",
+     "wrong-source"
+    ],
+    [
+     "correct-reworded",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-terse",
+     "wrong-verdict"
+    ],
+    [
+     "correct-terse",
+     "wrong-similarity"
+    ],
+    [
+     "correct-terse",
+     "wrong-source"
+    ],
+    [
+     "correct-terse",
+     "wrong-unrelated"
+    ]
+   ],
+   "constraints": [
+    {
+     "kind": "near-equal",
+     "ids": [
+      "correct-verbatim",
+      "correct-reworded",
+      "correct-terse"
+     ],
+     "tolerance": 0.05,
+     "note": "all correct phrasings must score within 0.05 of each other"
+    }
+   ],
+   "provenance": {
+    "source": "synthetic",
+    "generator": "gen-cv-pairs.mjs",
+    "created": "2026-08-28"
+   }
+  },
+  {
+   "id": "content_verification-cleanpair-06",
+   "intent": "CONTENT_VERIFICATION",
+   "class": "CLEAN-PAIR",
+   "rationale": "Every wrong answer differs from a correct one in exactly one decisive slot (verdict, similarity, or matched source) and is otherwise fluent and identically worded, so ordering it requires reading the fact rather than noticing broken prose.",
+   "question": "Verify the originality of the thesis chapter 'Graph Neural Networks'. Report the verdict, the similarity percentage, the number of matching passages, and the matched source.",
+   "ground_truth": "The thesis chapter 'Graph Neural Networks' is assessed as plagiarised. Similarity to the reference corpus is 55%, derived from 6 matching passages against arXiv:1810.00826. Confidence in this assessment is 0.93.",
+   "answers": [
+    {
+     "id": "correct-verbatim",
+     "text": "The thesis chapter 'Graph Neural Networks' is assessed as plagiarised. Similarity to the reference corpus is 55%, derived from 6 matching passages against arXiv:1810.00826. Confidence in this assessment is 0.93.",
+     "quality": 1,
+     "note": "the ground truth itself"
+    },
+    {
+     "id": "correct-reworded",
+     "text": "The data shows the thesis chapter 'Graph Neural Networks' to be plagiarised, with 55% similarity to the reference corpus across 6 matching passages traced to arXiv:1810.00826, at a confidence of 0.93.",
+     "quality": 1,
+     "note": "same facts, different wording"
+    },
+    {
+     "id": "correct-terse",
+     "text": "plagiarised; 55% similar; 6 matches; arXiv:1810.00826.",
+     "quality": 1,
+     "note": "same facts, minimal prose"
+    },
+    {
+     "id": "wrong-verdict",
+     "text": "The data shows the thesis chapter 'Graph Neural Networks' to be original, with 55% similarity to the reference corpus across 6 matching passages traced to arXiv:1810.00826, at a confidence of 0.93.",
+     "quality": 0,
+     "note": "verdict flipped, everything else right"
+    },
+    {
+     "id": "wrong-similarity",
+     "text": "The data shows the thesis chapter 'Graph Neural Networks' to be plagiarised, with 24% similarity to the reference corpus across 6 matching passages traced to arXiv:1810.00826, at a confidence of 0.93.",
+     "quality": 0,
+     "note": "similarity figure wrong, everything else right"
+    },
+    {
+     "id": "wrong-source",
+     "text": "The data shows the thesis chapter 'Graph Neural Networks' to be plagiarised, with 55% similarity to the reference corpus across 6 matching passages traced to Wikipedia article 'Erosion', at a confidence of 0.93.",
+     "quality": 0,
+     "note": "matched source wrong, everything else right"
+    },
+    {
+     "id": "wrong-unrelated",
+     "text": "The data shows the current gas price on Ethereum mainnet is 14 gwei, with a base fee of 12 gwei and a priority tip of 2 gwei.",
+     "quality": 0,
+     "note": "off-topic control"
+    }
+   ],
+   "pairs": [
+    [
+     "correct-verbatim",
+     "wrong-verdict"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-similarity"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-source"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-reworded",
+     "wrong-verdict"
+    ],
+    [
+     "correct-reworded",
+     "wrong-similarity"
+    ],
+    [
+     "correct-reworded",
+     "wrong-source"
+    ],
+    [
+     "correct-reworded",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-terse",
+     "wrong-verdict"
+    ],
+    [
+     "correct-terse",
+     "wrong-similarity"
+    ],
+    [
+     "correct-terse",
+     "wrong-source"
+    ],
+    [
+     "correct-terse",
+     "wrong-unrelated"
+    ]
+   ],
+   "constraints": [
+    {
+     "kind": "near-equal",
+     "ids": [
+      "correct-verbatim",
+      "correct-reworded",
+      "correct-terse"
+     ],
+     "tolerance": 0.05,
+     "note": "all correct phrasings must score within 0.05 of each other"
+    }
+   ],
+   "provenance": {
+    "source": "synthetic",
+    "generator": "gen-cv-pairs.mjs",
+    "created": "2026-08-28"
+   }
+  },
+  {
+   "id": "content_verification-cleanpair-07",
+   "intent": "CONTENT_VERIFICATION",
+   "class": "CLEAN-PAIR",
+   "rationale": "Every wrong answer differs from a correct one in exactly one decisive slot (verdict, similarity, or matched source) and is otherwise fluent and identically worded, so ordering it requires reading the fact rather than noticing broken prose.",
+   "question": "Verify the originality of the press release 'Q3 Earnings Summary'. Report the verdict, the similarity percentage, the number of matching passages, and the matched source.",
+   "ground_truth": "The press release 'Q3 Earnings Summary' is assessed as original. Similarity to the reference corpus is 12%, derived from 1 matching passage against no significant source. Confidence in this assessment is 0.89.",
+   "answers": [
+    {
+     "id": "correct-verbatim",
+     "text": "The press release 'Q3 Earnings Summary' is assessed as original. Similarity to the reference corpus is 12%, derived from 1 matching passage against no significant source. Confidence in this assessment is 0.89.",
+     "quality": 1,
+     "note": "the ground truth itself"
+    },
+    {
+     "id": "correct-reworded",
+     "text": "The data shows the press release 'Q3 Earnings Summary' to be original, with 12% similarity to the reference corpus across 1 matching passage traced to no significant source, at a confidence of 0.89.",
+     "quality": 1,
+     "note": "same facts, different wording"
+    },
+    {
+     "id": "correct-terse",
+     "text": "original; 12% similar; 1 match; no significant source.",
+     "quality": 1,
+     "note": "same facts, minimal prose"
+    },
+    {
+     "id": "wrong-verdict",
+     "text": "The data shows the press release 'Q3 Earnings Summary' to be plagiarised, with 12% similarity to the reference corpus across 1 matching passage traced to no significant source, at a confidence of 0.89.",
+     "quality": 0,
+     "note": "verdict flipped, everything else right"
+    },
+    {
+     "id": "wrong-similarity",
+     "text": "The data shows the press release 'Q3 Earnings Summary' to be original, with 59% similarity to the reference corpus across 1 matching passage traced to no significant source, at a confidence of 0.89.",
+     "quality": 0,
+     "note": "similarity figure wrong, everything else right"
+    },
+    {
+     "id": "wrong-source",
+     "text": "The data shows the press release 'Q3 Earnings Summary' to be original, with 12% similarity to the reference corpus across 1 matching passage traced to Proceedings of NeurIPS 2017, at a confidence of 0.89.",
+     "quality": 0,
+     "note": "matched source wrong, everything else right"
+    },
+    {
+     "id": "wrong-unrelated",
+     "text": "The data shows the current gas price on Ethereum mainnet is 14 gwei, with a base fee of 12 gwei and a priority tip of 2 gwei.",
+     "quality": 0,
+     "note": "off-topic control"
+    }
+   ],
+   "pairs": [
+    [
+     "correct-verbatim",
+     "wrong-verdict"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-similarity"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-source"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-reworded",
+     "wrong-verdict"
+    ],
+    [
+     "correct-reworded",
+     "wrong-similarity"
+    ],
+    [
+     "correct-reworded",
+     "wrong-source"
+    ],
+    [
+     "correct-reworded",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-terse",
+     "wrong-verdict"
+    ],
+    [
+     "correct-terse",
+     "wrong-similarity"
+    ],
+    [
+     "correct-terse",
+     "wrong-source"
+    ],
+    [
+     "correct-terse",
+     "wrong-unrelated"
+    ]
+   ],
+   "constraints": [
+    {
+     "kind": "near-equal",
+     "ids": [
+      "correct-verbatim",
+      "correct-reworded",
+      "correct-terse"
+     ],
+     "tolerance": 0.05,
+     "note": "all correct phrasings must score within 0.05 of each other"
+    }
+   ],
+   "provenance": {
+    "source": "synthetic",
+    "generator": "gen-cv-pairs.mjs",
+    "created": "2026-08-28"
+   }
+  },
+  {
+   "id": "content_verification-cleanpair-08",
+   "intent": "CONTENT_VERIFICATION",
+   "class": "CLEAN-PAIR",
+   "rationale": "Every wrong answer differs from a correct one in exactly one decisive slot (verdict, similarity, or matched source) and is otherwise fluent and identically worded, so ordering it requires reading the fact rather than noticing broken prose.",
+   "question": "Verify the originality of the review 'A Survey of Federated Learning'. Report the verdict, the similarity percentage, the number of matching passages, and the matched source.",
+   "ground_truth": "The review 'A Survey of Federated Learning' is assessed as plagiarised. Similarity to the reference corpus is 73%, derived from 9 matching passages against IEEE Communications Surveys, 2020. Confidence in this assessment is 0.95.",
+   "answers": [
+    {
+     "id": "correct-verbatim",
+     "text": "The review 'A Survey of Federated Learning' is assessed as plagiarised. Similarity to the reference corpus is 73%, derived from 9 matching passages against IEEE Communications Surveys, 2020. Confidence in this assessment is 0.95.",
+     "quality": 1,
+     "note": "the ground truth itself"
+    },
+    {
+     "id": "correct-reworded",
+     "text": "The data shows the review 'A Survey of Federated Learning' to be plagiarised, with 73% similarity to the reference corpus across 9 matching passages traced to IEEE Communications Surveys, 2020, at a confidence of 0.95.",
+     "quality": 1,
+     "note": "same facts, different wording"
+    },
+    {
+     "id": "correct-terse",
+     "text": "plagiarised; 73% similar; 9 matches; IEEE Communications Surveys, 2020.",
+     "quality": 1,
+     "note": "same facts, minimal prose"
+    },
+    {
+     "id": "wrong-verdict",
+     "text": "The data shows the review 'A Survey of Federated Learning' to be original, with 73% similarity to the reference corpus across 9 matching passages traced to IEEE Communications Surveys, 2020, at a confidence of 0.95.",
+     "quality": 0,
+     "note": "verdict flipped, everything else right"
+    },
+    {
+     "id": "wrong-similarity",
+     "text": "The data shows the review 'A Survey of Federated Learning' to be plagiarised, with 42% similarity to the reference corpus across 9 matching passages traced to IEEE Communications Surveys, 2020, at a confidence of 0.95.",
+     "quality": 0,
+     "note": "similarity figure wrong, everything else right"
+    },
+    {
+     "id": "wrong-source",
+     "text": "The data shows the review 'A Survey of Federated Learning' to be plagiarised, with 73% similarity to the reference corpus across 9 matching passages traced to World Bank Development Report 1998, at a confidence of 0.95.",
+     "quality": 0,
+     "note": "matched source wrong, everything else right"
+    },
+    {
+     "id": "wrong-unrelated",
+     "text": "The data shows the current gas price on Ethereum mainnet is 14 gwei, with a base fee of 12 gwei and a priority tip of 2 gwei.",
+     "quality": 0,
+     "note": "off-topic control"
+    }
+   ],
+   "pairs": [
+    [
+     "correct-verbatim",
+     "wrong-verdict"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-similarity"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-source"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-reworded",
+     "wrong-verdict"
+    ],
+    [
+     "correct-reworded",
+     "wrong-similarity"
+    ],
+    [
+     "correct-reworded",
+     "wrong-source"
+    ],
+    [
+     "correct-reworded",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-terse",
+     "wrong-verdict"
+    ],
+    [
+     "correct-terse",
+     "wrong-similarity"
+    ],
+    [
+     "correct-terse",
+     "wrong-source"
+    ],
+    [
+     "correct-terse",
+     "wrong-unrelated"
+    ]
+   ],
+   "constraints": [
+    {
+     "kind": "near-equal",
+     "ids": [
+      "correct-verbatim",
+      "correct-reworded",
+      "correct-terse"
+     ],
+     "tolerance": 0.05,
+     "note": "all correct phrasings must score within 0.05 of each other"
+    }
+   ],
+   "provenance": {
+    "source": "synthetic",
+    "generator": "gen-cv-pairs.mjs",
+    "created": "2026-08-28"
+   }
+  },
+  {
+   "id": "content_verification-cleanpair-09",
+   "intent": "CONTENT_VERIFICATION",
+   "class": "CLEAN-PAIR",
+   "rationale": "Every wrong answer differs from a correct one in exactly one decisive slot (verdict, similarity, or matched source) and is otherwise fluent and identically worded, so ordering it requires reading the fact rather than noticing broken prose.",
+   "question": "Verify the originality of the op-ed 'Water Rights in the Cauvery Basin'. Report the verdict, the similarity percentage, the number of matching passages, and the matched source.",
+   "ground_truth": "The op-ed 'Water Rights in the Cauvery Basin' is assessed as human-written. Similarity to the reference corpus is 6%, derived from 0 matching passages against no significant source. Confidence in this assessment is 0.87.",
+   "answers": [
+    {
+     "id": "correct-verbatim",
+     "text": "The op-ed 'Water Rights in the Cauvery Basin' is assessed as human-written. Similarity to the reference corpus is 6%, derived from 0 matching passages against no significant source. Confidence in this assessment is 0.87.",
+     "quality": 1,
+     "note": "the ground truth itself"
+    },
+    {
+     "id": "correct-reworded",
+     "text": "The data shows the op-ed 'Water Rights in the Cauvery Basin' to be human-written, with 6% similarity to the reference corpus across 0 matching passages traced to no significant source, at a confidence of 0.87.",
+     "quality": 1,
+     "note": "same facts, different wording"
+    },
+    {
+     "id": "correct-terse",
+     "text": "human-written; 6% similar; 0 matches; no significant source.",
+     "quality": 1,
+     "note": "same facts, minimal prose"
+    },
+    {
+     "id": "wrong-verdict",
+     "text": "The data shows the op-ed 'Water Rights in the Cauvery Basin' to be AI-generated, with 6% similarity to the reference corpus across 0 matching passages traced to no significant source, at a confidence of 0.87.",
+     "quality": 0,
+     "note": "verdict flipped, everything else right"
+    },
+    {
+     "id": "wrong-similarity",
+     "text": "The data shows the op-ed 'Water Rights in the Cauvery Basin' to be human-written, with 53% similarity to the reference corpus across 0 matching passages traced to no significant source, at a confidence of 0.87.",
+     "quality": 0,
+     "note": "similarity figure wrong, everything else right"
+    },
+    {
+     "id": "wrong-source",
+     "text": "The data shows the op-ed 'Water Rights in the Cauvery Basin' to be human-written, with 6% similarity to the reference corpus across 0 matching passages traced to Nature Climate Change, 2016, at a confidence of 0.87.",
+     "quality": 0,
+     "note": "matched source wrong, everything else right"
+    },
+    {
+     "id": "wrong-unrelated",
+     "text": "The data shows the current gas price on Ethereum mainnet is 14 gwei, with a base fee of 12 gwei and a priority tip of 2 gwei.",
+     "quality": 0,
+     "note": "off-topic control"
+    }
+   ],
+   "pairs": [
+    [
+     "correct-verbatim",
+     "wrong-verdict"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-similarity"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-source"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-reworded",
+     "wrong-verdict"
+    ],
+    [
+     "correct-reworded",
+     "wrong-similarity"
+    ],
+    [
+     "correct-reworded",
+     "wrong-source"
+    ],
+    [
+     "correct-reworded",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-terse",
+     "wrong-verdict"
+    ],
+    [
+     "correct-terse",
+     "wrong-similarity"
+    ],
+    [
+     "correct-terse",
+     "wrong-source"
+    ],
+    [
+     "correct-terse",
+     "wrong-unrelated"
+    ]
+   ],
+   "constraints": [
+    {
+     "kind": "near-equal",
+     "ids": [
+      "correct-verbatim",
+      "correct-reworded",
+      "correct-terse"
+     ],
+     "tolerance": 0.05,
+     "note": "all correct phrasings must score within 0.05 of each other"
+    }
+   ],
+   "provenance": {
+    "source": "synthetic",
+    "generator": "gen-cv-pairs.mjs",
+    "created": "2026-08-28"
+   }
+  },
+  {
+   "id": "content_verification-cleanpair-10",
+   "intent": "CONTENT_VERIFICATION",
+   "class": "CLEAN-PAIR",
+   "rationale": "Every wrong answer differs from a correct one in exactly one decisive slot (verdict, similarity, or matched source) and is otherwise fluent and identically worded, so ordering it requires reading the fact rather than noticing broken prose.",
+   "question": "Verify the originality of the lab writeup 'Enzyme Kinetics of Amylase'. Report the verdict, the similarity percentage, the number of matching passages, and the matched source.",
+   "ground_truth": "The lab writeup 'Enzyme Kinetics of Amylase' is assessed as plagiarised. Similarity to the reference corpus is 34%, derived from 4 matching passages against Biochemistry Lab Manual, 3rd ed.. Confidence in this assessment is 0.9.",
+   "answers": [
+    {
+     "id": "correct-verbatim",
+     "text": "The lab writeup 'Enzyme Kinetics of Amylase' is assessed as plagiarised. Similarity to the reference corpus is 34%, derived from 4 matching passages against Biochemistry Lab Manual, 3rd ed.. Confidence in this assessment is 0.9.",
+     "quality": 1,
+     "note": "the ground truth itself"
+    },
+    {
+     "id": "correct-reworded",
+     "text": "The data shows the lab writeup 'Enzyme Kinetics of Amylase' to be plagiarised, with 34% similarity to the reference corpus across 4 matching passages traced to Biochemistry Lab Manual, 3rd ed., at a confidence of 0.9.",
+     "quality": 1,
+     "note": "same facts, different wording"
+    },
+    {
+     "id": "correct-terse",
+     "text": "plagiarised; 34% similar; 4 matches; Biochemistry Lab Manual, 3rd ed..",
+     "quality": 1,
+     "note": "same facts, minimal prose"
+    },
+    {
+     "id": "wrong-verdict",
+     "text": "The data shows the lab writeup 'Enzyme Kinetics of Amylase' to be original, with 34% similarity to the reference corpus across 4 matching passages traced to Biochemistry Lab Manual, 3rd ed., at a confidence of 0.9.",
+     "quality": 0,
+     "note": "verdict flipped, everything else right"
+    },
+    {
+     "id": "wrong-similarity",
+     "text": "The data shows the lab writeup 'Enzyme Kinetics of Amylase' to be plagiarised, with 81% similarity to the reference corpus across 4 matching passages traced to Biochemistry Lab Manual, 3rd ed., at a confidence of 0.9.",
+     "quality": 0,
+     "note": "similarity figure wrong, everything else right"
+    },
+    {
+     "id": "wrong-source",
+     "text": "The data shows the lab writeup 'Enzyme Kinetics of Amylase' to be plagiarised, with 34% similarity to the reference corpus across 4 matching passages traced to Wikipedia article 'Erosion', at a confidence of 0.9.",
+     "quality": 0,
+     "note": "matched source wrong, everything else right"
+    },
+    {
+     "id": "wrong-unrelated",
+     "text": "The data shows the current gas price on Ethereum mainnet is 14 gwei, with a base fee of 12 gwei and a priority tip of 2 gwei.",
+     "quality": 0,
+     "note": "off-topic control"
+    }
+   ],
+   "pairs": [
+    [
+     "correct-verbatim",
+     "wrong-verdict"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-similarity"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-source"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-reworded",
+     "wrong-verdict"
+    ],
+    [
+     "correct-reworded",
+     "wrong-similarity"
+    ],
+    [
+     "correct-reworded",
+     "wrong-source"
+    ],
+    [
+     "correct-reworded",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-terse",
+     "wrong-verdict"
+    ],
+    [
+     "correct-terse",
+     "wrong-similarity"
+    ],
+    [
+     "correct-terse",
+     "wrong-source"
+    ],
+    [
+     "correct-terse",
+     "wrong-unrelated"
+    ]
+   ],
+   "constraints": [
+    {
+     "kind": "near-equal",
+     "ids": [
+      "correct-verbatim",
+      "correct-reworded",
+      "correct-terse"
+     ],
+     "tolerance": 0.05,
+     "note": "all correct phrasings must score within 0.05 of each other"
+    }
+   ],
+   "provenance": {
+    "source": "synthetic",
+    "generator": "gen-cv-pairs.mjs",
+    "created": "2026-08-28"
+   }
+  },
+  {
+   "id": "content_verification-cleanpair-11",
+   "intent": "CONTENT_VERIFICATION",
+   "class": "CLEAN-PAIR",
+   "rationale": "Every wrong answer differs from a correct one in exactly one decisive slot (verdict, similarity, or matched source) and is otherwise fluent and identically worded, so ordering it requires reading the fact rather than noticing broken prose.",
+   "question": "Verify the originality of the whitepaper 'Zero-Knowledge Rollups'. Report the verdict, the similarity percentage, the number of matching passages, and the matched source.",
+   "ground_truth": "The whitepaper 'Zero-Knowledge Rollups' is assessed as AI-generated. Similarity to the reference corpus is 28%, derived from 2 matching passages against large language model output. Confidence in this assessment is 0.85.",
+   "answers": [
+    {
+     "id": "correct-verbatim",
+     "text": "The whitepaper 'Zero-Knowledge Rollups' is assessed as AI-generated. Similarity to the reference corpus is 28%, derived from 2 matching passages against large language model output. Confidence in this assessment is 0.85.",
+     "quality": 1,
+     "note": "the ground truth itself"
+    },
+    {
+     "id": "correct-reworded",
+     "text": "The data shows the whitepaper 'Zero-Knowledge Rollups' to be AI-generated, with 28% similarity to the reference corpus across 2 matching passages traced to large language model output, at a confidence of 0.85.",
+     "quality": 1,
+     "note": "same facts, different wording"
+    },
+    {
+     "id": "correct-terse",
+     "text": "AI-generated; 28% similar; 2 matches; large language model output.",
+     "quality": 1,
+     "note": "same facts, minimal prose"
+    },
+    {
+     "id": "wrong-verdict",
+     "text": "The data shows the whitepaper 'Zero-Knowledge Rollups' to be human-written, with 28% similarity to the reference corpus across 2 matching passages traced to large language model output, at a confidence of 0.85.",
+     "quality": 0,
+     "note": "verdict flipped, everything else right"
+    },
+    {
+     "id": "wrong-similarity",
+     "text": "The data shows the whitepaper 'Zero-Knowledge Rollups' to be AI-generated, with 75% similarity to the reference corpus across 2 matching passages traced to large language model output, at a confidence of 0.85.",
+     "quality": 0,
+     "note": "similarity figure wrong, everything else right"
+    },
+    {
+     "id": "wrong-source",
+     "text": "The data shows the whitepaper 'Zero-Knowledge Rollups' to be AI-generated, with 28% similarity to the reference corpus across 2 matching passages traced to Proceedings of NeurIPS 2017, at a confidence of 0.85.",
+     "quality": 0,
+     "note": "matched source wrong, everything else right"
+    },
+    {
+     "id": "wrong-unrelated",
+     "text": "The data shows the current gas price on Ethereum mainnet is 14 gwei, with a base fee of 12 gwei and a priority tip of 2 gwei.",
+     "quality": 0,
+     "note": "off-topic control"
+    }
+   ],
+   "pairs": [
+    [
+     "correct-verbatim",
+     "wrong-verdict"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-similarity"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-source"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-reworded",
+     "wrong-verdict"
+    ],
+    [
+     "correct-reworded",
+     "wrong-similarity"
+    ],
+    [
+     "correct-reworded",
+     "wrong-source"
+    ],
+    [
+     "correct-reworded",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-terse",
+     "wrong-verdict"
+    ],
+    [
+     "correct-terse",
+     "wrong-similarity"
+    ],
+    [
+     "correct-terse",
+     "wrong-source"
+    ],
+    [
+     "correct-terse",
+     "wrong-unrelated"
+    ]
+   ],
+   "constraints": [
+    {
+     "kind": "near-equal",
+     "ids": [
+      "correct-verbatim",
+      "correct-reworded",
+      "correct-terse"
+     ],
+     "tolerance": 0.05,
+     "note": "all correct phrasings must score within 0.05 of each other"
+    }
+   ],
+   "provenance": {
+    "source": "synthetic",
+    "generator": "gen-cv-pairs.mjs",
+    "created": "2026-08-28"
+   }
+  },
+  {
+   "id": "content_verification-cleanpair-12",
+   "intent": "CONTENT_VERIFICATION",
+   "class": "CLEAN-PAIR",
+   "rationale": "Every wrong answer differs from a correct one in exactly one decisive slot (verdict, similarity, or matched source) and is otherwise fluent and identically worded, so ordering it requires reading the fact rather than noticing broken prose.",
+   "question": "Verify the originality of the case note 'Kesavananda Bharati Revisited'. Report the verdict, the similarity percentage, the number of matching passages, and the matched source.",
+   "ground_truth": "The case note 'Kesavananda Bharati Revisited' is assessed as original. Similarity to the reference corpus is 8%, derived from 1 matching passage against no significant source. Confidence in this assessment is 0.92.",
+   "answers": [
+    {
+     "id": "correct-verbatim",
+     "text": "The case note 'Kesavananda Bharati Revisited' is assessed as original. Similarity to the reference corpus is 8%, derived from 1 matching passage against no significant source. Confidence in this assessment is 0.92.",
+     "quality": 1,
+     "note": "the ground truth itself"
+    },
+    {
+     "id": "correct-reworded",
+     "text": "The data shows the case note 'Kesavananda Bharati Revisited' to be original, with 8% similarity to the reference corpus across 1 matching passage traced to no significant source, at a confidence of 0.92.",
+     "quality": 1,
+     "note": "same facts, different wording"
+    },
+    {
+     "id": "correct-terse",
+     "text": "original; 8% similar; 1 match; no significant source.",
+     "quality": 1,
+     "note": "same facts, minimal prose"
+    },
+    {
+     "id": "wrong-verdict",
+     "text": "The data shows the case note 'Kesavananda Bharati Revisited' to be plagiarised, with 8% similarity to the reference corpus across 1 matching passage traced to no significant source, at a confidence of 0.92.",
+     "quality": 0,
+     "note": "verdict flipped, everything else right"
+    },
+    {
+     "id": "wrong-similarity",
+     "text": "The data shows the case note 'Kesavananda Bharati Revisited' to be original, with 55% similarity to the reference corpus across 1 matching passage traced to no significant source, at a confidence of 0.92.",
+     "quality": 0,
+     "note": "similarity figure wrong, everything else right"
+    },
+    {
+     "id": "wrong-source",
+     "text": "The data shows the case note 'Kesavananda Bharati Revisited' to be original, with 8% similarity to the reference corpus across 1 matching passage traced to World Bank Development Report 1998, at a confidence of 0.92.",
+     "quality": 0,
+     "note": "matched source wrong, everything else right"
+    },
+    {
+     "id": "wrong-unrelated",
+     "text": "The data shows the current gas price on Ethereum mainnet is 14 gwei, with a base fee of 12 gwei and a priority tip of 2 gwei.",
+     "quality": 0,
+     "note": "off-topic control"
+    }
+   ],
+   "pairs": [
+    [
+     "correct-verbatim",
+     "wrong-verdict"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-similarity"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-source"
+    ],
+    [
+     "correct-verbatim",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-reworded",
+     "wrong-verdict"
+    ],
+    [
+     "correct-reworded",
+     "wrong-similarity"
+    ],
+    [
+     "correct-reworded",
+     "wrong-source"
+    ],
+    [
+     "correct-reworded",
+     "wrong-unrelated"
+    ],
+    [
+     "correct-terse",
+     "wrong-verdict"
+    ],
+    [
+     "correct-terse",
+     "wrong-similarity"
+    ],
+    [
+     "correct-terse",
+     "wrong-source"
+    ],
+    [
+     "correct-terse",
+     "wrong-unrelated"
+    ]
+   ],
+   "constraints": [
+    {
+     "kind": "near-equal",
+     "ids": [
+      "correct-verbatim",
+      "correct-reworded",
+      "correct-terse"
+     ],
+     "tolerance": 0.05,
+     "note": "all correct phrasings must score within 0.05 of each other"
+    }
+   ],
+   "provenance": {
+    "source": "synthetic",
+    "generator": "gen-cv-pairs.mjs",
+    "created": "2026-08-28"
+   }
+  }
+ ],
+ "corpus_version": "de1456ae164b5390"
+}

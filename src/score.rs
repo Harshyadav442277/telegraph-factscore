@@ -389,6 +389,42 @@ fn entity_agreement(ta: &Toks, gt_uncovered: f32, p: &Profile) -> f32 {
 /// truth occurrence it matched is not coverage; it is a contradiction.
 fn polarity_of(ta: &Toks, tg: &Toks, p: &Profile) -> f32 {
     let (mut sup_mass, mut contra_mass) = (0.0f32, 0.0f32);
+    let mut verdict_flip = false;
+    // Antonym pass. A polar verdict carried by a *different word* is invisible
+    // to the negation test below -- "plagiarised" against "original" shares no
+    // token, so it is merely unsupported, and an unsupported lowercase word is
+    // charged at `prose_w`. Measured before this: a flipped verdict scored
+    // 0.9999 against a verbatim-correct 1.0000 on CONTENT_VERIFICATION clean
+    // pairs. Treat it as what it is -- a contradiction of a stated finding.
+    {
+        let mut a = 0usize;
+        while a < ta.n {
+            if !ta.boiler[a] && !ta.echo[a] && crate::antonyms::is_verdict(ta.hash[a]) {
+                let mut g = 0usize;
+                let (mut stated_same, mut stated_opposite) = (false, false);
+                while g < tg.n {
+                    if tg.hash[g] == ta.hash[a] {
+                        stated_same = true;
+                    } else if crate::antonyms::opposes(ta.hash[a], tg.hash[g]) {
+                        stated_opposite = true;
+                    }
+                    g += 1;
+                }
+                // Only a ground truth that commits to the opposite verdict, and
+                // never to this one, is a contradiction. A truth that uses both
+                // (discussing the alternative it ruled out) abstains.
+                if stated_opposite && !stated_same {
+                    // Categorical, not proportional. Routing this through the
+                    // mass ratio diluted one flipped word across every other
+                    // supported token, so a verdict flip still scored 0.9999 on
+                    // a long answer. Asserting the opposite finding is wrong
+                    // outright, however much else the answer got right.
+                    verdict_flip = true;
+                }
+            }
+            a += 1;
+        }
+    }
     let mut i = 0usize;
     while i < ta.n {
         // Any supported *content* token can carry a polarity claim — not just a
@@ -444,10 +480,15 @@ fn polarity_of(ta: &Toks, tg: &Toks, p: &Profile) -> f32 {
         }
         i += 1;
     }
-    if sup_mass <= 0.0 {
-        return 1.0;
+    let base = if sup_mass <= 0.0 {
+        1.0
+    } else {
+        clamp01(1.0 - p.m_contra * (contra_mass / sup_mass))
+    };
+    if verdict_flip {
+        return base * p.m_verdict_flip;
     }
-    clamp01(1.0 - p.m_contra * (contra_mass / sup_mass))
+    base
 }
 
 /// Weighted fraction of the answer's own content that the ground truth supports.

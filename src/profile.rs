@@ -101,6 +101,14 @@ pub struct Profile {
     /// evidence than a properly-united match, but a legitimate shape
     /// (`wind_kmh=128.7`), so only a light discount.
     pub m_bare_unit: f32,
+    /// Weight given to a flipped polar verdict ("plagiarised" vs "original").
+    /// Carried on its own axis because a verdict word is neither an entity nor a
+    /// figure, so without this it is charged at `prose_w` and a flip is free.
+    pub verdict_w: f32,
+    /// Multiplier applied when the answer asserts the OPPOSITE verdict to the
+    /// one the ground truth states. Categorical: a flipped finding is wrong
+    /// however much surrounding detail is right.
+    pub m_verdict_flip: f32,
     /// How hard a polarity flip on supported content is punished. A sentence and
     /// its negation are different claims, not near-matches.
     pub m_contra: f32,
@@ -156,6 +164,10 @@ pub struct Profile {
 
 pub const fn base() -> Profile {
     Profile {
+        // Heavy: on an intent whose answer IS a verdict, this single token is
+        // the finding. Measured -- flipped verdict 0.9999 -> see tune.md.
+        verdict_w: 8.0,
+        m_verdict_flip: 0.04,
         w_number: 3.0,
         w_ident: 3.4,
         w_stop: 0.05,
