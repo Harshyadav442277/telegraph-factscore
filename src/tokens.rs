@@ -9,6 +9,7 @@
 
 #![allow(dead_code)]
 
+use crate::bytes::unit_family_hash;
 use crate::bytes::*;
 use crate::profile::profile;
 use crate::units::{
@@ -28,6 +29,8 @@ pub struct Toks {
     pub n: usize,
     pub hash: [u32; MAX_TOKENS],
     pub stem: [u32; MAX_TOKENS],
+    /// Four-letter family hash, used only for unrecognised unit-words.
+    pub family: [u32; MAX_TOKENS],
     pub w: [f32; MAX_TOKENS],
     pub val: [f32; MAX_TOKENS],
     /// Upper bound of a hyphenated range; equal to `val` for a plain figure.
@@ -80,6 +83,7 @@ pub const EMPTY_TOKS: Toks = Toks {
     n: 0,
     hash: [0; MAX_TOKENS],
     stem: [0; MAX_TOKENS],
+    family: [0; MAX_TOKENS],
     w: [0.0; MAX_TOKENS],
     val: [0.0; MAX_TOKENS],
     vhi: [0.0; MAX_TOKENS],
@@ -398,6 +402,11 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
 
         t.hash[k] = h;
         t.stem[k] = if kind == K_WORD { stem_hash(tok) } else { h };
+        t.family[k] = if kind == K_WORD {
+            unit_family_hash(tok)
+        } else {
+            h
+        };
         t.kind[k] = kind;
         t.val[k] = val;
         t.vhi[k] = if vhi >= val { vhi } else { val };

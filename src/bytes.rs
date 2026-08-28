@@ -167,6 +167,25 @@ pub const fn hash_str(s: &str) -> u32 {
 /// `provide`, or `ranges` and `range`, land on the same key. Deliberately crude:
 /// a real stemmer is not worth the bytes, and over-stemming only ever costs a
 /// little precision on a low-weight word.
+/// Coarse "same word family" hash for **unit-shaped words only**.
+///
+/// The general stemmer cannot collapse `matches` and `matching`: the plural rule
+/// yields `matche` while the -ing rule yields `match`, and widening the plural
+/// rule to strip `es` would send `provides` to `provid` (see `stem_hash`). That
+/// mismatch made a correct terse answer foreign to its own ground truth --
+/// "7 matches" against "7 matching passages" fired `m_foreign_unit` and cost the
+/// answer its numeric channel (fact 0.394 against 1.000 verbatim).
+///
+/// A four-letter prefix is deliberately blunt. It is applied ONLY to words that
+/// sat where a unit would and named no unit we recognise, so the failure mode is
+/// bounded: two *unrecognised* unit-words sharing four letters are treated as
+/// the same quantity. Recognised units never reach here -- they carry a real
+/// `U_*` code and are compared by dimension.
+pub fn unit_family_hash(tok: &[u8]) -> u32 {
+    let n = if tok.len() < 4 { tok.len() } else { 4 };
+    hash_bytes(&tok[..n])
+}
+
 pub fn stem_hash(tok: &[u8]) -> u32 {
     let n = tok.len();
     if n < 5 {

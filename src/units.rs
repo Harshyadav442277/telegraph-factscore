@@ -398,7 +398,16 @@ pub fn annotate_units(t: &mut Toks) {
                 && t.w[nxt] > 0.1
                 && !followed_by_figure
             {
-                t.ufword[k] = t.hash[nxt];
+                // Stem, not the raw hash. A unit-shaped word is the same unit
+                // however it is inflected: an answer saying "7 matches" against
+                // a ground truth saying "7 matching passages" is stating the
+                // same quantity, but comparing raw hashes made them foreign to
+                // each other and fired `m_foreign_unit` on a CORRECT answer.
+                // Measured on CONTENT_VERIFICATION clean pairs: the terse
+                // correct phrasing scored fact 0.3941 against 1.0000 for the
+                // verbatim one, dragging it to 0.3298 — below a wrong-similarity
+                // answer at 0.4921, an inversion.
+                t.ufword[k] = t.family[nxt];
             }
         }
         k += 1;
