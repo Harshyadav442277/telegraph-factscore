@@ -44,10 +44,10 @@
     "author_registration_count": 0
   },
   "publication": {
-    "status": "unpublished",
-    "hosted_url": null,
-    "source_commit": null,
-    "hosted_bytes_verified": false,
+    "status": "published_verified",
+    "hosted_url": "https://raw.githubusercontent.com/Harshyadav442277/telegraph-factscore/5728366ebc846faf2b81814be3b1dbec35f1c727/dist/text_authenticity.wasm",
+    "source_commit": "5728366ebc846faf2b81814be3b1dbec35f1c727",
+    "hosted_bytes_verified": true,
     "onchain_registration_id": null
   }
 }

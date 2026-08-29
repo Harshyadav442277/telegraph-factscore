@@ -19,8 +19,9 @@ This submission replaces vocabulary proximity with assertion-level agreement. Th
 
 These are offline, reproducible measurements against the exact pinned incumbent WASM—not claims
 about Telegraph's hidden fixtures. The 2026-08-29 06:53 IST registry recheck still reports
-registration 850 as champion at **0.65861213**, 14/15 cases, with no historical rows. The module
-has not yet been registered or received a network verdict.
+registration 850 as champion at **0.65861213**, 14/15 cases, with no historical rows. The release
+is public, its commit-pinned hosted bytes have been independently re-fetched, and Linux CI
+reproduces them from source. The module has not yet been registered or received a network verdict.
 
 ## Why this is an actual evaluator improvement
 
@@ -93,8 +94,8 @@ keccak256  67da3ac8c06529a4ac44044bcf04471dd7d6c62fc97ca34fdd364a8feceb53aa
 ```
 
 The Keccak implementation was checked by reproducing registration 850's public on-chain hash.
-`release/text-authenticity.json` is the machine-readable manifest. A hosted download must match
-both hashes before the user-signed registration.
+`release/text-authenticity.json` is the machine-readable manifest. The commit-pinned hosted
+download matches both hashes; the remaining activation step is the user-signed registration.
 
 ## Fast verification path
 
