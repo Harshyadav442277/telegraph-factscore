@@ -1,0 +1,5 @@
+[build]
+# Rust embeds source-span paths for checked operations in the release WASM. Cargo passes those
+# paths with backslashes on Windows and forward slashes on Linux, changing otherwise identical
+# bytes. Normalize the Windows prefix so both hosts produce the Linux/GitHub representation.
+rustflags = ["--remap-path-prefix=src\\=src/"]

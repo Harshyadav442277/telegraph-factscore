@@ -3,8 +3,8 @@
   "intent": "TEXT_AUTHENTICITY_CHECK",
   "artifact": "dist/text_authenticity.wasm",
   "bytes": 25887,
-  "sha256": "e7bb15f12e55aa5a0cb8fa30f5d2d5a21a3027d026b207d3d8563d2ae2ae52b6",
-  "keccak256": "bdd3fea5deb7ce2a48663aa7ec63d5a295ade30c4c2bb2d3254031cb04cdca0f",
+  "sha256": "1a0f191b57ed06421bf2ad067863261f515927b9d8bbc53e4e01ed99aa5fc634",
+  "keccak256": "67da3ac8c06529a4ac44044bcf04471dd7d6c62fc97ca34fdd364a8feceb53aa",
   "toolchain": {
     "rustc": "1.98.0",
     "target": "wasm32-unknown-unknown",
@@ -27,7 +27,7 @@
     "independent_verifier": {
       "repository": "https://github.com/neromtoobad/telegraph-wasm-check",
       "commit": "f537c7c085e9d3366c5615fe1ad1f98a0abeff7c",
-      "artifact_sha256": "e7bb15f12e55aa5a0cb8fa30f5d2d5a21a3027d026b207d3d8563d2ae2ae52b6",
+      "artifact_sha256": "1a0f191b57ed06421bf2ad067863261f515927b9d8bbc53e4e01ed99aa5fc634",
       "custom_cases": 16,
       "seeded_fuzz_cases": 500,
       "hard_failures": 0,
@@ -44,10 +44,10 @@
     "author_registration_count": 0
   },
   "publication": {
-    "status": "published_verified",
-    "hosted_url": "https://raw.githubusercontent.com/Harshyadav442277/telegraph-factscore/25ff8089d4d3f1cfcc639115e14464d7d6313cc1/dist/text_authenticity.wasm",
-    "source_commit": "25ff8089d4d3f1cfcc639115e14464d7d6313cc1",
-    "hosted_bytes_verified": true,
+    "status": "unpublished",
+    "hosted_url": null,
+    "source_commit": null,
+    "hosted_bytes_verified": false,
     "onchain_registration_id": null
   }
 }

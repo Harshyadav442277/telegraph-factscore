@@ -19,8 +19,7 @@ This submission replaces vocabulary proximity with assertion-level agreement. Th
 
 These are offline, reproducible measurements against the exact pinned incumbent WASM—not claims
 about Telegraph's hidden fixtures. The 2026-08-29 06:53 IST registry recheck still reports
-registration 850 as champion at **0.65861213**, 14/15 cases, with no historical rows. The release
-is public and its commit-pinned hosted bytes have been independently re-fetched, but the module
+registration 850 as champion at **0.65861213**, 14/15 cases, with no historical rows. The module
 has not yet been registered or received a network verdict.
 
 ## Why this is an actual evaluator improvement
@@ -89,13 +88,13 @@ should be linked here before final judging; artificial metrics would violate Rul
 ```text
 artifact   dist/text_authenticity.wasm
 bytes      25887
-sha256     e7bb15f12e55aa5a0cb8fa30f5d2d5a21a3027d026b207d3d8563d2ae2ae52b6
-keccak256  bdd3fea5deb7ce2a48663aa7ec63d5a295ade30c4c2bb2d3254031cb04cdca0f
+sha256     1a0f191b57ed06421bf2ad067863261f515927b9d8bbc53e4e01ed99aa5fc634
+keccak256  67da3ac8c06529a4ac44044bcf04471dd7d6c62fc97ca34fdd364a8feceb53aa
 ```
 
 The Keccak implementation was checked by reproducing registration 850's public on-chain hash.
-`release/text-authenticity.json` is the machine-readable manifest. The commit-pinned hosted
-download matches both hashes; the remaining activation step is the user-signed registration.
+`release/text-authenticity.json` is the machine-readable manifest. A hosted download must match
+both hashes before the user-signed registration.
 
 ## Fast verification path
 
