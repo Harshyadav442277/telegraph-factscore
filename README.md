@@ -6,6 +6,8 @@ scorer for Telegraph's `TEXT_AUTHENTICITY_CHECK` intent.
 This is the v1.2 semantic repair. Its predecessor was registered as 1671: Stage 1 passed, but
 Stage 2 rejected it at 9/15 orderings and margin 0.3274022. v1.2 separates independent
 authenticity axes and expands ordinary paraphrase coverage rather than hiding that result.
+The commit-pinned download reproduces both hashes below; Linux CI run `33236230467` rebuilds it
+byte-for-byte from source.
 
 The incumbent can score a one-word wrong verdict almost identically to the truth. This scorer
 compares assertion meaning instead: verdict polarity, equivalent labels, named-model attribution,

@@ -15,7 +15,8 @@ equivalent answer above every paired one-fact counterfactual or opposite verdict
 
 The artifact is bound to source commit `638dae46ba31c1bf3a30e9d0e541b7c56f3fe48b`:
 <https://raw.githubusercontent.com/Harshyadav442277/telegraph-factscore/638dae46ba31c1bf3a30e9d0e541b7c56f3fe48b/dist/text_authenticity.wasm>.
-Fresh-download hashes and Linux CI byte reproduction must pass before registration.
+Fresh-download hashes reproduced the bound identity, and Linux CI run `33236230467` rebuilt the
+tracked WASM byte-for-byte and passed every release gate.
 
 The incumbent URL is commit-pinned in its registry entry:
 <https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/85381b739a9d047f068dc2b3642ceef9a569f48d/dist/xfmr/tn_t70.wasm>.

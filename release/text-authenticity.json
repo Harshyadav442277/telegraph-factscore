@@ -54,10 +54,10 @@
     "rejected_candidate_wins": 9
   },
   "publication": {
-    "status": "publication_pending_verification",
+    "status": "published_verified",
     "hosted_url": "https://raw.githubusercontent.com/Harshyadav442277/telegraph-factscore/638dae46ba31c1bf3a30e9d0e541b7c56f3fe48b/dist/text_authenticity.wasm",
     "source_commit": "638dae46ba31c1bf3a30e9d0e541b7c56f3fe48b",
-    "hosted_bytes_verified": false,
+    "hosted_bytes_verified": true,
     "onchain_registration_id": null
   }
 }
