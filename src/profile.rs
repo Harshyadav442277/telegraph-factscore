@@ -80,6 +80,14 @@ pub struct Profile {
     /// How far each channel may pull the fact term down: 1.0 lets a wholly-wrong
     /// channel zero it, 0.0 disables the channel. Channels multiply.
     pub num_channel_w: f32,
+    /// When true, a figure is compared only against ground-truth figures in the
+    /// same role (see `tokens::role_overlap`) whenever any same-role candidate
+    /// exists. Off everywhere else, because the intents already calibrated
+    /// against a single-figure ground truth gain nothing and would have to be
+    /// re-tuned. Measured on STOCK_PRICE: a 9%-wrong current price sitting near
+    /// the ground truth's own 52-week high scored 0.55 without this and 0.10
+    /// with it.
+    pub role_scoped_figures: bool,
     pub id_channel_w: f32,
     /// Multiplier on a figure whose unit we could not identify, when the ground
     /// truth named a real one. Calibrated so that asserting a category error
@@ -174,6 +182,7 @@ pub const fn base() -> Profile {
         num_band_rel: 10.0,
         num_min_bias: 0.5,
         num_channel_w: 0.9,
+        role_scoped_figures: false,
         id_channel_w: 0.9,
         m_foreign_unit: 0.05,
         m_bare_unit: 0.85,
@@ -322,12 +331,101 @@ pub const fn profile() -> Profile {
     text_verification_profile()
 }
 
+/// Shared calibration for the two headline-quantity intents.
+///
+/// Both ask for ONE number — a share price, a total value locked — and the
+/// ground truth wraps it in prose that also carries dates, times, percentage
+/// changes and volumes. Registration 1377 on IP_GEOLOCATION and the 2026-08-29
+/// measurement both showed the same defect: with `base()`'s soft numeric
+/// channel, an answer that copies the ground truth and changes ONLY the headline
+/// figure keeps precision 0.959 and scores **0.927**, because the wrong figure is
+/// averaged against the dates and times that still agree.
+///
+/// The whole intent is that one number. So the numeric channel gets full
+/// authority (`num_channel_w = 1.0`) and reads the WORST comparable figure
+/// rather than the mean (`num_min_bias = 1.0`): four right figures and one wrong
+/// decisive figure is a wrong answer. `num_rel_k = 60` makes the decay steep
+/// enough that a rounding difference survives while a genuinely different price
+/// does not.
+#[cfg(any(
+    feature = "stock-price",
+    feature = "tvl-lookup",
+    feature = "crypto-price",
+    feature = "onchain-tx-lookup"
+))]
+const fn headline_quantity_profile() -> Profile {
+    let mut p = base();
+    // The decisive figure must be able to zero the fact term on its own.
+    p.num_channel_w = 1.0;
+    p.num_min_bias = 1.0;
+    // Swept against both fixture shapes (tune.md): 120 maximises separation on
+    // ground-truth-like answers, which is where the node's own fixtures sit --
+    // the champion scores 0.074 on recorded prose, 0.926 on ground-truth-like
+    // pairs, and 0.6147 on the real fixtures, so they are roughly two thirds of
+    // the way toward the latter. A 0.02% display rounding still agrees at 0.976.
+    p.num_rel_k = 120.0;
+    // These ground truths quote a current price, a day's range, a 52-week range
+    // and a market cap side by side, so "best match over every figure" is the
+    // wrong question. Compare like with like.
+    p.role_scoped_figures = true;
+    // With a decay this steep, an unknown category ("47 bananas") must still
+    // rank below an honestly wrong value stated in the expected unit; the
+    // text-verification profile carries this for the same reason.
+    p.m_foreign_unit = 0.005;
+    // Prices and TVL are absolute magnitudes, so relative decay carries the
+    // judgement and the absolute epsilon only absorbs display rounding.
+    p.num_abs_tol = 0.02;
+    // Tickers, protocol names and chain names are identifiers with no tolerance:
+    // an answer about Aave V2 does not answer a question about Aave V3.
+    p.w_ident = 4.0;
+    p.id_channel_w = 1.0;
+    // Keep precision close to linear and the range full, so ordering survives.
+    // Concave shaping is what lifted a wrong-figure answer from 0.771 to 0.927.
+    p.p_concave = 0.15;
+    p.ss_lo = 0.0;
+    p.ss_hi = 1.0;
+    // The question already names the ticker or protocol, so the novel content is
+    // the figure itself; demand real novel mass before the gate opens.
+    p.ans_sat = 3.5;
+    p
+}
+
+#[cfg(feature = "stock-price")]
+pub const fn profile() -> Profile {
+    headline_quantity_profile()
+}
+
+#[cfg(feature = "tvl-lookup")]
+pub const fn profile() -> Profile {
+    headline_quantity_profile()
+}
+
+#[cfg(feature = "crypto-price")]
+pub const fn profile() -> Profile {
+    headline_quantity_profile()
+}
+
+#[cfg(feature = "onchain-tx-lookup")]
+pub const fn profile() -> Profile {
+    let mut p = headline_quantity_profile();
+    // Gas fees and transfer values are ETH amounts around 0.002, so the shared
+    // absolute epsilon of 0.02 is larger than the quantity itself: a swapped
+    // fee and the true one both fell inside it and scored identically (measured
+    // 0.9236 for both, 0/2 cases). Relative decay must decide here.
+    p.num_abs_tol = 1e-9;
+    p
+}
+
 #[cfg(all(
     feature = "generic",
     not(feature = "ip-geolocation"),
     not(feature = "storm-alert"),
     not(feature = "content-verification"),
-    not(feature = "text-authenticity")
+    not(feature = "text-authenticity"),
+    not(feature = "stock-price"),
+    not(feature = "tvl-lookup"),
+    not(feature = "crypto-price"),
+    not(feature = "onchain-tx-lookup")
 ))]
 pub const fn profile() -> Profile {
     base()
@@ -342,12 +440,24 @@ const fn intent_tag() -> [u8; 32] {
     let name = b"CONTENT_VERIFICATION";
     #[cfg(feature = "text-authenticity")]
     let name = b"TEXT_AUTHENTICITY_CHECK";
+    #[cfg(feature = "stock-price")]
+    let name = b"STOCK_PRICE";
+    #[cfg(feature = "tvl-lookup")]
+    let name = b"TVL_LOOKUP";
+    #[cfg(feature = "crypto-price")]
+    let name = b"CRYPTO_PRICE";
+    #[cfg(feature = "onchain-tx-lookup")]
+    let name = b"ONCHAIN_TX_LOOKUP";
     #[cfg(all(
         feature = "generic",
         not(feature = "ip-geolocation"),
         not(feature = "storm-alert"),
         not(feature = "content-verification"),
-        not(feature = "text-authenticity")
+        not(feature = "text-authenticity"),
+        not(feature = "stock-price"),
+        not(feature = "tvl-lookup"),
+        not(feature = "crypto-price"),
+        not(feature = "onchain-tx-lookup")
     ))]
     let name = b"GENERIC";
 

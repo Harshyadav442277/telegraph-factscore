@@ -1,0 +1,22 @@
+{
+ "intent": "TVL_LOOKUP",
+ "class": "FACT-SWAP",
+ "built": "2026-08-29T08:43:17.633Z",
+ "provenance": {
+  "source": "scores-api",
+  "rows": 150,
+  "questions": 24
+ },
+ "construction": {
+  "good": "verbatim recorded miner answer whose quantity matches the ground truth within 0.5%",
+  "bad": "the same answer with only the headline quantity rescaled",
+  "factors": [
+   0.82,
+   0.91,
+   1.09,
+   1.23
+  ],
+  "note": "one objective difference per pair; no wording authored by us"
+ },
+ "cases": []
+}

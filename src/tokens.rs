@@ -73,6 +73,15 @@ pub struct Toks {
     /// proper noun. These are what a Tier-A answer is right or wrong about.
     pub decisive: [bool; MAX_TOKENS],
     pub boiler: [bool; MAX_TOKENS],
+    /// Stems of the two nearest preceding content words, so a figure can be
+    /// compared against the ground-truth figure in the SAME ROLE rather than
+    /// against every figure in the document. A ground truth that quotes a
+    /// current price, a day's range, a 52-week range and a market cap offers
+    /// four currency figures; without a role the numeric channel takes the best
+    /// match over all of them, and a wrong price that happens to land near the
+    /// 52-week high is scored as nearly right. Zero when there is none.
+    pub role1: [u32; MAX_TOKENS],
+    pub role2: [u32; MAX_TOKENS],
     pub echo: [bool; MAX_TOKENS],
     /// Part of an explicit model-name claim. Model names are compared through
     /// their separator-insensitive semantic signature, not generic token shape.
@@ -105,12 +114,79 @@ pub const EMPTY_TOKS: Toks = Toks {
     abbrev: [false; MAX_TOKENS],
     decisive: [false; MAX_TOKENS],
     boiler: [false; MAX_TOKENS],
+    role1: [0u32; MAX_TOKENS],
+    role2: [0u32; MAX_TOKENS],
     echo: [false; MAX_TOKENS],
     model: [false; MAX_TOKENS],
     supw: [0.0; MAX_TOKENS],
     supi: [0; MAX_TOKENS],
     has_ident: false,
 };
+
+/// Fill `role1`/`role2` for every figure: the stems of the two nearest preceding
+/// content words, skipping boilerplate, other figures and identifiers.
+///
+/// "the current share price of Apple Inc. (AAPL) is $309.25" and
+/// "**Day's Range**: $307.01" both offer a currency figure, but only the first
+/// is answering "what is the current share price". Comparing figures that share
+/// a role is what stops a 9%-wrong price from being rescued by a 52-week high it
+/// happens to sit near.
+fn fill_roles(t: &mut Toks) {
+    let mut i = 0usize;
+    while i < t.n {
+        if t.kind[i] != K_NUMBER {
+            i += 1;
+            continue;
+        }
+        let mut slot = 0u8;
+        let mut j = i;
+        while j > 0 && slot < 2 {
+            j -= 1;
+            if t.boiler[j] || t.kind[j] == K_NUMBER || t.kind[j] == K_IDENT {
+                continue;
+            }
+            if t.stem[j] == 0 {
+                continue;
+            }
+            if slot == 0 {
+                t.role1[i] = t.stem[j];
+            } else {
+                t.role2[i] = t.stem[j];
+            }
+            slot += 1;
+        }
+        i += 1;
+    }
+}
+
+/// How much two figures share a role: 2 both stems, 1 one stem, 0 none.
+/// Symmetric, and 0 on either side means "no role recorded", which callers treat
+/// as "cannot tell" rather than "different".
+pub fn role_overlap(ta: &Toks, i: usize, tg: &Toks, k: usize) -> u8 {
+    let a = [ta.role1[i], ta.role2[i]];
+    let b = [tg.role1[k], tg.role2[k]];
+    let mut hits = 0u8;
+    let mut x = 0usize;
+    while x < 2 {
+        if a[x] != 0 {
+            let mut y = 0usize;
+            while y < 2 {
+                if a[x] == b[y] {
+                    hits += 1;
+                    break;
+                }
+                y += 1;
+            }
+        }
+        x += 1;
+    }
+    hits
+}
+
+/// True when both figures carry a recorded role at all.
+pub fn roles_known(ta: &Toks, i: usize, tg: &Toks, k: usize) -> bool {
+    (ta.role1[i] != 0 || ta.role2[i] != 0) && (tg.role1[k] != 0 || tg.role2[k] != 0)
+}
 
 #[cfg(test)]
 impl Toks {
@@ -464,6 +540,7 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
         t.n = k + 1;
     }
     mark_model_spans(t);
+    fill_roles(t);
 }
 
 fn model_component(t: &Toks, i: usize) -> bool {

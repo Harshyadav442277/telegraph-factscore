@@ -1,0 +1,95 @@
+{
+ "intent": "CRYPTO_PRICE",
+ "class": "FACT-SWAP",
+ "built": "2026-08-29T09:13:45.876Z",
+ "provenance": {
+  "source": "scores-api",
+  "rows": 168,
+  "questions": 8
+ },
+ "construction": {
+  "good": "verbatim recorded miner answer whose quantity matches the ground truth within 0.5%",
+  "bad": "the same answer with only the headline quantity rescaled",
+  "factors": [
+   0.82,
+   0.91,
+   1.09,
+   1.23
+  ],
+  "note": "one objective difference per pair; no wording authored by us"
+ },
+ "cases": [
+  {
+   "id": "crypto_price-swap-1",
+   "question": "What is the current price of Bitcoin (BTC) in USD as of August 22, 2026?",
+   "groundTruth": "The current price of Bitcoin (BTC) as of August 22, 2026, is approximately **$77,290.98 USD**. This price reflects a slight decrease of -0.16% over the past 24 hours, with Bitcoin's market capitalization standing at around $1.55 trillion and a circulating supply of about 20.1 million BTC.\n\nAdditional sources confirm that Bitcoin traded slightly above $77,000 on the same day, having earlier approached $80,000 before pulling back. The price was also reported at $77,025.10 as of 05:50 ET (09:50 GMT) on August 22, 2026.\n\nIn summary, the consensus across multiple reliable sources indicates that Bitcoin’s price on August 22, 2026, is **around $77,290.98 USD**.",
+   "target": 77290.98,
+   "good": [
+    {
+     "text": "The data shows that the current price of Bitcoin is 77,252 USD.",
+     "miner": "coingecko",
+     "liveScore": 3.6933733e-19,
+     "relError": 0.000504
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows that the current price of Bitcoin is 63,347 USD.",
+     "factor": 0.82,
+     "derivedFrom": "coingecko"
+    },
+    {
+     "text": "The data shows that the current price of Bitcoin is 70,299 USD.",
+     "factor": 0.91,
+     "derivedFrom": "coingecko"
+    },
+    {
+     "text": "The data shows that the current price of Bitcoin is 84,205 USD.",
+     "factor": 1.09,
+     "derivedFrom": "coingecko"
+    },
+    {
+     "text": "The data shows that the current price of Bitcoin is 95,020 USD.",
+     "factor": 1.23,
+     "derivedFrom": "coingecko"
+    }
+   ]
+  },
+  {
+   "id": "crypto_price-swap-2",
+   "question": "What is the current price of Bitcoin (BTC) in USD as of August 21, 2026?",
+   "groundTruth": "The current price of Bitcoin (BTC) as of August 21, 2026, is approximately **$76,857.37 USD**, according to multiple sources. This price reflects a significant rally, with Bitcoin reaching intraday highs near **$79,463.71** and showing a **+7.22%** increase over the past 24 hours. The market appears to be influenced by factors such as U.S. Treasury bond buybacks, political developments involving President Donald Trump, and strong inflows into Bitcoin ETFs, which have contributed to the recent surge in price.",
+   "target": 76857.37,
+   "good": [
+    {
+     "text": "The data shows that the current price of Bitcoin is 77,012 USD.",
+     "miner": "coingecko",
+     "liveScore": 5.261141e-18,
+     "relError": 0.002012
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows that the current price of Bitcoin is 63,150 USD.",
+     "factor": 0.82,
+     "derivedFrom": "coingecko"
+    },
+    {
+     "text": "The data shows that the current price of Bitcoin is 70,081 USD.",
+     "factor": 0.91,
+     "derivedFrom": "coingecko"
+    },
+    {
+     "text": "The data shows that the current price of Bitcoin is 83,943 USD.",
+     "factor": 1.09,
+     "derivedFrom": "coingecko"
+    },
+    {
+     "text": "The data shows that the current price of Bitcoin is 94,725 USD.",
+     "factor": 1.23,
+     "derivedFrom": "coingecko"
+    }
+   ]
+  }
+ ]
+}

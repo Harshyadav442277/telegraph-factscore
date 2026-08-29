@@ -1,0 +1,599 @@
+{
+ "intent": "STOCK_PRICE",
+ "class": "FACT-SWAP",
+ "built": "2026-08-29T08:43:17.735Z",
+ "provenance": {
+  "source": "scores-api",
+  "rows": 82,
+  "questions": 20
+ },
+ "construction": {
+  "good": "verbatim recorded miner answer whose quantity matches the ground truth within 0.5%",
+  "bad": "the same answer with only the headline quantity rescaled",
+  "factors": [
+   0.82,
+   0.91,
+   1.09,
+   1.23
+  ],
+  "note": "one objective difference per pair; no wording authored by us"
+ },
+ "cases": [
+  {
+   "id": "stock_price-swap-1",
+   "question": "What is the current share price of Apple Inc. (AAPL) as retrieved by the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of Apple Inc. (AAPL) is **319.70** USD as of August 28, 2026, at 12:59 PM PDT, according to Investing.com and Nasdaq data. \n\nOther sources show slight variations due to market timing and data feeds, but the consensus around this price point is strong.",
+   "target": 319.7,
+   "good": [
+    {
+     "text": "The data shows that Apple Inc. (AAPL) is trading at $319.70 USD as of 2026-08-29T06:42:35.518441Z.",
+     "miner": "kriterion-pramagraph",
+     "liveScore": 0.014008716,
+     "relError": 0
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows that Apple Inc. (AAPL) is trading at $262.15 USD as of 2026-08-29T06:42:35.518441Z.",
+     "factor": 0.82,
+     "derivedFrom": "kriterion-pramagraph"
+    },
+    {
+     "text": "The data shows that Apple Inc. (AAPL) is trading at $290.93 USD as of 2026-08-29T06:42:35.518441Z.",
+     "factor": 0.91,
+     "derivedFrom": "kriterion-pramagraph"
+    },
+    {
+     "text": "The data shows that Apple Inc. (AAPL) is trading at $348.47 USD as of 2026-08-29T06:42:35.518441Z.",
+     "factor": 1.09,
+     "derivedFrom": "kriterion-pramagraph"
+    },
+    {
+     "text": "The data shows that Apple Inc. (AAPL) is trading at $393.23 USD as of 2026-08-29T06:42:35.518441Z.",
+     "factor": 1.23,
+     "derivedFrom": "kriterion-pramagraph"
+    }
+   ]
+  },
+  {
+   "id": "stock_price-swap-2",
+   "question": "What is the current share price of Global X Copper Miners ETF (COPX) as of August 28, 2026?",
+   "groundTruth": "The current share price of the Global X Copper Miners ETF (COPX) as of August 28, 2026, is **$96.44**.",
+   "target": 96.44,
+   "good": [
+    {
+     "text": "The data shows that the current share price of Global X Copper Miners ETF (COPX) is $96.45 USD, as of August 28, 2026.",
+     "miner": "kriterion-pramagraph",
+     "liveScore": 0.0071755014,
+     "relError": 0.000104
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows that the current share price of Global X Copper Miners ETF (COPX) is $79.09 USD, as of August 28, 2026.",
+     "factor": 0.82,
+     "derivedFrom": "kriterion-pramagraph"
+    },
+    {
+     "text": "The data shows that the current share price of Global X Copper Miners ETF (COPX) is $87.77 USD, as of August 28, 2026.",
+     "factor": 0.91,
+     "derivedFrom": "kriterion-pramagraph"
+    },
+    {
+     "text": "The data shows that the current share price of Global X Copper Miners ETF (COPX) is $105.13 USD, as of August 28, 2026.",
+     "factor": 1.09,
+     "derivedFrom": "kriterion-pramagraph"
+    },
+    {
+     "text": "The data shows that the current share price of Global X Copper Miners ETF (COPX) is $118.63 USD, as of August 28, 2026.",
+     "factor": 1.23,
+     "derivedFrom": "kriterion-pramagraph"
+    }
+   ]
+  },
+  {
+   "id": "stock_price-swap-3",
+   "question": "Can you retrieve the current GLOBAL_QUOTE for Apple Inc. (AAPL) using the appropriate function?",
+   "groundTruth": "The current GLOBAL_QUOTE for Apple Inc. (AAPL) is **314.58 USD**.",
+   "target": 314.58,
+   "good": [
+    {
+     "text": "The current share price of Apple (AAPL) is $314.58 USD, with a 0.36% increase over the last 24 hours.",
+     "miner": "chainsight-oracle",
+     "liveScore": 0.8395784,
+     "relError": 0
+    }
+   ],
+   "bad": [
+    {
+     "text": "The current share price of Apple (AAPL) is $257.96 USD, with a 0.36% increase over the last 24 hours.",
+     "factor": 0.82,
+     "derivedFrom": "chainsight-oracle"
+    },
+    {
+     "text": "The current share price of Apple (AAPL) is $286.27 USD, with a 0.36% increase over the last 24 hours.",
+     "factor": 0.91,
+     "derivedFrom": "chainsight-oracle"
+    },
+    {
+     "text": "The current share price of Apple (AAPL) is $342.89 USD, with a 0.36% increase over the last 24 hours.",
+     "factor": 1.09,
+     "derivedFrom": "chainsight-oracle"
+    },
+    {
+     "text": "The current share price of Apple (AAPL) is $386.93 USD, with a 0.36% increase over the last 24 hours.",
+     "factor": 1.23,
+     "derivedFrom": "chainsight-oracle"
+    }
+   ]
+  },
+  {
+   "id": "stock_price-swap-4",
+   "question": "What is the current share price of Microsoft (MSFT) as retrieved via the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of Microsoft (MSFT) is **$496.35** as of the latest timestamp on August 26, 2026, at 19:59:59 UTC-0 (12:59:59 PM Pacific Time).\n\nAdditional recent data points include:\n- **$496.37** as of August 26, 2026, at 12:59 PM PDT.\n- **$495.42** as of August 26, 2026, at 09:18 AM PDT.\n- **$495.17** as of August 25, 2026, at 11:20:25 AM EDT.\n\nThese values reflect minor fluctuations throughout recent trading sessions, with the most recent consolidated price at **$496.35** based on the latest available market data.",
+   "target": 496.35,
+   "good": [
+    {
+     "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 26, 2026, at $496.37 USD.",
+     "miner": "txlens",
+     "liveScore": 0.36056182,
+     "relError": 0.00004
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 26, 2026, at $407.02 USD.",
+     "factor": 0.82,
+     "derivedFrom": "txlens"
+    },
+    {
+     "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 26, 2026, at $451.70 USD.",
+     "factor": 0.91,
+     "derivedFrom": "txlens"
+    },
+    {
+     "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 26, 2026, at $541.04 USD.",
+     "factor": 1.09,
+     "derivedFrom": "txlens"
+    },
+    {
+     "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 26, 2026, at $610.54 USD.",
+     "factor": 1.23,
+     "derivedFrom": "txlens"
+    }
+   ]
+  },
+  {
+   "id": "stock_price-swap-5",
+   "question": "What is the current share price of Microsoft (MSFT) as retrieved through the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of Microsoft (MSFT) is $496.35 as of August 26, 2026, at 12:59:59 PM Pacific Time.",
+   "target": 496.35,
+   "good": [
+    {
+     "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 26, 2026, at $496.37 USD.",
+     "miner": "txlens",
+     "liveScore": 0.019611645,
+     "relError": 0.00004
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 26, 2026, at $407.02 USD.",
+     "factor": 0.82,
+     "derivedFrom": "txlens"
+    },
+    {
+     "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 26, 2026, at $451.70 USD.",
+     "factor": 0.91,
+     "derivedFrom": "txlens"
+    },
+    {
+     "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 26, 2026, at $541.04 USD.",
+     "factor": 1.09,
+     "derivedFrom": "txlens"
+    },
+    {
+     "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 26, 2026, at $610.54 USD.",
+     "factor": 1.23,
+     "derivedFrom": "txlens"
+    }
+   ]
+  },
+  {
+   "id": "stock_price-swap-6",
+   "question": "What is the current share price of Apple (AAPL) as retrieved by the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of Apple (AAPL) is **$313.12** as retrieved by the GLOBAL_QUOTE function.",
+   "target": 313.12,
+   "good": [
+    {
+     "text": "The current share price of Apple (AAPL) is $313.54 USD, with a 1.17% increase over the last 24 hours.",
+     "miner": "chainsight-oracle",
+     "liveScore": 0.006866657,
+     "relError": 0.001341
+    }
+   ],
+   "bad": [
+    {
+     "text": "The current share price of Apple (AAPL) is $257.10 USD, with a 1.17% increase over the last 24 hours.",
+     "factor": 0.82,
+     "derivedFrom": "chainsight-oracle"
+    },
+    {
+     "text": "The current share price of Apple (AAPL) is $285.32 USD, with a 1.17% increase over the last 24 hours.",
+     "factor": 0.91,
+     "derivedFrom": "chainsight-oracle"
+    },
+    {
+     "text": "The current share price of Apple (AAPL) is $341.76 USD, with a 1.17% increase over the last 24 hours.",
+     "factor": 1.09,
+     "derivedFrom": "chainsight-oracle"
+    },
+    {
+     "text": "The current share price of Apple (AAPL) is $385.65 USD, with a 1.17% increase over the last 24 hours.",
+     "factor": 1.23,
+     "derivedFrom": "chainsight-oracle"
+    }
+   ]
+  },
+  {
+   "id": "stock_price-swap-7",
+   "question": "What is the current share price of Microsoft () using the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of Microsoft (MSFT) is **$491.54** as of August 25, 2026, at 19:59:55 UTC.",
+   "target": 491.54,
+   "good": [
+    {
+     "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 25, 2026, at $491.71 USD.",
+     "miner": "txlens",
+     "liveScore": 0.020852376,
+     "relError": 0.000346
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 25, 2026, at $403.20 USD.",
+     "factor": 0.82,
+     "derivedFrom": "txlens"
+    },
+    {
+     "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 25, 2026, at $447.46 USD.",
+     "factor": 0.91,
+     "derivedFrom": "txlens"
+    },
+    {
+     "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 25, 2026, at $535.96 USD.",
+     "factor": 1.09,
+     "derivedFrom": "txlens"
+    },
+    {
+     "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 25, 2026, at $604.80 USD.",
+     "factor": 1.23,
+     "derivedFrom": "txlens"
+    }
+   ]
+  },
+  {
+   "id": "stock_price-swap-8",
+   "question": "What is the current share price of Amazon (AMZN) using the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of Amazon (AMZN) is $262.07.",
+   "target": 262.07,
+   "good": [
+    {
+     "text": "The data shows that Amazon.com's (AMZN) current share price is $261.06 USD, with a 24-hour change of -0.39%, and has fluctuated between a high of $263.89 and a low of $259.83.",
+     "miner": "chainsight-oracle",
+     "liveScore": 0.009381283,
+     "relError": 0.003854
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows that Amazon.com's (AMZN) current share price is $214.07 USD, with a 24-hour change of -0.39%, and has fluctuated between a high of $263.89 and a low of $259.83.",
+     "factor": 0.82,
+     "derivedFrom": "chainsight-oracle"
+    },
+    {
+     "text": "The data shows that Amazon.com's (AMZN) current share price is $237.56 USD, with a 24-hour change of -0.39%, and has fluctuated between a high of $263.89 and a low of $259.83.",
+     "factor": 0.91,
+     "derivedFrom": "chainsight-oracle"
+    },
+    {
+     "text": "The data shows that Amazon.com's (AMZN) current share price is $284.56 USD, with a 24-hour change of -0.39%, and has fluctuated between a high of $263.89 and a low of $259.83.",
+     "factor": 1.09,
+     "derivedFrom": "chainsight-oracle"
+    },
+    {
+     "text": "The data shows that Amazon.com's (AMZN) current share price is $321.10 USD, with a 24-hour change of -0.39%, and has fluctuated between a high of $263.89 and a low of $259.83.",
+     "factor": 1.23,
+     "derivedFrom": "chainsight-oracle"
+    }
+   ]
+  },
+  {
+   "id": "stock_price-swap-9",
+   "question": "What is the current share price of Apple Inc. (AAPL) as of August 25, 2026?",
+   "groundTruth": "The current share price of Apple Inc. (AAPL) as of August 25, 2026, is **$310.01**. This price reflects the intraday trading activity where the stock moved within a range of $309.90 to $310.53. The stock is trading slightly below its session's peak but above its intraday low.",
+   "target": 310.01,
+   "good": [
+    {
+     "text": "The data shows the current stock information for Apple Inc. (AAPL) with an opening price of 311.47, a high of 313.36, a low of 309.97, and a current price of 310.34, along with a trading volume of 34,673,582 shares.",
+     "miner": "alphavantage",
+     "liveScore": 0.009038953,
+     "relError": 0.000129
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows the current stock information for Apple Inc. (AAPL) with an opening price of 255.41, a high of 313.36, a low of 254.18, and a current price of 254.48, along with a trading volume of 34,673,582 shares.",
+     "factor": 0.82,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for Apple Inc. (AAPL) with an opening price of 283.44, a high of 313.36, a low of 282.07, and a current price of 282.41, along with a trading volume of 34,673,582 shares.",
+     "factor": 0.91,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for Apple Inc. (AAPL) with an opening price of 339.50, a high of 313.36, a low of 337.87, and a current price of 338.27, along with a trading volume of 34,673,582 shares.",
+     "factor": 1.09,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for Apple Inc. (AAPL) with an opening price of 383.11, a high of 313.36, a low of 381.26, and a current price of 381.72, along with a trading volume of 34,673,582 shares.",
+     "factor": 1.23,
+     "derivedFrom": "alphavantage"
+    }
+   ]
+  },
+  {
+   "id": "stock_price-swap-10",
+   "question": "What is the current share price of Tesla (TSLA) using the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of Tesla (TSLA) is $362.74 as of August 21, 2026, at 19:59:59 UTC-0.\n\nThe price has fluctuated between $346.90 and $366.50 on that day, with a market capitalization of approximately $1.43 trillion.",
+   "target": 362.74,
+   "good": [
+    {
+     "text": "The data shows the current stock information for Tesla (TSLA) with an open price of 349.88, a high of 366.50, a low of 346.90, and a current price of 362.86, along with a trading volume of 59,223,958 shares, a previous close of 345.13, and a change of 17.73 (5.1372%).",
+     "miner": "alphavantage",
+     "liveScore": 0.008731155,
+     "relError": 0.000331
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows the current stock information for Tesla (TSLA) with an open price of 349.88, a high of 366.50, a low of 346.90, and a current price of 297.55, along with a trading volume of 59,223,958 shares, a previous close of 345.13, and a change of 17.73 (5.1372%).",
+     "factor": 0.82,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for Tesla (TSLA) with an open price of 349.88, a high of 366.50, a low of 346.90, and a current price of 330.20, along with a trading volume of 59,223,958 shares, a previous close of 345.13, and a change of 17.73 (5.1372%).",
+     "factor": 0.91,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for Tesla (TSLA) with an open price of 349.88, a high of 366.50, a low of 346.90, and a current price of 395.52, along with a trading volume of 59,223,958 shares, a previous close of 345.13, and a change of 17.73 (5.1372%).",
+     "factor": 1.09,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for Tesla (TSLA) with an open price of 349.88, a high of 366.50, a low of 346.90, and a current price of 446.32, along with a trading volume of 59,223,958 shares, a previous close of 345.13, and a change of 17.73 (5.1372%).",
+     "factor": 1.23,
+     "derivedFrom": "alphavantage"
+    }
+   ]
+  },
+  {
+   "id": "stock_price-swap-11",
+   "question": "Can you retrieve the current share price for Apple Inc. (AAPL) using the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price for Apple Inc. (AAPL) is **$309.25** as of August 21, 2026, at 12:59 PM PDT.\n\nHere are some additional details:\n- **Day's Range**: $307.01 - $312.38- **52-Week Range**: $224.69 - $344.57- **Market Cap**: Approximately $4.51 trillion- **P/E Ratio**: 35.48- **Dividend Yield**: 0.35%",
+   "target": 309.25,
+   "good": [
+    {
+     "text": "The data shows that Apple's (AAPL) current share price is $309.35 USD, with a 24-hour change of -0.63%, opening at $312.05, and ranging between a high of $312.38 and a low of $307.01.",
+     "miner": "chainsight-oracle",
+     "liveScore": 0.006977704,
+     "relError": 0.000323
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows that Apple's (AAPL) current share price is $253.67 USD, with a 24-hour change of -0.63%, opening at $312.05, and ranging between a high of $312.38 and a low of $307.01.",
+     "factor": 0.82,
+     "derivedFrom": "chainsight-oracle"
+    },
+    {
+     "text": "The data shows that Apple's (AAPL) current share price is $281.51 USD, with a 24-hour change of -0.63%, opening at $312.05, and ranging between a high of $312.38 and a low of $307.01.",
+     "factor": 0.91,
+     "derivedFrom": "chainsight-oracle"
+    },
+    {
+     "text": "The data shows that Apple's (AAPL) current share price is $337.19 USD, with a 24-hour change of -0.63%, opening at $312.05, and ranging between a high of $312.38 and a low of $307.01.",
+     "factor": 1.09,
+     "derivedFrom": "chainsight-oracle"
+    },
+    {
+     "text": "The data shows that Apple's (AAPL) current share price is $380.50 USD, with a 24-hour change of -0.63%, opening at $312.05, and ranging between a high of $312.38 and a low of $307.01.",
+     "factor": 1.23,
+     "derivedFrom": "chainsight-oracle"
+    }
+   ]
+  },
+  {
+   "id": "stock_price-swap-12",
+   "question": "What is the current share price of Apple () using the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of Apple (AAPL) is $309.25 as of August 21, 2026, at 12:59:55 PM Pacific Time.",
+   "target": 309.25,
+   "good": [
+    {
+     "text": "The data shows that Apple's (AAPL) current share price is $309.35 USD, with a 24-hour change of -0.63%, opening at $312.05, and ranging between a high of $312.38 and a low of $307.01.",
+     "miner": "chainsight-oracle",
+     "liveScore": 0.006025259,
+     "relError": 0.000323
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows that Apple's (AAPL) current share price is $253.67 USD, with a 24-hour change of -0.63%, opening at $312.05, and ranging between a high of $312.38 and a low of $307.01.",
+     "factor": 0.82,
+     "derivedFrom": "chainsight-oracle"
+    },
+    {
+     "text": "The data shows that Apple's (AAPL) current share price is $281.51 USD, with a 24-hour change of -0.63%, opening at $312.05, and ranging between a high of $312.38 and a low of $307.01.",
+     "factor": 0.91,
+     "derivedFrom": "chainsight-oracle"
+    },
+    {
+     "text": "The data shows that Apple's (AAPL) current share price is $337.19 USD, with a 24-hour change of -0.63%, opening at $312.05, and ranging between a high of $312.38 and a low of $307.01.",
+     "factor": 1.09,
+     "derivedFrom": "chainsight-oracle"
+    },
+    {
+     "text": "The data shows that Apple's (AAPL) current share price is $380.50 USD, with a 24-hour change of -0.63%, opening at $312.05, and ranging between a high of $312.38 and a low of $307.01.",
+     "factor": 1.23,
+     "derivedFrom": "chainsight-oracle"
+    }
+   ]
+  },
+  {
+   "id": "stock_price-swap-13",
+   "question": "What is the current share price of Apple Inc. (AAPL) as retrieved via the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of Apple Inc. (AAPL) is $309.25 as retrieved via the GLOBAL_QUOTE function.",
+   "target": 309.25,
+   "good": [
+    {
+     "text": "The data shows the current stock information for Apple Inc. (AAPL) with an open price of 312.05, a high of 312.38, a low of 307.01, and a current price of 309.35, along with a trading volume of 46,876,815 shares, a previous close of 311.30, and a change of -1.95 (-0.6264%).",
+     "miner": "alphavantage",
+     "liveScore": 0.006449164,
+     "relError": 0.000323
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows the current stock information for Apple Inc. (AAPL) with an open price of 312.05, a high of 312.38, a low of 307.01, and a current price of 253.67, along with a trading volume of 46,876,815 shares, a previous close of 311.30, and a change of -1.95 (-0.6264%).",
+     "factor": 0.82,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for Apple Inc. (AAPL) with an open price of 312.05, a high of 312.38, a low of 307.01, and a current price of 281.51, along with a trading volume of 46,876,815 shares, a previous close of 311.30, and a change of -1.95 (-0.6264%).",
+     "factor": 0.91,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for Apple Inc. (AAPL) with an open price of 312.05, a high of 312.38, a low of 307.01, and a current price of 337.19, along with a trading volume of 46,876,815 shares, a previous close of 311.30, and a change of -1.95 (-0.6264%).",
+     "factor": 1.09,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for Apple Inc. (AAPL) with an open price of 312.05, a high of 312.38, a low of 307.01, and a current price of 380.50, along with a trading volume of 46,876,815 shares, a previous close of 311.30, and a change of -1.95 (-0.6264%).",
+     "factor": 1.23,
+     "derivedFrom": "alphavantage"
+    }
+   ]
+  },
+  {
+   "id": "stock_price-swap-14",
+   "question": "What is the current share price of Apple Inc. (AAPL) using the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of Apple Inc. (AAPL) is **$311.02** as of August 21, 2026, at 10:30:05 AM Pacific Time. \n\nAdditional details include:\n- **Day's Range**: $307.01 - $312.38- **52-Week Range**: $224.69 - $344.57- **Market Capitalization**: Approximately $4.53 trillion- **P/E Ratio**: Around 35.63The stock closed at $311.30 on August 20, 2026, with a decline of -1.75%.",
+   "target": 311.02,
+   "good": [
+    {
+     "text": "The data shows the current stock information for Apple Inc. (AAPL) with a current price of $311.30, a daily trading volume of 40,959,184 shares, and a 1.7454% decrease from the previous close of $316.83.",
+     "miner": "alphavantage",
+     "liveScore": 0.3162778,
+     "relError": 0.0009
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows the current stock information for Apple Inc. (AAPL) with a current price of $255.27, a daily trading volume of 40,959,184 shares, and a 1.7454% decrease from the previous close of $316.83.",
+     "factor": 0.82,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for Apple Inc. (AAPL) with a current price of $283.28, a daily trading volume of 40,959,184 shares, and a 1.7454% decrease from the previous close of $316.83.",
+     "factor": 0.91,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for Apple Inc. (AAPL) with a current price of $339.32, a daily trading volume of 40,959,184 shares, and a 1.7454% decrease from the previous close of $316.83.",
+     "factor": 1.09,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for Apple Inc. (AAPL) with a current price of $382.90, a daily trading volume of 40,959,184 shares, and a 1.7454% decrease from the previous close of $316.83.",
+     "factor": 1.23,
+     "derivedFrom": "alphavantage"
+    }
+   ]
+  },
+  {
+   "id": "stock_price-swap-15",
+   "question": "What is the current share price of IBM using the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of IBM is $236.02 as of August 21, 2026 at 07:44:14 America/Los_Angeles time.",
+   "target": 236.02,
+   "good": [
+    {
+     "text": "The data shows the current stock information for IBM, including the open, high, low, and latest prices, trading volume, previous close, and percentage change. The stock opened at 236.0000, reached a high of 237.5000, a low of 233.0300, and is currently trading at 233.6900 with a volume of 4986890 shares, reflecting a decrease of 3.4700 points or 1.463",
+     "miner": "alphavantage",
+     "liveScore": 0.0042106174,
+     "relError": 0.000085
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows the current stock information for IBM, including the open, high, low, and latest prices, trading volume, previous close, and percentage change. The stock opened at 193.5200, reached a high of 237.5000, a low of 233.0300, and is currently trading at 233.6900 with a volume of 4986890 shares, reflecting a decrease of 3.4700 points or 1.463",
+     "factor": 0.82,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for IBM, including the open, high, low, and latest prices, trading volume, previous close, and percentage change. The stock opened at 214.7600, reached a high of 237.5000, a low of 233.0300, and is currently trading at 233.6900 with a volume of 4986890 shares, reflecting a decrease of 3.4700 points or 1.463",
+     "factor": 0.91,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for IBM, including the open, high, low, and latest prices, trading volume, previous close, and percentage change. The stock opened at 257.2400, reached a high of 237.5000, a low of 233.0300, and is currently trading at 233.6900 with a volume of 4986890 shares, reflecting a decrease of 3.4700 points or 1.463",
+     "factor": 1.09,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for IBM, including the open, high, low, and latest prices, trading volume, previous close, and percentage change. The stock opened at 290.2800, reached a high of 237.5000, a low of 233.0300, and is currently trading at 233.6900 with a volume of 4986890 shares, reflecting a decrease of 3.4700 points or 1.463",
+     "factor": 1.23,
+     "derivedFrom": "alphavantage"
+    }
+   ]
+  },
+  {
+   "id": "stock_price-swap-16",
+   "question": "Can you retrieve the current share price for Microsoft (MSFT) using the GLOBAL_QUOTE function?",
+   "groundTruth": "Microsoft's current share price is $481.55 as of August 21, 2026 at 07:38:50 America/Los_Angeles",
+   "target": 481.55,
+   "good": [
+    {
+     "text": "The data shows the current stock information for Microsoft (MSFT) with an opening price of $483.30, a high of $484.16, a low of $479.50, and a current price of $481.15, along with a trading volume of 20,020,822 shares, a previous close of $483.3958, and a change of -2.2458 (-0.4646%).",
+     "miner": "alphavantage",
+     "liveScore": 0.0038414225,
+     "relError": 0.000831
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows the current stock information for Microsoft (MSFT) with an opening price of $396.31, a high of $484.16, a low of $393.19, and a current price of $394.54, along with a trading volume of 20,020,822 shares, a previous close of $396.3846, and a change of -2.2458 (-0.4646%).",
+     "factor": 0.82,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for Microsoft (MSFT) with an opening price of $439.80, a high of $484.16, a low of $436.35, and a current price of $437.85, along with a trading volume of 20,020,822 shares, a previous close of $439.8902, and a change of -2.2458 (-0.4646%).",
+     "factor": 0.91,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for Microsoft (MSFT) with an opening price of $526.80, a high of $484.16, a low of $522.66, and a current price of $524.45, along with a trading volume of 20,020,822 shares, a previous close of $526.9014, and a change of -2.2458 (-0.4646%).",
+     "factor": 1.09,
+     "derivedFrom": "alphavantage"
+    },
+    {
+     "text": "The data shows the current stock information for Microsoft (MSFT) with an opening price of $594.46, a high of $484.16, a low of $589.78, and a current price of $591.81, along with a trading volume of 20,020,822 shares, a previous close of $594.5768, and a change of -2.2458 (-0.4646%).",
+     "factor": 1.23,
+     "derivedFrom": "alphavantage"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,95 @@
+{
+ "intent": "ONCHAIN_TX_LOOKUP",
+ "class": "FACT-SWAP",
+ "built": "2026-08-29T09:13:45.968Z",
+ "provenance": {
+  "source": "scores-api",
+  "rows": 246,
+  "questions": 9
+ },
+ "construction": {
+  "good": "verbatim recorded miner answer whose quantity matches the ground truth within 0.5%",
+  "bad": "the same answer with only the headline quantity rescaled",
+  "factors": [
+   0.82,
+   0.91,
+   1.09,
+   1.23
+  ],
+  "note": "one objective difference per pair; no wording authored by us"
+ },
+ "cases": [
+  {
+   "id": "onchain_tx_lookup-swap-1",
+   "question": "How much ETH did Ethereum transaction 0x971fd44755a64c4c32716eed5d36d7d11682d2ef8734d5cdae3af06f7eb67416 send, and what method did it call?",
+   "groundTruth": "It sent 0.002093015314102974 ETH to contract 0xD152f549545093347A162Dce210e7293f1452150, calling its disperseEther method. It was sent from 0x22B338DeaC679d611586812303427F6369EAE519 in block 25700000.",
+   "target": 0.002093015314102974,
+   "good": [
+    {
+     "text": "The data shows that an Ethereum transaction was confirmed and succeeded, involving a contract call to the disperseEther method on a specific contract address, with a transaction fee of 0.002093015314102974 ETH. The transaction was initiated by one address and sent to another.",
+     "miner": "veyctum",
+     "liveScore": 0.013560607,
+     "relError": 0
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows that an Ethereum transaction was confirmed and succeeded, involving a contract call to the disperseEther method on a specific contract address, with a transaction fee of 0.001716272557564438 ETH. The transaction was initiated by one address and sent to another.",
+     "factor": 0.82,
+     "derivedFrom": "veyctum"
+    },
+    {
+     "text": "The data shows that an Ethereum transaction was confirmed and succeeded, involving a contract call to the disperseEther method on a specific contract address, with a transaction fee of 0.001904643935833706 ETH. The transaction was initiated by one address and sent to another.",
+     "factor": 0.91,
+     "derivedFrom": "veyctum"
+    },
+    {
+     "text": "The data shows that an Ethereum transaction was confirmed and succeeded, involving a contract call to the disperseEther method on a specific contract address, with a transaction fee of 0.002281386692372242 ETH. The transaction was initiated by one address and sent to another.",
+     "factor": 1.09,
+     "derivedFrom": "veyctum"
+    },
+    {
+     "text": "The data shows that an Ethereum transaction was confirmed and succeeded, involving a contract call to the disperseEther method on a specific contract address, with a transaction fee of 0.002574408836346658 ETH. The transaction was initiated by one address and sent to another.",
+     "factor": 1.23,
+     "derivedFrom": "veyctum"
+    }
+   ]
+  },
+  {
+   "id": "onchain_tx_lookup-swap-2",
+   "question": "How much ETH was transferred in Ethereum mainnet transaction 0x67f9f4c9ee09d5d557ff1743b7e1246088917e58c8748397631e52e25746e865, and to which address?",
+   "groundTruth": "0.0146870631 ETH was transferred from 0xf30ba13e4b04Ce5dC4D254Ae5FA95477800F0EB0 to 0xdC46fB8C99F83aDC2f54Ac8812fFe3b223ED7771. It was a plain value transfer, not a contract call, included in block 25700000 with status ok.",
+   "target": 0.0146870631,
+   "good": [
+    {
+     "text": "The data shows a successful Ethereum transaction transferring 0.0146870631 ETH from address 0xf30ba13e4b04Ce5dC4D254Ae5FA95477800F0EB0 to address 0xdC46fB8C99F83aDC2f54Ac8812fFe3b223ED7771 in block 25700000.",
+     "miner": "truvian-onchain-truth",
+     "liveScore": 0.011739307,
+     "relError": 0
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows a successful Ethereum transaction transferring 0.0120433917 ETH from address 0xf30ba13e4b04Ce5dC4D254Ae5FA95477800F0EB0 to address 0xdC46fB8C99F83aDC2f54Ac8812fFe3b223ED7771 in block 25700000.",
+     "factor": 0.82,
+     "derivedFrom": "truvian-onchain-truth"
+    },
+    {
+     "text": "The data shows a successful Ethereum transaction transferring 0.0133652274 ETH from address 0xf30ba13e4b04Ce5dC4D254Ae5FA95477800F0EB0 to address 0xdC46fB8C99F83aDC2f54Ac8812fFe3b223ED7771 in block 25700000.",
+     "factor": 0.91,
+     "derivedFrom": "truvian-onchain-truth"
+    },
+    {
+     "text": "The data shows a successful Ethereum transaction transferring 0.0160088988 ETH from address 0xf30ba13e4b04Ce5dC4D254Ae5FA95477800F0EB0 to address 0xdC46fB8C99F83aDC2f54Ac8812fFe3b223ED7771 in block 25700000.",
+     "factor": 1.09,
+     "derivedFrom": "truvian-onchain-truth"
+    },
+    {
+     "text": "The data shows a successful Ethereum transaction transferring 0.0180650876 ETH from address 0xf30ba13e4b04Ce5dC4D254Ae5FA95477800F0EB0 to address 0xdC46fB8C99F83aDC2f54Ac8812fFe3b223ED7771 in block 25700000.",
+     "factor": 1.23,
+     "derivedFrom": "truvian-onchain-truth"
+    }
+   ]
+  }
+ ]
+}

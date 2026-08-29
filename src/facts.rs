@@ -185,9 +185,32 @@ pub fn best_agreement(ta: &Toks, i: usize, tg: &Toks, p: &Profile) -> Option<f32
         }
     }
 
+    // Role scoping, when the profile asks for it: if any candidate shares a role
+    // with this figure, ONLY those candidates are admissible. Falling back to all
+    // candidates when none shares a role keeps a bare figure comparable.
+    let mut role_scoped = false;
+    if p.role_scoped_figures {
+        let mut k = 0usize;
+        while k < tg.n {
+            if tg.kind[k] == K_NUMBER
+                && (!restrict || dimension(tg.unit[k]) == ad)
+                && crate::tokens::roles_known(ta, i, tg, k)
+                && crate::tokens::role_overlap(ta, i, tg, k) == 2
+            {
+                role_scoped = true;
+                break;
+            }
+            k += 1;
+        }
+    }
+
     let mut best: Option<f32> = None;
     let mut k = 0usize;
     while k < tg.n {
+        if role_scoped && crate::tokens::role_overlap(ta, i, tg, k) < 2 {
+            k += 1;
+            continue;
+        }
         if tg.kind[k] == K_NUMBER && (!restrict || dimension(tg.unit[k]) == ad) {
             if let Some(a) = value_agreement(Fig::of(ta, i), Fig::of(tg, k), p) {
                 best = Some(match best {

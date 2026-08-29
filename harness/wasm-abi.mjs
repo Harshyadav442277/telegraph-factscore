@@ -23,8 +23,13 @@ const ENCODER = new TextEncoder();
 const INITIAL_BUDGET = 512 * 1024; // conservative: docs example heap is 1 MB, champion 4 MB
 const MIN_BUDGET = 8 * 1024;
 
+/** The host caps each text at MaxTextBytes (128 KiB, gate analysis §5); mirror
+ *  it so a corpus row can never hand the module more than the node would. */
+export const MAX_TEXT_BYTES = 128 * 1024;
+
 export function utf8(text) {
-  return ENCODER.encode(text);
+  const bytes = ENCODER.encode(text);
+  return bytes.length > MAX_TEXT_BYTES ? bytes.subarray(0, MAX_TEXT_BYTES) : bytes;
 }
 
 /** Raw bytes that are deliberately not valid UTF-8 (adversarial Stage-1 input). */

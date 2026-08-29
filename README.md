@@ -1,7 +1,74 @@
-# Telegraph fact-aware scorer — TEXT_AUTHENTICITY_CHECK
+# Telegraph fact-aware scorers
 
-This repository contains one registration artifact: a 30,897-byte freestanding WebAssembly
-scorer for Telegraph's `TEXT_AUTHENTICITY_CHECK` intent.
+Freestanding, zero-import WebAssembly scoring modules for Telegraph intents whose
+answers carry **typed facts** — a price, a total value locked, a gas fee, a
+coordinate, a verdict. Every module is ~31 KB and scores in microseconds.
+
+## Current submission — the headline-quantity intents
+
+Four modules, one profile, for the intents whose question is a single number:
+
+| module | intent | status |
+|---|---|---|
+| `dist/stock_price.wasm` | `STOCK_PRICE` | measured on 16 cases, beats the champion on all four answer shapes |
+| `dist/crypto_price.wasm` | `CRYPTO_PRICE` | measured on 2 cases |
+| `dist/onchain_tx_lookup.wasm` | `ONCHAIN_TX_LOOKUP` | measured on 2 cases |
+| `dist/tvl_lookup.wasm` | `TVL_LOOKUP` | **unmeasured** — no clean pair exists in its recorded traffic |
+
+**The finding that motivated them.** On recorded `STOCK_PRICE` traffic with a
+ground truth of **$319.70**, the incumbent scored a miner that answered
+*$319.64* at **0.0208** and a miner that answered *$319.70 exactly* at
+**0.0140** — it ranked the wrong answer above the right one. In another recorded
+case a correct answer scored 0.0196 while one 2% wrong scored 0.6684.
+
+**The defect we fixed in our own scorer first.** Take a ground truth, change only
+its headline figure, leave every other word identical. Our general-purpose
+profile scored that **0.927**, because precision stayed at 0.959 when one token
+moved and the wrong figure was averaged against the dates that still agreed. The
+new profile gives the numeric channel full authority, reads the worst comparable
+figure rather than the mean, and compares a figure only against ground-truth
+figures **in the same role** — so a wrong current price is no longer rescued by
+landing near the ground truth's own 52-week high.
+
+Full numbers, method and limits: **[NUMERIC_PROOF.md](NUMERIC_PROOF.md)**.
+The honest limits are stated there, including that `TVL_LOOKUP` has no
+measurement behind it and that our corpus models ordering well and absolute
+margin badly.
+
+```bash
+node verify.mjs dist/stock_price.wasm
+node harness/run-numeric.mjs fixtures/numeric/STOCK_PRICE-factswap.json ours=dist/stock_price.wasm
+cargo test --no-default-features --features stock-price
+```
+
+## Disclosure
+
+The author of these scoring modules also operates the Track 1 miner `livecert`
+(registration 225). The modules encode general intent correctness: they contain
+no slug, wallet, field name, schema or phrasing that favours any miner, and the
+public test suite includes cases where our own miner's answer style is scored
+**down** when factually wrong. This overlap was disclosed to the organizers in
+advance and they confirmed it is acceptable with disclosure.
+
+---
+
+# Historical — TEXT_AUTHENTICITY_CHECK
+
+**Superseded. Both registrations of this artifact were rejected and it must not be
+registered again.** Registration 1671 (v1.1.0) was rejected at 9/15 orderings and
+margin 0.3274022; registration 1673 (v1.2, the artifact below) was rejected at
+**8/15 and 0.2702413** — the repair made it worse. The root cause is recorded in
+the monorepo's honesty ledger: `TEXT_AUTHENTICITY_CHECK` has zero miners and zero
+score records, so every fixture we owned for it was written by us, and the
+champion scores 13% on our corpus against 93% on the node's. We optimised against
+a corpus that was anti-correlated with the one being judged.
+
+Note also that `src/` has moved on since these bytes were built: `tokens.rs` and
+`facts.rs` gained the role-scoping fields. The behaviour for this intent is
+unchanged because role scoping is off for every profile except the
+headline-quantity ones, but a rebuild will not reproduce these exact bytes.
+
+The section below is kept for auditability.
 
 This is the v1.2 semantic repair. Its predecessor was registered as 1671: Stage 1 passed, but
 Stage 2 rejected it at 9/15 orderings and margin 0.3274022. v1.2 separates independent
