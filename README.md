@@ -74,10 +74,10 @@ sha256     3bb3bb82e0f6e2db9948e8ce96c8f1796835858d4b0a78332ec0b624501628a9
 keccak256  8cfc5456b08363d281878b59f587ad9c44b7296b211a6a4bab4ec794a3c58a07
 ```
 
-Commit-pinned registration URL (inserted after publication):
+Commit-pinned registration URL:
 
 ```text
-PENDING
+https://raw.githubusercontent.com/Harshyadav442277/telegraph-factscore/638dae46ba31c1bf3a30e9d0e541b7c56f3fe48b/dist/text_authenticity.wasm
 ```
 
 ## Design

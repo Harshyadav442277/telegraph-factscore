@@ -13,8 +13,9 @@ equivalent answer above every paired one-fact counterfactual or opposite verdict
 | Candidate `dist/text_authenticity.wasm` | 30,897 | `3bb3bb82e0f6e2db9948e8ce96c8f1796835858d4b0a78332ec0b624501628a9` |
 | Incumbent registration 850 | 23,987,851 | `432ae4423edd24ea74d8529fef8bf61d50ccc6622da94619482f9213b1f32395` |
 
-Publication evidence is pending. Before registration, the immutable raw URL, fresh-download
-hashes, and Linux CI byte reproduction must be recorded here.
+The artifact is bound to source commit `638dae46ba31c1bf3a30e9d0e541b7c56f3fe48b`:
+<https://raw.githubusercontent.com/Harshyadav442277/telegraph-factscore/638dae46ba31c1bf3a30e9d0e541b7c56f3fe48b/dist/text_authenticity.wasm>.
+Fresh-download hashes and Linux CI byte reproduction must pass before registration.
 
 The incumbent URL is commit-pinned in its registry entry:
 <https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/85381b739a9d047f068dc2b3642ceef9a569f48d/dist/xfmr/tn_t70.wasm>.
