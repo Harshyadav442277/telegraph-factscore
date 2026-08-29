@@ -10,7 +10,8 @@ Four modules, one profile, for the intents whose question is a single number:
 
 | module | intent | status |
 |---|---|---|
-| `dist/stock_price.wasm` | `STOCK_PRICE` | measured on 16 cases, beats the champion on all four answer shapes |
+| `dist/stock_price_b2.wasm` | `STOCK_PRICE` | measured on 16 cases, beats the champion on all four answer shapes |
+| `dist/stock_price.wasm` | `STOCK_PRICE` | identical behaviour; its hash is already bound on chain to a mis-filed registration, use `_b2` instead |
 | `dist/crypto_price.wasm` | `CRYPTO_PRICE` | measured on 2 cases |
 | `dist/onchain_tx_lookup.wasm` | `ONCHAIN_TX_LOOKUP` | measured on 2 cases |
 | `dist/tvl_lookup.wasm` | `TVL_LOOKUP` | **unmeasured** — no clean pair exists in its recorded traffic |
