@@ -22,6 +22,28 @@
 
 use crate::bytes::hash_str;
 
+/// Verdict words that state the same finding in the target domains.
+///
+/// This is intentionally smaller than a general synonym dictionary. It covers
+/// only closed-set authenticity labels whose equivalence survives a complete
+/// replacement of the benchmark: `ai` and `machine`, `human` and `person`, and
+/// the two originality poles. Without it a terse truth of `ai` scored the
+/// correct phrase "machine generated" exactly the same as the opposite
+/// `human`, because both answers had zero literal overlap with the truth.
+static EQUIVALENT: [(u32, u32); 11] = [
+    (hash_str("ai"), hash_str("machine")),
+    (hash_str("ai"), hash_str("synthetic")),
+    (hash_str("machine"), hash_str("synthetic")),
+    (hash_str("human"), hash_str("person")),
+    (hash_str("original"), hash_str("authentic")),
+    (hash_str("original"), hash_str("genuine")),
+    (hash_str("authentic"), hash_str("genuine")),
+    (hash_str("plagiarised"), hash_str("plagiarized")),
+    (hash_str("plagiarised"), hash_str("copied")),
+    (hash_str("plagiarized"), hash_str("copied")),
+    (hash_str("copied"), hash_str("duplicate")),
+];
+
 /// Case-folded FNV-1a hashes of polar pairs. Order within a pair is irrelevant;
 /// the lookup tests both directions.
 static AXES: [(u32, u32); 28] = [
@@ -63,6 +85,22 @@ pub fn opposes(a: u32, b: u32) -> bool {
     let mut i = 0usize;
     while i < AXES.len() {
         let (x, y) = AXES[i];
+        if (equivalent(a, x) && equivalent(b, y)) || (equivalent(a, y) && equivalent(b, x)) {
+            return true;
+        }
+        i += 1;
+    }
+    false
+}
+
+/// True when two closed-set verdict words state the same finding.
+pub fn equivalent(a: u32, b: u32) -> bool {
+    if a == b {
+        return true;
+    }
+    let mut i = 0usize;
+    while i < EQUIVALENT.len() {
+        let (x, y) = EQUIVALENT[i];
         if (a == x && b == y) || (a == y && b == x) {
             return true;
         }
@@ -81,6 +119,13 @@ pub fn is_verdict(h: u32) -> bool {
         }
         i += 1;
     }
+    i = 0;
+    while i < EQUIVALENT.len() {
+        if EQUIVALENT[i].0 == h || EQUIVALENT[i].1 == h {
+            return true;
+        }
+        i += 1;
+    }
     false
 }
 
@@ -94,6 +139,16 @@ mod tests {
         assert!(opposes(hash_str("plagiarised"), hash_str("original")));
         assert!(opposes(hash_str("original"), hash_str("plagiarised")));
         assert!(opposes(hash_str("valid"), hash_str("invalid")));
+        assert!(opposes(hash_str("machine"), hash_str("person")));
+        assert!(opposes(hash_str("fake"), hash_str("original")));
+    }
+
+    #[test]
+    fn authenticity_equivalents_are_symmetric() {
+        assert!(equivalent(hash_str("ai"), hash_str("machine")));
+        assert!(equivalent(hash_str("machine"), hash_str("ai")));
+        assert!(equivalent(hash_str("original"), hash_str("genuine")));
+        assert!(!equivalent(hash_str("ai"), hash_str("human")));
     }
 
     #[test]

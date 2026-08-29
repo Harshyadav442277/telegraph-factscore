@@ -1,8 +1,6 @@
 //! Open-addressed hash set over token keys, so matching an answer against the
 //! ground truth is linear rather than n*m. Fixed capacity, no allocator.
 
-#![allow(dead_code)]
-
 use crate::tokens::Toks;
 
 pub const SET_SLOTS: usize = 8192;
@@ -57,10 +55,6 @@ impl Set {
             probes += 1;
         }
         None
-    }
-
-    pub fn has(&self, key: u32) -> bool {
-        self.get(key).is_some()
     }
 
     /// Reset and load every token of `t` under both its exact and stemmed key.

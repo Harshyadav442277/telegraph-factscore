@@ -4,8 +4,6 @@
 //! what stops a wrong "over the next 48 hours" from matching a ground-truth
 //! gust of 47.3 km/h merely because the digits are close.
 
-#![allow(dead_code)]
-
 use crate::bytes::*;
 use crate::tokens::{Toks, K_NUMBER, K_WORD};
 

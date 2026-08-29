@@ -3,22 +3,29 @@
 /**
  * Offline proxy for the node's two-stage promotion gate, plus per-class accuracy.
  *
- *   node track2/harness/run-eval.mjs --scorer cand.wasm [--against champ.wasm]
- *        [--fixtures track2/fixtures/real,track2/fixtures/synth] [--intent ALL|NAME]
- *        [--max-real-answers 12] [--workers N] [--out track2/fixtures] [--quiet]
+ *   node harness/run-eval.mjs --scorer cand.wasm [--against champ.wasm]
+ *        [--fixtures fixtures/real,fixtures/synth] [--intent ALL|NAME]
+ *        [--max-real-answers 12] [--workers N] [--out fixtures] [--quiet]
  *
  * Stage 1 (structural, candidate only) and Stage 2 (separation vs the reference)
- * follow track2/recon/2026-08-27-track2-scorer-spec.md section 5. This is a PROXY:
+ * follow the recovered Telegraph promotion-gate constants. This is a PROXY:
  * the node's built-in benchmark is not published, so the numbers below are this
  * corpus's, not the node's. What transfers is the comparison, not the absolute.
  */
 
 import { mkdir, writeFile } from "node:fs/promises";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { loadScorer, utf8, rawBytes } from "./wasm-abi.mjs";
 import { scoreAll, defaultWorkers } from "./score-pool.mjs";
 import { loadCorpus, byIntent, mean, stddev, spearman, round } from "./corpus.mjs";
 import { renderReport } from "./report.mjs";
+
+const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT = resolve(SCRIPT_DIR, "..");
+const DEFAULT_FIXTURE_DIRS = ["real", "synth", "probe"].map((name) =>
+  resolve(PROJECT_ROOT, "fixtures", name),
+);
 
 /**
  * Gate constants. Source: the 2026-08-27 gate recon (a redacted-then-restored
@@ -26,7 +33,7 @@ import { renderReport } from "./report.mjs";
  * live rejection strings). They are STRICTER than the public docs in two places
  * the public text gets wrong: margin must STRICTLY exceed the champion's (not
  * merely tie), and stddev must STRICTLY exceed 0.05. Not independently verified
- * by this harness -- see track2/GAPS.md.
+ * by this harness; see the release proof's evidence boundary.
  */
 const GATE = {
   self_match_floor: 0.75, // rank_answer(q,gt,gt) >= max(0.75, incumbent self-match)
@@ -483,11 +490,11 @@ async function main() {
   const scorerPath = args.get("--scorer");
   if (!scorerPath || scorerPath === "true") throw new Error("--scorer <path-to-wasm> is required");
   const againstPath = args.get("--against") && args.get("--against") !== "true" ? args.get("--against") : null;
-  const dirs = (args.get("--fixtures") ?? "track2/fixtures/real,track2/fixtures/synth,track2/fixtures/probe").split(",");
+  const dirs = (args.get("--fixtures") ?? DEFAULT_FIXTURE_DIRS.join(",")).split(",");
   const intent = args.get("--intent") ?? "all";
   const maxReal = Number(args.get("--max-real-answers") ?? 12);
   const workers = Number(args.get("--workers") ?? defaultWorkers());
-  const outDir = args.get("--out") ?? "track2/fixtures";
+  const outDir = args.get("--out") ?? resolve(PROJECT_ROOT, "fixtures");
   const quiet = args.has("--quiet");
 
   const candidate = await loadScorer(scorerPath, "candidate");
@@ -567,7 +574,7 @@ async function main() {
     thresholds: {
       ...GATE,
       source: "2026-08-27 gate recon: restored telegraph-docs page from git history + 1,033 live rejection strings",
-      status: "NOT independently verified by this harness — see track2/GAPS.md",
+      status: "NOT independently verified by this harness — see the release proof",
     },
     candidate: { path: scorerPath, sha256: candidate.sha256, bytes: candidate.sizeBytes, timing: timing(t1 - t0, jobs.length) },
     against: against ? { path: againstPath, sha256: against.sha256, bytes: against.sizeBytes, timing: timing(t2 - t1, jobs.length) } : null,

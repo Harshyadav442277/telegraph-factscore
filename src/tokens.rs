@@ -7,8 +7,6 @@
 //! correctness. Bytes >= 0x80 are opaque word bytes, never decoded, so emoji /
 //! CJK / accented input cannot trap (A1 Stage-1).
 
-#![allow(dead_code)]
-
 use crate::bytes::unit_family_hash;
 use crate::bytes::*;
 use crate::profile::profile;
@@ -52,6 +50,11 @@ pub struct Toks {
     pub first: [u8; MAX_TOKENS],
     /// Capitalised mid-sentence: a proper noun, i.e. a salient entity.
     pub proper: [bool; MAX_TOKENS],
+    /// Starts with an ASCII capital. Kept separately because sentence-initial
+    /// names are not marked `proper`: ordinary sentence openers would otherwise
+    /// poison the entity channel. `score.rs` uses this only for a tightly
+    /// constrained, one-token subject substitution.
+    pub capitalized: [bool; MAX_TOKENS],
     /// A **two-letter** ALL-CAPS token: a standard code, not a name. ISO 3166
     /// country codes and US/Canadian state codes are exactly two letters ("US",
     /// "UY", "IS", "CA", "NY"), and their expansion cannot be derived from the
@@ -95,6 +98,7 @@ pub const EMPTY_TOKS: Toks = Toks {
     neg: [false; MAX_TOKENS],
     first: [0; MAX_TOKENS],
     proper: [false; MAX_TOKENS],
+    capitalized: [false; MAX_TOKENS],
     abbrev: [false; MAX_TOKENS],
     decisive: [false; MAX_TOKENS],
     boiler: [false; MAX_TOKENS],
@@ -104,6 +108,7 @@ pub const EMPTY_TOKS: Toks = Toks {
     has_ident: false,
 };
 
+#[cfg(test)]
 impl Toks {
     pub const fn new() -> Toks {
         EMPTY_TOKS
@@ -427,6 +432,7 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
         // a previous call would make the score depend on call order.
         t.decisive[k] = kind != K_WORD || proper;
         t.proper[k] = proper && kind == K_WORD;
+        t.capitalized[k] = has_alpha && tok[0].is_ascii_uppercase();
         t.abbrev[k] = kind == K_WORD && all_upper(tok) && tok.len() <= 2;
         t.first[k] = if is_alpha(tok[0]) { lower(tok[0]) } else { 0 };
         t.boiler[k] = false;

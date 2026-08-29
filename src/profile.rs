@@ -6,8 +6,6 @@
 //! default and rationale. One source is compiled once per intent (A6); the
 //! per-intent blocks below are selected by cargo feature.
 
-#![allow(dead_code)]
-
 /// Intent tag, for provenance. Not read by the node; mirrors the champion's
 /// `TELEGRAPH_INTENT` marker so a reviewer can tell two builds apart.
 #[no_mangle]
@@ -31,15 +29,6 @@ pub struct Profile {
     pub w_len_cap: f32,
     /// Bonus for a mid-sentence capitalised token (proper nouns carry answers).
     pub w_proper: f32,
-
-    // ---- anti-parrot (A3.6) -------------------------------------------
-    /// Reserved. Question-echoed tokens are **not** discounted in precision:
-    /// measured over 554 real rows, question-overlap correlates *negatively*
-    /// (-0.258) with the champion's score, so a general echo penalty buys
-    /// nothing and costs Spearman agreement. The echo flag is used only as a
-    /// boolean inside the answered-ness gate, which is what actually catches
-    /// the parrot.
-    pub echo_discount: f32,
 
     // ---- answered-ness gate (A3.6, A3.9) ------------------------------
     /// Novel-supported-mass at which the answered-ness gate is fully open.
@@ -101,10 +90,6 @@ pub struct Profile {
     /// evidence than a properly-united match, but a legitimate shape
     /// (`wind_kmh=128.7`), so only a light discount.
     pub m_bare_unit: f32,
-    /// Weight given to a flipped polar verdict ("plagiarised" vs "original").
-    /// Carried on its own axis because a verdict word is neither an entity nor a
-    /// figure, so without this it is charged at `prose_w` and a flip is free.
-    pub verdict_w: f32,
     /// Multiplier applied when the answer asserts the OPPOSITE verdict to the
     /// one the ground truth states. Categorical: a flipped finding is wrong
     /// however much surrounding detail is right.
@@ -164,9 +149,6 @@ pub struct Profile {
 
 pub const fn base() -> Profile {
     Profile {
-        // Heavy: on an intent whose answer IS a verdict, this single token is
-        // the finding. Measured -- flipped verdict 0.9999 -> see tune.md.
-        verdict_w: 8.0,
         m_verdict_flip: 0.04,
         w_number: 3.0,
         w_ident: 3.4,
@@ -176,8 +158,6 @@ pub const fn base() -> Profile {
         w_len_step: 0.06,
         w_len_cap: 12.0,
         w_proper: 1.0,
-
-        echo_discount: 0.25,
 
         ans_sat: 3.0,
         ans_gt_frac: 0.5,
@@ -306,113 +286,40 @@ pub const fn profile() -> Profile {
     p
 }
 
-#[cfg(feature = "content-verification")]
-pub const fn profile() -> Profile {
+/// Shared calibration for the two text-verification intents.
+///
+/// Both are decided by a polar verdict, a bounded confidence/similarity value,
+/// and a named model or source. The numeric sweep is recorded in `tune.md`:
+/// worst-figure bias 1.0 and decay 60 gave the separation knee without turning
+/// a small confidence miss into the same score as a gross one. Full-range
+/// shaping preserves ordering while no historical-traffic correlation applies.
+#[cfg(any(feature = "content-verification", feature = "text-authenticity"))]
+const fn text_verification_profile() -> Profile {
     let mut p = base();
-    // Plagiarism / authenticity checking. The decisive content is a polar
-    // verdict (plagiarised vs original, AI-generated vs human), a similarity
-    // percentage, and the matched source. All three are things an answer either
-    // gets right or gets backwards, so this profile leans on the polarity and
-    // identifier channels rather than on prose.
-    //
-    // A verdict flip is the characteristic wrong answer here, and it shares
-    // almost all its vocabulary with the correct one ("the text IS original" vs
-    // "the text is NOT original"), so the contradiction path must dominate.
     p.w_ident = 4.0;
     p.id_channel_w = 1.0;
-    // Similarity is a bounded percentage: an absolute epsilon, not a relative
-    // one, or "12%" and "82%" both read as near-misses of a 47% truth.
     p.num_abs_tol = 0.02;
-    // Steep. A similarity percentage is the finding, not a measurement with
-    // tolerance: reporting 21% against a truth of 68% is a wrong answer, not a
-    // near miss. Swept 10/25/60/150 -- margin 0.8668/0.8754/0.8793/0.8812, so
-    // this is the knee. 150 was rejected as over-punishing: it makes a 1% error
-    // look like a 100% one, which would misrank genuinely close answers on
-    // questions unlike the tuning set.
-    // Worst figure decides the numeric channel outright. On this intent every
-    // figure IS the finding -- the similarity percentage and the passage count
-    // are what a plagiarism report exists to state -- so one wrong figure must
-    // not average away behind the right ones. Swept 0.5(base)/0.6/0.85/1.0 ->
-    // margin 0.8793/0.9014/0.9463/0.9634, correct answers unmoved at 0.9999
-    // throughout, so this buys separation at no cost to correctness.
-    //
-    // The entity mirror (`ent_min_bias`) was swept too and left at the base 0.6:
-    // raising it to 0.8/1.0 REDUCED margin (0.9543/0.9483), because a wrong
-    // source is one entity among several correct ones and worst-biasing it
-    // dragged the whole entity channel rather than sharpening it.
     p.num_min_bias = 1.0;
     p.num_rel_k = 60.0;
     p.num_channel_w = 1.0;
-    // Single miner with no scoring history (historical_rows_evaluated: 0), so
-    // the Spearman traffic check is SKIPPED for this intent. That frees this
-    // build to calibrate for separation outright, exactly as IP_GEOLOCATION
-    // does, without the agreement tax that STORM_ALERT pays.
+    // With this steep decay, keep an unknown category ("47 bananas") below an
+    // honestly but grossly wrong value expressed in the expected unit.
+    p.m_foreign_unit = 0.005;
     p.ss_lo = 0.0;
     p.ss_hi = 1.0;
     p.p_concave = 0.15;
-    // The matched source and the verdict are the answer; a fluent restatement
-    // of the submitted passage is not. Demand real novel mass before the
-    // answered-ness gate opens.
     p.ans_sat = 3.5;
     p
 }
 
+#[cfg(feature = "content-verification")]
+pub const fn profile() -> Profile {
+    text_verification_profile()
+}
+
 #[cfg(feature = "text-authenticity")]
 pub const fn profile() -> Profile {
-    let mut p = base();
-    // TEXT_AUTHENTICITY_CHECK. Same question as content verification -- is this
-    // text original, AI-generated or human-written -- so it shares the profile:
-    // a polar verdict, a confidence/similarity figure, and a named source. The
-    // antonym axis (src/antonyms.rs) already carries this vocabulary.
-    //
-    // Zero miners with scoring history (historical_rows_evaluated: 0 on the
-    // champion and on every recent challenger), so Spearman is SKIPPED here too
-    // and the profile can calibrate for separation outright. The decisive content is a polar
-    // verdict (plagiarised vs original, AI-generated vs human), a similarity
-    // percentage, and the matched source. All three are things an answer either
-    // gets right or gets backwards, so this profile leans on the polarity and
-    // identifier channels rather than on prose.
-    //
-    // A verdict flip is the characteristic wrong answer here, and it shares
-    // almost all its vocabulary with the correct one ("the text IS original" vs
-    // "the text is NOT original"), so the contradiction path must dominate.
-    p.w_ident = 4.0;
-    p.id_channel_w = 1.0;
-    // Similarity is a bounded percentage: an absolute epsilon, not a relative
-    // one, or "12%" and "82%" both read as near-misses of a 47% truth.
-    p.num_abs_tol = 0.02;
-    // Steep. A similarity percentage is the finding, not a measurement with
-    // tolerance: reporting 21% against a truth of 68% is a wrong answer, not a
-    // near miss. Swept 10/25/60/150 -- margin 0.8668/0.8754/0.8793/0.8812, so
-    // this is the knee. 150 was rejected as over-punishing: it makes a 1% error
-    // look like a 100% one, which would misrank genuinely close answers on
-    // questions unlike the tuning set.
-    // Worst figure decides the numeric channel outright. On this intent every
-    // figure IS the finding -- the similarity percentage and the passage count
-    // are what a plagiarism report exists to state -- so one wrong figure must
-    // not average away behind the right ones. Swept 0.5(base)/0.6/0.85/1.0 ->
-    // margin 0.8793/0.9014/0.9463/0.9634, correct answers unmoved at 0.9999
-    // throughout, so this buys separation at no cost to correctness.
-    //
-    // The entity mirror (`ent_min_bias`) was swept too and left at the base 0.6:
-    // raising it to 0.8/1.0 REDUCED margin (0.9543/0.9483), because a wrong
-    // source is one entity among several correct ones and worst-biasing it
-    // dragged the whole entity channel rather than sharpening it.
-    p.num_min_bias = 1.0;
-    p.num_rel_k = 60.0;
-    p.num_channel_w = 1.0;
-    // Single miner with no scoring history (historical_rows_evaluated: 0), so
-    // the Spearman traffic check is SKIPPED for this intent. That frees this
-    // build to calibrate for separation outright, exactly as IP_GEOLOCATION
-    // does, without the agreement tax that STORM_ALERT pays.
-    p.ss_lo = 0.0;
-    p.ss_hi = 1.0;
-    p.p_concave = 0.15;
-    // The matched source and the verdict are the answer; a fluent restatement
-    // of the submitted passage is not. Demand real novel mass before the
-    // answered-ness gate opens.
-    p.ans_sat = 3.5;
-    p
+    text_verification_profile()
 }
 
 #[cfg(all(

@@ -19,7 +19,7 @@ use crate::bytes::*;
 use crate::facts::{best_agreement, fact_multiplier};
 use crate::profile::{profile, Profile};
 use crate::sets::{Set, EMPTY_SET};
-use crate::tokens::{mark_boilerplate, tokenize, Toks, EMPTY_TOKS, K_NUMBER};
+use crate::tokens::{mark_boilerplate, tokenize, Toks, EMPTY_TOKS, K_IDENT, K_NUMBER};
 use crate::units::annotate_units;
 
 // Scratch state. The module is single-threaded and the host gives each call a
@@ -136,6 +136,8 @@ pub fn breakdown(q: &[u8], gt: &[u8], ma: &[u8]) -> Breakdown {
     // agreement to `>= 1 - 1e-6` put a hard cliff on top of a smooth curve, and
     // a 1% change in an asserted figure moved the score by 0.999 whenever the
     // figure was the answer's only decisive content (adversarial review M2).
+    let answer_label = presentation_label(ta);
+    let truth_label = presentation_label(tg);
     let mut i = 0usize;
     while i < ta.n {
         ta.echo[i] = sq.contains_tok(ta, i);
@@ -144,6 +146,29 @@ pub fn breakdown(q: &[u8], gt: &[u8], ma: &[u8]) -> Breakdown {
             // agrees with it — not merely when the same digits appear.
             ta.supw[i] = best_agreement(ta, i, tg, &p).unwrap_or(0.0);
             ta.supi[i] = 0;
+        } else if answer_label == Some(i) && truth_label.is_some() {
+            // `Assessment: human` and `Verdict: human` differ only in a
+            // presentation label. Treat the labels as equivalent only in the
+            // narrow sentence-initial shape that also contains a closed-set
+            // verdict; words such as `response` remain substantive elsewhere.
+            ta.supw[i] = 1.0;
+            ta.supi[i] = truth_label.unwrap_or(0) as u32 + 1;
+        } else if crate::antonyms::is_verdict(ta.hash[i]) {
+            // Verdict support is semantic, not just lexical. `not AI` and
+            // `human` assert the same pole; `AI` and `not AI` do not. Letting
+            // the token set match an identical hash first made a positive AI
+            // answer look supported by a negated-AI truth, while the correct
+            // human synonym looked unsupported.
+            match agreeing_verdict(tg, ta.hash[i], ta.neg[i]) {
+                Some(k) => {
+                    ta.supw[i] = 1.0;
+                    ta.supi[i] = k as u32 + 1;
+                }
+                None => {
+                    ta.supw[i] = 0.0;
+                    ta.supi[i] = 0;
+                }
+            }
         } else {
             match sg.find(ta, i) {
                 Some(k) => {
@@ -159,9 +184,26 @@ pub fn breakdown(q: &[u8], gt: &[u8], ma: &[u8]) -> Breakdown {
         i += 1;
     }
 
+    // A one-token ground truth is a closed-set verdict, not a bag of prose.
+    // Once the answer states one unambiguous equivalent label, presentation
+    // words must not dilute it: `ai` and "machine generated" are the same
+    // categorical finding. An asserted opposite is exactly wrong. Mixed answers
+    // (`ai or human`) fall through to the normal pipeline rather than receiving
+    // either shortcut.
+    if let Some(correct) = categorical_verdict(ta, tg) {
+        let value = if correct { 1.0 } else { 0.0 };
+        return Breakdown {
+            precision: value,
+            fact: value,
+            answered: 1.0,
+            raw: value,
+            final_score: value,
+        };
+    }
+
     // Computed once and read by three channels: entity, identifier, precision.
     let gt_uncovered = gt_uncovered_mass(ta, tg, sa);
-    let entity = entity_agreement(ta, gt_uncovered, &p);
+    let entity = entity_agreement(ta, tg, gt_uncovered, &p);
     let precision = precision_of(ta, gt_uncovered, &p);
     let answered = answeredness(ta, tg, sq, &p);
     let (fmul, fact_raw) = fact_multiplier(ta, tg, sa, &p);
@@ -189,6 +231,58 @@ fn fold<'a>(src: &'a [u8], buf: &'a mut [u8; FOLD_CAP]) -> &'a [u8] {
     match fold_punct(src, buf) {
         Some(len) => &buf[..len],
         None => src,
+    }
+}
+
+/// Compare two verdict tokens after applying their local negation state.
+///
+/// Equivalent base words agree when both are negated or both are positive.
+/// Opposite base words agree when exactly one is negated: `not AI` is the
+/// human pole, and `not original` is the copied pole.
+fn verdict_agrees(a: u32, a_neg: bool, b: u32, b_neg: bool) -> Option<bool> {
+    if crate::antonyms::equivalent(a, b) {
+        return Some(a_neg == b_neg);
+    }
+    if crate::antonyms::opposes(a, b) {
+        return Some(a_neg != b_neg);
+    }
+    None
+}
+
+/// Find a ground-truth verdict that states the same semantic pole.
+fn agreeing_verdict(t: &Toks, h: u32, neg: bool) -> Option<usize> {
+    let mut i = 0usize;
+    while i < t.n {
+        if verdict_agrees(h, neg, t.hash[i], t.neg[i]) == Some(true) {
+            return Some(i);
+        }
+        i += 1;
+    }
+    None
+}
+
+/// Resolve an unambiguous answer against a one-token closed-set verdict.
+/// Full sentences may carry independent facts even when they contain only one
+/// verdict word, so they deliberately stay in the complete pipeline.
+fn categorical_verdict(ta: &Toks, tg: &Toks) -> Option<bool> {
+    if tg.n != 1 || !crate::antonyms::is_verdict(tg.hash[0]) {
+        return None;
+    }
+    let truth = tg.hash[0];
+    let (mut same, mut opposite) = (false, false);
+    let mut i = 0usize;
+    while i < ta.n {
+        match verdict_agrees(ta.hash[i], ta.neg[i], truth, tg.neg[0]) {
+            Some(true) => same = true,
+            Some(false) => opposite = true,
+            None => {}
+        }
+        i += 1;
+    }
+    match (same, opposite) {
+        (true, false) => Some(true),
+        (false, true) => Some(false),
+        _ => None,
     }
 }
 
@@ -346,7 +440,7 @@ fn gt_uncovered_mass(ta: &Toks, tg: &Toks, sa: &Set) -> f32 {
     gt_uncovered
 }
 
-fn entity_agreement(ta: &Toks, gt_uncovered: f32, p: &Profile) -> f32 {
+fn entity_agreement(ta: &Toks, tg: &Toks, gt_uncovered: f32, p: &Profile) -> f32 {
     let (mut supported, mut unsupported) = (0.0f32, 0.0f32);
     let mut i = 0usize;
     while i < ta.n {
@@ -369,15 +463,143 @@ fn entity_agreement(ta: &Toks, gt_uncovered: f32, p: &Profile) -> f32 {
     let substituted = fmin(unsupported, gt_uncovered);
     let addition = fmax(unsupported - substituted, 0.0);
     let total = supported + substituted + p.add_w * addition;
-    if total <= 0.0 {
-        return 1.0;
+    let mut result = if total <= 0.0 {
+        1.0
+    } else {
+        let mean = supported / total;
+        // Worst-case leaning, exactly as the numeric channel is: one swapped
+        // entity must not hide behind five correct ones.
+        let worst = if substituted > 0.0 { 0.0 } else { 1.0 };
+        let agree = (1.0 - p.ent_min_bias) * mean + p.ent_min_bias * worst;
+        clamp01(1.0 - p.ent_channel_w * (1.0 - agree))
+    };
+    if leading_subject_swap(ta, tg) {
+        result *= 1.0 - p.ent_channel_w;
     }
-    let mean = supported / total;
-    // Worst-case leaning, exactly as the numeric channel is: one swapped entity
-    // must not hide behind five correct ones.
-    let worst = if substituted > 0.0 { 0.0 } else { 1.0 };
-    let agree = (1.0 - p.ent_min_bias) * mean + p.ent_min_bias * worst;
-    clamp01(1.0 - p.ent_channel_w * (1.0 - agree))
+    result
+}
+
+/// Detect a one-token sentence-subject substitution with an otherwise identical
+/// assertion: `Paris is ...` -> `Berlin is ...`.
+///
+/// Sentence-initial capitals cannot generally be treated as proper nouns because
+/// ordinary openers (`Assessment`, `Result`, `Sustained`) would become false
+/// entities. This narrow shape is unambiguous enough to act on: both first words
+/// are capitalised, the next word is a copula, and every remaining token is
+/// identical. Structural labels are excluded so `Assessment is ...` and
+/// `Verdict is ...` remain equivalent ways to present the same finding.
+fn leading_subject_swap(ta: &Toks, tg: &Toks) -> bool {
+    if ta.n != tg.n
+        || ta.n < 3
+        || ta.kind[0] != crate::tokens::K_WORD
+        || tg.kind[0] != crate::tokens::K_WORD
+        || !ta.capitalized[0]
+        || !tg.capitalized[0]
+        || ta.hash[0] == tg.hash[0]
+        || is_structural_subject(ta.hash[0])
+        || is_structural_subject(tg.hash[0])
+        || ta.hash[1] != tg.hash[1]
+        || !is_copula(ta.hash[1])
+    {
+        return false;
+    }
+    let mut i = 2usize;
+    while i < ta.n {
+        if ta.hash[i] != tg.hash[i] || ta.kind[i] != tg.kind[i] {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn is_copula(h: u32) -> bool {
+    h == hash_str("is") || h == hash_str("are") || h == hash_str("was") || h == hash_str("were")
+}
+
+fn is_structural_subject(h: u32) -> bool {
+    const LABELS: [u32; 12] = [
+        hash_str("answer"),
+        hash_str("assessment"),
+        hash_str("classification"),
+        hash_str("conclusion"),
+        hash_str("estimate"),
+        hash_str("finding"),
+        hash_str("prediction"),
+        hash_str("report"),
+        hash_str("response"),
+        hash_str("result"),
+        hash_str("status"),
+        hash_str("verdict"),
+    ];
+    let mut i = 0usize;
+    while i < LABELS.len() {
+        if LABELS[i] == h {
+            return true;
+        }
+        i += 1;
+    }
+    false
+}
+
+/// Sentence-initial response labels are presentation, not factual content,
+/// when they introduce a closed-set verdict. The context restriction prevents
+/// a substantive subject such as `Response is delayed` from aliasing `Result`.
+fn presentation_label(t: &Toks) -> Option<usize> {
+    if t.n < 2 || !is_structural_subject(t.hash[0]) || !(is_copula(t.hash[1]) || t.nb[0] == b':') {
+        return None;
+    }
+    let mut i = 1usize;
+    while i < t.n {
+        if crate::antonyms::is_verdict(t.hash[i]) {
+            return Some(0);
+        }
+        i += 1;
+    }
+    None
+}
+
+/// Last named value in an `Attribution:` or `Model:` clause.
+///
+/// Model names cross the token classes used by the generic scorer: `Claude`
+/// is a proper word while `GPT-4` is an identifier. Comparing the slot here
+/// prevents that spelling accident from making a model substitution free.
+fn attributed_model(t: &Toks) -> Option<u32> {
+    let attribution = hash_str("attribution");
+    let model = hash_str("model");
+    let mut i = 0usize;
+    while i < t.n {
+        if t.hash[i] == attribution || (t.hash[i] == model && !t.neg[i]) {
+            let mut value = None;
+            let mut k = i + 1;
+            while k < t.n {
+                if t.kind[k] == K_IDENT || t.proper[k] {
+                    value = Some(t.hash[k]);
+                }
+                if is_phrase_break(t.nb[k]) {
+                    break;
+                }
+                k += 1;
+            }
+            if value.is_some() {
+                return value;
+            }
+        }
+        i += 1;
+    }
+    None
+}
+
+fn denies_model(t: &Toks) -> bool {
+    let model = hash_str("model");
+    let mut i = 0usize;
+    while i < t.n {
+        if t.hash[i] == model && t.neg[i] {
+            return true;
+        }
+        i += 1;
+    }
+    false
 }
 
 /// Penalty for asserting the opposite of what the ground truth says.
@@ -399,14 +621,18 @@ fn polarity_of(ta: &Toks, tg: &Toks, p: &Profile) -> f32 {
     {
         let mut a = 0usize;
         while a < ta.n {
-            if !ta.boiler[a] && !ta.echo[a] && crate::antonyms::is_verdict(ta.hash[a]) {
+            // A verdict remains a claim when its vocabulary appeared in the
+            // question. Authenticity prompts commonly offer both alternatives
+            // ("human-written or AI-generated?"); excluding echoed words made
+            // choosing the wrong alternative invisible.
+            if !ta.boiler[a] && crate::antonyms::is_verdict(ta.hash[a]) {
                 let mut g = 0usize;
                 let (mut stated_same, mut stated_opposite) = (false, false);
                 while g < tg.n {
-                    if tg.hash[g] == ta.hash[a] {
-                        stated_same = true;
-                    } else if crate::antonyms::opposes(ta.hash[a], tg.hash[g]) {
-                        stated_opposite = true;
+                    match verdict_agrees(ta.hash[a], ta.neg[a], tg.hash[g], tg.neg[g]) {
+                        Some(true) => stated_same = true,
+                        Some(false) => stated_opposite = true,
+                        None => {}
                     }
                     g += 1;
                 }
@@ -424,6 +650,14 @@ fn polarity_of(ta: &Toks, tg: &Toks, p: &Profile) -> f32 {
             }
             a += 1;
         }
+    }
+    let answer_model = attributed_model(ta);
+    let truth_model = attributed_model(tg);
+    if matches!((answer_model, truth_model), (Some(a), Some(g)) if a != g)
+        || (answer_model.is_some() && denies_model(tg))
+        || (truth_model.is_some() && denies_model(ta))
+    {
+        verdict_flip = true;
     }
     let mut i = 0usize;
     while i < ta.n {
@@ -516,7 +750,11 @@ fn precision_of(ta: &Toks, gt_uncovered: f32, p: &Profile) -> f32 {
             continue;
         }
         let w = ta.w[i];
-        if ta.decisive[i] {
+        // A categorical verdict is an assertion even when it is a lowercase
+        // common word. Routing `human`, `AI`, `original`, or `copied` through
+        // the prose bucket capped a semantically complete short answer near
+        // zero solely because prose has a 0.02 tie-break weight.
+        if ta.decisive[i] || crate::antonyms::is_verdict(ta.hash[i]) {
             // An unsupported non-numeric assertion abstains when the answer has
             // already covered every entity the ground truth names. It has then
             // displaced nothing, so it is *unverifiable extra detail*, not a
@@ -838,6 +1076,217 @@ mod tests {
         );
         assert!(pos > neg, "positive {} must beat negated {}", pos, neg);
         assert!(neg < 0.75, "a flat contradiction scored {}", neg);
+    }
+
+    #[test]
+    fn a_question_option_is_still_a_verdict_when_asserted() {
+        let q = b"Is the essay human-written or AI-generated?";
+        let gt = b"The essay is assessed as human-written with 88% confidence.";
+        let right = score(q, gt, b"Assessment: human-written. Confidence 88%.");
+        let wrong = score(
+            q,
+            gt,
+            b"The essay is assessed as AI-generated with 88% confidence.",
+        );
+        assert!(
+            right > wrong * 4.0,
+            "right {} vs flipped verdict {}",
+            right,
+            wrong
+        );
+        assert!(
+            wrong < 0.1,
+            "a question-echoed verdict flip scored {}",
+            wrong
+        );
+    }
+
+    #[test]
+    fn attributed_models_are_compared_across_token_shapes() {
+        let q = b"Was a model detected?";
+        let gt = b"The text is AI-generated. Attribution: GPT-4.";
+        let right = score(q, gt, b"Assessment: AI-generated. Model GPT-4.");
+        let wrong_word = score(q, gt, b"Assessment: AI-generated. Model Claude.");
+        let absent = score(
+            q,
+            gt,
+            b"Assessment: AI-generated. Attribution: no model detected.",
+        );
+        assert!(
+            right > wrong_word * 4.0,
+            "right {} vs wrong named model {}",
+            right,
+            wrong_word
+        );
+        assert!(
+            right > absent * 4.0,
+            "right {} vs denied attribution {}",
+            right,
+            absent
+        );
+
+        let no_model = b"The text is human-written. Attribution: no model detected.";
+        let invented = score(
+            q,
+            no_model,
+            b"The text is human-written. Attribution: GPT-4.",
+        );
+        let faithful = score(
+            q,
+            no_model,
+            b"The text is human-written. No model was detected.",
+        );
+        assert!(
+            faithful > invented * 4.0,
+            "no-model truth {} vs invented model {}",
+            faithful,
+            invented
+        );
+    }
+
+    #[test]
+    fn terse_authorship_labels_recognise_equivalent_wording() {
+        let q = b"Was this essay written by AI or a human?";
+        let gt = b"ai";
+        let exact = score(q, gt, b"ai");
+        let equivalent = score(q, gt, b"This text appears machine generated.");
+        let opposite = score(q, gt, b"human");
+        assert!(
+            equivalent > opposite,
+            "machine-generated synonym {} vs human opposite {}",
+            equivalent,
+            opposite
+        );
+        assert!(
+            exact > opposite,
+            "exact AI label {} vs human opposite {}",
+            exact,
+            opposite
+        );
+        assert_eq!(
+            equivalent, 1.0,
+            "an unambiguous equivalent closed-set label must be fully correct"
+        );
+
+        let hedged = score(q, gt, b"It may be AI or human.");
+        assert!(
+            hedged < equivalent,
+            "mixed verdict {} must stay below unambiguous {}",
+            hedged,
+            equivalent
+        );
+
+        let original = score(
+            b"Is this passage original or copied?",
+            b"original",
+            b"The passage appears genuine.",
+        );
+        let copied = score(
+            b"Is this passage original or copied?",
+            b"original",
+            b"The passage appears plagiarised.",
+        );
+        assert!(
+            original > copied,
+            "genuine synonym {} vs plagiarised opposite {}",
+            original,
+            copied
+        );
+    }
+
+    #[test]
+    fn negated_verdicts_reverse_the_semantic_pole() {
+        type VerdictCase<'a> = (&'a [u8], &'a [u8], &'a [u8], &'a [u8]);
+        let cases: [VerdictCase<'_>; 3] = [
+            (
+                b"Did an AI system write the passage?",
+                b"The passage is not AI-generated.",
+                b"It appears human-written.",
+                b"It appears AI-generated.",
+            ),
+            (
+                b"Was the text written by a person?",
+                b"The text is not human-written.",
+                b"It is machine-generated.",
+                b"It is human-written.",
+            ),
+            (
+                b"Is this submission original?",
+                b"The submission is not original.",
+                b"It is copied.",
+                b"It is authentic and original.",
+            ),
+        ];
+        for (question, truth, right, wrong) in cases {
+            let right_score = score(question, truth, right);
+            let wrong_score = score(question, truth, wrong);
+            assert!(
+                right_score > wrong_score,
+                "negated truth {:?}: right {} must beat wrong {}",
+                truth,
+                right_score,
+                wrong_score
+            );
+            assert!(
+                wrong_score < 0.1,
+                "positive restatement of a negated verdict scored {}",
+                wrong_score
+            );
+        }
+    }
+
+    #[test]
+    fn explicit_negative_and_positive_labels_do_not_cancel() {
+        let q = b"Was the response produced by AI or a person?";
+        let gt = b"It was not generated by AI; the writing is human-authored.";
+        let right = score(q, gt, b"Assessment: human-written.");
+        let wrong = score(q, gt, b"Assessment: AI-generated.");
+        assert!(right > wrong * 4.0, "right {} vs wrong {}", right, wrong);
+        assert!(wrong < 0.1, "opposite verdict scored {}", wrong);
+    }
+
+    #[test]
+    fn sentence_initial_entity_substitution_is_not_free() {
+        let q = b"What is the capital of France?";
+        let gt = b"Paris is the capital of France.";
+        let correct = score(q, gt, b"The capital city of France is Paris.");
+        for wrong in [
+            &b"Berlin is the capital of France."[..],
+            &b"Lyon is the capital of France."[..],
+        ] {
+            let value = score(q, gt, wrong);
+            assert!(
+                value < correct * 0.5,
+                "wrong subject {} vs correct {}",
+                value,
+                correct
+            );
+        }
+
+        // Presentation labels are not subject entities.
+        let labelled = score(
+            b"Was the passage AI-generated?",
+            b"Assessment is human-written.",
+            b"Verdict is human-written.",
+        );
+        assert!(
+            labelled > 0.75,
+            "equivalent presentation scored {}",
+            labelled
+        );
+
+        // A structural-looking word remains substantive when it does not
+        // introduce a closed-set verdict.
+        let substantive_q = b"Is the response delayed?";
+        let substantive_gt = b"Response is delayed.";
+        let faithful = score(substantive_q, substantive_gt, substantive_gt);
+        let false_alias = score(substantive_q, substantive_gt, b"Verdict is delayed.");
+        assert!(
+            faithful > false_alias,
+            "substantive response was mistaken for a label: {} vs faithful {}",
+            false_alias,
+            faithful
+        );
     }
 
     #[test]

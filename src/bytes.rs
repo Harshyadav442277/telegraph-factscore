@@ -5,8 +5,6 @@
 //! the whole scorer is transcendental-free — which is also what keeps it far
 //! inside the node's 10-minute gate budget (ARCHITECTURE A2).
 
-#![allow(dead_code)]
-
 // --------------------------------------------------------------------------
 // Byte classes. Bytes >= 0x80 are treated as opaque *word* bytes: we never
 // decode UTF-8, so emoji/CJK/accented input can never trap (A1 Stage-1 trap).

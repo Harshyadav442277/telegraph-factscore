@@ -1,0 +1,244 @@
+{
+  "corpus_version": "3a30a0fff08c62a3",
+  "generator": "gen-tac-pairs.mjs",
+  "class": "LABEL-EQUIVALENCE",
+  "provenance": {
+    "source": "synthetic",
+    "generated_from": "LABELS table (4 closed-set verdict shapes)"
+  },
+  "note": "Terse label truths with equivalent phrasings, explicit opposites, and ambiguous hedges.",
+  "fixtures": [
+    {
+      "intent": "TEXT_AUTHENTICITY_CHECK",
+      "id": "tac-label-01-ai",
+      "class": "LABEL-EQUIVALENCE",
+      "question": "Was this essay written by AI or a human?",
+      "ground_truth": "ai",
+      "answers": [
+        {
+          "id": "correct-exact",
+          "text": "ai",
+          "quality": 1
+        },
+        {
+          "id": "correct-equivalent",
+          "text": "This text appears machine generated.",
+          "quality": 1
+        },
+        {
+          "id": "wrong-opposite",
+          "text": "human",
+          "quality": 0
+        },
+        {
+          "id": "wrong-hedge",
+          "text": "It may be AI or human.",
+          "quality": 0
+        }
+      ],
+      "pairs": [
+        [
+          "correct-exact",
+          "wrong-opposite"
+        ],
+        [
+          "correct-exact",
+          "wrong-hedge"
+        ],
+        [
+          "correct-equivalent",
+          "wrong-opposite"
+        ],
+        [
+          "correct-equivalent",
+          "wrong-hedge"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-exact",
+            "correct-equivalent"
+          ],
+          "tolerance": 0.01,
+          "note": "a terse closed-set truth and an unambiguous equivalent label are the same finding"
+        }
+      ]
+    },
+    {
+      "intent": "TEXT_AUTHENTICITY_CHECK",
+      "id": "tac-label-02-human",
+      "class": "LABEL-EQUIVALENCE",
+      "question": "Was this article written by a human or AI?",
+      "ground_truth": "human",
+      "answers": [
+        {
+          "id": "correct-exact",
+          "text": "human",
+          "quality": 1
+        },
+        {
+          "id": "correct-equivalent",
+          "text": "A person wrote this article.",
+          "quality": 1
+        },
+        {
+          "id": "wrong-opposite",
+          "text": "machine generated",
+          "quality": 0
+        },
+        {
+          "id": "wrong-hedge",
+          "text": "It may be human or machine generated.",
+          "quality": 0
+        }
+      ],
+      "pairs": [
+        [
+          "correct-exact",
+          "wrong-opposite"
+        ],
+        [
+          "correct-exact",
+          "wrong-hedge"
+        ],
+        [
+          "correct-equivalent",
+          "wrong-opposite"
+        ],
+        [
+          "correct-equivalent",
+          "wrong-hedge"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-exact",
+            "correct-equivalent"
+          ],
+          "tolerance": 0.01,
+          "note": "a terse closed-set truth and an unambiguous equivalent label are the same finding"
+        }
+      ]
+    },
+    {
+      "intent": "TEXT_AUTHENTICITY_CHECK",
+      "id": "tac-label-03-original",
+      "class": "LABEL-EQUIVALENCE",
+      "question": "Is this passage original or copied?",
+      "ground_truth": "original",
+      "answers": [
+        {
+          "id": "correct-exact",
+          "text": "original",
+          "quality": 1
+        },
+        {
+          "id": "correct-equivalent",
+          "text": "The passage appears genuine.",
+          "quality": 1
+        },
+        {
+          "id": "wrong-opposite",
+          "text": "plagiarised",
+          "quality": 0
+        },
+        {
+          "id": "wrong-hedge",
+          "text": "It could be original or copied.",
+          "quality": 0
+        }
+      ],
+      "pairs": [
+        [
+          "correct-exact",
+          "wrong-opposite"
+        ],
+        [
+          "correct-exact",
+          "wrong-hedge"
+        ],
+        [
+          "correct-equivalent",
+          "wrong-opposite"
+        ],
+        [
+          "correct-equivalent",
+          "wrong-hedge"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-exact",
+            "correct-equivalent"
+          ],
+          "tolerance": 0.01,
+          "note": "a terse closed-set truth and an unambiguous equivalent label are the same finding"
+        }
+      ]
+    },
+    {
+      "intent": "TEXT_AUTHENTICITY_CHECK",
+      "id": "tac-label-04-copied",
+      "class": "LABEL-EQUIVALENCE",
+      "question": "Is this passage copied or original?",
+      "ground_truth": "plagiarised",
+      "answers": [
+        {
+          "id": "correct-exact",
+          "text": "plagiarised",
+          "quality": 1
+        },
+        {
+          "id": "correct-equivalent",
+          "text": "This is a copied passage.",
+          "quality": 1
+        },
+        {
+          "id": "wrong-opposite",
+          "text": "genuine",
+          "quality": 0
+        },
+        {
+          "id": "wrong-hedge",
+          "text": "It could be copied or original.",
+          "quality": 0
+        }
+      ],
+      "pairs": [
+        [
+          "correct-exact",
+          "wrong-opposite"
+        ],
+        [
+          "correct-exact",
+          "wrong-hedge"
+        ],
+        [
+          "correct-equivalent",
+          "wrong-opposite"
+        ],
+        [
+          "correct-equivalent",
+          "wrong-hedge"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-exact",
+            "correct-equivalent"
+          ],
+          "tolerance": 0.01,
+          "note": "a terse closed-set truth and an unambiguous equivalent label are the same finding"
+        }
+      ]
+    }
+  ]
+}

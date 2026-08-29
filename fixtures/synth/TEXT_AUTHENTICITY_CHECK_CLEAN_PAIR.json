@@ -1,0 +1,1800 @@
+{
+  "corpus_version": "3a30a0fff08c62a3",
+  "generator": "gen-tac-pairs.mjs",
+  "class": "CLEAN-PAIR",
+  "provenance": {
+    "source": "synthetic",
+    "generated_from": "TRUTHS table (12 independent documents)"
+  },
+  "note": "Fluent one-fact counterfactuals in AI-detection register. Wrong answers differ from the ground truth by exactly one slot.",
+  "fixtures": [
+    {
+      "intent": "TEXT_AUTHENTICITY_CHECK",
+      "id": "tac-cleanpair-01",
+      "class": "CLEAN-PAIR",
+      "question": "Is the essay 'The Ethics of Autonomous Weapons' authentic human writing or AI-generated?",
+      "ground_truth": "The submitted essay 'The Ethics of Autonomous Weapons' is assessed as AI-generated with 93% detector confidence. Attribution: GPT-4. Mean perplexity 18.4, burstiness 0.21.",
+      "answers": [
+        {
+          "id": "correct-0",
+          "text": "The data shows the essay 'The Ethics of Autonomous Weapons' is AI-generated, at 93% confidence, attributed to GPT-4, with perplexity 18.4 and burstiness 0.21.",
+          "quality": 1
+        },
+        {
+          "id": "correct-1",
+          "text": "Assessment: AI-generated. Confidence 93%. Model GPT-4. Perplexity 18.4. Burstiness 0.21.",
+          "quality": 1
+        },
+        {
+          "id": "correct-2",
+          "text": "The essay 'The Ethics of Autonomous Weapons' reads as AI-generated (93% confidence; GPT-4; perplexity 18.4; burstiness 0.21).",
+          "quality": 1
+        },
+        {
+          "id": "correct-verbatim",
+          "text": "The submitted essay 'The Ethics of Autonomous Weapons' is assessed as AI-generated with 93% detector confidence. Attribution: GPT-4. Mean perplexity 18.4, burstiness 0.21.",
+          "quality": 1
+        },
+        {
+          "id": "wrong-verdict",
+          "text": "The submitted essay 'The Ethics of Autonomous Weapons' is assessed as human-written with 93% detector confidence. Attribution: GPT-4. Mean perplexity 18.4, burstiness 0.21.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-confidence",
+          "text": "The submitted essay 'The Ethics of Autonomous Weapons' is assessed as AI-generated with 7% detector confidence. Attribution: GPT-4. Mean perplexity 18.4, burstiness 0.21.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-model",
+          "text": "The submitted essay 'The Ethics of Autonomous Weapons' is assessed as AI-generated with 93% detector confidence. Attribution: Claude. Mean perplexity 18.4, burstiness 0.21.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-perplexity",
+          "text": "The submitted essay 'The Ethics of Autonomous Weapons' is assessed as AI-generated with 93% detector confidence. Attribution: GPT-4. Mean perplexity 68.1, burstiness 0.21.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-burstiness",
+          "text": "The submitted essay 'The Ethics of Autonomous Weapons' is assessed as AI-generated with 93% detector confidence. Attribution: GPT-4. Mean perplexity 18.4, burstiness 0.79.",
+          "quality": 0
+        }
+      ],
+      "pairs": [
+        [
+          "correct-0",
+          "wrong-verdict"
+        ],
+        [
+          "correct-0",
+          "wrong-confidence"
+        ],
+        [
+          "correct-0",
+          "wrong-model"
+        ],
+        [
+          "correct-0",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-0",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-1",
+          "wrong-verdict"
+        ],
+        [
+          "correct-1",
+          "wrong-confidence"
+        ],
+        [
+          "correct-1",
+          "wrong-model"
+        ],
+        [
+          "correct-1",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-1",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-2",
+          "wrong-verdict"
+        ],
+        [
+          "correct-2",
+          "wrong-confidence"
+        ],
+        [
+          "correct-2",
+          "wrong-model"
+        ],
+        [
+          "correct-2",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-2",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-verdict"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-confidence"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-model"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-burstiness"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-0",
+            "correct-1",
+            "correct-2",
+            "correct-verbatim"
+          ],
+          "tolerance": 0.05,
+          "note": "all correct phrasings carry the same verdict, model and figures"
+        }
+      ]
+    },
+    {
+      "intent": "TEXT_AUTHENTICITY_CHECK",
+      "id": "tac-cleanpair-02",
+      "class": "CLEAN-PAIR",
+      "question": "Is the short story 'The Lighthouse at Vizhinjam' authentic human writing or AI-generated?",
+      "ground_truth": "The submitted short story 'The Lighthouse at Vizhinjam' is assessed as human-written with 88% detector confidence. Attribution: no model detected. Mean perplexity 74.6, burstiness 0.83.",
+      "answers": [
+        {
+          "id": "correct-0",
+          "text": "The data shows the short story 'The Lighthouse at Vizhinjam' is human-written, at 88% confidence, attributed to no model detected, with perplexity 74.6 and burstiness 0.83.",
+          "quality": 1
+        },
+        {
+          "id": "correct-1",
+          "text": "Assessment: human-written. Confidence 88%. Model no model detected. Perplexity 74.6. Burstiness 0.83.",
+          "quality": 1
+        },
+        {
+          "id": "correct-2",
+          "text": "The short story 'The Lighthouse at Vizhinjam' reads as human-written (88% confidence; no model detected; perplexity 74.6; burstiness 0.83).",
+          "quality": 1
+        },
+        {
+          "id": "correct-verbatim",
+          "text": "The submitted short story 'The Lighthouse at Vizhinjam' is assessed as human-written with 88% detector confidence. Attribution: no model detected. Mean perplexity 74.6, burstiness 0.83.",
+          "quality": 1
+        },
+        {
+          "id": "wrong-verdict",
+          "text": "The submitted short story 'The Lighthouse at Vizhinjam' is assessed as AI-generated with 88% detector confidence. Attribution: no model detected. Mean perplexity 74.6, burstiness 0.83.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-confidence",
+          "text": "The submitted short story 'The Lighthouse at Vizhinjam' is assessed as human-written with 12% detector confidence. Attribution: no model detected. Mean perplexity 74.6, burstiness 0.83.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-model",
+          "text": "The submitted short story 'The Lighthouse at Vizhinjam' is assessed as human-written with 88% detector confidence. Attribution: GPT-4. Mean perplexity 74.6, burstiness 0.83.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-perplexity",
+          "text": "The submitted short story 'The Lighthouse at Vizhinjam' is assessed as human-written with 88% detector confidence. Attribution: no model detected. Mean perplexity 276.0, burstiness 0.83.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-burstiness",
+          "text": "The submitted short story 'The Lighthouse at Vizhinjam' is assessed as human-written with 88% detector confidence. Attribution: no model detected. Mean perplexity 74.6, burstiness 0.17.",
+          "quality": 0
+        }
+      ],
+      "pairs": [
+        [
+          "correct-0",
+          "wrong-verdict"
+        ],
+        [
+          "correct-0",
+          "wrong-confidence"
+        ],
+        [
+          "correct-0",
+          "wrong-model"
+        ],
+        [
+          "correct-0",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-0",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-1",
+          "wrong-verdict"
+        ],
+        [
+          "correct-1",
+          "wrong-confidence"
+        ],
+        [
+          "correct-1",
+          "wrong-model"
+        ],
+        [
+          "correct-1",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-1",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-2",
+          "wrong-verdict"
+        ],
+        [
+          "correct-2",
+          "wrong-confidence"
+        ],
+        [
+          "correct-2",
+          "wrong-model"
+        ],
+        [
+          "correct-2",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-2",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-verdict"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-confidence"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-model"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-burstiness"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-0",
+            "correct-1",
+            "correct-2",
+            "correct-verbatim"
+          ],
+          "tolerance": 0.05,
+          "note": "all correct phrasings carry the same verdict, model and figures"
+        }
+      ]
+    },
+    {
+      "intent": "TEXT_AUTHENTICITY_CHECK",
+      "id": "tac-cleanpair-03",
+      "class": "CLEAN-PAIR",
+      "question": "Is the product review for a wireless keyboard authentic human writing or AI-generated?",
+      "ground_truth": "The submitted product review for a wireless keyboard is assessed as AI-generated with 96% detector confidence. Attribution: GPT-3.5. Mean perplexity 12.1, burstiness 0.14.",
+      "answers": [
+        {
+          "id": "correct-0",
+          "text": "The data shows the product review for a wireless keyboard is AI-generated, at 96% confidence, attributed to GPT-3.5, with perplexity 12.1 and burstiness 0.14.",
+          "quality": 1
+        },
+        {
+          "id": "correct-1",
+          "text": "Assessment: AI-generated. Confidence 96%. Model GPT-3.5. Perplexity 12.1. Burstiness 0.14.",
+          "quality": 1
+        },
+        {
+          "id": "correct-2",
+          "text": "The product review for a wireless keyboard reads as AI-generated (96% confidence; GPT-3.5; perplexity 12.1; burstiness 0.14).",
+          "quality": 1
+        },
+        {
+          "id": "correct-verbatim",
+          "text": "The submitted product review for a wireless keyboard is assessed as AI-generated with 96% detector confidence. Attribution: GPT-3.5. Mean perplexity 12.1, burstiness 0.14.",
+          "quality": 1
+        },
+        {
+          "id": "wrong-verdict",
+          "text": "The submitted product review for a wireless keyboard is assessed as human-written with 96% detector confidence. Attribution: GPT-3.5. Mean perplexity 12.1, burstiness 0.14.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-confidence",
+          "text": "The submitted product review for a wireless keyboard is assessed as AI-generated with 4% detector confidence. Attribution: GPT-3.5. Mean perplexity 12.1, burstiness 0.14.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-model",
+          "text": "The submitted product review for a wireless keyboard is assessed as AI-generated with 96% detector confidence. Attribution: Gemini. Mean perplexity 12.1, burstiness 0.14.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-perplexity",
+          "text": "The submitted product review for a wireless keyboard is assessed as AI-generated with 96% detector confidence. Attribution: GPT-3.5. Mean perplexity 44.8, burstiness 0.14.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-burstiness",
+          "text": "The submitted product review for a wireless keyboard is assessed as AI-generated with 96% detector confidence. Attribution: GPT-3.5. Mean perplexity 12.1, burstiness 0.86.",
+          "quality": 0
+        }
+      ],
+      "pairs": [
+        [
+          "correct-0",
+          "wrong-verdict"
+        ],
+        [
+          "correct-0",
+          "wrong-confidence"
+        ],
+        [
+          "correct-0",
+          "wrong-model"
+        ],
+        [
+          "correct-0",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-0",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-1",
+          "wrong-verdict"
+        ],
+        [
+          "correct-1",
+          "wrong-confidence"
+        ],
+        [
+          "correct-1",
+          "wrong-model"
+        ],
+        [
+          "correct-1",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-1",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-2",
+          "wrong-verdict"
+        ],
+        [
+          "correct-2",
+          "wrong-confidence"
+        ],
+        [
+          "correct-2",
+          "wrong-model"
+        ],
+        [
+          "correct-2",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-2",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-verdict"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-confidence"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-model"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-burstiness"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-0",
+            "correct-1",
+            "correct-2",
+            "correct-verbatim"
+          ],
+          "tolerance": 0.05,
+          "note": "all correct phrasings carry the same verdict, model and figures"
+        }
+      ]
+    },
+    {
+      "intent": "TEXT_AUTHENTICITY_CHECK",
+      "id": "tac-cleanpair-04",
+      "class": "CLEAN-PAIR",
+      "question": "Is the cover letter for a data analyst role authentic human writing or AI-generated?",
+      "ground_truth": "The submitted cover letter for a data analyst role is assessed as AI-generated with 79% detector confidence. Attribution: Claude. Mean perplexity 22.7, burstiness 0.29.",
+      "answers": [
+        {
+          "id": "correct-0",
+          "text": "The data shows the cover letter for a data analyst role is AI-generated, at 79% confidence, attributed to Claude, with perplexity 22.7 and burstiness 0.29.",
+          "quality": 1
+        },
+        {
+          "id": "correct-1",
+          "text": "Assessment: AI-generated. Confidence 79%. Model Claude. Perplexity 22.7. Burstiness 0.29.",
+          "quality": 1
+        },
+        {
+          "id": "correct-2",
+          "text": "The cover letter for a data analyst role reads as AI-generated (79% confidence; Claude; perplexity 22.7; burstiness 0.29).",
+          "quality": 1
+        },
+        {
+          "id": "correct-verbatim",
+          "text": "The submitted cover letter for a data analyst role is assessed as AI-generated with 79% detector confidence. Attribution: Claude. Mean perplexity 22.7, burstiness 0.29.",
+          "quality": 1
+        },
+        {
+          "id": "wrong-verdict",
+          "text": "The submitted cover letter for a data analyst role is assessed as human-written with 79% detector confidence. Attribution: Claude. Mean perplexity 22.7, burstiness 0.29.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-confidence",
+          "text": "The submitted cover letter for a data analyst role is assessed as AI-generated with 21% detector confidence. Attribution: Claude. Mean perplexity 22.7, burstiness 0.29.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-model",
+          "text": "The submitted cover letter for a data analyst role is assessed as AI-generated with 79% detector confidence. Attribution: GPT-4. Mean perplexity 22.7, burstiness 0.29.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-perplexity",
+          "text": "The submitted cover letter for a data analyst role is assessed as AI-generated with 79% detector confidence. Attribution: Claude. Mean perplexity 84.0, burstiness 0.29.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-burstiness",
+          "text": "The submitted cover letter for a data analyst role is assessed as AI-generated with 79% detector confidence. Attribution: Claude. Mean perplexity 22.7, burstiness 0.71.",
+          "quality": 0
+        }
+      ],
+      "pairs": [
+        [
+          "correct-0",
+          "wrong-verdict"
+        ],
+        [
+          "correct-0",
+          "wrong-confidence"
+        ],
+        [
+          "correct-0",
+          "wrong-model"
+        ],
+        [
+          "correct-0",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-0",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-1",
+          "wrong-verdict"
+        ],
+        [
+          "correct-1",
+          "wrong-confidence"
+        ],
+        [
+          "correct-1",
+          "wrong-model"
+        ],
+        [
+          "correct-1",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-1",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-2",
+          "wrong-verdict"
+        ],
+        [
+          "correct-2",
+          "wrong-confidence"
+        ],
+        [
+          "correct-2",
+          "wrong-model"
+        ],
+        [
+          "correct-2",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-2",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-verdict"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-confidence"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-model"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-burstiness"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-0",
+            "correct-1",
+            "correct-2",
+            "correct-verbatim"
+          ],
+          "tolerance": 0.05,
+          "note": "all correct phrasings carry the same verdict, model and figures"
+        }
+      ]
+    },
+    {
+      "intent": "TEXT_AUTHENTICITY_CHECK",
+      "id": "tac-cleanpair-05",
+      "class": "CLEAN-PAIR",
+      "question": "Is the personal blog entry about training for a marathon authentic human writing or AI-generated?",
+      "ground_truth": "The submitted personal blog entry about training for a marathon is assessed as human-written with 91% detector confidence. Attribution: no model detected. Mean perplexity 88.2, burstiness 0.91.",
+      "answers": [
+        {
+          "id": "correct-0",
+          "text": "The data shows the personal blog entry about training for a marathon is human-written, at 91% confidence, attributed to no model detected, with perplexity 88.2 and burstiness 0.91.",
+          "quality": 1
+        },
+        {
+          "id": "correct-1",
+          "text": "Assessment: human-written. Confidence 91%. Model no model detected. Perplexity 88.2. Burstiness 0.91.",
+          "quality": 1
+        },
+        {
+          "id": "correct-2",
+          "text": "The personal blog entry about training for a marathon reads as human-written (91% confidence; no model detected; perplexity 88.2; burstiness 0.91).",
+          "quality": 1
+        },
+        {
+          "id": "correct-verbatim",
+          "text": "The submitted personal blog entry about training for a marathon is assessed as human-written with 91% detector confidence. Attribution: no model detected. Mean perplexity 88.2, burstiness 0.91.",
+          "quality": 1
+        },
+        {
+          "id": "wrong-verdict",
+          "text": "The submitted personal blog entry about training for a marathon is assessed as AI-generated with 91% detector confidence. Attribution: no model detected. Mean perplexity 88.2, burstiness 0.91.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-confidence",
+          "text": "The submitted personal blog entry about training for a marathon is assessed as human-written with 9% detector confidence. Attribution: no model detected. Mean perplexity 88.2, burstiness 0.91.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-model",
+          "text": "The submitted personal blog entry about training for a marathon is assessed as human-written with 91% detector confidence. Attribution: GPT-4. Mean perplexity 88.2, burstiness 0.91.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-perplexity",
+          "text": "The submitted personal blog entry about training for a marathon is assessed as human-written with 91% detector confidence. Attribution: no model detected. Mean perplexity 326.3, burstiness 0.91.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-burstiness",
+          "text": "The submitted personal blog entry about training for a marathon is assessed as human-written with 91% detector confidence. Attribution: no model detected. Mean perplexity 88.2, burstiness 0.09.",
+          "quality": 0
+        }
+      ],
+      "pairs": [
+        [
+          "correct-0",
+          "wrong-verdict"
+        ],
+        [
+          "correct-0",
+          "wrong-confidence"
+        ],
+        [
+          "correct-0",
+          "wrong-model"
+        ],
+        [
+          "correct-0",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-0",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-1",
+          "wrong-verdict"
+        ],
+        [
+          "correct-1",
+          "wrong-confidence"
+        ],
+        [
+          "correct-1",
+          "wrong-model"
+        ],
+        [
+          "correct-1",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-1",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-2",
+          "wrong-verdict"
+        ],
+        [
+          "correct-2",
+          "wrong-confidence"
+        ],
+        [
+          "correct-2",
+          "wrong-model"
+        ],
+        [
+          "correct-2",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-2",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-verdict"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-confidence"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-model"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-burstiness"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-0",
+            "correct-1",
+            "correct-2",
+            "correct-verbatim"
+          ],
+          "tolerance": 0.05,
+          "note": "all correct phrasings carry the same verdict, model and figures"
+        }
+      ]
+    },
+    {
+      "intent": "TEXT_AUTHENTICITY_CHECK",
+      "id": "tac-cleanpair-06",
+      "class": "CLEAN-PAIR",
+      "question": "Is the news summary of a municipal budget vote authentic human writing or AI-generated?",
+      "ground_truth": "The submitted news summary of a municipal budget vote is assessed as AI-generated with 84% detector confidence. Attribution: GPT-4. Mean perplexity 16.9, burstiness 0.19.",
+      "answers": [
+        {
+          "id": "correct-0",
+          "text": "The data shows the news summary of a municipal budget vote is AI-generated, at 84% confidence, attributed to GPT-4, with perplexity 16.9 and burstiness 0.19.",
+          "quality": 1
+        },
+        {
+          "id": "correct-1",
+          "text": "Assessment: AI-generated. Confidence 84%. Model GPT-4. Perplexity 16.9. Burstiness 0.19.",
+          "quality": 1
+        },
+        {
+          "id": "correct-2",
+          "text": "The news summary of a municipal budget vote reads as AI-generated (84% confidence; GPT-4; perplexity 16.9; burstiness 0.19).",
+          "quality": 1
+        },
+        {
+          "id": "correct-verbatim",
+          "text": "The submitted news summary of a municipal budget vote is assessed as AI-generated with 84% detector confidence. Attribution: GPT-4. Mean perplexity 16.9, burstiness 0.19.",
+          "quality": 1
+        },
+        {
+          "id": "wrong-verdict",
+          "text": "The submitted news summary of a municipal budget vote is assessed as human-written with 84% detector confidence. Attribution: GPT-4. Mean perplexity 16.9, burstiness 0.19.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-confidence",
+          "text": "The submitted news summary of a municipal budget vote is assessed as AI-generated with 16% detector confidence. Attribution: GPT-4. Mean perplexity 16.9, burstiness 0.19.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-model",
+          "text": "The submitted news summary of a municipal budget vote is assessed as AI-generated with 84% detector confidence. Attribution: Claude. Mean perplexity 16.9, burstiness 0.19.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-perplexity",
+          "text": "The submitted news summary of a municipal budget vote is assessed as AI-generated with 84% detector confidence. Attribution: GPT-4. Mean perplexity 62.5, burstiness 0.19.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-burstiness",
+          "text": "The submitted news summary of a municipal budget vote is assessed as AI-generated with 84% detector confidence. Attribution: GPT-4. Mean perplexity 16.9, burstiness 0.81.",
+          "quality": 0
+        }
+      ],
+      "pairs": [
+        [
+          "correct-0",
+          "wrong-verdict"
+        ],
+        [
+          "correct-0",
+          "wrong-confidence"
+        ],
+        [
+          "correct-0",
+          "wrong-model"
+        ],
+        [
+          "correct-0",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-0",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-1",
+          "wrong-verdict"
+        ],
+        [
+          "correct-1",
+          "wrong-confidence"
+        ],
+        [
+          "correct-1",
+          "wrong-model"
+        ],
+        [
+          "correct-1",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-1",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-2",
+          "wrong-verdict"
+        ],
+        [
+          "correct-2",
+          "wrong-confidence"
+        ],
+        [
+          "correct-2",
+          "wrong-model"
+        ],
+        [
+          "correct-2",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-2",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-verdict"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-confidence"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-model"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-burstiness"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-0",
+            "correct-1",
+            "correct-2",
+            "correct-verbatim"
+          ],
+          "tolerance": 0.05,
+          "note": "all correct phrasings carry the same verdict, model and figures"
+        }
+      ]
+    },
+    {
+      "intent": "TEXT_AUTHENTICITY_CHECK",
+      "id": "tac-cleanpair-07",
+      "class": "CLEAN-PAIR",
+      "question": "Is the academic abstract on protein folding authentic human writing or AI-generated?",
+      "ground_truth": "The submitted academic abstract on protein folding is assessed as human-written with 72% detector confidence. Attribution: no model detected. Mean perplexity 61.3, burstiness 0.68.",
+      "answers": [
+        {
+          "id": "correct-0",
+          "text": "The data shows the academic abstract on protein folding is human-written, at 72% confidence, attributed to no model detected, with perplexity 61.3 and burstiness 0.68.",
+          "quality": 1
+        },
+        {
+          "id": "correct-1",
+          "text": "Assessment: human-written. Confidence 72%. Model no model detected. Perplexity 61.3. Burstiness 0.68.",
+          "quality": 1
+        },
+        {
+          "id": "correct-2",
+          "text": "The academic abstract on protein folding reads as human-written (72% confidence; no model detected; perplexity 61.3; burstiness 0.68).",
+          "quality": 1
+        },
+        {
+          "id": "correct-verbatim",
+          "text": "The submitted academic abstract on protein folding is assessed as human-written with 72% detector confidence. Attribution: no model detected. Mean perplexity 61.3, burstiness 0.68.",
+          "quality": 1
+        },
+        {
+          "id": "wrong-verdict",
+          "text": "The submitted academic abstract on protein folding is assessed as AI-generated with 72% detector confidence. Attribution: no model detected. Mean perplexity 61.3, burstiness 0.68.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-confidence",
+          "text": "The submitted academic abstract on protein folding is assessed as human-written with 28% detector confidence. Attribution: no model detected. Mean perplexity 61.3, burstiness 0.68.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-model",
+          "text": "The submitted academic abstract on protein folding is assessed as human-written with 72% detector confidence. Attribution: GPT-4. Mean perplexity 61.3, burstiness 0.68.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-perplexity",
+          "text": "The submitted academic abstract on protein folding is assessed as human-written with 72% detector confidence. Attribution: no model detected. Mean perplexity 226.8, burstiness 0.68.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-burstiness",
+          "text": "The submitted academic abstract on protein folding is assessed as human-written with 72% detector confidence. Attribution: no model detected. Mean perplexity 61.3, burstiness 0.32.",
+          "quality": 0
+        }
+      ],
+      "pairs": [
+        [
+          "correct-0",
+          "wrong-verdict"
+        ],
+        [
+          "correct-0",
+          "wrong-confidence"
+        ],
+        [
+          "correct-0",
+          "wrong-model"
+        ],
+        [
+          "correct-0",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-0",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-1",
+          "wrong-verdict"
+        ],
+        [
+          "correct-1",
+          "wrong-confidence"
+        ],
+        [
+          "correct-1",
+          "wrong-model"
+        ],
+        [
+          "correct-1",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-1",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-2",
+          "wrong-verdict"
+        ],
+        [
+          "correct-2",
+          "wrong-confidence"
+        ],
+        [
+          "correct-2",
+          "wrong-model"
+        ],
+        [
+          "correct-2",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-2",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-verdict"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-confidence"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-model"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-burstiness"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-0",
+            "correct-1",
+            "correct-2",
+            "correct-verbatim"
+          ],
+          "tolerance": 0.05,
+          "note": "all correct phrasings carry the same verdict, model and figures"
+        }
+      ]
+    },
+    {
+      "intent": "TEXT_AUTHENTICITY_CHECK",
+      "id": "tac-cleanpair-08",
+      "class": "CLEAN-PAIR",
+      "question": "Is the marketing email announcing a summer sale authentic human writing or AI-generated?",
+      "ground_truth": "The submitted marketing email announcing a summer sale is assessed as AI-generated with 97% detector confidence. Attribution: GPT-3.5. Mean perplexity 10.5, burstiness 0.11.",
+      "answers": [
+        {
+          "id": "correct-0",
+          "text": "The data shows the marketing email announcing a summer sale is AI-generated, at 97% confidence, attributed to GPT-3.5, with perplexity 10.5 and burstiness 0.11.",
+          "quality": 1
+        },
+        {
+          "id": "correct-1",
+          "text": "Assessment: AI-generated. Confidence 97%. Model GPT-3.5. Perplexity 10.5. Burstiness 0.11.",
+          "quality": 1
+        },
+        {
+          "id": "correct-2",
+          "text": "The marketing email announcing a summer sale reads as AI-generated (97% confidence; GPT-3.5; perplexity 10.5; burstiness 0.11).",
+          "quality": 1
+        },
+        {
+          "id": "correct-verbatim",
+          "text": "The submitted marketing email announcing a summer sale is assessed as AI-generated with 97% detector confidence. Attribution: GPT-3.5. Mean perplexity 10.5, burstiness 0.11.",
+          "quality": 1
+        },
+        {
+          "id": "wrong-verdict",
+          "text": "The submitted marketing email announcing a summer sale is assessed as human-written with 97% detector confidence. Attribution: GPT-3.5. Mean perplexity 10.5, burstiness 0.11.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-confidence",
+          "text": "The submitted marketing email announcing a summer sale is assessed as AI-generated with 3% detector confidence. Attribution: GPT-3.5. Mean perplexity 10.5, burstiness 0.11.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-model",
+          "text": "The submitted marketing email announcing a summer sale is assessed as AI-generated with 97% detector confidence. Attribution: Gemini. Mean perplexity 10.5, burstiness 0.11.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-perplexity",
+          "text": "The submitted marketing email announcing a summer sale is assessed as AI-generated with 97% detector confidence. Attribution: GPT-3.5. Mean perplexity 38.9, burstiness 0.11.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-burstiness",
+          "text": "The submitted marketing email announcing a summer sale is assessed as AI-generated with 97% detector confidence. Attribution: GPT-3.5. Mean perplexity 10.5, burstiness 0.89.",
+          "quality": 0
+        }
+      ],
+      "pairs": [
+        [
+          "correct-0",
+          "wrong-verdict"
+        ],
+        [
+          "correct-0",
+          "wrong-confidence"
+        ],
+        [
+          "correct-0",
+          "wrong-model"
+        ],
+        [
+          "correct-0",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-0",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-1",
+          "wrong-verdict"
+        ],
+        [
+          "correct-1",
+          "wrong-confidence"
+        ],
+        [
+          "correct-1",
+          "wrong-model"
+        ],
+        [
+          "correct-1",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-1",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-2",
+          "wrong-verdict"
+        ],
+        [
+          "correct-2",
+          "wrong-confidence"
+        ],
+        [
+          "correct-2",
+          "wrong-model"
+        ],
+        [
+          "correct-2",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-2",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-verdict"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-confidence"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-model"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-burstiness"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-0",
+            "correct-1",
+            "correct-2",
+            "correct-verbatim"
+          ],
+          "tolerance": 0.05,
+          "note": "all correct phrasings carry the same verdict, model and figures"
+        }
+      ]
+    },
+    {
+      "intent": "TEXT_AUTHENTICITY_CHECK",
+      "id": "tac-cleanpair-09",
+      "class": "CLEAN-PAIR",
+      "question": "Is the forum reply about diesel engine maintenance authentic human writing or AI-generated?",
+      "ground_truth": "The submitted forum reply about diesel engine maintenance is assessed as human-written with 94% detector confidence. Attribution: no model detected. Mean perplexity 96.4, burstiness 0.88.",
+      "answers": [
+        {
+          "id": "correct-0",
+          "text": "The data shows the forum reply about diesel engine maintenance is human-written, at 94% confidence, attributed to no model detected, with perplexity 96.4 and burstiness 0.88.",
+          "quality": 1
+        },
+        {
+          "id": "correct-1",
+          "text": "Assessment: human-written. Confidence 94%. Model no model detected. Perplexity 96.4. Burstiness 0.88.",
+          "quality": 1
+        },
+        {
+          "id": "correct-2",
+          "text": "The forum reply about diesel engine maintenance reads as human-written (94% confidence; no model detected; perplexity 96.4; burstiness 0.88).",
+          "quality": 1
+        },
+        {
+          "id": "correct-verbatim",
+          "text": "The submitted forum reply about diesel engine maintenance is assessed as human-written with 94% detector confidence. Attribution: no model detected. Mean perplexity 96.4, burstiness 0.88.",
+          "quality": 1
+        },
+        {
+          "id": "wrong-verdict",
+          "text": "The submitted forum reply about diesel engine maintenance is assessed as AI-generated with 94% detector confidence. Attribution: no model detected. Mean perplexity 96.4, burstiness 0.88.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-confidence",
+          "text": "The submitted forum reply about diesel engine maintenance is assessed as human-written with 6% detector confidence. Attribution: no model detected. Mean perplexity 96.4, burstiness 0.88.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-model",
+          "text": "The submitted forum reply about diesel engine maintenance is assessed as human-written with 94% detector confidence. Attribution: GPT-4. Mean perplexity 96.4, burstiness 0.88.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-perplexity",
+          "text": "The submitted forum reply about diesel engine maintenance is assessed as human-written with 94% detector confidence. Attribution: no model detected. Mean perplexity 356.7, burstiness 0.88.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-burstiness",
+          "text": "The submitted forum reply about diesel engine maintenance is assessed as human-written with 94% detector confidence. Attribution: no model detected. Mean perplexity 96.4, burstiness 0.12.",
+          "quality": 0
+        }
+      ],
+      "pairs": [
+        [
+          "correct-0",
+          "wrong-verdict"
+        ],
+        [
+          "correct-0",
+          "wrong-confidence"
+        ],
+        [
+          "correct-0",
+          "wrong-model"
+        ],
+        [
+          "correct-0",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-0",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-1",
+          "wrong-verdict"
+        ],
+        [
+          "correct-1",
+          "wrong-confidence"
+        ],
+        [
+          "correct-1",
+          "wrong-model"
+        ],
+        [
+          "correct-1",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-1",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-2",
+          "wrong-verdict"
+        ],
+        [
+          "correct-2",
+          "wrong-confidence"
+        ],
+        [
+          "correct-2",
+          "wrong-model"
+        ],
+        [
+          "correct-2",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-2",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-verdict"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-confidence"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-model"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-burstiness"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-0",
+            "correct-1",
+            "correct-2",
+            "correct-verbatim"
+          ],
+          "tolerance": 0.05,
+          "note": "all correct phrasings carry the same verdict, model and figures"
+        }
+      ]
+    },
+    {
+      "intent": "TEXT_AUTHENTICITY_CHECK",
+      "id": "tac-cleanpair-10",
+      "class": "CLEAN-PAIR",
+      "question": "Is the travel guide section on Hampi authentic human writing or AI-generated?",
+      "ground_truth": "The submitted travel guide section on Hampi is assessed as AI-generated with 81% detector confidence. Attribution: Gemini. Mean perplexity 20.3, burstiness 0.24.",
+      "answers": [
+        {
+          "id": "correct-0",
+          "text": "The data shows the travel guide section on Hampi is AI-generated, at 81% confidence, attributed to Gemini, with perplexity 20.3 and burstiness 0.24.",
+          "quality": 1
+        },
+        {
+          "id": "correct-1",
+          "text": "Assessment: AI-generated. Confidence 81%. Model Gemini. Perplexity 20.3. Burstiness 0.24.",
+          "quality": 1
+        },
+        {
+          "id": "correct-2",
+          "text": "The travel guide section on Hampi reads as AI-generated (81% confidence; Gemini; perplexity 20.3; burstiness 0.24).",
+          "quality": 1
+        },
+        {
+          "id": "correct-verbatim",
+          "text": "The submitted travel guide section on Hampi is assessed as AI-generated with 81% detector confidence. Attribution: Gemini. Mean perplexity 20.3, burstiness 0.24.",
+          "quality": 1
+        },
+        {
+          "id": "wrong-verdict",
+          "text": "The submitted travel guide section on Hampi is assessed as human-written with 81% detector confidence. Attribution: Gemini. Mean perplexity 20.3, burstiness 0.24.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-confidence",
+          "text": "The submitted travel guide section on Hampi is assessed as AI-generated with 19% detector confidence. Attribution: Gemini. Mean perplexity 20.3, burstiness 0.24.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-model",
+          "text": "The submitted travel guide section on Hampi is assessed as AI-generated with 81% detector confidence. Attribution: GPT-3.5. Mean perplexity 20.3, burstiness 0.24.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-perplexity",
+          "text": "The submitted travel guide section on Hampi is assessed as AI-generated with 81% detector confidence. Attribution: Gemini. Mean perplexity 75.1, burstiness 0.24.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-burstiness",
+          "text": "The submitted travel guide section on Hampi is assessed as AI-generated with 81% detector confidence. Attribution: Gemini. Mean perplexity 20.3, burstiness 0.76.",
+          "quality": 0
+        }
+      ],
+      "pairs": [
+        [
+          "correct-0",
+          "wrong-verdict"
+        ],
+        [
+          "correct-0",
+          "wrong-confidence"
+        ],
+        [
+          "correct-0",
+          "wrong-model"
+        ],
+        [
+          "correct-0",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-0",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-1",
+          "wrong-verdict"
+        ],
+        [
+          "correct-1",
+          "wrong-confidence"
+        ],
+        [
+          "correct-1",
+          "wrong-model"
+        ],
+        [
+          "correct-1",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-1",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-2",
+          "wrong-verdict"
+        ],
+        [
+          "correct-2",
+          "wrong-confidence"
+        ],
+        [
+          "correct-2",
+          "wrong-model"
+        ],
+        [
+          "correct-2",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-2",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-verdict"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-confidence"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-model"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-burstiness"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-0",
+            "correct-1",
+            "correct-2",
+            "correct-verbatim"
+          ],
+          "tolerance": 0.05,
+          "note": "all correct phrasings carry the same verdict, model and figures"
+        }
+      ]
+    },
+    {
+      "intent": "TEXT_AUTHENTICITY_CHECK",
+      "id": "tac-cleanpair-11",
+      "class": "CLEAN-PAIR",
+      "question": "Is the obituary published in a regional paper authentic human writing or AI-generated?",
+      "ground_truth": "The submitted obituary published in a regional paper is assessed as human-written with 86% detector confidence. Attribution: no model detected. Mean perplexity 70.1, burstiness 0.79.",
+      "answers": [
+        {
+          "id": "correct-0",
+          "text": "The data shows the obituary published in a regional paper is human-written, at 86% confidence, attributed to no model detected, with perplexity 70.1 and burstiness 0.79.",
+          "quality": 1
+        },
+        {
+          "id": "correct-1",
+          "text": "Assessment: human-written. Confidence 86%. Model no model detected. Perplexity 70.1. Burstiness 0.79.",
+          "quality": 1
+        },
+        {
+          "id": "correct-2",
+          "text": "The obituary published in a regional paper reads as human-written (86% confidence; no model detected; perplexity 70.1; burstiness 0.79).",
+          "quality": 1
+        },
+        {
+          "id": "correct-verbatim",
+          "text": "The submitted obituary published in a regional paper is assessed as human-written with 86% detector confidence. Attribution: no model detected. Mean perplexity 70.1, burstiness 0.79.",
+          "quality": 1
+        },
+        {
+          "id": "wrong-verdict",
+          "text": "The submitted obituary published in a regional paper is assessed as AI-generated with 86% detector confidence. Attribution: no model detected. Mean perplexity 70.1, burstiness 0.79.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-confidence",
+          "text": "The submitted obituary published in a regional paper is assessed as human-written with 14% detector confidence. Attribution: no model detected. Mean perplexity 70.1, burstiness 0.79.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-model",
+          "text": "The submitted obituary published in a regional paper is assessed as human-written with 86% detector confidence. Attribution: GPT-4. Mean perplexity 70.1, burstiness 0.79.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-perplexity",
+          "text": "The submitted obituary published in a regional paper is assessed as human-written with 86% detector confidence. Attribution: no model detected. Mean perplexity 259.4, burstiness 0.79.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-burstiness",
+          "text": "The submitted obituary published in a regional paper is assessed as human-written with 86% detector confidence. Attribution: no model detected. Mean perplexity 70.1, burstiness 0.21.",
+          "quality": 0
+        }
+      ],
+      "pairs": [
+        [
+          "correct-0",
+          "wrong-verdict"
+        ],
+        [
+          "correct-0",
+          "wrong-confidence"
+        ],
+        [
+          "correct-0",
+          "wrong-model"
+        ],
+        [
+          "correct-0",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-0",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-1",
+          "wrong-verdict"
+        ],
+        [
+          "correct-1",
+          "wrong-confidence"
+        ],
+        [
+          "correct-1",
+          "wrong-model"
+        ],
+        [
+          "correct-1",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-1",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-2",
+          "wrong-verdict"
+        ],
+        [
+          "correct-2",
+          "wrong-confidence"
+        ],
+        [
+          "correct-2",
+          "wrong-model"
+        ],
+        [
+          "correct-2",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-2",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-verdict"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-confidence"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-model"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-burstiness"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-0",
+            "correct-1",
+            "correct-2",
+            "correct-verbatim"
+          ],
+          "tolerance": 0.05,
+          "note": "all correct phrasings carry the same verdict, model and figures"
+        }
+      ]
+    },
+    {
+      "intent": "TEXT_AUTHENTICITY_CHECK",
+      "id": "tac-cleanpair-12",
+      "class": "CLEAN-PAIR",
+      "question": "Is the technical README for a Rust crate authentic human writing or AI-generated?",
+      "ground_truth": "The submitted technical README for a Rust crate is assessed as AI-generated with 76% detector confidence. Attribution: Claude. Mean perplexity 24.8, burstiness 0.33.",
+      "answers": [
+        {
+          "id": "correct-0",
+          "text": "The data shows the technical README for a Rust crate is AI-generated, at 76% confidence, attributed to Claude, with perplexity 24.8 and burstiness 0.33.",
+          "quality": 1
+        },
+        {
+          "id": "correct-1",
+          "text": "Assessment: AI-generated. Confidence 76%. Model Claude. Perplexity 24.8. Burstiness 0.33.",
+          "quality": 1
+        },
+        {
+          "id": "correct-2",
+          "text": "The technical README for a Rust crate reads as AI-generated (76% confidence; Claude; perplexity 24.8; burstiness 0.33).",
+          "quality": 1
+        },
+        {
+          "id": "correct-verbatim",
+          "text": "The submitted technical README for a Rust crate is assessed as AI-generated with 76% detector confidence. Attribution: Claude. Mean perplexity 24.8, burstiness 0.33.",
+          "quality": 1
+        },
+        {
+          "id": "wrong-verdict",
+          "text": "The submitted technical README for a Rust crate is assessed as human-written with 76% detector confidence. Attribution: Claude. Mean perplexity 24.8, burstiness 0.33.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-confidence",
+          "text": "The submitted technical README for a Rust crate is assessed as AI-generated with 24% detector confidence. Attribution: Claude. Mean perplexity 24.8, burstiness 0.33.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-model",
+          "text": "The submitted technical README for a Rust crate is assessed as AI-generated with 76% detector confidence. Attribution: GPT-4. Mean perplexity 24.8, burstiness 0.33.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-perplexity",
+          "text": "The submitted technical README for a Rust crate is assessed as AI-generated with 76% detector confidence. Attribution: Claude. Mean perplexity 91.8, burstiness 0.33.",
+          "quality": 0
+        },
+        {
+          "id": "wrong-burstiness",
+          "text": "The submitted technical README for a Rust crate is assessed as AI-generated with 76% detector confidence. Attribution: Claude. Mean perplexity 24.8, burstiness 0.67.",
+          "quality": 0
+        }
+      ],
+      "pairs": [
+        [
+          "correct-0",
+          "wrong-verdict"
+        ],
+        [
+          "correct-0",
+          "wrong-confidence"
+        ],
+        [
+          "correct-0",
+          "wrong-model"
+        ],
+        [
+          "correct-0",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-0",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-1",
+          "wrong-verdict"
+        ],
+        [
+          "correct-1",
+          "wrong-confidence"
+        ],
+        [
+          "correct-1",
+          "wrong-model"
+        ],
+        [
+          "correct-1",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-1",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-2",
+          "wrong-verdict"
+        ],
+        [
+          "correct-2",
+          "wrong-confidence"
+        ],
+        [
+          "correct-2",
+          "wrong-model"
+        ],
+        [
+          "correct-2",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-2",
+          "wrong-burstiness"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-verdict"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-confidence"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-model"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-perplexity"
+        ],
+        [
+          "correct-verbatim",
+          "wrong-burstiness"
+        ]
+      ],
+      "constraints": [
+        {
+          "type": "near_equal",
+          "ids": [
+            "correct-0",
+            "correct-1",
+            "correct-2",
+            "correct-verbatim"
+          ],
+          "tolerance": 0.05,
+          "note": "all correct phrasings carry the same verdict, model and figures"
+        }
+      ]
+    }
+  ]
+}

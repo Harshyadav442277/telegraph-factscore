@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "intent": "TEXT_AUTHENTICITY_CHECK",
+  "artifact": "dist/text_authenticity.wasm",
+  "bytes": 25887,
+  "sha256": "e7bb15f12e55aa5a0cb8fa30f5d2d5a21a3027d026b207d3d8563d2ae2ae52b6",
+  "keccak256": "bdd3fea5deb7ce2a48663aa7ec63d5a295ade30c4c2bb2d3254031cb04cdca0f",
+  "toolchain": {
+    "rustc": "1.98.0",
+    "target": "wasm32-unknown-unknown",
+    "feature": "text-authenticity"
+  },
+  "offline_evidence": {
+    "corpus_version": "3a30a0fff08c62a3",
+    "native_fixtures": 16,
+    "native_pairs": 256,
+    "native_wins": 256,
+    "native_margin": 0.973844,
+    "metamorphic_holdout_pairs": 20,
+    "metamorphic_holdout_wins": 20,
+    "metamorphic_holdout_mean_margin": 0.757994,
+    "metamorphic_pre_fix_wins": 10,
+    "metamorphic_pre_fix_mean_margin": 0.211152,
+    "content_verification_holdout_pairs": 144,
+    "content_verification_holdout_wins": 144,
+    "content_verification_holdout_margin": 0.963445,
+    "independent_verifier": {
+      "repository": "https://github.com/neromtoobad/telegraph-wasm-check",
+      "commit": "f537c7c085e9d3366c5615fe1ad1f98a0abeff7c",
+      "artifact_sha256": "e7bb15f12e55aa5a0cb8fa30f5d2d5a21a3027d026b207d3d8563d2ae2ae52b6",
+      "custom_cases": 16,
+      "seeded_fuzz_cases": 500,
+      "hard_failures": 0,
+      "soft_failures": 0
+    }
+  },
+  "network_state_at_freeze": {
+    "checked_at": "2026-08-28T20:01:05+05:30",
+    "incumbent_registration_id": 850,
+    "incumbent_margin": 0.65861213,
+    "incumbent_wins": 14,
+    "incumbent_comparable_cases": 15,
+    "historical_rows": 0,
+    "author_registration_count": 0
+  },
+  "publication": {
+    "status": "unpublished",
+    "hosted_url": null,
+    "source_commit": null,
+    "hosted_bytes_verified": false,
+    "onchain_registration_id": null
+  }
+}

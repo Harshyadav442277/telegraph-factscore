@@ -6,8 +6,6 @@
 //! **neutral**, not wrong - we score precision of what the answer asserts, not
 //! recall of the truth (ARCHITECTURE A3.8).
 
-#![allow(dead_code)]
-
 use crate::bytes::*;
 use crate::profile::Profile;
 use crate::sets::Set;

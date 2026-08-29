@@ -1,0 +1,39 @@
+name: scorer-ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: dtolnay/rust-toolchain@1.98.0
+        with:
+          targets: wasm32-unknown-unknown
+          components: clippy,rustfmt
+      - run: cargo fmt --check
+      - name: Test and lint every intent profile
+        run: |
+          cargo test
+          cargo clippy --all-targets -- -D warnings
+          for feature in ip-geolocation storm-alert content-verification text-authenticity; do
+            cargo test --no-default-features --features "$feature"
+            cargo clippy --all-targets --no-default-features --features "$feature" -- -D warnings
+          done
+      - name: Reproduce the frozen registration artifact
+        run: |
+          cargo build --release --target wasm32-unknown-unknown --no-default-features --features text-authenticity
+          cmp target/wasm32-unknown-unknown/release/scorer.wasm dist/text_authenticity.wasm
+          node verify.mjs dist/text_authenticity.wasm
+          node harness/check-tac.mjs dist/text_authenticity.wasm
+          node release/probe-negation.mjs dist/text_authenticity.wasm
+          node release/verify-standalone.mjs .

@@ -26,7 +26,9 @@ const check = (ok, label, detail = "") => {
 
 console.log(`module:     ${wasmPath}`);
 console.log(`size:       ${bytes.length} bytes`);
-const tag = Buffer.from(bytes).toString("latin1").match(/(IP_GEOLOCATION|STORM_ALERT|GENERIC)/);
+const tag = Buffer.from(bytes)
+  .toString("latin1")
+  .match(/(IP_GEOLOCATION|STORM_ALERT|CONTENT_VERIFICATION|TEXT_AUTHENTICITY_CHECK|GENERIC)/);
 console.log(`intent tag: ${tag ? tag[1] : "(none)"}`);
 console.log("");
 
@@ -154,4 +156,7 @@ check(Object.is(a1, a2), "no scratch state leaks between calls", `${a1} == ${a2}
 
 console.log("");
 console.log(failures === 0 ? `ALL CHECKS PASSED (${wasmPath})` : `${failures} CHECK(S) FAILED`);
-process.exit(failures === 0 ? 0 : 1);
+// Let Node unwind normally. `process.exit()` can tear down Windows libuv while
+// the WebAssembly runtime still owns an async handle, producing a false
+// assertion after a completely green verification run.
+process.exitCode = failures === 0 ? 0 : 1;
