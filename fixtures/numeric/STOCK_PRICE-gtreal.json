@@ -1,0 +1,170 @@
+{
+ "intent": "STOCK_PRICE",
+ "class": "GT-VS-REAL",
+ "built": "2026-08-29T10:15:37.970Z",
+ "provenance": {
+  "source": "scores-api",
+  "rows": 82,
+  "questions": 20,
+  "skipped_no_target": 1
+ },
+ "construction": {
+  "good": "the ground truth's own first-sentence assertion",
+  "bad": "verbatim recorded miner answers whose every stated quantity is >=1% from the ground truth's",
+  "note": "no wording authored by us on either side; the live score never decides a label"
+ },
+ "cases": [
+  {
+   "id": "stock_price-gtreal-1",
+   "question": "What is the current share price of Apple Inc. (AAPL) as retrieved by the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of Apple Inc. (AAPL) is **319.70** USD as of August 28, 2026, at 12:59 PM PDT, according to Investing.com and Nasdaq data. \n\nOther sources show slight variations due to market timing and data feeds, but the consensus around this price point is strong.",
+   "target": 319.7,
+   "good": [
+    {
+     "text": "The current share price of Apple Inc.",
+     "source": "ground-truth assertion"
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows the stock performance of AAPL on August 25, 2026, with a closing price of $309.90, down by $0.44 (-0.1418%) from the previous close of $310.34, and a trading volume of 25,869,807 shares. The day's trading range was between a low of $308.21 and a high of $313.59.",
+     "miner": "alphavantage",
+     "liveScore": 0.008790774,
+     "relError": 0.019112
+    }
+   ]
+  },
+  {
+   "id": "stock_price-gtreal-2",
+   "question": "What is the current share price of Microsoft (MSFT) as retrieved by the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of Microsoft (MSFT) is **$496.35** as retrieved by the GLOBAL_QUOTE function.",
+   "target": 496.35,
+   "good": [
+    {
+     "text": "The current share price of Microsoft (MSFT) is $496.35 as retrieved by the GLOBAL_QUOTE function.",
+     "source": "ground-truth assertion"
+    }
+   ],
+   "bad": [
+    {
+     "text": "The current share price of Microsoft (MSFT) is $502.85 USD, with a 1.31% increase over the last 24 hours.",
+     "miner": "chainsight-oracle",
+     "liveScore": 0.006779344,
+     "relError": 0.013096
+    },
+    {
+     "text": "The data shows the current price of Microsoft (MSFT) stock on the NASDAQ exchange, as of August 27, 2026, at $502.98 USD.",
+     "miner": "txlens",
+     "liveScore": 0.005734603,
+     "relError": 0.013358
+    }
+   ]
+  },
+  {
+   "id": "stock_price-gtreal-3",
+   "question": "What is the current share price of Microsoft (MSFT) as retrieved via the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of Microsoft (MSFT) is **$496.35** as of the latest timestamp on August 26, 2026, at 19:59:59 UTC-0 (12:59:59 PM Pacific Time).\n\nAdditional recent data points include:\n- **$496.37** as of August 26, 2026, at 12:59 PM PDT.\n- **$495.42** as of August 26, 2026, at 09:18 AM PDT.\n- **$495.17** as of August 25, 2026, at 11:20:25 AM EDT.\n\nThese values reflect minor fluctuations throughout recent trading sessions, with the most recent consolidated price at **$496.35** based on the latest available market data.",
+   "target": 496.35,
+   "good": [
+    {
+     "text": "The current share price of Microsoft (MSFT) is $496.35 as of the latest timestamp on August 26, 2026, at 19:59:59 UTC-0 (12:59:59 PM Pacific Time).",
+     "source": "ground-truth assertion"
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows that Microsoft's (MSFT) current share price is $487.31 USD, with a 24-hour change of +0.84%, opening at $483.205, and ranging between a high of $490.605 and a low of $481.86.",
+     "miner": "chainsight-oracle",
+     "liveScore": 0.008821338,
+     "relError": 0.011574
+    },
+    {
+     "text": "The data shows the current stock information for Microsoft (MSFT) with a current price of $487.31, a trading volume of 17,230,751 shares, and a 0.8422% increase from the previous close of $483.24.",
+     "miner": "alphavantage",
+     "liveScore": 0.0052452767,
+     "relError": 0.018213
+    }
+   ]
+  },
+  {
+   "id": "stock_price-gtreal-4",
+   "question": "What is the current share price of Microsoft (MSFT) as retrieved through the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of Microsoft (MSFT) is $496.35 as of August 26, 2026, at 12:59:59 PM Pacific Time.",
+   "target": 496.35,
+   "good": [
+    {
+     "text": "The current share price of Microsoft (MSFT) is $496.35 as of August 26, 2026, at 12:59:59 PM Pacific Time.",
+     "source": "ground-truth assertion"
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows Microsoft's (MSFT) current share price at $483.24 with a 24-hour change of +0.43%, opening at $479.88, reaching a high of $486.36, a low of $478.53, and a previous close of $481.15.",
+     "miner": "chainsight-oracle",
+     "liveScore": 0.66840833,
+     "relError": 0.020127
+    }
+   ]
+  },
+  {
+   "id": "stock_price-gtreal-5",
+   "question": "What is the current share price of Apple (AAPL) as retrieved by the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of Apple (AAPL) is **$313.12** as retrieved by the GLOBAL_QUOTE function.",
+   "target": 313.12,
+   "good": [
+    {
+     "text": "The current share price of Apple (AAPL) is $313.12 as retrieved by the GLOBAL_QUOTE function.",
+     "source": "ground-truth assertion"
+    }
+   ],
+   "bad": [
+    {
+     "text": "This data shows the current price of Apple Inc. (AAPL) stock at $309.90, with a 0.14% decrease from the previous day's close.",
+     "miner": "alphavantage",
+     "liveScore": 0.005633443,
+     "relError": 0.010284
+    }
+   ]
+  },
+  {
+   "id": "stock_price-gtreal-6",
+   "question": "What is the current share price of Microsoft () using the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of Microsoft (MSFT) is **$491.54** as of August 25, 2026, at 19:59:55 UTC.",
+   "target": 491.54,
+   "good": [
+    {
+     "text": "The current share price of Microsoft (MSFT) is $491.54 as of August 25, 2026, at 19:59:55 UTC.",
+     "source": "ground-truth assertion"
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows the current stock information for Microsoft (MSFT) with an open price of 483.30, high of 484.16, low of 479.50, and the latest price at 481.15, along with a trading volume of 20,020,822 shares, a previous close of 483.3958, and a change of -2.2458 (-0.4646%).",
+     "miner": "alphavantage",
+     "liveScore": 0.31320256,
+     "relError": 0.015014
+    }
+   ]
+  },
+  {
+   "id": "stock_price-gtreal-7",
+   "question": "What is the current share price of as retrieved by the GLOBAL_QUOTE function?",
+   "groundTruth": "The current share price of AS (Amer Sports) as retrieved by the GLOBAL_QUOTE function is **$32.61** USD, as of August 21, 2026, at 12:59 PM Pacific Time",
+   "target": 32.61,
+   "good": [
+    {
+     "text": "The current share price of AS (Amer Sports) as retrieved by the GLOBAL_QUOTE function is $32.61 USD, as of August 21, 2026, at 12:59 PM Pacific Time",
+     "source": "ground-truth assertion"
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows the current stock information for Apple Inc. (AAPL) with an open price of 312.05, a high of 312.38, a low of 307.01, and a current price of 309.35, along with a trading volume of 46,876,815 shares, a previous close of 311.30, and a change of -1.95 (-0.6264%).",
+     "miner": "alphavantage",
+     "liveScore": 0.0024277358,
+     "relError": 0.940202
+    }
+   ]
+  }
+ ]
+}
