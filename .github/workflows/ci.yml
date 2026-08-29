@@ -36,4 +36,5 @@ jobs:
           node verify.mjs dist/text_authenticity.wasm
           node harness/check-tac.mjs dist/text_authenticity.wasm
           node release/probe-negation.mjs dist/text_authenticity.wasm
+          node release/probe-model-aliases.mjs dist/text_authenticity.wasm
           node release/verify-standalone.mjs .

@@ -14,7 +14,7 @@ This submission replaces vocabulary proximity with assertion-level agreement. Th
 | Native TAC clean pairs | **240/240** | 21/240 |
 | Native TAC clean-pair margin | **0.970427** | -0.165231 |
 | Label-equivalence pairs | **16/16** | 12/16 |
-| Combined separation | **0.973844** | -0.124818 |
+| Combined separation | **0.973658** | -0.124818 |
 | Content-verification holdout | **144/144** | not the comparison target |
 
 These are offline, reproducible measurements against the exact pinned incumbent WASM—not claims
@@ -59,14 +59,13 @@ chosen by focused manual review.
 
 ### 30% — robustness and code quality
 
-- 25,887-byte freestanding `wasm32-unknown-unknown` module, zero imports.
+- 30,011-byte freestanding `wasm32-unknown-unknown` module, zero imports.
 - Pinned Rust 1.98.0 build reproduces the frozen SHA byte-for-byte.
-- Tests plus `clippy -D warnings` pass for all five compiled profiles: 79 / 80 / 71 / 79 / 79.
+- The release profile passes 84 Rust tests plus `clippy -D warnings`.
 - Local verifier covers ABI arity, blank/Unicode/NUL/large inputs, allocation, range, determinism,
   self-match and semantic separation.
-- Independent `telegraph-wasm-check` commit `f537c7c` reports 17/17 structural checks, 14/14
-  robustness checks, 500 seeded fuzz triples, fresh-instance determinism, approximately 800 µs
-  per 128 KiB call, zero sustained memory growth and 16/16 custom TAC cases.
+- Independent `telegraph-wasm-check` commit `f537c7c` verified the superseded v1.0.0 artifact;
+  those results are not claimed for the v1.1.0 bytes.
 - CI rebuilds the real registration feature and fails if size or SHA-256 drifts from the release
   manifest.
 - `node harness/check-tac.mjs path/to/module.wasm` gives any TAC author a zero-install,
@@ -74,7 +73,7 @@ chosen by focused manual review.
   the exact incumbent fails at 33/256, so the tool discriminates rather than rubber-stamping both.
 - A separate 20-pair metamorphic set was never loaded by the public checker. It exposed ten
   negation inversions in the prior candidate (`not AI`, `not human`, `not original`, and negated
-  answers). The release passes 20/20 at mean margin 0.757994; the rejected broad shortcut that
+  answers). The release passes 20/20 at mean margin 0.757995; the rejected broad shortcut that
   hid an invented model is retained in the worklog as evidence of adversarial selection.
 
 ### 20% — public evidence, never fabricated
@@ -89,9 +88,9 @@ every claim in the diverged fork. No stars, testimonials, or benchmark issues ar
 
 ```text
 artifact   dist/text_authenticity.wasm
-bytes      25887
-sha256     1a0f191b57ed06421bf2ad067863261f515927b9d8bbc53e4e01ed99aa5fc634
-keccak256  67da3ac8c06529a4ac44044bcf04471dd7d6c62fc97ca34fdd364a8feceb53aa
+bytes      30011
+sha256     8d8d690628d2cfcd52359f1bb1bfcd882456fc1198b80237ad74c1276a4ae8fe
+keccak256  8599d78b039870628b67bb8e855cd6f93fc337eb0e569d786d16fa13036e9938
 ```
 
 The Keccak implementation was checked by reproducing registration 850's public on-chain hash.

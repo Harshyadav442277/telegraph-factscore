@@ -31,6 +31,7 @@ const REQUIRED = [
   "harness/wasm-abi.mjs",
   "release/README.md",
   "release/probe-negation.mjs",
+  "release/probe-model-aliases.mjs",
   "release/text-authenticity.json",
   "release/verify-standalone.mjs",
   "rust-toolchain.toml",

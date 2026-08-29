@@ -10,11 +10,11 @@ equivalent answer above every paired one-fact counterfactual or opposite verdict
 
 | Role | Bytes | SHA-256 |
 |---|---:|---|
-| Candidate `dist/text_authenticity.wasm` | 25,887 | `1a0f191b57ed06421bf2ad067863261f515927b9d8bbc53e4e01ed99aa5fc634` |
+| Candidate `dist/text_authenticity.wasm` | 30,011 | `8d8d690628d2cfcd52359f1bb1bfcd882456fc1198b80237ad74c1276a4ae8fe` |
 | Incumbent registration 850 | 23,987,851 | `432ae4423edd24ea74d8529fef8bf61d50ccc6622da94619482f9213b1f32395` |
 
-The candidate artifact is published at commit `5728366ebc846faf2b81814be3b1dbec35f1c727`:
-<https://raw.githubusercontent.com/Harshyadav442277/telegraph-factscore/5728366ebc846faf2b81814be3b1dbec35f1c727/dist/text_authenticity.wasm>.
+The candidate artifact is published at commit `409911f351b4778555ac5bb03c9a6d6bba69ae58`:
+<https://raw.githubusercontent.com/Harshyadav442277/telegraph-factscore/409911f351b4778555ac5bb03c9a6d6bba69ae58/dist/text_authenticity.wasm>.
 A fresh download reproduced the bound byte length, SHA-256 and Keccak-256, and the Linux CI build
 reproduced the tracked WASM byte-for-byte.
 
@@ -44,7 +44,7 @@ rendered from the same fact record, preventing fluency or length from revealing 
 | All pair wins | **256/256** | 33/256 |
 | Mean good score | 0.996997 | 0.787247 |
 | Mean bad score | 0.023152 | 0.912065 |
-| Separation | **+0.973844** | -0.124818 |
+| Separation | **+0.973658** | -0.124818 |
 | Score standard deviation | 0.485381 | 0.348862 |
 | Worst self-match | 1.0 | 1.0 |
 | Clean-pair wins | **240/240** | 21/240 |
@@ -54,7 +54,7 @@ rendered from the same fact record, preventing fluency or length from revealing 
 An out-of-corpus negation probe then tested positive and negative forms of AI/human and
 original/copied verdicts, probability scaling, attribution, and multi-axis sentences. The prior
 candidate inverted 10 of 20 comparisons, with worst margin `-0.999137`; the release passes 20/20
-at mean margin `0.757994`. The probe is retained at `release/probe-negation.mjs` and is
+at mean margin `0.757995`. The probe is retained at `release/probe-negation.mjs` and is
 deliberately not part of the benchmark corpus used to report the 256/256 result.
 
 The candidate passes all applicable public promotion-proxy conditions; the history-based Spearman
@@ -83,10 +83,11 @@ node harness/run-eval.mjs \
   --intent TEXT_AUTHENTICITY_CHECK
 ```
 
-Independent structural and adversarial verification is recorded at commit
+Independent structural and adversarial verification of the superseded v1.0.0 artifact is recorded at commit
 [`f537c7c`](https://github.com/neromtoobad/telegraph-wasm-check/commit/f537c7c085e9d3366c5615fe1ad1f98a0abeff7c):
 17/17 structural checks, 14/14 robustness checks, 500 seeded fuzz triples, fresh-instance
-determinism, bounded memory, and 16/16 submitted custom cases, with no hard or soft failures.
+determinism, bounded memory, and 16/16 submitted custom cases, with no hard or soft failures. Those
+results are historical evidence, not verification of the v1.1.0 bytes.
 
 ## Evidence boundary
 

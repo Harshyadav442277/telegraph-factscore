@@ -1,14 +1,14 @@
 # Telegraph fact-aware scorer — TEXT_AUTHENTICITY_CHECK
 
-This repository contains one registration artifact: a 25,887-byte freestanding WebAssembly
+This repository contains one registration artifact: a 30,011-byte freestanding WebAssembly
 scorer for Telegraph's `TEXT_AUTHENTICITY_CHECK` intent.
 
 Published artifact commit:
-[`5728366`](https://github.com/Harshyadav442277/telegraph-factscore/commit/5728366ebc846faf2b81814be3b1dbec35f1c727).
+[`409911f`](https://github.com/Harshyadav442277/telegraph-factscore/commit/409911f351b4778555ac5bb03c9a6d6bba69ae58).
 The commit-pinned raw download was independently re-fetched and reproduced the byte length and
 both hashes shown below. GitHub's Linux workflow rebuilt those exact bytes from source.
 The stable reviewer entry point is the
-[`tac-v1.0.0` release](https://github.com/Harshyadav442277/telegraph-factscore/releases/tag/tac-v1.0.0).
+[`tac-v1.1.0` release](https://github.com/Harshyadav442277/telegraph-factscore/releases/tag/tac-v1.1.0).
 
 The incumbent can score a one-word wrong verdict almost identically to the truth. This scorer
 compares assertion meaning instead: verdict polarity, equivalent labels, named-model attribution,
@@ -20,7 +20,7 @@ when the surrounding prose is unchanged.
 | Public reproducible evidence | This scorer | Incumbent reg. 850 |
 |---|---:|---:|
 | Correct-over-counterfactual pairs | **256/256** | 33/256 |
-| Separation, mean good minus mean bad | **+0.973844** | -0.124818 |
+| Separation, mean good minus mean bad | **+0.973658** | -0.124818 |
 | Clean-pair verdict/fact comparisons | **240/240** | 21/240 |
 | Equivalent-label comparisons | **16/16** | 12/16 |
 | Equivalent-answer constraints | **16/16** | 4/16 |
@@ -67,15 +67,15 @@ cmp target/wasm32-unknown-unknown/release/scorer.wasm dist/text_authenticity.was
 Frozen identity:
 
 ```text
-bytes      25887
-sha256     1a0f191b57ed06421bf2ad067863261f515927b9d8bbc53e4e01ed99aa5fc634
-keccak256  67da3ac8c06529a4ac44044bcf04471dd7d6c62fc97ca34fdd364a8feceb53aa
+bytes      30011
+sha256     8d8d690628d2cfcd52359f1bb1bfcd882456fc1198b80237ad74c1276a4ae8fe
+keccak256  8599d78b039870628b67bb8e855cd6f93fc337eb0e569d786d16fa13036e9938
 ```
 
 Commit-pinned registration URL:
 
 ```text
-https://raw.githubusercontent.com/Harshyadav442277/telegraph-factscore/5728366ebc846faf2b81814be3b1dbec35f1c727/dist/text_authenticity.wasm
+https://raw.githubusercontent.com/Harshyadav442277/telegraph-factscore/409911f351b4778555ac5bb03c9a6d6bba69ae58/dist/text_authenticity.wasm
 ```
 
 ## Design

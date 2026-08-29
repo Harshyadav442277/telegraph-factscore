@@ -2,9 +2,9 @@
   "schema_version": 1,
   "intent": "TEXT_AUTHENTICITY_CHECK",
   "artifact": "dist/text_authenticity.wasm",
-  "bytes": 25887,
-  "sha256": "1a0f191b57ed06421bf2ad067863261f515927b9d8bbc53e4e01ed99aa5fc634",
-  "keccak256": "67da3ac8c06529a4ac44044bcf04471dd7d6c62fc97ca34fdd364a8feceb53aa",
+  "bytes": 30011,
+  "sha256": "8d8d690628d2cfcd52359f1bb1bfcd882456fc1198b80237ad74c1276a4ae8fe",
+  "keccak256": "8599d78b039870628b67bb8e855cd6f93fc337eb0e569d786d16fa13036e9938",
   "toolchain": {
     "rustc": "1.98.0",
     "target": "wasm32-unknown-unknown",
@@ -15,24 +15,19 @@
     "native_fixtures": 16,
     "native_pairs": 256,
     "native_wins": 256,
-    "native_margin": 0.973844,
+    "native_margin": 0.973658,
     "metamorphic_holdout_pairs": 20,
     "metamorphic_holdout_wins": 20,
-    "metamorphic_holdout_mean_margin": 0.757994,
+    "metamorphic_holdout_mean_margin": 0.757995,
     "metamorphic_pre_fix_wins": 10,
     "metamorphic_pre_fix_mean_margin": 0.211152,
     "content_verification_holdout_pairs": 144,
     "content_verification_holdout_wins": 144,
     "content_verification_holdout_margin": 0.963445,
-    "independent_verifier": {
-      "repository": "https://github.com/neromtoobad/telegraph-wasm-check",
-      "commit": "f537c7c085e9d3366c5615fe1ad1f98a0abeff7c",
-      "artifact_sha256": "1a0f191b57ed06421bf2ad067863261f515927b9d8bbc53e4e01ed99aa5fc634",
-      "custom_cases": 16,
-      "seeded_fuzz_cases": 500,
-      "hard_failures": 0,
-      "soft_failures": 0
-    }
+    "model_alias_probe_pairs": 10,
+    "model_alias_probe_wins": 10,
+    "model_alias_probe_mean_margin": 0.846029,
+    "model_alias_pre_fix_wins": 3
   },
   "network_state_at_freeze": {
     "checked_at": "2026-08-29T06:53:15.1827414+05:30",
@@ -45,8 +40,8 @@
   },
   "publication": {
     "status": "published_verified",
-    "hosted_url": "https://raw.githubusercontent.com/Harshyadav442277/telegraph-factscore/5728366ebc846faf2b81814be3b1dbec35f1c727/dist/text_authenticity.wasm",
-    "source_commit": "5728366ebc846faf2b81814be3b1dbec35f1c727",
+    "hosted_url": "https://raw.githubusercontent.com/Harshyadav442277/telegraph-factscore/409911f351b4778555ac5bb03c9a6d6bba69ae58/dist/text_authenticity.wasm",
+    "source_commit": "409911f351b4778555ac5bb03c9a6d6bba69ae58",
     "hosted_bytes_verified": true,
     "onchain_registration_id": null
   }
