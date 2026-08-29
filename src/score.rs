@@ -17,6 +17,7 @@
 use crate::aliases::{code_for_name, is_country_code, name_for_code};
 use crate::bytes::*;
 use crate::facts::{best_agreement, fact_multiplier};
+use crate::models::{claim as model_claim, relation as model_relation, Relation};
 use crate::profile::{profile, Profile};
 use crate::sets::{Set, EMPTY_SET};
 use crate::tokens::{mark_boilerplate, tokenize, Toks, EMPTY_TOKS, K_IDENT, K_NUMBER};
@@ -107,9 +108,13 @@ pub fn breakdown(q: &[u8], gt: &[u8], ma: &[u8]) -> Breakdown {
         let (b, c) = rest.split_at_mut(1);
         (&mut a[0], &mut b[0], &mut c[0])
     };
-    tokenize(fold(q, fq), tq);
-    tokenize(fold(gt, fg), tg);
-    tokenize(fold(ma, fa), ta);
+    let fq = fold(q, fq);
+    let fg = fold(gt, fg);
+    let fa = fold(ma, fa);
+    let semantic_models = model_relation(model_claim(fa), model_claim(fg));
+    tokenize(fq, tq);
+    tokenize(fg, tg);
+    tokenize(fa, ta);
     annotate_units(tq);
     annotate_units(tg);
     annotate_units(ta);
@@ -184,6 +189,24 @@ pub fn breakdown(q: &[u8], gt: &[u8], ma: &[u8]) -> Breakdown {
         i += 1;
     }
 
+    // A model name is one semantic slot even when punctuation changes its
+    // generic token classes. Equal canonical claims support every component;
+    // unequal family/version/variant claims remain unsupported and are handled
+    // as categorical contradictions by the polarity channel below.
+    if semantic_models == Relation::Same {
+        let mut i = 0usize;
+        while i < ta.n {
+            if ta.model[i] {
+                ta.supw[i] = 1.0;
+                // There may be no one lexical counterpart (`GPT-4o` vs
+                // `GPT 4o`), so keep this semantic support out of the literal
+                // token-negation pass.
+                ta.supi[i] = 0;
+            }
+            i += 1;
+        }
+    }
+
     // A one-token ground truth is a closed-set verdict, not a bag of prose.
     // Once the answer states one unambiguous equivalent label, presentation
     // words must not dilute it: `ai` and "machine generated" are the same
@@ -207,7 +230,7 @@ pub fn breakdown(q: &[u8], gt: &[u8], ma: &[u8]) -> Breakdown {
     let precision = precision_of(ta, gt_uncovered, &p);
     let answered = answeredness(ta, tg, sq, &p);
     let (fmul, fact_raw) = fact_multiplier(ta, tg, sa, &p);
-    let polarity = polarity_of(ta, tg, &p);
+    let polarity = polarity_of(ta, tg, semantic_models, &p);
 
     // Concave shaping pulls a mostly-right answer up without flattening the
     // middle; p_concave = 0 leaves precision linear.
@@ -408,7 +431,7 @@ fn gt_uncovered_mass(ta: &Toks, tg: &Toks, sa: &Set) -> f32 {
     let mut gt_uncovered = 0.0f32;
     let mut k = 0usize;
     while k < tg.n {
-        if tg.proper[k] {
+        if tg.proper[k] && !tg.model[k] {
             if !sa.contains_tok(tg, k) {
                 gt_uncovered += tg.w[k];
             } else {
@@ -444,7 +467,7 @@ fn entity_agreement(ta: &Toks, tg: &Toks, gt_uncovered: f32, p: &Profile) -> f32
     let (mut supported, mut unsupported) = (0.0f32, 0.0f32);
     let mut i = 0usize;
     while i < ta.n {
-        if ta.proper[i] && !ta.boiler[i] && !ta.echo[i] {
+        if ta.proper[i] && !ta.model[i] && !ta.boiler[i] && !ta.echo[i] {
             if ta.supw[i] > 0.0 {
                 supported += ta.w[i];
             } else if !abstains(ta, i) {
@@ -609,7 +632,7 @@ fn denies_model(t: &Toks) -> bool {
 /// 0.05-weight stopword out of a ~15-token pool and tied at 1.0000 (adversarial
 /// review C2). A supported token whose negation state disagrees with the ground
 /// truth occurrence it matched is not coverage; it is a contradiction.
-fn polarity_of(ta: &Toks, tg: &Toks, p: &Profile) -> f32 {
+fn polarity_of(ta: &Toks, tg: &Toks, semantic_models: Relation, p: &Profile) -> f32 {
     let (mut sup_mass, mut contra_mass) = (0.0f32, 0.0f32);
     let mut verdict_flip = false;
     // Antonym pass. A polar verdict carried by a *different word* is invisible
@@ -653,7 +676,14 @@ fn polarity_of(ta: &Toks, tg: &Toks, p: &Profile) -> f32 {
     }
     let answer_model = attributed_model(ta);
     let truth_model = attributed_model(tg);
-    if matches!((answer_model, truth_model), (Some(a), Some(g)) if a != g)
+    let named_mismatch = match semantic_models {
+        Relation::Same => false,
+        Relation::Different => true,
+        Relation::Unavailable => {
+            matches!((answer_model, truth_model), (Some(a), Some(g)) if a != g)
+        }
+    };
+    if named_mismatch
         || (answer_model.is_some() && denies_model(tg))
         || (truth_model.is_some() && denies_model(ta))
     {
@@ -1141,6 +1171,27 @@ mod tests {
             "no-model truth {} vs invented model {}",
             faithful,
             invented
+        );
+    }
+
+    #[test]
+    fn model_versions_are_separator_insensitive_but_not_aliased() {
+        let q = b"Which model generated the sample?";
+        let gt = b"The sample is AI-generated. Model: Claude 3.5 Sonnet.";
+        let equivalent = score(q, gt, b"AI-generated; model Claude-3.5-Sonnet.");
+        let wrong_version = score(q, gt, b"AI-generated; model Claude-3.7-Sonnet.");
+        let wrong_family = score(q, gt, b"AI-generated; model Gemini-1.5-Pro.");
+        assert!(
+            equivalent > wrong_version * 4.0,
+            "equivalent {} vs wrong version {}",
+            equivalent,
+            wrong_version
+        );
+        assert!(
+            equivalent > wrong_family * 4.0,
+            "equivalent {} vs wrong family {}",
+            equivalent,
+            wrong_family
         );
     }
 

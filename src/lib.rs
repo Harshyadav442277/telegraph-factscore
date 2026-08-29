@@ -27,6 +27,7 @@ mod aliases;
 mod antonyms;
 mod bytes;
 mod facts;
+mod models;
 mod profile;
 mod score;
 mod sets;

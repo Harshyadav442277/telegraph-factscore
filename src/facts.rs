@@ -221,7 +221,7 @@ pub fn fact_multiplier(ta: &Toks, tg: &Toks, sa: &Set, p: &Profile) -> (f32, f32
     let mut gt_id_uncovered = 0.0f32;
     let mut k = 0usize;
     while k < tg.n {
-        if tg.kind[k] == K_IDENT && !sa.contains_tok(tg, k) {
+        if tg.kind[k] == K_IDENT && !tg.model[k] && !sa.contains_tok(tg, k) {
             gt_id_uncovered += tg.w[k];
         }
         k += 1;
@@ -229,7 +229,7 @@ pub fn fact_multiplier(ta: &Toks, tg: &Toks, sa: &Set, p: &Profile) -> (f32, f32
 
     let mut i = 0usize;
     while i < ta.n {
-        if ta.boiler[i] {
+        if ta.boiler[i] || ta.model[i] {
             i += 1;
             continue;
         }

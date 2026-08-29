@@ -74,6 +74,9 @@ pub struct Toks {
     pub decisive: [bool; MAX_TOKENS],
     pub boiler: [bool; MAX_TOKENS],
     pub echo: [bool; MAX_TOKENS],
+    /// Part of an explicit model-name claim. Model names are compared through
+    /// their separator-insensitive semantic signature, not generic token shape.
+    pub model: [bool; MAX_TOKENS],
     /// How well the ground truth supports this token, in [0,1]. Graded, not
     /// boolean: a figure 1% off must not read the same as one that is absent.
     pub supw: [f32; MAX_TOKENS],
@@ -103,6 +106,7 @@ pub const EMPTY_TOKS: Toks = Toks {
     decisive: [false; MAX_TOKENS],
     boiler: [false; MAX_TOKENS],
     echo: [false; MAX_TOKENS],
+    model: [false; MAX_TOKENS],
     supw: [0.0; MAX_TOKENS],
     supi: [0; MAX_TOKENS],
     has_ident: false,
@@ -437,6 +441,10 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
         t.first[k] = if is_alpha(tok[0]) { lower(tok[0]) } else { 0 };
         t.boiler[k] = false;
         t.echo[k] = false;
+        // Seed compound and standalone family names here while the original
+        // bytes are available. The post-pass extends the span over versions and
+        // variants such as `3.5 Sonnet` or `4o`.
+        t.model[k] = crate::models::family_code(tok) != 0;
         t.supw[k] = 0.0;
         t.supi[k] = 0;
         t.ufword[k] = 0;
@@ -454,6 +462,44 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
         }
         sentence_start = false;
         t.n = k + 1;
+    }
+    mark_model_spans(t);
+}
+
+fn model_component(t: &Toks, i: usize) -> bool {
+    t.model[i]
+        || t.kind[i] == K_NUMBER
+        || t.kind[i] == K_IDENT
+        || t.proper[i]
+        || crate::models::is_variant_hash(t.hash[i])
+}
+
+/// Extend family seeds and explicit `Model:` / `Attribution:` slots over their
+/// version and variant components, stopping at punctuation or ordinary prose.
+fn mark_model_spans(t: &mut Toks) {
+    let model = hash_str("model");
+    let attribution = hash_str("attribution");
+    let attributed = hash_str("attributed");
+    let mut i = 0usize;
+    while i < t.n {
+        let seeded = t.model[i];
+        let marker = t.hash[i] == model || t.hash[i] == attribution || t.hash[i] == attributed;
+        if seeded || marker {
+            let mut k = i + 1;
+            let mut used = 0usize;
+            while k < t.n && used < 6 {
+                if !model_component(t, k) {
+                    break;
+                }
+                t.model[k] = true;
+                used += 1;
+                if is_phrase_break(t.nb[k]) {
+                    break;
+                }
+                k += 1;
+            }
+        }
+        i += 1;
     }
 }
 
