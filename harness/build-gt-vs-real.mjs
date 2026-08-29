@@ -68,10 +68,26 @@ function headline(gt) {
   return all.length ? all[0] : null;
 }
 
-/** The ground truth's own assertion, trimmed to its first sentence. */
-function assertion(gt) {
-  const first = gt.replace(/\*\*/g, "").split(/(?<=\.)\s/)[0].trim();
-  return first.length > 20 ? first : gt.replace(/\*\*/g, "").slice(0, 400).trim();
+/**
+ * The ground truth's own assertion: the sentence that actually STATES the
+ * headline quantity, not simply the first one.
+ *
+ * The first-sentence version was wrong. On one TVL case the truth opens with a
+ * date clause and states its figure later, so the "correct" side of the pair
+ * carried no quantity at all — which made a missing-quantity penalty look like
+ * it cost four cases when it was really the corpus at fault.
+ */
+function assertion(gt, target) {
+  const clean = gt.replace(/\*\*/g, "");
+  const sentences = clean.split(/(?<=\.)\s+/);
+  if (target !== null && target !== undefined) {
+    for (const sentence of sentences) {
+      const qs = quantities(sentence);
+      if (qs.some((v) => Math.abs(v - target) / Math.abs(target) < 1e-6)) return sentence.trim();
+    }
+  }
+  const first = sentences[0].trim();
+  return first.length > 20 ? first : clean.slice(0, 400).trim();
 }
 
 const args = parseArgs(process.argv.slice(2));
@@ -123,7 +139,7 @@ for (const [question, rows] of byQuestion) {
     question,
     groundTruth,
     target,
-    good: [{ text: assertion(groundTruth), source: "ground-truth assertion" }],
+    good: [{ text: assertion(groundTruth, target), source: "ground-truth assertion stating the headline quantity" }],
     bad,
   });
 }
