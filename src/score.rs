@@ -16,11 +16,13 @@
 
 use crate::aliases::{code_for_name, is_country_code, name_for_code};
 use crate::bytes::*;
-use crate::facts::{best_agreement, fact_multiplier};
+use crate::facts::{best_agreement, fact_multiplier, states_a_quantity};
 use crate::models::{claim as model_claim, relation as model_relation, Relation};
 use crate::profile::{profile, Profile};
 use crate::sets::{Set, EMPTY_SET};
-use crate::tokens::{mark_boilerplate, tokenize, Toks, EMPTY_TOKS, K_IDENT, K_NUMBER};
+use crate::tokens::{
+    apply_scale_words, mark_boilerplate, mark_dates, tokenize, Toks, EMPTY_TOKS, K_IDENT, K_NUMBER,
+};
 use crate::units::annotate_units;
 
 // Scratch state. The module is single-threaded and the host gives each call a
@@ -115,6 +117,16 @@ pub fn breakdown(q: &[u8], gt: &[u8], ma: &[u8]) -> Breakdown {
     tokenize(fq, tq);
     tokenize(fg, tg);
     tokenize(fa, ta);
+    if p.scale_words {
+        apply_scale_words(tq);
+        apply_scale_words(tg);
+        apply_scale_words(ta);
+    }
+    if p.quantity_required {
+        mark_dates(tq);
+        mark_dates(tg);
+        mark_dates(ta);
+    }
     annotate_units(tq);
     annotate_units(tg);
     annotate_units(ta);
@@ -229,7 +241,14 @@ pub fn breakdown(q: &[u8], gt: &[u8], ma: &[u8]) -> Breakdown {
     let entity = entity_agreement(ta, tg, gt_uncovered, &p);
     let precision = precision_of(ta, gt_uncovered, &p);
     let answered = answeredness(ta, tg, sq, &p);
-    let (fmul, fact_raw) = fact_multiplier(ta, tg, sa, &p);
+    let (mut fmul, fact_raw) = fact_multiplier(ta, tg, sa, &p);
+    // The question asks for a quantity and the truth states one. An answer that
+    // states no figure at all has not answered it, however closely its prose
+    // tracks the truth. This is what a restatement of the question is, and
+    // before this it scored 0.99997.
+    if p.quantity_required && states_a_quantity(tg) && !states_a_quantity(ta) {
+        fmul = fmin(fmul, p.m_no_quantity);
+    }
     let polarity = polarity_of(ta, tg, semantic_models, &p);
 
     // Concave shaping pulls a mostly-right answer up without flattening the

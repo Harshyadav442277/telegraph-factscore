@@ -228,6 +228,18 @@ pub fn best_agreement(ta: &Toks, i: usize, tg: &Toks, p: &Profile) -> Option<f32
 ///
 /// Returns `(multiplier, raw_agreement)` — the second value is exposed only
 /// through `breakdown_answer` for debugging.
+/// Does this text state any figure that is not a calendar date?
+pub fn states_a_quantity(t: &Toks) -> bool {
+    let mut i = 0usize;
+    while i < t.n {
+        if t.kind[i] == K_NUMBER && !t.date_like[i] && !t.boiler[i] {
+            return true;
+        }
+        i += 1;
+    }
+    false
+}
+
 pub fn fact_multiplier(ta: &Toks, tg: &Toks, sa: &Set, p: &Profile) -> (f32, f32) {
     let (mut num_w, mut num_a) = (0.0f32, 0.0f32);
     let (mut id_sup, mut id_uns) = (0.0f32, 0.0f32);

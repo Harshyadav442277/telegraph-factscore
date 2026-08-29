@@ -80,6 +80,12 @@ pub struct Toks {
     /// four currency figures; without a role the numeric channel takes the best
     /// match over all of them, and a wrong price that happens to land near the
     /// 52-week high is scored as nearly right. Zero when there is none.
+    /// Figure that is a calendar date rather than an answer: a bare year, or a
+    /// day-of-month sitting next to a month name. A pure restatement of the
+    /// question scored 0.99997 because its only figures were the date, and they
+    /// matched the truth's date exactly, so the numeric channel reported perfect
+    /// agreement about nothing.
+    pub date_like: [bool; MAX_TOKENS],
     pub role1: [u32; MAX_TOKENS],
     pub role2: [u32; MAX_TOKENS],
     pub echo: [bool; MAX_TOKENS],
@@ -114,6 +120,7 @@ pub const EMPTY_TOKS: Toks = Toks {
     abbrev: [false; MAX_TOKENS],
     decisive: [false; MAX_TOKENS],
     boiler: [false; MAX_TOKENS],
+    date_like: [false; MAX_TOKENS],
     role1: [0u32; MAX_TOKENS],
     role2: [0u32; MAX_TOKENS],
     echo: [false; MAX_TOKENS],
@@ -154,6 +161,138 @@ fn fill_roles(t: &mut Toks) {
                 t.role2[i] = t.stem[j];
             }
             slot += 1;
+        }
+        i += 1;
+    }
+}
+
+/// Multiply a figure by the magnitude word or finance suffix that follows it.
+///
+/// Without this, a ground truth saying "$12.5 billion" parses as the number
+/// 12.5 while an answer saying "$12,500,000,000" parses as 12_500_000_000, and
+/// the two never compare — measured, a correct answer written in full digits
+/// scored 0.0044 and "$12.5B" scored 0.0025 against the same ground truth.
+///
+/// Only UPPERCASE single letters are read as suffixes. Lowercase `m`, `k` and
+/// `t` are metres, kilo- and tonnes elsewhere in the corpus, and mis-reading a
+/// wind speed as a magnitude would be far worse than missing a suffix.
+///
+/// Called only for profiles that set `scale_words`; the intents already
+/// calibrated without it are untouched.
+pub fn mark_dates(t: &mut Toks) {
+    const MONTHS: [&[u8]; 12] = [
+        b"january",
+        b"february",
+        b"march",
+        b"april",
+        b"may",
+        b"june",
+        b"july",
+        b"august",
+        b"september",
+        b"october",
+        b"november",
+        b"december",
+    ];
+    let mut month = [0u32; 12];
+    let mut m = 0usize;
+    while m < 12 {
+        month[m] = stem_hash(MONTHS[m]);
+        m += 1;
+    }
+    let is_month = |h: u32| {
+        let mut m = 0usize;
+        while m < 12 {
+            if month[m] == h {
+                return true;
+            }
+            m += 1;
+        }
+        false
+    };
+    let mut i = 0usize;
+    while i < t.n {
+        if t.kind[i] == K_NUMBER {
+            let v = t.val[i];
+            let whole = v == libm_trunc(v);
+            if whole && (1900.0..=2100.0).contains(&v) {
+                t.date_like[i] = true;
+            } else if whole && (1.0..=31.0).contains(&v) {
+                // day-of-month only when a month name is adjacent
+                let before = i > 0 && t.kind[i - 1] == K_WORD && is_month(t.stem[i - 1]);
+                let after = i + 1 < t.n && t.kind[i + 1] == K_WORD && is_month(t.stem[i + 1]);
+                if before || after {
+                    t.date_like[i] = true;
+                }
+            }
+        }
+        i += 1;
+    }
+}
+
+/// `f32::trunc` is std-only; this crate is `no_std` on wasm.
+fn libm_trunc(v: f32) -> f32 {
+    (v as i64) as f32
+}
+
+pub fn apply_scale_words(t: &mut Toks) {
+    let h_tri = stem_hash(b"trillion");
+    let h_bil = stem_hash(b"billion");
+    let h_mil = stem_hash(b"million");
+    let h_tho = stem_hash(b"thousand");
+    // Only the spelled-out magnitudes. Single letters are NOT accepted: `m` is
+    // metres and `k` is the kilo- prefix elsewhere in the corpus, and reading
+    // "5 m/s" as five million broke unit normalisation outright (measured — the
+    // Stage-1 equivalence check between 5 m/s and 18 km/h failed).
+    let h_bn = stem_hash(b"bn");
+    // Currency words are not units of measure. Left alone they sit where a unit
+    // would and read as an unknown category, which multiplied a correct answer
+    // by the foreign-unit penalty: "12,500,000,000 dollars" scored 0.000017
+    // against a truth of "$12.5 billion".
+    let h_usd = stem_hash(b"USD");
+    let h_dollars = stem_hash(b"dollars");
+    let h_dollar = stem_hash(b"dollar");
+    let mut i = 0usize;
+    while i < t.n {
+        if t.kind[i] != K_NUMBER {
+            i += 1;
+            continue;
+        }
+        let mut scale = 1.0f32;
+        if i + 1 < t.n && t.kind[i + 1] == K_WORD {
+            let h = t.stem[i + 1];
+            scale = if h == h_tri {
+                1e12
+            } else if h == h_bil || h == h_bn {
+                1e9
+            } else if h == h_mil {
+                1e6
+            } else if h == h_tho {
+                1e3
+            } else {
+                1.0
+            };
+            // The magnitude word has been folded into the figure; leaving it as
+            // ordinary prose would also let it count as answer content.
+            if scale != 1.0 {
+                t.boiler[i + 1] = true;
+            }
+        }
+        if scale != 1.0 {
+            t.val[i] *= scale;
+            t.vhi[i] *= scale;
+        }
+        // Neutralise a currency word following the figure (possibly past the
+        // magnitude word) so it is not read as an unknown unit.
+        let mut j = i + 1;
+        while j < t.n && j <= i + 3 {
+            if t.kind[j] == K_WORD
+                && (t.stem[j] == h_usd || t.stem[j] == h_dollars || t.stem[j] == h_dollar)
+            {
+                t.boiler[j] = true;
+                break;
+            }
+            j += 1;
         }
         i += 1;
     }

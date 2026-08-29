@@ -10,11 +10,15 @@ Four modules, one profile, for the intents whose question is a single number:
 
 | module | intent | status |
 |---|---|---|
-| `dist/stock_price_b2.wasm` | `STOCK_PRICE` | measured on 16 cases, beats the champion on all four answer shapes |
-| `dist/stock_price.wasm` | `STOCK_PRICE` | identical behaviour; its hash is already bound on chain to a mis-filed registration, use `_b2` instead |
-| `dist/crypto_price.wasm` | `CRYPTO_PRICE` | measured on 2 cases |
-| `dist/onchain_tx_lookup.wasm` | `ONCHAIN_TX_LOOKUP` | measured on 2 cases |
-| `dist/tvl_lookup.wasm` | `TVL_LOOKUP` | **unmeasured** — no clean pair exists in its recorded traffic |
+| `dist/tvl_lookup_b3.wasm` | `TVL_LOOKUP` | 20/20 cases, margin 0.957407, against the champion's 19/20 and 0.612070 |
+| `dist/crypto_price_b3.wasm` | `CRYPTO_PRICE` | 5/5 cases, margin 0.934438, against 4/5 and 0.196033 |
+| `dist/onchain_tx_lookup_b3.wasm` | `ONCHAIN_TX_LOOKUP` | 9/9 cases, margin 0.862541, against 9/9 and 0.553594 |
+| `dist/stock_price_b3.wasm` | `STOCK_PRICE` | 7/7 cases, margin 0.995831, against 7/7 and 0.818382 |
+
+Earlier `_b2` and un-suffixed builds are superseded. Measurements above are on
+the ground-truth-versus-recorded corpora, the only ones where the incumbent
+reproduces its live behaviour — on TVL_LOOKUP it scores 0.612070 here against
+0.634025 on the node's own fixtures.
 
 **The finding that motivated them.** On recorded `STOCK_PRICE` traffic with a
 ground truth of **$319.70**, the incumbent scored a miner that answered

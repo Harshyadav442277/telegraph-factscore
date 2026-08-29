@@ -40,6 +40,50 @@ pub const U_MI: u8 = 25;
 pub const U_KG: u8 = 26;
 pub const U_LB: u8 = 27;
 pub const U_MSEC: u8 = 28;
+/// A money amount. Only set when the figure carries an explicit marker — a
+/// leading currency sign, or a trailing currency word. It exists so a price or
+/// a total-value-locked figure is never compared against the day-of-month or
+/// the year sitting beside it in the same sentence.
+pub const U_MONEY: u8 = 29;
+
+/// Currency names and magnitude words are not units of measure, and must not
+/// fire the foreign-unit penalty when they follow a figure.
+///
+/// Without this, "12,500,000,000 dollars" scored **0.000018** against a ground
+/// truth of "$12.5 billion" while the identical figure with no trailing word
+/// scored 1.0: "dollars" sat where a unit would, matched nothing known, and was
+/// read as a different category of quantity.
+///
+/// Both lists are closed-class vocabulary — currency names and the standard
+/// magnitude words — not anything specific to an intent or a miner.
+pub fn is_money_or_magnitude(family: u32) -> bool {
+    const WORDS: [&[u8]; 16] = [
+        b"dollar",
+        b"dollars",
+        b"usd",
+        b"euro",
+        b"euros",
+        b"eur",
+        b"pound",
+        b"pounds",
+        b"gbp",
+        b"yen",
+        b"trillion",
+        b"billion",
+        b"million",
+        b"thousand",
+        b"bn",
+        b"usdt",
+    ];
+    let mut i = 0usize;
+    while i < WORDS.len() {
+        if unit_family_hash(WORDS[i]) == family {
+            return true;
+        }
+        i += 1;
+    }
+    false
+}
 
 /// Dimension of a unit. Two figures are only comparable within one dimension —
 /// a temperature and a wind speed are not a near-miss, they are unrelated.
@@ -54,6 +98,7 @@ pub const D_LEN: u8 = 5;
 pub const D_TIME: u8 = 6;
 pub const D_PRESSURE: u8 = 7;
 pub const D_MASS: u8 = 8;
+pub const D_MONEY: u8 = 9;
 
 pub fn dimension(u: u8) -> u8 {
     match u {
@@ -65,6 +110,7 @@ pub fn dimension(u: u8) -> u8 {
         U_SEC | U_MIN | U_HOUR | U_DAY | U_MSEC => D_TIME,
         U_HPA | U_MB | U_INHG | U_PSI | U_BAR => D_PRESSURE,
         U_KG | U_LB => D_MASS,
+        U_MONEY => D_MONEY,
         _ => D_NONE,
     }
 }
@@ -395,6 +441,7 @@ pub fn annotate_units(t: &mut Toks) {
                 && t.uword[nxt] == U_NONE
                 && t.w[nxt] > 0.1
                 && !followed_by_figure
+                && !is_money_or_magnitude(t.family[nxt])
             {
                 // Stem, not the raw hash. A unit-shaped word is the same unit
                 // however it is inflected: an answer saying "7 matches" against
