@@ -1,0 +1,41 @@
+name: Report a TAC benchmark result
+description: Share a genuine check-tac run, including failures that would improve the corpus.
+title: "[benchmark] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Run `node harness/check-tac.mjs path/to/module.wasm --json` from this repository.
+        Reports are evidence only when they come from a real module and include the raw output.
+  - type: input
+    id: module
+    attributes:
+      label: Module identity
+      description: Commit-pinned URL or SHA-256 of the WASM you tested.
+      placeholder: https://raw.githubusercontent.com/owner/repo/commit/module.wasm
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: check-tac output
+      description: Paste the complete text or JSON output without editing the scores.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: finding
+    attributes:
+      label: What did the benchmark reveal?
+      description: Describe a pass, failure class, false positive, or proposed independent case.
+    validations:
+      required: true
+  - type: checkboxes
+    id: integrity
+    attributes:
+      label: Integrity confirmation
+      options:
+        - label: I ran this against the module identified above and did not fabricate the output.
+          required: true
+        - label: The maintainers may cite this public report as community-use evidence.
+          required: false

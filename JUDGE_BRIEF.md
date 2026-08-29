@@ -79,10 +79,11 @@ chosen by focused manual review.
 
 ### 20% — public evidence, never fabricated
 
-X and adoption points are intentionally unclaimed here until public post and third-party-use links
-exist. The repository includes a reusable harness, corpus, and one-command TAC checker, but
-publishing code is not the same as adoption. Real mentions, feedback, issues or downstream use
-should be linked here before final judging; artificial metrics would violate Rule 04.
+X engagement remains unclaimed until the user publishes the prepared posts. Community reuse now
+has one concrete external receipt: [`shreshth006/telegraph-factscore`](https://github.com/shreshth006/telegraph-factscore/commits/main/)
+contains nine downstream commits using the shared fact-aware kernel for IP-geolocation work. This
+is adoption of the code, not independent validation of this TAC artifact and not endorsement of
+every claim in the diverged fork. No stars, testimonials, or benchmark issues are claimed.
 
 ## Frozen release identity
 

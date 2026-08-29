@@ -7,6 +7,8 @@ Published artifact commit:
 [`5728366`](https://github.com/Harshyadav442277/telegraph-factscore/commit/5728366ebc846faf2b81814be3b1dbec35f1c727).
 The commit-pinned raw download was independently re-fetched and reproduced the byte length and
 both hashes shown below. GitHub's Linux workflow rebuilt those exact bytes from source.
+The stable reviewer entry point is the
+[`tac-v1.0.0` release](https://github.com/Harshyadav442277/telegraph-factscore/releases/tag/tac-v1.0.0).
 
 The incumbent can score a one-word wrong verdict almost identically to the truth. This scorer
 compares assertion meaning instead: verdict polarity, equivalent labels, named-model attribution,
@@ -40,6 +42,9 @@ The command checks the Telegraph ABI, blank behavior, score range, self-match, a
 orderings, and all 16 equivalence constraints. Add `--json` to the first command for
 machine-readable benchmark output. The second command independently checks 20 held-out negation
 and categorical comparisons that are not counted in the benchmark totals.
+
+Genuine results—including failures—can be submitted through the repository's
+[benchmark report form](https://github.com/Harshyadav442277/telegraph-factscore/issues/new?template=benchmark-result.yml).
 
 To verify the broader ABI and adversarial input suite:
 
@@ -88,6 +93,18 @@ The module is `no_std`, has zero imports, and exports Telegraph's allocation and
 There are no miner identities, wallets, fixture IDs, network calls, clocks, randomness, or hidden
 data probes in the scorer. The source is under `src/`; `src/profile.rs` contains the complete
 decision surface and `src/score.rs` the composition logic.
+
+## Disclosure and community reuse
+
+The module author also operates the Track 1 miner `livecert` (registration 225). That relationship
+is disclosed for review. The scorer applies the same public ABI and semantic rules to every answer;
+it contains no miner slug, wallet, registration, or response-template fingerprint.
+
+As of 2026-08-29, a public external fork has made nine downstream, measured commits using the
+shared fact-aware kernel for IP-geolocation work:
+[`shreshth006/telegraph-factscore`](https://github.com/shreshth006/telegraph-factscore/commits/main/).
+This is concrete source reuse, not a claim that the fork independently validated this TAC artifact
+or that upstream endorses every statement in the diverged branch.
 
 ## Honest boundary
 

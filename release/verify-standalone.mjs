@@ -11,6 +11,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(process.argv[2] ?? join(HERE, ".."));
 const REQUIRED = [
   ".cargo/config.toml",
+  ".github/ISSUE_TEMPLATE/benchmark-result.yml",
   ".github/workflows/ci.yml",
   "Cargo.lock",
   "Cargo.toml",
