@@ -25,6 +25,10 @@ stock-price = []
 tvl-lookup = []
 crypto-price = []
 onchain-tx-lookup = []
+wallet-balance-check = []
+academic-search = []
+language-translation = []
+fact-check = []
 
 [profile.release]
 opt-level = "s"

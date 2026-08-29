@@ -646,6 +646,25 @@ pub fn tokenize(src: &[u8], t: &mut Toks) {
         };
         t.uword[k] = unit_word_code(tok);
         t.nb[k] = if i < n { src[i] } else { 0 };
+
+        // A finance magnitude letter glued straight onto the figure: "$12.5B",
+        // "$4.51T". Uppercase only, and only when nothing alphanumeric follows,
+        // so "5 m/s" and "47 km" are untouched — reading a lowercase `m` as
+        // *million* previously broke unit normalisation outright. Gated to the
+        // headline-quantity profiles.
+        if kind == K_NUMBER && i < n && (i + 1 >= n || !is_alnum(src[i + 1])) {
+            let mag = match src[i] {
+                b'T' => 1e12,
+                b'B' => 1e9,
+                b'M' => 1e6,
+                b'K' => 1e3,
+                _ => 0.0,
+            };
+            if mag > 0.0 && profile().scale_words {
+                t.val[k] *= mag;
+                t.vhi[k] *= mag;
+            }
+        }
         t.w[k] = weight(tok, h, kind, proper, high);
         // Every per-token field is written on every push: a field left over from
         // a previous call would make the score depend on call order.

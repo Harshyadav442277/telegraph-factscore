@@ -57,7 +57,7 @@ pub const U_MONEY: u8 = 29;
 /// Both lists are closed-class vocabulary — currency names and the standard
 /// magnitude words — not anything specific to an intent or a miner.
 pub fn is_money_or_magnitude(family: u32) -> bool {
-    const WORDS: [&[u8]; 16] = [
+    const WORDS: [&[u8]; 19] = [
         b"dollar",
         b"dollars",
         b"usd",
@@ -74,6 +74,10 @@ pub fn is_money_or_magnitude(family: u32) -> bool {
         b"thousand",
         b"bn",
         b"usdt",
+        // Lone magnitude letters left behind once the figure has absorbed them.
+        b"b",
+        b"t",
+        b"k",
     ];
     let mut i = 0usize;
     while i < WORDS.len() {

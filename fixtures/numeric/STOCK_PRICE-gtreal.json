@@ -1,7 +1,7 @@
 {
  "intent": "STOCK_PRICE",
  "class": "GT-VS-REAL",
- "built": "2026-08-29T10:15:37.970Z",
+ "built": "2026-08-29T12:20:16.478Z",
  "provenance": {
   "source": "scores-api",
   "rows": 82,
@@ -21,8 +21,8 @@
    "target": 319.7,
    "good": [
     {
-     "text": "The current share price of Apple Inc.",
-     "source": "ground-truth assertion"
+     "text": "(AAPL) is 319.70 USD as of August 28, 2026, at 12:59 PM PDT, according to Investing.com and Nasdaq data.",
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -42,7 +42,7 @@
    "good": [
     {
      "text": "The current share price of Microsoft (MSFT) is $496.35 as retrieved by the GLOBAL_QUOTE function.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -68,7 +68,7 @@
    "good": [
     {
      "text": "The current share price of Microsoft (MSFT) is $496.35 as of the latest timestamp on August 26, 2026, at 19:59:59 UTC-0 (12:59:59 PM Pacific Time).",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -94,7 +94,7 @@
    "good": [
     {
      "text": "The current share price of Microsoft (MSFT) is $496.35 as of August 26, 2026, at 12:59:59 PM Pacific Time.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -114,7 +114,7 @@
    "good": [
     {
      "text": "The current share price of Apple (AAPL) is $313.12 as retrieved by the GLOBAL_QUOTE function.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -134,7 +134,7 @@
    "good": [
     {
      "text": "The current share price of Microsoft (MSFT) is $491.54 as of August 25, 2026, at 19:59:55 UTC.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -154,7 +154,7 @@
    "good": [
     {
      "text": "The current share price of AS (Amer Sports) as retrieved by the GLOBAL_QUOTE function is $32.61 USD, as of August 21, 2026, at 12:59 PM Pacific Time",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [

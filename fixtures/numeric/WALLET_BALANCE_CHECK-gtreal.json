@@ -1,0 +1,210 @@
+{
+ "intent": "WALLET_BALANCE_CHECK",
+ "class": "GT-VS-REAL",
+ "built": "2026-08-29T12:20:30.166Z",
+ "provenance": {
+  "source": "scores-api",
+  "rows": 85,
+  "questions": 16,
+  "skipped_no_target": 5
+ },
+ "construction": {
+  "good": "the ground truth's own first-sentence assertion",
+  "bad": "verbatim recorded miner answers whose every stated quantity is >=1% from the ground truth's",
+  "note": "no wording authored by us on either side; the live score never decides a label"
+ },
+ "cases": [
+  {
+   "id": "wallet_balance_check-gtreal-1",
+   "question": "What is the current native-coin balance of address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e on Arbitrum?",
+   "groundTruth": "I cannot provide the current native-coin balance of the address `0x742d35Cc6634C0532925a3b844Bc454e4438f44e` on Arbitrum because the required data is not available in the search results. To obtain this information, you would need to use a blockchain explorer or a wallet that supports Arbitrum and is connected to the correct network. Ensure that your wallet or explorer is set to the Arbitrum network (either Arbitrum One or Arbitrum Nova) and then query the balance for the specified address. \n\nIf you have access to an API key for a service like Infura or Alchemy, you could also use the `eth_getBalance` JSON-RPC method to retrieve the balance programmatically. The balance will be returned in wei, which you can convert to ETH by dividing by `10^18`. \n\nHere’s an example of how you might structure such a request using Infura:\n\n```json\n{\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"eth_getBalance\",\n  \"params\": [\"0x742d35Cc6634C0532925a3b844Bc454e4438f44e\", \"latest\"],\n  \"id\": 1\n}\n```\n\nSend this request to the Arbitrum endpoint provided by Infura (or another provider) to get the balance. Note that you will need to replace the placeholder with your actual Infura project ID. \n\nWithout direct access to a live node or API, I am unable to fetch the current balance for you.",
+   "target": 10,
+   "good": [
+    {
+     "text": "The balance will be returned in wei, which you can convert to ETH by dividing by `10^18`.",
+     "source": "ground-truth assertion stating the headline quantity"
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows the balance of a wallet address on the Arbitrum blockchain, which holds 1.19 ETH in native-coin value.",
+     "miner": "chainsight-oracle",
+     "liveScore": 0.00012895642,
+     "relError": 0.881
+    },
+    {
+     "text": "This data shows that the Ethereum address `0x742d35Cc6634C0532925a3b844Bc454e4438f44e` has a balance of 1.1909 ETH on the Arbitrum network as of August 28, 2026.",
+     "miner": "chainwire-wallet-balance",
+     "liveScore": 0.0001288352,
+     "relError": 0.88091
+    },
+    {
+     "text": "The data shows that the address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e on the Arbitrum network holds 1.190926282158386709 ETH (1190926282158386709 wei) and 2 token balances: 51.0 USDC and 0.00",
+     "miner": "degenlens-onchain",
+     "liveScore": 0.00011287268,
+     "relError": 0.8
+    },
+    {
+     "text": "This data shows the balance of 1.190926 native Arbitrum tokens held by the address `0x742d35Cc6634C0532925a3b844Bc454e4438f44e` on the Arbitrum blockchain as of August 28, 2026.",
+     "miner": "txlens",
+     "liveScore": 0.00010433345,
+     "relError": 0.880907
+    }
+   ]
+  },
+  {
+   "id": "wallet_balance_check-gtreal-2",
+   "question": "What is the current ETH balance of address %[0x123456789ABCDEF123456789ABCDEF123456789ABC]% on Sepolia chain?",
+   "groundTruth": "I cannot retrieve the balance of a specific Ethereum address on Sepolia without using appropriate tools or APIs. The search results provide general information about Etherscan and how to check balances using their API, but they do not give the actual balance for address `0x123456789ABCDEF123456789ABCDEF123456789ABC`.\n\nTo get the current ETH balance of this address on Sepolia, you would need to:\n\n1. Use Etherscan's Sepolia explorer: https://sepolia.etherscan.io/address/0x123456789ABCDEF123456789ABCDEF123456789ABC\n2. Or use Etherscan's API with a valid API key: `https://api-sepolia.etherscan.io/api?module=account&action=balance&address=0x123456789ABCDEF123456789ABCDEF123456789ABC&tag=latest&apikey=YOUR_API_KEY`\n\nWithout access to these tools or an API key, I cannot provide the actual balance. The address appears to be a placeholder/test address that likely has zero balance on Sepolia testnet.",
+   "target": 1,
+   "good": [
+    {
+     "text": "To get the current ETH balance of this address on Sepolia, you would need to:\n\n1.",
+     "source": "ground-truth assertion stating the headline quantity"
+    }
+   ],
+   "bad": [
+    {
+     "text": "The wallet address 0x123456789ABCDEF123456789ABCDEF123456789A on the Ethereum chain has a balance of 0.0002 ETH, which is equivalent to 200000000000000 wei.",
+     "miner": "chainsight-oracle",
+     "liveScore": 0.00016878778,
+     "relError": 0.9998
+    },
+    {
+     "text": "The data shows that an Ethereum address on the Sepolia testnet holds 0.1757 ETH, with a confidence level of 0.98.",
+     "miner": "chainwire-wallet-balance",
+     "liveScore": 0.00011381378,
+     "relError": 0.02
+    }
+   ]
+  },
+  {
+   "id": "wallet_balance_check-gtreal-3",
+   "question": "What is the current ETH balance of EVM-compatible wallet address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e on Base chain?",
+   "groundTruth": "The wallet address `0x742d35Cc6634C0532925a3b844Bc454e4438f44e` on the Base chain has a balance of **2.47 ETH**.",
+   "target": 2.47,
+   "good": [
+    {
+     "text": "The wallet address `0x742d35Cc6634C0532925a3b844Bc454e4438f44e` on the Base chain has a balance of 2.47 ETH.",
+     "source": "ground-truth assertion stating the headline quantity"
+    }
+   ],
+   "bad": [
+    {
+     "text": "This data shows the balance of 0.032213 native Base tokens held by the address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e on the Base chain as of August 27, 2026.",
+     "miner": "txlens",
+     "liveScore": 0.00018565226,
+     "relError": 0.986958
+    },
+    {
+     "text": "The data shows the balance of a wallet address on the Base chain, which is 0.032212857718437016 ETH, or 32212857718437014 wei.",
+     "miner": "chainsight-oracle",
+     "liveScore": 0.00018120736,
+     "relError": 0.986958
+    },
+    {
+     "text": "This data shows that the Ethereum address `0x742d35Cc6634C0532925a3b844Bc454e4438f44e` on the Base network holds approximately 0.0322 ETH as of August 27, 2026.",
+     "miner": "chainwire-wallet-balance",
+     "liveScore": 0.00017558776,
+     "relError": 0.986964
+    },
+    {
+     "text": "The data shows that the address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e on the base chain holds 0.032212857718437014 ETH (32212857718437014 wei) as of block 50517294, with no tracked token balances and no associations to",
+     "miner": "degenlens-onchain",
+     "liveScore": 0.00015939247,
+     "relError": 0.986958
+    }
+   ]
+  },
+  {
+   "id": "wallet_balance_check-gtreal-4",
+   "question": "What is the current native-coin balance of wallet address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e on Base chain?",
+   "groundTruth": "The native-coin balance of wallet address `0x742d35Cc6634C0532925a3b844Bc454e4438f44e` on Base chain is **2.47 ETH**.",
+   "target": 2.47,
+   "good": [
+    {
+     "text": "The native-coin balance of wallet address `0x742d35Cc6634C0532925a3b844Bc454e4438f44e` on Base chain is 2.47 ETH.",
+     "source": "ground-truth assertion stating the headline quantity"
+    }
+   ],
+   "bad": [
+    {
+     "text": "This data shows that the Ethereum address `0x742d35Cc6634C0532925a3b844Bc454e4438f44e` on the Base network holds approximately 0.0322 ETH as of August 26, 2026.",
+     "miner": "chainwire-wallet-balance",
+     "liveScore": 0.00023475458,
+     "relError": 0.986964
+    },
+    {
+     "text": "The data shows the ETH balance of an address on the Base network, which is 0.032212857718437016 ETH, or 32212857718437014 wei.",
+     "miner": "chainsight-oracle",
+     "liveScore": 0.00022695807,
+     "relError": 0.986958
+    },
+    {
+     "text": "The data shows an Ethereum address (0x742d35cc6634c0532925a3b844bc454e4438f44e) on the base chain holding 0.0322 native units, with no interactions with tracked casinos in the last 30 days.",
+     "miner": "degenlens-onchain",
+     "liveScore": 0.00019338304,
+     "relError": 0.986964
+    },
+    {
+     "text": "This data shows the balance of 0.032213 native Base tokens held by the address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e on the Base chain as of August 26, 2026.",
+     "miner": "txlens",
+     "liveScore": 0.00018837253,
+     "relError": 0.986958
+    }
+   ]
+  },
+  {
+   "id": "wallet_balance_check-gtreal-5",
+   "question": "What is the current ETH balance for wallet address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e on Ethereum mainnet as of August 25, 2026?",
+   "groundTruth": "I cannot retrieve the exact ETH balance for the wallet address `0x742d35Cc6634C0532925a3b844Bc454e4438f44e` on Ethereum mainnet as of August 25, 2026, because the search results do not provide this specific information. \n\nTo check a wallet's ETH balance, you would typically use tools like Etherscan, a blockchain explorer, or a wallet service that connects to the Ethereum network. These tools allow you to input the wallet address and retrieve the current balance. Since the balance can change frequently due to transactions, it's best to query it in real time using such services.\n\nIf you have access to an Ethereum node or an API like Etherscan, you could use the `eth_getBalance` JSON-RPC method to fetch the balance for this address at the latest block. The balance would be returned in wei, which you would then convert to ETH by dividing by \\(10^{18}\\).\n\nFor the most accurate and up-to-date balance, I recommend using a blockchain explorer or connecting directly to the Ethereum network with a suitable tool or library.",
+   "target": 25,
+   "good": [
+    {
+     "text": "I cannot retrieve the exact ETH balance for the wallet address `0x742d35Cc6634C0532925a3b844Bc454e4438f44e` on Ethereum mainnet as of August 25, 2026, because the search results do not provide this specific information.",
+     "source": "ground-truth assertion stating the headline quantity"
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows that the Ethereum address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e holds a balance of 109094.285861 native Ethereum tokens as of block number 25831991.",
+     "miner": "txlens",
+     "liveScore": 0.0041874666,
+     "relError": 4362.771434
+    }
+   ]
+  },
+  {
+   "id": "wallet_balance_check-gtreal-6",
+   "question": "What is the current native-coin balance of address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e in ETH on the Base chain as of today?",
+   "groundTruth": "The current native-coin balance of address `0x742d35Cc6634C0532925a3b844Bc454e4438f44e` on the Base chain is **2.47 ETH**.",
+   "target": 2.47,
+   "good": [
+    {
+     "text": "The current native-coin balance of address `0x742d35Cc6634C0532925a3b844Bc454e4438f44e` on the Base chain is 2.47 ETH.",
+     "source": "ground-truth assertion stating the headline quantity"
+    }
+   ],
+   "bad": [
+    {
+     "text": "The data shows that the Ethereum address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e holds a balance of 0.0322 ETH on the base chain, with a confidence level of 0.98.",
+     "miner": "chainwire-wallet-balance",
+     "liveScore": 0.010052712,
+     "relError": 0.603239
+    },
+    {
+     "text": "The data shows that the Ethereum address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e holds a balance of 0.032213 ETH, equivalent to 32212857718437014 wei, on the Base network.",
+     "miner": "chainsight-oracle",
+     "liveScore": 0.008978562,
+     "relError": 0.986958
+    },
+    {
+     "text": "The data shows that the address `0x742d35Cc6634C0532925a3b844Bc454e4438f44e` holds 0.032213 native Base tokens, equivalent to 32212857718437014 wei, as of block number 50431890.",
+     "miner": "txlens",
+     "liveScore": 0.0065143756,
+     "relError": 0.986958
+    }
+   ]
+  }
+ ]
+}

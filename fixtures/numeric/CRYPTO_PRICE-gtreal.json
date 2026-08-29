@@ -1,7 +1,7 @@
 {
  "intent": "CRYPTO_PRICE",
  "class": "GT-VS-REAL",
- "built": "2026-08-29T10:15:37.786Z",
+ "built": "2026-08-29T12:20:16.235Z",
  "provenance": {
   "source": "scores-api",
   "rows": 168,
@@ -22,7 +22,7 @@
    "good": [
     {
      "text": "The closing price of Ethereum (ETH) on August 28, 2026, was $2,408.17 USD.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -66,7 +66,7 @@
    "good": [
     {
      "text": "The current price of Solana (SOL) is approximately $106.26 USD, according to recent data.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -314,7 +314,7 @@
    "good": [
     {
      "text": "The current price of Ethereum (ETH) is approximately $2,504.35 USD based on recent data, though prices can fluctuate rapidly due to market conditions.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -358,7 +358,7 @@
    "good": [
     {
      "text": "The current price of Bitcoin (BTC) is approximately $78,211.91 USD, according to recent data.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -390,7 +390,7 @@
    "good": [
     {
      "text": "The price of Solana (SOL) on August 1, 2026, was $86.65 USD, and the current price as of August 21, 2026, is $91.03 USD.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [

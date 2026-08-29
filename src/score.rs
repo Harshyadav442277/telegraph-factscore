@@ -237,7 +237,7 @@ pub fn breakdown(q: &[u8], gt: &[u8], ma: &[u8]) -> Breakdown {
     }
 
     // Computed once and read by three channels: entity, identifier, precision.
-    let gt_uncovered = gt_uncovered_mass(ta, tg, sa);
+    let gt_uncovered = gt_uncovered_mass(ta, tg, sa, sq, &p);
     let entity = entity_agreement(ta, tg, gt_uncovered, &p);
     let precision = precision_of(ta, gt_uncovered, &p);
     let answered = answeredness(ta, tg, sq, &p);
@@ -472,10 +472,21 @@ fn add_acronyms(set: &mut Set, t: &Toks) {
 /// and three channels read it: the entity channel, the identifier channel, and
 /// precision. Zero means the answer said everything the truth says, so anything
 /// extra it also said has displaced nothing.
-fn gt_uncovered_mass(ta: &Toks, tg: &Toks, sa: &Set) -> f32 {
+fn gt_uncovered_mass(ta: &Toks, tg: &Toks, sa: &Set, sq: &Set, p: &Profile) -> f32 {
     let mut gt_uncovered = 0.0f32;
     let mut k = 0usize;
     while k < tg.n {
+        // An entity the QUESTION already supplies is not missing truth when the
+        // answer leaves it out -- the asker already knows it. Counting it as
+        // uncovered let any unsupported entity in the answer be paired with it
+        // and scored as a substitution, so "The current TVL is approximately
+        // $12.5 billion, according to DeFiLlama" -- correct, and citing its
+        // source -- scored 0.0160, as though DeFiLlama had displaced "Aave V3"
+        // and "Ethereum" rather than simply naming where the figure came from.
+        if p.question_entities_are_given && tg.proper[k] && sq.contains_tok(tg, k) {
+            k += 1;
+            continue;
+        }
         if tg.proper[k] && !tg.model[k] {
             if !sa.contains_tok(tg, k) {
                 gt_uncovered += tg.w[k];

@@ -1,7 +1,7 @@
 {
  "intent": "TVL_LOOKUP",
  "class": "GT-VS-REAL",
- "built": "2026-08-29T10:15:37.700Z",
+ "built": "2026-08-29T12:20:30.076Z",
  "provenance": {
   "source": "scores-api",
   "rows": 150,
@@ -22,7 +22,7 @@
    "good": [
     {
      "text": "The current total value locked (TVL) in the Aave V3 protocol on the Ethereum chain as of August 29, 2026, is approximately $12.5 billion.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -78,7 +78,7 @@
    "good": [
     {
      "text": "The current total value locked (TVL) in the Aave V3 protocol on the Ethereum chain as of August 28, 2026 is approximately $12.5 billion.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -128,7 +128,7 @@
    "good": [
     {
      "text": "The current total value locked (TVL) in the Aave V3 DeFi protocol on the Ethereum chain as of August 2026 is approximately $11.46 billion.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -172,7 +172,7 @@
    "good": [
     {
      "text": "The current total value locked (TVL) in the Aave V3 lending protocol on the Ethereum mainnet as of August 27, 2026, is approximately $12.5 billion.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -222,7 +222,7 @@
    "good": [
     {
      "text": "The current total value locked (TVL) in the Aave V3 DeFi protocol on the Ethereum mainnet as reported by DeFiLlama is approximately $17.89 billion.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -260,7 +260,7 @@
    "good": [
     {
      "text": "The current total value locked (TVL) in the Aave V3 protocol on Ethereum as of August 2026 is approximately $17.6 billion, according to DeFiLlama data referenced in recent reports.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -304,7 +304,7 @@
    "good": [
     {
      "text": "The Aave V3 protocol on the Ethereum chain had approximately $11.46 billion in total value locked (TVL) as of August 26, 2026, according to the latest available data.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -371,8 +371,8 @@
    "target": 18,
    "good": [
     {
-     "text": "The current total value locked (TVL) in the Aave V3 DeFi protocol on the Ethereum mainnet as of August 2026 is not explicitly stated in the available sources.",
-     "source": "ground-truth assertion"
+     "text": "However, we can infer some relevant information:\n\n- As of May 18, 2026, Aave's total TVL across all versions and chains was $14.49 billion, with Aave V3 holding 96.6% of that total TVL .",
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -416,7 +416,7 @@
    "good": [
     {
      "text": "The current total value locked (TVL) in the Aave V3 protocol on the Ethereum mainnet is approximately $3.1 billion as of May 2026, according to DeFiLlama data.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -436,7 +436,7 @@
    "good": [
     {
      "text": "The current total value locked (TVL) in the Aave V3 protocol on Ethereum as of the latest data (May 18, 2026) is $11.46 billion.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -462,7 +462,7 @@
    "good": [
     {
      "text": "The current total value locked (TVL) in the Aave V3 protocol on the Ethereum chain as of August 25, 2026 is approximately $11.46 billion.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -506,7 +506,7 @@
    "good": [
     {
      "text": "The current total value locked (TVL) in the Aave V3 protocol on the Ethereum chain as of August 2026 is approximately $17.6 billion, according to DeFiLlama's methodology, which nets out borrowed amounts and applies specific chain coverage and asset inclusion criteria.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -526,7 +526,7 @@
    "good": [
     {
      "text": "The current total value locked (TVL) in the Aave V3 protocol on the Ethereum chain as of August 24, 2026, is approximately $14.27 billion, according to recent data from DeFiLlama and other sources.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -552,7 +552,7 @@
    "good": [
     {
      "text": "The current total value locked (TVL) in the Aave V3 protocol on the Ethereum chain as of August 23, 2026 is approximately $17.6 billion, according to recent reports and on-chain data.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -578,7 +578,7 @@
    "good": [
     {
      "text": "The current total value locked (TVL) in the Aave V3 DeFi protocol on Ethereum as of August 2026 is approximately $14.29 billion, according to DeFiLlama data referenced in August 2026 sources.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -598,7 +598,7 @@
    "good": [
     {
      "text": "The current total value locked (TVL) in the Aave V3 DeFi protocol on the Ethereum mainnet stands at approximately $14.27 billion as of the latest available data in August 2026.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -624,7 +624,7 @@
    "good": [
     {
      "text": "The total value locked (TVL) in the Aave DeFi protocol as of August 22, 2026, is $17.69 billion, marking a 21.6% increase over the preceding 30 days.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -644,7 +644,7 @@
    "good": [
     {
      "text": "The total value locked (TVL) in the Aave DeFi protocol as of August 2026 is approximately $14.9 billion, according to recent reports.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -664,7 +664,7 @@
    "good": [
     {
      "text": "The total value locked (TVL) in the Aave DeFi protocol as of August 21, 2026, is $27.2 billion.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -690,7 +690,7 @@
    "good": [
     {
      "text": "The total value locked (TVL) in Aave as of August 2026 is approximately $14.9 billion.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [

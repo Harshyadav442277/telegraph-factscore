@@ -1,7 +1,7 @@
 {
  "intent": "ONCHAIN_TX_LOOKUP",
  "class": "GT-VS-REAL",
- "built": "2026-08-29T10:15:37.875Z",
+ "built": "2026-08-29T12:20:16.362Z",
  "provenance": {
   "source": "scores-api",
   "rows": 246,
@@ -21,8 +21,8 @@
    "target": 2.1775104332774324,
    "good": [
     {
-     "text": "Yes, both the sender and recipient are 0x7F881d3EA884051Dfa36DCf68Fa879Dc83A9fc85.",
-     "source": "ground-truth assertion"
+     "text": "It was a self-transfer of 2.177510433277432266 ETH, included in block 25700000 with status ok.",
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -41,8 +41,8 @@
    "target": 25700000,
    "good": [
     {
-     "text": "Yes, it was a contract call to 0xdAC17F958D2ee523a2206206994597C13D831ec7 (Tether's USDT token contract), invoking the transfer method.",
-     "source": "ground-truth assertion"
+     "text": "It carried 0 ETH in native value and was sent from 0x471928849276377F9c3fEad335E8213397BDCF9E, in block 25700000.",
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -73,8 +73,8 @@
    "target": 25700000,
    "good": [
     {
-     "text": "The recipient contract was 0x447A03C131C0a97A8b8d548e3cD81aec4Ce05d73, and the transaction carried 0 ETH in native value (the call invoked function selector 0x742a7783).",
-     "source": "ground-truth assertion"
+     "text": "It was sent from 0x315D2Ee4fcCdA0def532Ef4108FF57204F8D9EbA in block 25700000.",
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -112,7 +112,7 @@
    "good": [
     {
      "text": "It sent 0.002093015314102974 ETH to contract 0xD152f549545093347A162Dce210e7293f1452150, calling its disperseEther method.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -131,8 +131,8 @@
    "target": 25700000,
    "good": [
     {
-     "text": "No, it failed (status: error).",
-     "source": "ground-truth assertion"
+     "text": "It called the execute method on contract 0x66a9893cC07D91D95644AEDD05D03f95e1dBA8Af, sent from 0x8A0231d6FB864a3Ae9439a860871510249C31D07, in block 25700000.",
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -182,7 +182,7 @@
    "good": [
     {
      "text": "The sender is 0xA9Ac43f5b5e38155A288d1A01D2cbc4478E14573, and it sent 0.1049719 ETH to 0x7db324AaB5D9e4DD19Fb4D0a9E6A59feD8516466 in block 25700000.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -220,7 +220,7 @@
    "good": [
     {
      "text": "It invoked the transfer method on contract address 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48, sent from 0x8F174c6fbDe64446cb521D62BfFBf19C51cD24B4, with 0 ETH in native value, in block 25700000.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -240,7 +240,7 @@
    "good": [
     {
      "text": "It called the bridgeERC20To method on contract 0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1, sent from 0x2Ce910fBba65B454bBAf6A18c952A70f3bcd8299 with 0 ETH in native value, in block 25700000.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
@@ -272,7 +272,7 @@
    "good": [
     {
      "text": "0.0146870631 ETH was transferred from 0xf30ba13e4b04Ce5dC4D254Ae5FA95477800F0EB0 to 0xdC46fB8C99F83aDC2f54Ac8812fFe3b223ED7771.",
-     "source": "ground-truth assertion"
+     "source": "ground-truth assertion stating the headline quantity"
     }
    ],
    "bad": [
