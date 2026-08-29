@@ -5,8 +5,8 @@ scorer for Telegraph's `TEXT_AUTHENTICITY_CHECK` intent.
 
 Published artifact commit:
 [`409911f`](https://github.com/Harshyadav442277/telegraph-factscore/commit/409911f351b4778555ac5bb03c9a6d6bba69ae58).
-The commit-pinned raw download was independently re-fetched and reproduced the byte length and
-both hashes shown below. GitHub's Linux workflow rebuilt those exact bytes from source.
+The v1.1.0 release asset was independently re-fetched and reproduced the byte length and both
+hashes shown below. GitHub's Linux workflow rebuilt those exact bytes from source.
 The stable reviewer entry point is the
 [`tac-v1.1.0` release](https://github.com/Harshyadav442277/telegraph-factscore/releases/tag/tac-v1.1.0).
 
