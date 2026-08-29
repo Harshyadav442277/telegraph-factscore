@@ -3,6 +3,11 @@
 This repository contains one registration artifact: a 25,887-byte freestanding WebAssembly
 scorer for Telegraph's `TEXT_AUTHENTICITY_CHECK` intent.
 
+Published artifact commit:
+[`25ff808`](https://github.com/Harshyadav442277/telegraph-factscore/commit/25ff8089d4d3f1cfcc639115e14464d7d6313cc1).
+The commit-pinned raw download was independently re-fetched and reproduced the byte length and
+both hashes shown below.
+
 The incumbent can score a one-word wrong verdict almost identically to the truth. This scorer
 compares assertion meaning instead: verdict polarity, equivalent labels, named-model attribution,
 entities, percentages, perplexity, burstiness, and other typed figures can change the score even
@@ -62,7 +67,11 @@ sha256     e7bb15f12e55aa5a0cb8fa30f5d2d5a21a3027d026b207d3d8563d2ae2ae52b6
 keccak256  bdd3fea5deb7ce2a48663aa7ec63d5a295ade30c4c2bb2d3254031cb04cdca0f
 ```
 
-The final hosted download must reproduce both hashes before registration.
+Commit-pinned registration URL:
+
+```text
+https://raw.githubusercontent.com/Harshyadav442277/telegraph-factscore/25ff8089d4d3f1cfcc639115e14464d7d6313cc1/dist/text_authenticity.wasm
+```
 
 ## Design
 

@@ -35,7 +35,7 @@
     }
   },
   "network_state_at_freeze": {
-    "checked_at": "2026-08-28T20:01:05+05:30",
+    "checked_at": "2026-08-29T06:53:15.1827414+05:30",
     "incumbent_registration_id": 850,
     "incumbent_margin": 0.65861213,
     "incumbent_wins": 14,
@@ -44,10 +44,10 @@
     "author_registration_count": 0
   },
   "publication": {
-    "status": "unpublished",
-    "hosted_url": null,
-    "source_commit": null,
-    "hosted_bytes_verified": false,
+    "status": "published_verified",
+    "hosted_url": "https://raw.githubusercontent.com/Harshyadav442277/telegraph-factscore/25ff8089d4d3f1cfcc639115e14464d7d6313cc1/dist/text_authenticity.wasm",
+    "source_commit": "25ff8089d4d3f1cfcc639115e14464d7d6313cc1",
+    "hosted_bytes_verified": true,
     "onchain_registration_id": null
   }
 }

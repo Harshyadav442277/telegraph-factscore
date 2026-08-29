@@ -13,6 +13,10 @@ equivalent answer above every paired one-fact counterfactual or opposite verdict
 | Candidate `dist/text_authenticity.wasm` | 25,887 | `e7bb15f12e55aa5a0cb8fa30f5d2d5a21a3027d026b207d3d8563d2ae2ae52b6` |
 | Incumbent registration 850 | 23,987,851 | `432ae4423edd24ea74d8529fef8bf61d50ccc6622da94619482f9213b1f32395` |
 
+The candidate artifact is published at commit `25ff8089d4d3f1cfcc639115e14464d7d6313cc1`:
+<https://raw.githubusercontent.com/Harshyadav442277/telegraph-factscore/25ff8089d4d3f1cfcc639115e14464d7d6313cc1/dist/text_authenticity.wasm>.
+A fresh download reproduced the bound byte length, SHA-256 and Keccak-256.
+
 The incumbent URL is commit-pinned in its registry entry:
 <https://raw.githubusercontent.com/zkasuran/telegraph-salience-scorer/85381b739a9d047f068dc2b3642ceef9a569f48d/dist/xfmr/tn_t70.wasm>.
 Its on-chain Keccak-256 is

@@ -18,9 +18,10 @@ This submission replaces vocabulary proximity with assertion-level agreement. Th
 | Content-verification holdout | **144/144** | not the comparison target |
 
 These are offline, reproducible measurements against the exact pinned incumbent WASM—not claims
-about Telegraph's hidden fixtures. The live registry still reports registration 850 as champion
-at **0.65861213**, 14/15 cases, with no historical rows. The submitted module has not yet received
-a network verdict.
+about Telegraph's hidden fixtures. The 2026-08-29 06:53 IST registry recheck still reports
+registration 850 as champion at **0.65861213**, 14/15 cases, with no historical rows. The release
+is public and its commit-pinned hosted bytes have been independently re-fetched, but the module
+has not yet been registered or received a network verdict.
 
 ## Why this is an actual evaluator improvement
 
@@ -93,8 +94,8 @@ keccak256  bdd3fea5deb7ce2a48663aa7ec63d5a295ade30c4c2bb2d3254031cb04cdca0f
 ```
 
 The Keccak implementation was checked by reproducing registration 850's public on-chain hash.
-`release/text-authenticity.json` is the machine-readable manifest. A hosted download must match
-both hashes before registration.
+`release/text-authenticity.json` is the machine-readable manifest. The commit-pinned hosted
+download matches both hashes; the remaining activation step is the user-signed registration.
 
 ## Fast verification path
 
