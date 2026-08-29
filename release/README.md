@@ -37,8 +37,12 @@ Anyone can run the release's focused public proxy without an incumbent or networ
 node harness/check-tac.mjs dist/text_authenticity.wasm
 node harness/check-tac.mjs dist/text_authenticity.wasm --json
 node release/probe-negation.mjs dist/text_authenticity.wasm
+node release/probe-model-aliases.mjs dist/text_authenticity.wasm
+node release/probe-authenticity-axes.mjs dist/text_authenticity.wasm
+node release/probe-authenticity-vocabulary.mjs dist/text_authenticity.wasm
 ```
 
 A pass covers 256 public semantic orderings and 16 equivalent-answer constraints; it is not a
-claim about Telegraph's hidden rotating fixtures. The separate negation probe covers 20 held-out
-comparisons and is kept outside the benchmark totals so it cannot inflate the reported corpus.
+claim about Telegraph's hidden rotating fixtures. The separate probes cover negation, model-name
+normalization, independent semantic axes, and ordinary authenticity vocabulary; all remain outside
+the benchmark totals so they cannot inflate the reported 256-pair corpus.

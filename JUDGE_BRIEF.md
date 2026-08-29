@@ -14,14 +14,14 @@ This submission replaces vocabulary proximity with assertion-level agreement. Th
 | Native TAC clean pairs | **240/240** | 21/240 |
 | Native TAC clean-pair margin | **0.970427** | -0.165231 |
 | Label-equivalence pairs | **16/16** | 12/16 |
-| Combined separation | **0.973658** | -0.124818 |
+| Combined separation | **0.973696** | -0.124818 |
 | Content-verification holdout | **144/144** | not the comparison target |
 
 These are offline, reproducible measurements against the exact pinned incumbent WASM—not claims
-about Telegraph's hidden fixtures. The 2026-08-29 06:53 IST registry recheck still reports
-registration 850 as champion at **0.65861213**, 14/15 cases, with no historical rows. The release
-is public, its commit-pinned hosted bytes have been independently re-fetched, and Linux CI
-reproduces them from source. The module has not yet been registered or received a network verdict.
+about Telegraph's hidden fixtures. v1.1.0 was registered as 1671: Stage 1 passed, but Stage 2
+rejected it at **9/15** and margin **0.3274022** versus champion 850 at **14/15** and
+**0.65861213**. The current v1.2 candidate is a semantic repair of that measured failure and has
+not yet received a network verdict.
 
 ## Why this is an actual evaluator improvement
 
@@ -59,9 +59,9 @@ chosen by focused manual review.
 
 ### 30% — robustness and code quality
 
-- 30,011-byte freestanding `wasm32-unknown-unknown` module, zero imports.
+- 30,897-byte freestanding `wasm32-unknown-unknown` module, zero imports.
 - Pinned Rust 1.98.0 build reproduces the frozen SHA byte-for-byte.
-- The release profile passes 84 Rust tests plus `clippy -D warnings`.
+- The release profile passes 85 Rust tests plus `clippy -D warnings`; all five profile matrices pass.
 - Local verifier covers ABI arity, blank/Unicode/NUL/large inputs, allocation, range, determinism,
   self-match and semantic separation.
 - Independent `telegraph-wasm-check` commit `f537c7c` verified the superseded v1.0.0 artifact;
@@ -73,8 +73,11 @@ chosen by focused manual review.
   the exact incumbent fails at 33/256, so the tool discriminates rather than rubber-stamping both.
 - A separate 20-pair metamorphic set was never loaded by the public checker. It exposed ten
   negation inversions in the prior candidate (`not AI`, `not human`, `not original`, and negated
-  answers). The release passes 20/20 at mean margin 0.757995; the rejected broad shortcut that
+  answers). v1.2 passes 20/20 at mean margin 0.945619; the rejected broad shortcut that
   hid an invented model is retained in the worklog as evidence of adversarial selection.
+- Two probes frozen before their fixes expose the network-relevant weakness directly: independent
+  authenticity axes improved from 18/20 at 0.463029 to 20/20 at 0.974294, and ordinary semantic
+  vocabulary improved from 8/12 near zero margin to 12/12 at 0.999465.
 
 ### 20% — public evidence, never fabricated
 
@@ -88,14 +91,14 @@ every claim in the diverged fork. No stars, testimonials, or benchmark issues ar
 
 ```text
 artifact   dist/text_authenticity.wasm
-bytes      30011
-sha256     8d8d690628d2cfcd52359f1bb1bfcd882456fc1198b80237ad74c1276a4ae8fe
-keccak256  8599d78b039870628b67bb8e855cd6f93fc337eb0e569d786d16fa13036e9938
+bytes      30897
+sha256     3bb3bb82e0f6e2db9948e8ce96c8f1796835858d4b0a78332ec0b624501628a9
+keccak256  8cfc5456b08363d281878b59f587ad9c44b7296b211a6a4bab4ec794a3c58a07
 ```
 
 The Keccak implementation was checked by reproducing registration 850's public on-chain hash.
-`release/text-authenticity.json` is the machine-readable manifest. The commit-pinned hosted
-download matches both hashes; the remaining activation step is the user-signed registration.
+`release/text-authenticity.json` is the machine-readable manifest. Hosted-byte and Linux CI
+reproduction must pass before the remaining user-signed registration step.
 
 ## Fast verification path
 

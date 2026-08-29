@@ -263,10 +263,23 @@ fn fold<'a>(src: &'a [u8], buf: &'a mut [u8; FOLD_CAP]) -> &'a [u8] {
 /// Opposite base words agree when exactly one is negated: `not AI` is the
 /// human pole, and `not original` is the copied pole.
 fn verdict_agrees(a: u32, a_neg: bool, b: u32, b_neg: bool) -> Option<bool> {
-    if crate::antonyms::equivalent(a, b) {
+    if crate::antonyms::strongly_equivalent(a, b) {
         return Some(a_neg == b_neg);
     }
     if crate::antonyms::opposes(a, b) {
+        return Some(a_neg != b_neg);
+    }
+    None
+}
+
+/// Support accepts the conventional broad shorthand between a one-word
+/// `original` and `genuine` verdict. The polarity pass above remains strict so
+/// that shorthand cannot cancel a separate same-axis contradiction.
+fn verdict_supports(a: u32, a_neg: bool, b: u32, b_neg: bool) -> Option<bool> {
+    if crate::antonyms::equivalent(a, b) {
+        return Some(a_neg == b_neg);
+    }
+    if crate::antonyms::broadly_opposes(a, b) {
         return Some(a_neg != b_neg);
     }
     None
@@ -276,12 +289,35 @@ fn verdict_agrees(a: u32, a_neg: bool, b: u32, b_neg: bool) -> Option<bool> {
 fn agreeing_verdict(t: &Toks, h: u32, neg: bool) -> Option<usize> {
     let mut i = 0usize;
     while i < t.n {
-        if verdict_agrees(h, neg, t.hash[i], t.neg[i]) == Some(true) {
+        if verdict_supports(h, neg, t.hash[i], t.neg[i]) == Some(true) {
             return Some(i);
         }
         i += 1;
     }
     None
+}
+
+/// Whether the answer makes supported and/or opposing closed-set claims.
+/// A truth may express one pole twice (`human`, `not AI`), so this operates on
+/// semantic polarity rather than counting surface labels.
+fn verdict_commitment(ta: &Toks, tg: &Toks) -> (bool, bool) {
+    let (mut same, mut opposite) = (false, false);
+    let mut i = 0usize;
+    while i < ta.n {
+        if crate::antonyms::is_verdict(ta.hash[i]) {
+            let mut k = 0usize;
+            while k < tg.n {
+                match verdict_supports(ta.hash[i], ta.neg[i], tg.hash[k], tg.neg[k]) {
+                    Some(true) => same = true,
+                    Some(false) => opposite = true,
+                    None => {}
+                }
+                k += 1;
+            }
+        }
+        i += 1;
+    }
+    (same, opposite)
 }
 
 /// Resolve an unambiguous answer against a one-token closed-set verdict.
@@ -291,17 +327,7 @@ fn categorical_verdict(ta: &Toks, tg: &Toks) -> Option<bool> {
     if tg.n != 1 || !crate::antonyms::is_verdict(tg.hash[0]) {
         return None;
     }
-    let truth = tg.hash[0];
-    let (mut same, mut opposite) = (false, false);
-    let mut i = 0usize;
-    while i < ta.n {
-        match verdict_agrees(ta.hash[i], ta.neg[i], truth, tg.neg[0]) {
-            Some(true) => same = true,
-            Some(false) => opposite = true,
-            None => {}
-        }
-        i += 1;
-    }
+    let (same, opposite) = verdict_commitment(ta, tg);
     match (same, opposite) {
         (true, false) => Some(true),
         (false, true) => Some(false),
@@ -650,10 +676,16 @@ fn polarity_of(ta: &Toks, tg: &Toks, semantic_models: Relation, p: &Profile) -> 
             // choosing the wrong alternative invisible.
             if !ta.boiler[a] && crate::antonyms::is_verdict(ta.hash[a]) {
                 let mut g = 0usize;
-                let (mut stated_same, mut stated_opposite) = (false, false);
+                let (mut stated_strong_same, mut stated_opposite) = (false, false);
                 while g < tg.n {
                     match verdict_agrees(ta.hash[a], ta.neg[a], tg.hash[g], tg.neg[g]) {
-                        Some(true) => stated_same = true,
+                        Some(true) => {
+                            if ta.neg[a] == tg.neg[g]
+                                && crate::antonyms::strongly_equivalent(ta.hash[a], tg.hash[g])
+                            {
+                                stated_strong_same = true;
+                            }
+                        }
                         Some(false) => stated_opposite = true,
                         None => {}
                     }
@@ -662,7 +694,7 @@ fn polarity_of(ta: &Toks, tg: &Toks, semantic_models: Relation, p: &Profile) -> 
                 // Only a ground truth that commits to the opposite verdict, and
                 // never to this one, is a contradiction. A truth that uses both
                 // (discussing the alternative it ruled out) abstains.
-                if stated_opposite && !stated_same {
+                if stated_opposite && !stated_strong_same {
                     // Categorical, not proportional. Routing this through the
                     // mass ratio diluted one flipped word across every other
                     // supported token, so a verdict flip still scored 0.9999 on
@@ -843,6 +875,14 @@ fn precision_of(ta: &Toks, gt_uncovered: f32, p: &Profile) -> f32 {
 /// the correct answer, and the gate opens fully — scoring falls back to text
 /// agreement. We never relitigate the ground truth.
 fn answeredness(ta: &Toks, tg: &Toks, sq: &Set, p: &Profile) -> f32 {
+    // A supported, unambiguous closed-set finding is a complete answer even
+    // when its wording shares no literal token with the truth (`person` for
+    // `human`, `machine` for `AI`). If the answer states both poles, it remains
+    // on the ordinary novelty curve; an opposing pole is handled by polarity.
+    if verdict_commitment(ta, tg) == (true, false) {
+        return 1.0;
+    }
+
     // The ground truth's own answer-bearing mass: what it says that the question
     // did not already give away.
     // Novelty is counted at full weight for an assertion (a figure, identifier
@@ -852,7 +892,11 @@ fn answeredness(ta: &Toks, tg: &Toks, sq: &Set, p: &Profile) -> f32 {
     // words — measured on live traffic, a contentless echo reached 0.80 on this
     // gate purely through words like "terms", "scope" and "order".
     let mass = |t: &Toks, i: usize, prose_w: f32| -> f32 {
-        if t.decisive[i] {
+        // Closed-set verdicts are answer-bearing facts even when written as
+        // lowercase common words. Precision already treats them this way; the
+        // novelty gate must agree or a semantically complete paraphrase such
+        // as `person` for `human` remains pinned to the 0.05 floor.
+        if t.decisive[i] || crate::antonyms::is_verdict(t.hash[i]) {
             t.w[i]
         } else {
             t.w[i] * prose_w
@@ -866,7 +910,7 @@ fn answeredness(ta: &Toks, tg: &Toks, sq: &Set, p: &Profile) -> f32 {
     while k < tg.n {
         if tg.w[k] >= p.decisive_min && !sq.contains_tok(tg, k) {
             gt_ans += mass(tg, k, p.novel_prose_w);
-            if tg.decisive[k] {
+            if tg.decisive[k] || crate::antonyms::is_verdict(tg.hash[k]) {
                 gt_decisive += tg.w[k];
             }
         }
@@ -1242,6 +1286,20 @@ mod tests {
             "genuine synonym {} vs plagiarised opposite {}",
             original,
             copied
+        );
+    }
+
+    #[test]
+    fn semantic_verdict_paraphrases_open_the_answeredness_gate() {
+        let q = b"Who wrote the passage?";
+        let gt = b"The passage was written by a human, not generated by AI.";
+        let b = breakdown(q, gt, b"A person authored it.");
+        assert!(b.answered > 0.75, "answeredness stayed at {}", b.answered);
+        #[cfg(feature = "text-authenticity")]
+        assert!(
+            b.final_score > 0.75,
+            "correct paraphrase scored {}",
+            b.final_score
         );
     }
 

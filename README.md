@@ -1,14 +1,11 @@
 # Telegraph fact-aware scorer — TEXT_AUTHENTICITY_CHECK
 
-This repository contains one registration artifact: a 30,011-byte freestanding WebAssembly
+This repository contains one registration artifact: a 30,897-byte freestanding WebAssembly
 scorer for Telegraph's `TEXT_AUTHENTICITY_CHECK` intent.
 
-Published artifact commit:
-[`409911f`](https://github.com/Harshyadav442277/telegraph-factscore/commit/409911f351b4778555ac5bb03c9a6d6bba69ae58).
-The v1.1.0 release asset was independently re-fetched and reproduced the byte length and both
-hashes shown below. GitHub's Linux workflow rebuilt those exact bytes from source.
-The stable reviewer entry point is the
-[`tac-v1.1.0` release](https://github.com/Harshyadav442277/telegraph-factscore/releases/tag/tac-v1.1.0).
+This is the v1.2 semantic repair. Its predecessor was registered as 1671: Stage 1 passed, but
+Stage 2 rejected it at 9/15 orderings and margin 0.3274022. v1.2 separates independent
+authenticity axes and expands ordinary paraphrase coverage rather than hiding that result.
 
 The incumbent can score a one-word wrong verdict almost identically to the truth. This scorer
 compares assertion meaning instead: verdict polarity, equivalent labels, named-model attribution,
@@ -20,12 +17,15 @@ when the surrounding prose is unchanged.
 | Public reproducible evidence | This scorer | Incumbent reg. 850 |
 |---|---:|---:|
 | Correct-over-counterfactual pairs | **256/256** | 33/256 |
-| Separation, mean good minus mean bad | **+0.973658** | -0.124818 |
+| Separation, mean good minus mean bad | **+0.973696** | -0.124818 |
 | Clean-pair verdict/fact comparisons | **240/240** | 21/240 |
 | Equivalent-label comparisons | **16/16** | 12/16 |
 | Equivalent-answer constraints | **16/16** | 4/16 |
 
 These are public offline measurements, not a claim about Telegraph's hidden rotating fixtures.
+Predeclared out-of-corpus checks also pass: negation 20/20 (0.945619 mean margin), model aliases
+10/10 (0.960045), independent authenticity axes 20/20 (0.974294), and ordinary authenticity
+vocabulary 12/12 (0.999465).
 The exact reproduction and evidence boundary are in [PROOF.md](PROOF.md); the 90-second rubric map
 is [JUDGE_BRIEF.md](JUDGE_BRIEF.md).
 
@@ -36,6 +36,8 @@ Node 18+ is the only requirement:
 ```bash
 node harness/check-tac.mjs dist/text_authenticity.wasm
 node release/probe-negation.mjs dist/text_authenticity.wasm
+node release/probe-authenticity-axes.mjs dist/text_authenticity.wasm
+node release/probe-authenticity-vocabulary.mjs dist/text_authenticity.wasm
 ```
 
 The command checks the Telegraph ABI, blank behavior, score range, self-match, all 256 semantic
@@ -53,7 +55,7 @@ node verify.mjs dist/text_authenticity.wasm
 node release/verify-standalone.mjs .
 ```
 
-## Reproduce the registered bytes
+## Reproduce the frozen bytes
 
 The repository pins Rust 1.98.0:
 
@@ -67,15 +69,15 @@ cmp target/wasm32-unknown-unknown/release/scorer.wasm dist/text_authenticity.was
 Frozen identity:
 
 ```text
-bytes      30011
-sha256     8d8d690628d2cfcd52359f1bb1bfcd882456fc1198b80237ad74c1276a4ae8fe
-keccak256  8599d78b039870628b67bb8e855cd6f93fc337eb0e569d786d16fa13036e9938
+bytes      30897
+sha256     3bb3bb82e0f6e2db9948e8ce96c8f1796835858d4b0a78332ec0b624501628a9
+keccak256  8cfc5456b08363d281878b59f587ad9c44b7296b211a6a4bab4ec794a3c58a07
 ```
 
-Commit-pinned registration URL:
+Commit-pinned registration URL (inserted after publication):
 
 ```text
-https://raw.githubusercontent.com/Harshyadav442277/telegraph-factscore/409911f351b4778555ac5bb03c9a6d6bba69ae58/dist/text_authenticity.wasm
+PENDING
 ```
 
 ## Design

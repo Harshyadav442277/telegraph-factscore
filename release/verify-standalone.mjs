@@ -32,6 +32,8 @@ const REQUIRED = [
   "release/README.md",
   "release/probe-negation.mjs",
   "release/probe-model-aliases.mjs",
+  "release/probe-authenticity-axes.mjs",
+  "release/probe-authenticity-vocabulary.mjs",
   "release/text-authenticity.json",
   "release/verify-standalone.mjs",
   "rust-toolchain.toml",

@@ -103,6 +103,27 @@ class Scorer {
     return Number(rankAnswer(...q, ...gt, ...a));
   }
 
+  _attemptBreakdown(qBytes, gtBytes, aBytes) {
+    const q = this._put(qBytes);
+    const gt = this._put(gtBytes);
+    const a = this._put(aBytes);
+    const { memory, alloc, breakdown_answer: breakdownAnswer } = this._instance.exports;
+    if (typeof breakdownAnswer !== "function") {
+      throw new Error(`${this.label}: WASM does not expose breakdown_answer`);
+    }
+    const out = [Number(alloc(5 * Float32Array.BYTES_PER_ELEMENT)), 5 * Float32Array.BYTES_PER_ELEMENT];
+    const live = [q, gt, a, out].filter(([, len]) => len > 0);
+    for (let i = 1; i < live.length; i += 1) {
+      if (live[i - 1][0] + live[i - 1][1] > live[i][0]) return null;
+    }
+    if (Number(breakdownAnswer(...q, ...gt, ...a, out[0])) !== 5) {
+      throw new Error(`${this.label}: breakdown_answer did not write five values`);
+    }
+    const view = new DataView(memory.buffer, out[0], out[1]);
+    const values = Array.from({ length: 5 }, (_, index) => view.getFloat32(index * 4, true));
+    return Object.fromEntries(["precision", "fact", "answered", "raw", "score"].map((key, index) => [key, values[index]]));
+  }
+
   scoreBytes(qBytes, gtBytes, aBytes) {
     const needed = qBytes.length + gtBytes.length + aBytes.length + 32;
     if (!this._instance || this._used + needed > this._budget) this._instantiate();
@@ -119,6 +140,19 @@ class Scorer {
 
   score(question, groundTruth, answer) {
     return this.scoreBytes(utf8(question), utf8(groundTruth), utf8(answer));
+  }
+
+  breakdown(question, groundTruth, answer) {
+    const inputs = [question, groundTruth, answer].map(utf8);
+    const needed = inputs.reduce((sum, bytes) => sum + bytes.length, 0) + 64;
+    if (!this._instance || this._used + needed > this._budget) this._instantiate();
+    let result = this._attemptBreakdown(...inputs);
+    if (result === null) {
+      this._instantiate();
+      result = this._attemptBreakdown(...inputs);
+      if (result === null) throw new Error(`${this.label}: allocator wrapped even on a fresh instance`);
+    }
+    return result;
   }
 }
 
