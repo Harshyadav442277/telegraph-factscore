@@ -1,0 +1,6 @@
+Experimental v8 shared-word query-binding continuation; for reproduction only.
+Factual registration readiness is not established. No canonical-status claim.
+Source-audited synthetic data, no captured miner response or pool training.
+Parent v7 weights inherited; two invalid parent source-label blocks excluded from new data.
+The exact protocol was frozen in miner commit 4e81b5e before external evaluation.
+Methods and full node scores: miner repository, codex/sanctions-benchmark-v7, track2/adapter/sanctions/BENCHMARK_VALIDITY.md.
