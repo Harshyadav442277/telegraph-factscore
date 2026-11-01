@@ -1,0 +1,53 @@
+{
+  "intent": "SANCTIONS_SCREENING_MATCH",
+  "base_model": "answerdotai/ModernBERT-base",
+  "base_model_sha256": "340ac08b74eef0d7bdec2d7981a6a3d4249bf0e6aab60634b72ad02c2b8023a9",
+  "tokenizer_sha256": "9fd55248d51d33976b324fc11592e28071da7d41e0e9401dfb7082e30574b7b1",
+  "adapter_dir": "..\\runs-v2\\SANCTIONS_SCREENING_MATCH_v6\\adapter",
+  "reward_head": "..\\runs-v2\\SANCTIONS_SCREENING_MATCH_v6\\adapter\\reward_head.pt",
+  "train_pairs": 5958,
+  "gate_split": "test",
+  "dataset_gate": {
+    "ok": true,
+    "n": 5958,
+    "metrics": {
+      "unique_rejected_frac": 0.9961,
+      "top_rejected_share": 0.0005,
+      "length_shortcut_acc": 0.5331,
+      "eval_negative_leak": 0.0045,
+      "surface_probe_acc": 0.6047,
+      "mean_len_chosen": 426.8,
+      "mean_len_rejected": 443.7
+    },
+    "failures": []
+  },
+  "n_eval": 794,
+  "pairwise_accuracy": 0.9018,
+  "val_loss": 0.146857,
+  "length_baseline": 0.517,
+  "beats_length_baseline": true,
+  "verdict": "PASS",
+  "negative_memorisation": 0.0,
+  "hyperparameters": {
+    "max_length": 256,
+    "batch_size": 4,
+    "grad_accum": 4,
+    "grad_checkpointing": true,
+    "lora_rank": 8,
+    "lora_alpha": 32,
+    "lora_dropout": 0.1,
+    "epochs": 2,
+    "lr": 0.0001,
+    "weight_decay": 0.01,
+    "eval_split": 0.15,
+    "seed": 42,
+    "eval_batch": 1,
+    "gate_min_acc": 0.65,
+    "gate_min_margin_over_baseline": 0.1,
+    "early_stopping": true,
+    "es_metric": "val_loss",
+    "es_patience": 1,
+    "es_min_delta": 0.001,
+    "loss_floor": 0.0001
+  }
+}
