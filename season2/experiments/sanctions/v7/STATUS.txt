@@ -1,0 +1,6 @@
+Experimental v7 replay artifact. Not ready for registration.
+New balanced query-binding final: 40/40; original bank regression remains 3/4 in our miner format.
+Genuine factual disagreement set remains all-positive/source-confounded.
+Two training exact-name labels were affected by parenthetical stripping; archived inputs preserve this known defect.
+Methods, inputs and measured f32 scores: miner repository, codex/sanctions-benchmark-v7, track2/adapter/sanctions/BENCHMARK_VALIDITY.md.
+No pool answers used for training, no canonical-status claim.
