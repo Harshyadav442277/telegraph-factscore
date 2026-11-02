@@ -1,0 +1,6 @@
+{
+  "source": "Original self-trained PEFT parent used by v11-v13. Inherited public SDN knowledge overlaps evaluation names; no unseen-entity claim.",
+  "parent_version": 3,
+  "adapter_model_sha256": "b3ae99c2a2c4afcdece4b8acfe412cb3465c0c16ee40c8b26388110af975cd5d",
+  "config_sha256": "a2cc92ad483805d4c5f191a660502b3b8102036e312f7b9e1f9a597991838046"
+}

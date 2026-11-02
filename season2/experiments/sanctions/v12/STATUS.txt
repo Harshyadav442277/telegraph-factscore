@@ -1,0 +1,3 @@
+REJECTED factual experiment: actual-node development 4/62 (6.45%), visible-length baseline 42/62.
+Synthetic test 83.25% is not factual readiness. Frozen v3 encoder, reward-head-only training.
+No registration or pool use. Archive for public reproduction only.
