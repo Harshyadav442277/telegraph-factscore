@@ -1,0 +1,3 @@
+REJECTED factual experiment: actual-node development 27/62 (43.55%), visible-length baseline42/62.
+Synthetic test630/800 is not factual readiness. All eligible public SDN organization aliases are source-exposed.
+No captured-answer training, fresh scoring, registration, pool use or readiness claim. Reproduction archive only.
