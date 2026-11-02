@@ -1,0 +1,5 @@
+REJECTED factual experiment v9. Replay artifact only; not ready for registration.
+Actual node factual accuracy: 0.209677419354839 on 62 unchanged development pairs; visible-length reference 0.677419.
+result.json describes the separate synthetic test, not external factual performance.
+Full source/results: miner branch codex/sanctions-benchmark-v7, FACTUAL_V9.md / FACTUAL_V10.md / FACTUAL_V11.md.
+No pool-derived training or captured answer training. Fresh cohort was not scored for this failed candidate.

@@ -1,0 +1,989 @@
+{
+ "version": 10,
+ "started_at": "2026-11-02T04:57:19.171672+00:00",
+ "finished_at": "2026-11-02T04:59:50.686509+00:00",
+ "seconds": 151.51,
+ "runtime_commands": [
+  [
+   "C:\\Users\\hyada\\tg-eval\\bin-v2\\adapterexec.exe",
+   "-listen",
+   "127.0.0.1:18081",
+   "-package",
+   "C:\\Users\\hyada\\tg-eval\\runs-v2\\SANCTIONS_SCREENING_MATCH_v10\\SANCTIONS_SCREENING_MATCH.safetensors"
+  ],
+  [
+   "C:\\Users\\hyada\\tg-eval\\bin-v2\\adapterexec.exe",
+   "-listen",
+   "127.0.0.1:18082",
+   "-package",
+   "C:\\Users\\hyada\\tg-eval\\runs-v2\\SANCTIONS_SCREENING_MATCH_v10\\SANCTIONS_SCREENING_MATCH.safetensors"
+  ],
+  [
+   "C:\\Users\\hyada\\tg-eval\\bin-v2\\adapterexec.exe",
+   "-listen",
+   "127.0.0.1:18083",
+   "-package",
+   "C:\\Users\\hyada\\tg-eval\\runs-v2\\SANCTIONS_SCREENING_MATCH_v10\\SANCTIONS_SCREENING_MATCH.safetensors"
+  ]
+ ],
+ "package_sha256": "5eb181e054110c52e0b552156124cc046da23082b683537708fc705117fb34c0",
+ "identity": {
+  "foundation_hash": "0a49b325304bb4cf292e683929689d0457966be264f60bfc94d0072b614bf8e6",
+  "adapter_hash": "a21aae9b7fe2dd1555eedeb3f0d72c873fdce3ce3f4c8c7a2ee4730a8ffde391",
+  "tokenizer_hash": "67bc76f8b9386efba1a761c1c8e5ad439fd0eaf1c2826e9dd1a205c7af4dc456"
+ },
+ "pairs_sha256": "770f201729650039fdacfe3582ef0a2d06271ed01e0a74ba8d440cd8e691ecb6",
+ "pairs": 62,
+ "accuracy": 0.3225806451612903,
+ "ties": 0,
+ "names": 14,
+ "all_comparisons_correct_names": 1,
+ "name_level_wilson_95_lower": 0.012721886112291648,
+ "registration_gate_pass": false,
+ "gate_note": "Requires >=80% point and name-level lower bound, both labels, length baseline <=65%",
+ "tokens": {
+  "max_tokens": 256,
+  "rendered_max_before_truncation": 1014,
+  "texts_truncated": 57,
+  "texts": 124,
+  "unique_token_sequences": 66
+ },
+ "rows": [
+  {
+   "name": "CEGESA",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1087172108,
+    "value": 6.404058456420898
+   },
+   "rejected": {
+    "bits": 1091097003,
+    "value": 8.551188468933105
+   },
+   "correct": false
+  },
+  {
+   "name": "CEGESA",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1068684521,
+    "value": 1.3971225023269653
+   },
+   "rejected": {
+    "bits": 1091097003,
+    "value": 8.551188468933105
+   },
+   "correct": false
+  },
+  {
+   "name": "CEGESA",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1087172108,
+    "value": 6.404058456420898
+   },
+   "rejected": {
+    "bits": 1075073414,
+    "value": 2.3174757957458496
+   },
+   "correct": true
+  },
+  {
+   "name": "CEGESA",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1087172108,
+    "value": 6.404058456420898
+   },
+   "rejected": {
+    "bits": 1086606128,
+    "value": 6.134178161621094
+   },
+   "correct": true
+  },
+  {
+   "name": "CEGESA",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1068684521,
+    "value": 1.3971225023269653
+   },
+   "rejected": {
+    "bits": 1075073414,
+    "value": 2.3174757957458496
+   },
+   "correct": false
+  },
+  {
+   "name": "CEGESA",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1068684521,
+    "value": 1.3971225023269653
+   },
+   "rejected": {
+    "bits": 1086606128,
+    "value": 6.134178161621094
+   },
+   "correct": false
+  },
+  {
+   "name": "LLC PSO RSB-GROUP",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1090117316,
+    "value": 7.808443069458008
+   },
+   "rejected": {
+    "bits": 1093011275,
+    "value": 10.37678050994873
+   },
+   "correct": false
+  },
+  {
+   "name": "LLC PSO RSB-GROUP",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1085554499,
+    "value": 5.6327223777771
+   },
+   "rejected": {
+    "bits": 1093011275,
+    "value": 10.37678050994873
+   },
+   "correct": false
+  },
+  {
+   "name": "LLC PSO RSB-GROUP",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1063884239,
+    "value": 0.912442147731781
+   },
+   "rejected": {
+    "bits": 1093011275,
+    "value": 10.37678050994873
+   },
+   "correct": false
+  },
+  {
+   "name": "LLC PSO RSB-GROUP",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1090117316,
+    "value": 7.808443069458008
+   },
+   "rejected": {
+    "bits": 1091870650,
+    "value": 9.288995742797852
+   },
+   "correct": false
+  },
+  {
+   "name": "LLC PSO RSB-GROUP",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1085554499,
+    "value": 5.6327223777771
+   },
+   "rejected": {
+    "bits": 1091870650,
+    "value": 9.288995742797852
+   },
+   "correct": false
+  },
+  {
+   "name": "LLC PSO RSB-GROUP",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1063884239,
+    "value": 0.912442147731781
+   },
+   "rejected": {
+    "bits": 1091870650,
+    "value": 9.288995742797852
+   },
+   "correct": false
+  },
+  {
+   "name": "GHARCHAK PRISON",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1097726840,
+    "value": 14.873893737792969
+   },
+   "rejected": {
+    "bits": 1094410636,
+    "value": 11.711315155029297
+   },
+   "correct": true
+  },
+  {
+   "name": "GHARCHAK PRISON",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1093359556,
+    "value": 10.708927154541016
+   },
+   "rejected": {
+    "bits": 1094410636,
+    "value": 11.711315155029297
+   },
+   "correct": false
+  },
+  {
+   "name": "GHARCHAK PRISON",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 3201361333,
+    "value": -0.4080025255680084
+   },
+   "rejected": {
+    "bits": 1094410636,
+    "value": 11.711315155029297
+   },
+   "correct": false
+  },
+  {
+   "name": "GHARCHAK PRISON",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1097726840,
+    "value": 14.873893737792969
+   },
+   "rejected": {
+    "bits": 1092597926,
+    "value": 9.982580184936523
+   },
+   "correct": true
+  },
+  {
+   "name": "GHARCHAK PRISON",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1093359556,
+    "value": 10.708927154541016
+   },
+   "rejected": {
+    "bits": 1092597926,
+    "value": 9.982580184936523
+   },
+   "correct": true
+  },
+  {
+   "name": "GHARCHAK PRISON",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 3201361333,
+    "value": -0.4080025255680084
+   },
+   "rejected": {
+    "bits": 1092597926,
+    "value": 9.982580184936523
+   },
+   "correct": false
+  },
+  {
+   "name": "ASIA SUN TRADING CO. LTD.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1092475081,
+    "value": 9.865426063537598
+   },
+   "rejected": {
+    "bits": 1088002288,
+    "value": 6.799919128417969
+   },
+   "correct": true
+  },
+  {
+   "name": "ASIA SUN TRADING CO. LTD.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1085019278,
+    "value": 5.377509117126465
+   },
+   "rejected": {
+    "bits": 1088002288,
+    "value": 6.799919128417969
+   },
+   "correct": false
+  },
+  {
+   "name": "ASIA SUN TRADING CO. LTD.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 3187355144,
+    "value": -0.12264639139175415
+   },
+   "rejected": {
+    "bits": 1088002288,
+    "value": 6.799919128417969
+   },
+   "correct": false
+  },
+  {
+   "name": "ASIA SUN TRADING CO. LTD.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1083542550,
+    "value": 4.6733503341674805
+   },
+   "rejected": {
+    "bits": 1088002288,
+    "value": 6.799919128417969
+   },
+   "correct": false
+  },
+  {
+   "name": "YEMEN ABBOT TRADING CO., LTD.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1094081324,
+    "value": 11.397258758544922
+   },
+   "rejected": {
+    "bits": 1081235385,
+    "value": 3.786604166030884
+   },
+   "correct": true
+  },
+  {
+   "name": "YEMEN ABBOT TRADING CO., LTD.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1089051815,
+    "value": 7.30037260055542
+   },
+   "rejected": {
+    "bits": 1081235385,
+    "value": 3.786604166030884
+   },
+   "correct": true
+  },
+  {
+   "name": "YEMEN ABBOT TRADING CO., LTD.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 3219536804,
+    "value": -1.7986950874328613
+   },
+   "rejected": {
+    "bits": 1081235385,
+    "value": 3.786604166030884
+   },
+   "correct": false
+  },
+  {
+   "name": "YEMEN ABBOT TRADING CO., LTD.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1067822619,
+    "value": 1.2943757772445679
+   },
+   "rejected": {
+    "bits": 1081235385,
+    "value": 3.786604166030884
+   },
+   "correct": false
+  },
+  {
+   "name": "AL-MUKHTAR COMPANIES",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1096734891,
+    "value": 13.927897453308105
+   },
+   "rejected": {
+    "bits": 1094435127,
+    "value": 11.734671592712402
+   },
+   "correct": true
+  },
+  {
+   "name": "AL-MUKHTAR COMPANIES",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1084252319,
+    "value": 5.011794567108154
+   },
+   "rejected": {
+    "bits": 1094435127,
+    "value": 11.734671592712402
+   },
+   "correct": false
+  },
+  {
+   "name": "AL-MUKHTAR COMPANIES",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 3213760578,
+    "value": -1.1101152896881104
+   },
+   "rejected": {
+    "bits": 1094435127,
+    "value": 11.734671592712402
+   },
+   "correct": false
+  },
+  {
+   "name": "AL-MUKHTAR COMPANIES",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1070774337,
+    "value": 1.6462479829788208
+   },
+   "rejected": {
+    "bits": 1094435127,
+    "value": 11.734671592712402
+   },
+   "correct": false
+  },
+  {
+   "name": "HTOO GROUP",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1083872882,
+    "value": 4.830864906311035
+   },
+   "rejected": {
+    "bits": 1094797714,
+    "value": 12.080461502075195
+   },
+   "correct": false
+  },
+  {
+   "name": "HTOO GROUP",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1091999235,
+    "value": 9.41162395477295
+   },
+   "rejected": {
+    "bits": 1094797714,
+    "value": 12.080461502075195
+   },
+   "correct": false
+  },
+  {
+   "name": "HTOO GROUP",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1078348841,
+    "value": 3.098398447036743
+   },
+   "rejected": {
+    "bits": 1094797714,
+    "value": 12.080461502075195
+   },
+   "correct": false
+  },
+  {
+   "name": "HTOO GROUP",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1080051914,
+    "value": 3.5044426918029785
+   },
+   "rejected": {
+    "bits": 1094797714,
+    "value": 12.080461502075195
+   },
+   "correct": false
+  },
+  {
+   "name": "CONFIDERI ADVISORY GROUP",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1094320341,
+    "value": 11.625203132629395
+   },
+   "rejected": {
+    "bits": 1091382005,
+    "value": 8.82298755645752
+   },
+   "correct": true
+  },
+  {
+   "name": "CONFIDERI ADVISORY GROUP",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1067157502,
+    "value": 1.215087652206421
+   },
+   "rejected": {
+    "bits": 1091382005,
+    "value": 8.82298755645752
+   },
+   "correct": false
+  },
+  {
+   "name": "CONFIDERI ADVISORY GROUP",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 3213801691,
+    "value": -1.1150163412094116
+   },
+   "rejected": {
+    "bits": 1091382005,
+    "value": 8.82298755645752
+   },
+   "correct": false
+  },
+  {
+   "name": "CONFIDERI ADVISORY GROUP",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1094320341,
+    "value": 11.625203132629395
+   },
+   "rejected": {
+    "bits": 1089283708,
+    "value": 7.410947799682617
+   },
+   "correct": true
+  },
+  {
+   "name": "CONFIDERI ADVISORY GROUP",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1067157502,
+    "value": 1.215087652206421
+   },
+   "rejected": {
+    "bits": 1089283708,
+    "value": 7.410947799682617
+   },
+   "correct": false
+  },
+  {
+   "name": "CONFIDERI ADVISORY GROUP",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 3213801691,
+    "value": -1.1150163412094116
+   },
+   "rejected": {
+    "bits": 1089283708,
+    "value": 7.410947799682617
+   },
+   "correct": false
+  },
+  {
+   "name": "BRILLIANCE BANKING CORPORATION, LTD.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1093849595,
+    "value": 11.176264762878418
+   },
+   "rejected": {
+    "bits": 1089221350,
+    "value": 7.381213188171387
+   },
+   "correct": true
+  },
+  {
+   "name": "BRILLIANCE BANKING CORPORATION, LTD.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1083877378,
+    "value": 4.833008766174316
+   },
+   "rejected": {
+    "bits": 1089221350,
+    "value": 7.381213188171387
+   },
+   "correct": false
+  },
+  {
+   "name": "BRILLIANCE BANKING CORPORATION, LTD.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 3197516876,
+    "value": -0.29342877864837646
+   },
+   "rejected": {
+    "bits": 1089221350,
+    "value": 7.381213188171387
+   },
+   "correct": false
+  },
+  {
+   "name": "BRILLIANCE BANKING CORPORATION, LTD.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1079158841,
+    "value": 3.291517496109009
+   },
+   "rejected": {
+    "bits": 1089221350,
+    "value": 7.381213188171387
+   },
+   "correct": false
+  },
+  {
+   "name": "REBEL SECT",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1095030396,
+    "value": 12.302364349365234
+   },
+   "rejected": {
+    "bits": 1092243789,
+    "value": 9.644848823547363
+   },
+   "correct": true
+  },
+  {
+   "name": "REBEL SECT",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1090574107,
+    "value": 8.052515983581543
+   },
+   "rejected": {
+    "bits": 1092243789,
+    "value": 9.644848823547363
+   },
+   "correct": false
+  },
+  {
+   "name": "REBEL SECT",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 3223109096,
+    "value": -2.4490909576416016
+   },
+   "rejected": {
+    "bits": 1092243789,
+    "value": 9.644848823547363
+   },
+   "correct": false
+  },
+  {
+   "name": "REBEL SECT",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1095030396,
+    "value": 12.302364349365234
+   },
+   "rejected": {
+    "bits": 1088327277,
+    "value": 6.954885959625244
+   },
+   "correct": true
+  },
+  {
+   "name": "REBEL SECT",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1090574107,
+    "value": 8.052515983581543
+   },
+   "rejected": {
+    "bits": 1088327277,
+    "value": 6.954885959625244
+   },
+   "correct": true
+  },
+  {
+   "name": "REBEL SECT",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 3223109096,
+    "value": -2.4490909576416016
+   },
+   "rejected": {
+    "bits": 1088327277,
+    "value": 6.954885959625244
+   },
+   "correct": false
+  },
+  {
+   "name": "RAD D.O.O.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1089637155,
+    "value": 7.579484462738037
+   },
+   "rejected": {
+    "bits": 1091783189,
+    "value": 9.205586433410645
+   },
+   "correct": false
+  },
+  {
+   "name": "RAD D.O.O.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1068000755,
+    "value": 1.3156112432479858
+   },
+   "rejected": {
+    "bits": 1091783189,
+    "value": 9.205586433410645
+   },
+   "correct": false
+  },
+  {
+   "name": "RAD D.O.O.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 3213800752,
+    "value": -1.1149044036865234
+   },
+   "rejected": {
+    "bits": 1091783189,
+    "value": 9.205586433410645
+   },
+   "correct": false
+  },
+  {
+   "name": "TRY PHEAP TRAVEL & TOURS CO., LTD.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1090426290,
+    "value": 7.95577335357666
+   },
+   "rejected": {
+    "bits": 3223955796,
+    "value": -2.6509599685668945
+   },
+   "correct": true
+  },
+  {
+   "name": "TRY PHEAP TRAVEL & TOURS CO., LTD.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1071535364,
+    "value": 1.7369694709777832
+   },
+   "rejected": {
+    "bits": 3223955796,
+    "value": -2.6509599685668945
+   },
+   "correct": true
+  },
+  {
+   "name": "TRY PHEAP TRAVEL & TOURS CO., LTD.",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1085291754,
+    "value": 5.5074357986450195
+   },
+   "rejected": {
+    "bits": 3223955796,
+    "value": -2.6509599685668945
+   },
+   "correct": true
+  },
+  {
+   "name": "OOO 148ESEYCH",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1095008384,
+    "value": 12.2813720703125
+   },
+   "rejected": {
+    "bits": 1092087354,
+    "value": 9.495660781860352
+   },
+   "correct": true
+  },
+  {
+   "name": "OOO 148ESEYCH",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1086540558,
+    "value": 6.102911949157715
+   },
+   "rejected": {
+    "bits": 1092087354,
+    "value": 9.495660781860352
+   },
+   "correct": false
+  },
+  {
+   "name": "OOO 148ESEYCH",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1058824002,
+    "value": 0.6108285188674927
+   },
+   "rejected": {
+    "bits": 1092087354,
+    "value": 9.495660781860352
+   },
+   "correct": false
+  },
+  {
+   "name": "MORE REKA SERVIS",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1090114744,
+    "value": 7.807216644287109
+   },
+   "rejected": {
+    "bits": 1087727022,
+    "value": 6.668662071228027
+   },
+   "correct": true
+  },
+  {
+   "name": "MORE REKA SERVIS",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 1083769837,
+    "value": 4.781729221343994
+   },
+   "rejected": {
+    "bits": 1087727022,
+    "value": 6.668662071228027
+   },
+   "correct": false
+  },
+  {
+   "name": "MORE REKA SERVIS",
+   "kind": "listed",
+   "block_id": null,
+   "source_id_metadata_only": null,
+   "chosen": {
+    "bits": 3210952306,
+    "value": -0.8876715898513794
+   },
+   "rejected": {
+    "bits": 1087727022,
+    "value": 6.668662071228027
+   },
+   "correct": false
+  }
+ ],
+ "by_kind": {
+  "listed": {
+   "pairs": 62,
+   "accuracy": 0.3225806451612903
+  }
+ }
+}
