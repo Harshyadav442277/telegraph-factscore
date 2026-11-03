@@ -1,0 +1,11 @@
+{
+  "version": 18,
+  "source_repository": "https://github.com/Harshyadav442277/miner",
+  "source_commit": "9147c3a",
+  "scope": "Exact v17 tensors at512; parent trained256. Actual old62:14/62, rejected.",
+  "files_sha256": {
+    "SANCTIONS_SCREENING_MATCH.safetensors": "a6feb2ef07299d31a0fce5eff38b38d78fb3d3ebd9afb4bb4b9c30c3d4251890",
+    "SANCTIONS_SCREENING_MATCH.safetensors.manifest.json": "52f3714d46e48ef326e5c6a28d67052e2af5a1c17375adee416c0f78e9d8cf46"
+  },
+  "status": "REJECTED_EXPERIMENT_FOR_REPRODUCTION_ONLY"
+}

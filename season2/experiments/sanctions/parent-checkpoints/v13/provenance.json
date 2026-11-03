@@ -1,0 +1,11 @@
+{
+  "version": 13,
+  "source_repository": "https://github.com/Harshyadav442277/miner",
+  "source_commit": "9147c3a",
+  "scope": "Full public-reference parent. Failed actual old62:27/62. Known positive source facts exposed.",
+  "files_sha256": {
+    "adapter_config.json": "8f4abcf6fdae4451ec8784acd69318f0345a0c9e1fe9528e1421094a697ff96e",
+    "adapter_model.safetensors": "7d27363d75cc00e55d7638d7ab5bbdb6b5e6ade009e0102584b0c8a694a7de72"
+  },
+  "status": "REJECTED_EXPERIMENT_FOR_REPRODUCTION_ONLY"
+}

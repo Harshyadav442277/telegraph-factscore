@@ -1,0 +1,11 @@
+{
+  "version": 16,
+  "source_repository": "https://github.com/Harshyadav442277/miner",
+  "source_commit": "9147c3a",
+  "scope": "Rejected HF bounded repair:listed prose41/64 below65%. No export or node score.",
+  "files_sha256": {
+    "adapter\\adapter_config.json": "8f4abcf6fdae4451ec8784acd69318f0345a0c9e1fe9528e1421094a697ff96e",
+    "adapter\\adapter_model.safetensors": "5f80a42afdc7967e77f22c31ddd41b5a95a347111ab591942123471164e72327"
+  },
+  "status": "REJECTED_EXPERIMENT_FOR_REPRODUCTION_ONLY"
+}
