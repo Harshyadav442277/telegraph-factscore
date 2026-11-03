@@ -4,8 +4,8 @@
   "source_commit": "9147c3a",
   "scope": "Rejected HF bounded repair:listed prose41/64 below65%. No export or node score.",
   "files_sha256": {
-    "adapter\\adapter_config.json": "dbd705be08709aea38e3e01ad4bf0a204ebb51918251c04e511831614299bfdd",
-    "adapter\\adapter_model.safetensors": "5f80a42afdc7967e77f22c31ddd41b5a95a347111ab591942123471164e72327"
+    "adapter/adapter_config.json": "dbd705be08709aea38e3e01ad4bf0a204ebb51918251c04e511831614299bfdd",
+    "adapter/adapter_model.safetensors": "5f80a42afdc7967e77f22c31ddd41b5a95a347111ab591942123471164e72327"
   },
   "status": "REJECTED_EXPERIMENT_FOR_REPRODUCTION_ONLY",
   "metadata_encoding": "Public JSON bytes use LF line endings; safetensors bytes unchanged"

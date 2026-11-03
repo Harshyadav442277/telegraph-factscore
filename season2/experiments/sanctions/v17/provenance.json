@@ -6,8 +6,8 @@
   "files_sha256": {
     "SANCTIONS_SCREENING_MATCH.safetensors": "f09baab9ad799e7d361c51b0146c755ce1059353d4fb0d362e6605a5a7b0bdf5",
     "SANCTIONS_SCREENING_MATCH.safetensors.manifest.json": "3e2768676894be9410264d61a17bde7b0079c356142e3f3dda5482998990d63d",
-    "adapter\\adapter_config.json": "dbd705be08709aea38e3e01ad4bf0a204ebb51918251c04e511831614299bfdd",
-    "adapter\\adapter_model.safetensors": "45393cb7b7c022fabc8b25e39c476bb669e8614f1b1e20d0a603837f04324c9c"
+    "adapter/adapter_config.json": "dbd705be08709aea38e3e01ad4bf0a204ebb51918251c04e511831614299bfdd",
+    "adapter/adapter_model.safetensors": "45393cb7b7c022fabc8b25e39c476bb669e8614f1b1e20d0a603837f04324c9c"
   },
   "status": "REJECTED_EXPERIMENT_FOR_REPRODUCTION_ONLY",
   "metadata_encoding": "Public JSON bytes use LF line endings; safetensors bytes unchanged"
