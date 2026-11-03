@@ -4,8 +4,9 @@
   "source_commit": "9147c3a",
   "scope": "Source-only distillation fails absent late-JSON9/48 and thin retention. No export or node score.",
   "files_sha256": {
-    "adapter\\adapter_config.json": "a2cc92ad483805d4c5f191a660502b3b8102036e312f7b9e1f9a597991838046",
+    "adapter\\adapter_config.json": "d6ebae50ae26d8c0ab8e9f7c73e2cbe01c54d8a7b7bd12c7d5ac751879bc98bb",
     "adapter\\adapter_model.safetensors": "52b3f847c652fb0cf3bbce7936df44b61056b2701f834b496d0e22424cdb913f"
   },
-  "status": "REJECTED_EXPERIMENT_FOR_REPRODUCTION_ONLY"
+  "status": "REJECTED_EXPERIMENT_FOR_REPRODUCTION_ONLY",
+  "metadata_encoding": "Public JSON bytes use LF line endings; safetensors bytes unchanged"
 }
