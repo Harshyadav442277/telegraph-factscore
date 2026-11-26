@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "builder": "github.com/telegraphprotocol/telegraph-wasm-baseline/cmd/adapterbuild",
+  "builder_version": "adapterbuild/2 1ed063e2f006+dirty",
+  "intent": "INVOICE_LEDGER_RECONCILE",
+  "class": "judgment",
+  "abi": "lora-v1",
+  "foundation": {
+    "hash": "0a49b325304bb4cf292e683929689d0457966be264f60bfc94d0072b614bf8e6",
+    "version": "modernbert-base-lora16-v1"
+  },
+  "tokenizer_hash": "67bc76f8b9386efba1a761c1c8e5ad439fd0eaf1c2826e9dd1a205c7af4dc456",
+  "rank": 8,
+  "alpha": 32,
+  "target_modules": [
+    "Wi",
+    "Wo",
+    "Wqkv"
+  ],
+  "max_tokens": 511,
+  "tensors": 178,
+  "delta_bytes": 6761476,
+  "package": {
+    "file": "INVOICE_LEDGER_RECONCILE.safetensors",
+    "sha256": "8b31e0f1df1c1e1388d3810f2a93ba2860450dbc9164a8a3a1d6c50848c31f8e",
+    "bytes": 6776916
+  },
+  "keccak256": "0x4d0d122be29e009b6a2a9ec247b1c3386e31afbf86676650a134c8eee9cc5145",
+  "verification": {
+    "stage1": true,
+    "loaded": true,
+    "score_hex": "0xbf21865a",
+    "repeats": 2,
+    "seconds": "4.423",
+    "input": "default"
+  },
+  "built_at": "2026-11-26T16:01:11Z"
+}
